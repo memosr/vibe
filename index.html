@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Tıklayınca her biri farklı tepki veren dokuz küçük blok karakter.">
-<title>Blok Ahali</title>
+<title>Vibe Ahali</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Nunito:wght@500;700&display=swap">
 <style>
@@ -81,7 +81,15 @@
   .modal-actions{display:flex;flex-wrap:wrap;gap:10px}
   .note{margin:0;font-size:13px;color:var(--ink-soft)}
 
-  /* ---- Blok Sokağı ---- */
+  .eyebrow{margin:0 0 8px;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:15px;letter-spacing:.16em;color:var(--ink)}
+  .eyebrow b{color:#e0643a;margin-inline:2px}
+  .foot{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;padding-top:16px;border-top:2px dashed rgba(35,28,31,.3);color:var(--ink-soft)}
+  .foot-mark{font-family:"Pixelify Sans", monospace;font-weight:700;font-size:22px;color:var(--ink);letter-spacing:.06em}
+  .foot-mark i,.neon i{font-style:normal;color:#e0643a}
+  .foot a{color:var(--ink);font-weight:700;text-underline-offset:3px}
+  .foot a:hover{color:#e0643a}
+  .foot a:focus-visible{outline:3px dashed var(--ink);outline-offset:3px}
+  /* ---- Vibe Sokağı ---- */
   .street-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 20px;margin-top:10px}
   .street-head h2{margin:0;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:clamp(24px,3vw,32px)}
   .street-head p{margin:0;color:var(--ink-soft);max-width:52ch}
@@ -100,6 +108,14 @@
   .decor{position:absolute;bottom:calc(var(--u)*20);pointer-events:none}
   .decor .px{position:absolute}
   .shopsign{position:absolute;top:calc(var(--u)*8);left:50%;translate:-50% 0;background:var(--paper);border:2px solid var(--line);box-shadow:3px 3px 0 var(--line);padding:4px 10px;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:clamp(12px,calc(var(--u)*5),15px);letter-spacing:.08em;white-space:nowrap}
+  .neon{position:absolute;top:calc(var(--u)*9);right:14%;z-index:1;padding:calc(var(--u)*2) calc(var(--u)*4);background:#2b2528;border:2px solid var(--line);box-shadow:3px 3px 0 var(--line);
+    font-family:"Pixelify Sans", monospace;font-weight:700;font-size:clamp(16px,calc(var(--u)*7.5),26px);letter-spacing:.06em;color:#fff0f4;
+    text-shadow:0 0 4px #ff7fa0,0 0 10px #ff5c86,0 0 18px #ff5c86;animation:flicker 7s steps(1) infinite}
+  .neon i{text-shadow:0 0 4px #ffb08a,0 0 10px #e0643a,0 0 18px #e0643a}
+  @keyframes flicker{0%,100%{opacity:1}62%{opacity:1}63%{opacity:.45}64%{opacity:1}66%{opacity:.6}67%{opacity:1}}
+  .walker{transition:bottom .7s ease-in-out}
+  @media (max-width:560px){ .shopsign{left:12px;translate:0 0} .neon{right:12px} }
+  @media (prefers-reduced-motion: reduce){ .neon{animation:none} }
   .gift{position:absolute;left:0;top:0;width:calc(var(--u)*9);height:calc(var(--u)*11);z-index:8;pointer-events:none}
   .gift svg{display:block;width:100%;height:100%}
   .rig{position:absolute;inset:0;transform-origin:50% 100%}
@@ -148,7 +164,8 @@
 <div class="wrap">
   <header>
     <div>
-      <h1>Blok Ahali</h1>
+      <p class="eyebrow" aria-hidden="true"><span>vibe</span><b>/</b><span>vibe</span></p>
+      <h1>Vibe Ahali</h1>
       <p class="sub">Dokuz küçük blok karakter. Birine tıkla, ne yapacağını gör. Her biri farklı huylu.</p>
     </div>
     <div class="found" id="found">
@@ -176,12 +193,12 @@
     <div class="rowwrap"><div class="row" id="row"></div></div>
     <div class="floor"></div>
   </div>
-  <section class="street-wrap" aria-label="Blok Sokağı">
+  <section class="street-wrap" aria-label="Vibe Sokağı">
     <div class="street-head">
-      <h2>Blok Sokağı</h2>
+      <h2>Vibe Sokağı</h2>
       <p>Ahali burada geziniyor. Karşılaşınca sohbet ediyorlar, bazen birbirine kart hediye ediyorlar. Onlara da tıklayabilirsin.</p>
     </div>
-    <div class="street" id="street"><div class="shopsign">BLOK PAZARI</div></div>
+    <div class="street" id="street"><div class="shopsign">VIBE PAZARI</div><div class="neon" aria-hidden="true">vibe<i>/</i>vibe</div></div>
   </section>
   <div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-card">
@@ -195,6 +212,11 @@
       </div>
     </div>
   </div>
+  <footer class="foot">
+    <span class="foot-mark">vibe<i>/</i>vibe</span>
+    <span>Tıkla, izle, GIF'ini al.</span>
+    <a href="https://github.com/memosr/vibe" target="_blank" rel="noopener">Kaynak kodu GitHub'da</a>
+  </footer>
   <p class="hint">İpucu: fareyi gezdir, gözleriyle seni takip ediyorlar. Hepsinin huyunu bulunca bir sürpriz var.</p>
 </div>
 
@@ -637,9 +659,12 @@
     ['Sana bir şey aldım!','Oo, kart mı bu?', true],
     ['Al bakalım, hediye!','Çok teşekkürler!', true],
     ['Pazara gidiyorum.','Bana da bir kart al!'],
-    ['Zzz... ah, selam!','Uyuyor muydun?']
+    ['Zzz... ah, selam!','Uyuyor muydun?'],
+    ['vibe?','vibe/vibe!'],
+    ['Buranın adı ne?','Vibe Sokağı!'],
+    ['vibe/vibe demek ne?','İyi hisset demek!']
   ];
-  const LANES = [{bottom:5, z:3}, {bottom:13, z:2}];
+  const LANES = [{bottom:4, z:3, scale:1}, {bottom:14, z:2, scale:.86}];
 
   function stopWalk(b){ (b.walkAnims || []).forEach(a => a.cancel()); b.walkAnims = null; }
   function startWalk(b){
@@ -649,13 +674,14 @@
       b.g.legL.animate([{transform:'rotate(22deg)'},{transform:'rotate(-22deg)'}], o),
       b.g.legR.animate([{transform:'rotate(-22deg)'},{transform:'rotate(22deg)'}], o),
       b.g.armL.animate([{transform:'rotate(-25deg)'},{transform:'rotate(25deg)'}], o),
-      b.g.armR.animate([{transform:'rotate(25deg)'},{transform:'rotate(-25deg)'}], o)
+      b.g.armR.animate([{transform:'rotate(25deg)'},{transform:'rotate(-25deg)'}], o),
+      b.rig.animate([{transform:'translateY(0)'},{transform:`translateY(${-u(b)*.9}px)`}], {duration:130, iterations:Infinity, direction:'alternate', easing:'ease-out'})
     ];
   }
 
-  function decorBlocks(x, parts){
+  function decorBlocks(pos, parts, bottomU = 20){
     const d = document.createElement('div'); d.className = 'decor';
-    d.style.left = `calc(${x} * var(--u))`;
+    Object.assign(d.style, pos, {bottom:`calc(${bottomU} * var(--u))`});
     parts.forEach(([px,py,w,h,c,cls]) => {
       const e = document.createElement('div'); e.className = 'px ' + (cls||'');
       e.style.cssText = `left:calc(${px} * var(--u));bottom:calc(${py} * var(--u));width:calc(${w} * var(--u));height:calc(${h} * var(--u));--c:${c}`;
@@ -665,10 +691,15 @@
   }
   function buildStreet(){
     // iki sokak lambası ve bir bank
-    const lamp = x => decorBlocks(x, [[3,0,2,44,'#3a3236',''],[0,44,8,3,'#3a3236',''],[1,41,6,3,'#ffe7a3','glow'],[1,-1,6,2,'#3a3236','']]);
-    lamp(8); lamp(null);
-    street.lastChild.style.left = ''; street.lastChild.style.right = 'calc(8 * var(--u))';
-    decorBlocks(40, [[0,6,30,3,'#8a5a3a',''],[0,10,30,2,'#8a5a3a',''],[2,0,2,6,'#3a3236',''],[26,0,2,6,'#3a3236','']]);
+    // duvardaki pencereler (biri ışıklı)
+    const win = (pos, lit) => decorBlocks(pos, [[0,0,22,16,'#3a3236',''],[1.5,1.5,19,13,lit ? '#f4d98f' : '#5b5358', lit ? 'glow' : 'flat'],[10.2,1.5,1.6,13,'#3a3236','nol'],[1.5,7.2,19,1.6,'#3a3236','nol'],[-1,-2,24,2,'#8d8187','']], 40);
+    win({left:'calc(22 * var(--u))'}, true); win({left:'34%'}, false); win({right:'30%'}, true);
+    // sokak lambaları, bank, saksı ve çöp kutusu
+    const lamp = pos => decorBlocks(pos, [[3,0,2,44,'#3a3236',''],[0,44,8,3,'#3a3236',''],[1,41,6,3,'#ffe7a3','glow'],[1,-1,6,2,'#3a3236','']]);
+    lamp({left:'calc(8 * var(--u))'}); lamp({right:'calc(8 * var(--u))'});
+    decorBlocks({left:'calc(46 * var(--u))'}, [[0,6,30,3,'#8a5a3a',''],[0,10,30,2,'#8a5a3a',''],[2,0,2,6,'#3a3236',''],[26,0,2,6,'#3a3236','']]);
+    decorBlocks({right:'calc(26 * var(--u))'}, [[1,0,8,8,'#b86a45',''],[0,8,10,2,'#9a5537',''],[2,10,2,6,'#2f7d52',''],[5,10,2,9,'#3e9a64',''],[3,15,5,3,'#2f7d52','']]);
+    decorBlocks({left:'calc(84 * var(--u))'}, [[0,0,9,12,'#5f6b70',''],[-1,12,11,2,'#4b5559',''],[2,4,5,1.4,'#4b5559','nol']]);
 
     const n = Math.min(5, Math.max(3, Math.floor(street.clientWidth / 190)));
     const picks = bots.slice().sort(() => Math.random() - .5).slice(0, n);
@@ -679,13 +710,19 @@
       wrap.style.bottom = `calc(${lane.bottom} * var(--u))`; wrap.style.zIndex = lane.z;
       street.appendChild(wrap);
       const b = build({name:def.name, act:def.act, parts:def.parts, sparks:def.sparks, walker:true}, i + 3, wrap);
-      b.wrap = wrap; b.lane = i % 2;
+      b.wrap = wrap; b.lane = i % 2; b.scale = LANES[b.lane].scale;
       b.x = (W / n) * i + Math.random() * 30;
       b.dir = Math.random() < .5 ? -1 : 1;
       b.speed = 26 + Math.random() * 18;
       b.state = 'walk'; b.until = 0; b.cool = performance.now() + 2500 + i * 900;
       return b;
     });
+  }
+
+  function switchLane(b, lane){
+    b.lane = lane;
+    b.wrap.style.bottom = `calc(${LANES[lane].bottom} * var(--u))`;
+    b.wrap.style.zIndex = LANES[lane].z;
   }
 
   async function giveGift(a, b){
@@ -705,14 +742,26 @@
     squash(b);
   }
 
+  // konuşurken el hareketi, dinlerken baş sallama
+  function gesture(b){
+    if (b.busy) return;
+    const arm = b.dir > 0 ? b.g.armR : b.g.armL, s = b.dir > 0 ? -1 : 1;
+    arm.animate([{transform:'rotate(0)'},{transform:`rotate(${s*70}deg)`},{transform:`rotate(${s*45}deg)`},{transform:`rotate(${s*70}deg)`},{transform:'rotate(0)'}],{duration:1100,easing:'ease-in-out'});
+    b.rig.animate([{transform:T()},{transform:T(0,-u(b)*1.5)},{transform:T()}],{duration:260,easing:'ease-out'});
+  }
+  function nod(b){
+    if (b.busy) return;
+    b.g.head.animate([{transform:T()},{transform:T(0,u(b)*.8,0)},{transform:T()},{transform:T(0,u(b)*.8,0)},{transform:T()}],{duration:700,easing:'ease-in-out'});
+  }
+
   async function chat(a, b){
     a.state = b.state = 'talk';
     stopWalk(a); stopWalk(b);
     // birbirlerine dönük dursunlar
     a.dir = b.x > a.x ? 1 : -1; b.dir = -a.dir;
     const [l1, l2, gift] = pick(talks);
-    speak(a, l1, 1500); await wait(1500);
-    if (!a.busy && !b.busy){ speak(b, l2, 1500); await wait(gift ? 700 : 1500); }
+    speak(a, l1, 1500); gesture(a); await wait(350); nod(b); await wait(1150);
+    if (!a.busy && !b.busy){ speak(b, l2, 1500); gesture(b); await wait(350); nod(a); await wait(gift ? 400 : 1150); }
     if (gift && !a.busy && !b.busy){ await giveGift(a, b); await wait(700); }
     const now = performance.now();
     a.cool = b.cool = now + 5000 + Math.random() * 3000;
@@ -727,7 +776,11 @@
     const W = street.clientWidth;
     for (const b of walkers){
       const bw = b.el.offsetWidth;
-      if (b.busy || b.state === 'talk'){ b.wrap.style.transform = `translateX(${b.x}px)`; continue; }
+      b.scale += (LANES[b.lane].scale - b.scale) * Math.min(1, dt * 4);
+      if (b.busy || b.state === 'talk'){
+        b.wrap.style.transform = `translateX(${b.x}px) rotate(${b.state === 'talk' && !b.busy ? b.dir * 3 : 0}deg) scale(${b.scale})`;
+        continue;
+      }
       if (b.state === 'idle'){
         if (now > b.until){ b.state = 'walk'; if (Math.random() < .5) b.dir *= -1; }
         stopWalk(b);
@@ -738,7 +791,7 @@
         if (b.x > W - bw){ b.x = W - bw; b.dir = -1; }
         if (Math.random() < dt * .08){ b.state = 'idle'; b.until = now + 1200 + Math.random() * 1800; }
       }
-      b.wrap.style.transform = `translateX(${b.x}px) rotate(${b.state === 'walk' ? b.dir * 3 : 0}deg)`;
+      b.wrap.style.transform = `translateX(${b.x}px) rotate(${b.state === 'walk' ? b.dir * 3 : 0}deg) scale(${b.scale})`;
     }
     // karşılaşmalar: aynı şeritte, yakın, ikisi de müsait
     for (let i = 0; i < walkers.length; i++) for (let j = i + 1; j < walkers.length; j++){
@@ -747,6 +800,21 @@
       if (now < a.cool || now < b.cool) continue;
       const gap = Math.abs(a.x - b.x), bw = a.el.offsetWidth;
       if (gap < bw * 1.35 && gap > bw * 0.9) chat(a, b);
+    }
+    // birbirinin içinden geçmesinler: yaklaşan ya şerit değiştirsin ya da geri dönsün
+    for (const a of walkers){
+      if (a.busy || a.state !== 'walk') continue;
+      for (const b of walkers){
+        if (a === b || a.lane !== b.lane) continue;
+        const d = b.x - a.x, bw = a.el.offsetWidth;
+        if (Math.abs(d) < bw * .95 && Math.sign(d) === a.dir){
+          const other = 1 - a.lane;
+          const free = walkers.every(c => c === a || c.lane !== other || Math.abs(c.x - a.x) > bw * 1.1);
+          if (free && now > (a.laneT || 0)){ switchLane(a, other); a.laneT = now + 2500; }
+          else a.dir *= -1;
+          break;
+        }
+      }
     }
     requestAnimationFrame(streetLoop);
   }
@@ -762,7 +830,7 @@
   const rec = document.getElementById('rec'), recText = document.getElementById('recText');
   const gifBtn = document.getElementById('gifBtn'), modal = document.getElementById('modal');
   const gifImg = document.getElementById('gifImg');
-  let gifUrl = null, gifBlob = null, gifName = 'blok-ahali.gif', lastFocus = null;
+  let gifUrl = null, gifBlob = null, gifName = 'vibe-ahali.gif', lastFocus = null;
 
   const svgCache = new Map();
   function svgImage(html){
@@ -885,7 +953,7 @@
     ctx.fillStyle = '#2a2226'; ctx.font = '700 20px "Pixelify Sans", monospace'; ctx.textBaseline = 'alphabetic';
     ctx.fillText(b.name, 16, H-18);
     ctx.fillStyle = '#5a4f52'; ctx.font = '500 14px "Pixelify Sans", monospace'; ctx.textAlign = 'right';
-    ctx.fillText(huyAdi[b.act] + ' · Blok Ahali', W-16, H-19); ctx.textAlign = 'start';
+    ctx.fillText(huyAdi[b.act] + ' · vibe/vibe', W-16, H-19); ctx.textAlign = 'start';
   }
 
   let encoderMod = null;
@@ -948,7 +1016,7 @@
       if (gifUrl) URL.revokeObjectURL(gifUrl);
       gifBlob = new Blob([gif.bytes()], {type:'image/gif'});
       gifUrl = URL.createObjectURL(gifBlob);
-      gifName = `blok-ahali-${b.name.toLowerCase().replace(/ş/g,'s').replace(/ı/g,'i').replace(/ü/g,'u').replace(/ö/g,'o').replace(/ç/g,'c').replace(/ğ/g,'g').replace(/[^a-z0-9]+/g,'-')}.gif`;
+      gifName = `vibe-ahali-${b.name.toLowerCase().replace(/ş/g,'s').replace(/ı/g,'i').replace(/ü/g,'u').replace(/ö/g,'o').replace(/ç/g,'c').replace(/ğ/g,'g').replace(/[^a-z0-9]+/g,'-')}.gif`;
       gifImg.src = gifUrl; gifImg.alt = `${b.name} karakterinin ${huyAdi[b.act].toLowerCase()} animasyonu`;
       document.getElementById('gifNote').hidden = window.self === window.top || !!(await getDownloads());
       setGifMode('idle');
