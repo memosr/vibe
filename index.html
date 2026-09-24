@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Tıklayınca her biri farklı tepki veren dokuz küçük blok karakter.">
-<title>Vibe Ahali</title>
+<meta name="description" content="Nine little block characters that each react differently when clicked.">
+<title>Vibe Folk</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Nunito:wght@500;700&display=swap">
 <style>
@@ -165,59 +165,59 @@
   <header>
     <div>
       <p class="eyebrow" aria-hidden="true"><span>vibe</span><b>/</b><span>vibe</span></p>
-      <h1>Vibe Ahali</h1>
-      <p class="sub">Dokuz küçük blok karakter. Birine tıkla, ne yapacağını gör. Her biri farklı huylu.</p>
+      <h1>Vibe Folk</h1>
+      <p class="sub">Nine little block characters. Click one and see what it does. Each has its own personality.</p>
     </div>
     <div class="found" id="found">
       <div class="found-row">
-        <span class="found-label" aria-live="polite" id="foundLabel">Keşfedilen huylar <span id="count">0</span>/9</span>
-        <button class="btn" id="gifBtn" type="button">GIF yap</button>
-        <button class="btn" id="sound" type="button" aria-pressed="true">Ses: açık</button>
+        <span class="found-label" aria-live="polite" id="foundLabel">Personalities found <span id="count">0</span>/9</span>
+        <button class="btn" id="gifBtn" type="button">Make GIF</button>
+        <button class="btn" id="sound" type="button" aria-pressed="true">Sound: on</button>
       </div>
       <div class="chips">
-        <span class="chip" data-k="wave">El sallayan</span>
-        <span class="chip" data-k="flee">Kaçan</span>
-        <span class="chip" data-k="shy">Utangaç</span>
-        <span class="chip" data-k="silly">Saçma</span>
-        <span class="chip" data-k="heart">Âşık</span>
-        <span class="chip" data-k="angry">Kızgın</span>
-        <span class="chip" data-k="dance">Dansçı</span>
-        <span class="chip" data-k="turn">Küskün</span>
-        <span class="chip" data-k="sleep">Uykucu</span>
+        <span class="chip" data-k="wave">Waver</span>
+        <span class="chip" data-k="flee">Runner</span>
+        <span class="chip" data-k="shy">Shy</span>
+        <span class="chip" data-k="silly">Silly</span>
+        <span class="chip" data-k="heart">In love</span>
+        <span class="chip" data-k="angry">Grumpy</span>
+        <span class="chip" data-k="dance">Dancer</span>
+        <span class="chip" data-k="turn">Sulker</span>
+        <span class="chip" data-k="sleep">Sleepyhead</span>
       </div>
     </div>
   </header>
 
   <div class="scene" id="scene">
-    <div class="rec" id="rec" hidden><span class="dot"></span><span id="recText">GIF için bir karakter seç</span><button type="button" id="recCancel">Vazgeç</button></div>
+    <div class="rec" id="rec" hidden><span class="dot"></span><span id="recText">Pick a character for your GIF</span><button type="button" id="recCancel">Cancel</button></div>
     <div class="rowwrap"><div class="row" id="row"></div></div>
     <div class="floor"></div>
   </div>
-  <section class="street-wrap" aria-label="Vibe Sokağı">
+  <section class="street-wrap" aria-label="Vibe Street">
     <div class="street-head">
-      <h2>Vibe Sokağı</h2>
-      <p>Ahali burada geziniyor. Karşılaşınca sohbet ediyorlar, bazen birbirine kart hediye ediyorlar. Onlara da tıklayabilirsin.</p>
+      <h2>Vibe Street</h2>
+      <p>The folk hang out here. When they meet they chat, and sometimes they gift each other a card. You can click them too.</p>
     </div>
-    <div class="street" id="street"><div class="shopsign">VIBE PAZARI</div><div class="neon" aria-hidden="true">vibe<i>/</i>vibe</div></div>
+    <div class="street" id="street"><div class="shopsign">VIBE MARKET</div><div class="neon" aria-hidden="true">vibe<i>/</i>vibe</div></div>
   </section>
   <div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-card">
-      <h2 id="modalTitle">GIF hazır</h2>
+      <h2 id="modalTitle">Your GIF is ready</h2>
       <img id="gifImg" alt="">
-      <p class="note" id="gifNote" hidden>Bu önizleme ekranı dosya indirmeyi engelleyebilir. Görsele sağ tıklayıp kaydedebilir ya da siteyi kendi adresinden açabilirsin.</p>
+      <p class="note" id="gifNote" hidden>This preview may block downloads. Right-click the image to save it, or open the site at its own address.</p>
       <div class="modal-actions">
-        <button class="btn primary" type="button" id="gifDl">İndir</button>
-        <button class="btn" type="button" id="gifAgain">Başka karakter</button>
-        <button class="btn" type="button" id="gifClose">Kapat</button>
+        <button class="btn primary" type="button" id="gifDl">Download</button>
+        <button class="btn" type="button" id="gifAgain">Another character</button>
+        <button class="btn" type="button" id="gifClose">Close</button>
       </div>
     </div>
   </div>
   <footer class="foot">
     <span class="foot-mark">vibe<i>/</i>vibe</span>
-    <span>Tıkla, izle, GIF'ini al.</span>
-    <a href="https://github.com/memosr/vibe" target="_blank" rel="noopener">Kaynak kodu GitHub'da</a>
+    <span>Click, watch, grab your GIF.</span>
+    <a href="https://github.com/memosr/vibe" target="_blank" rel="noopener">Source code on GitHub</a>
   </footer>
-  <p class="hint">İpucu: fareyi gezdir, gözleriyle seni takip ediyorlar. Hepsinin huyunu bulunca bir sürpriz var.</p>
+  <p class="hint">Tip: move your mouse around, their eyes follow you. Find every personality for a surprise.</p>
 </div>
 
 <script>
@@ -245,30 +245,30 @@
   ];
 
   const bots = [
-    { name:'Zırh', act:'silly', sparks:true, parts:[
+    { name:'Armor', act:'silly', sparks:true, parts:[
       ['head',0.8,4,2.2,13,'#ece2c8',''],
       ...base({head:'#c7a458', hand:'#efe9dc', leg:'#efe9dc', foot:L}),
       ...eyesGlow(),
       ['body',8,32,6,2,L,'flat'],['body',16,32,6,2,L,'flat'],['body',8,36,6,2,L,'flat'],['body',16,36,6,2,L,'flat'],
       ...blush()]},
-    { name:'Pus', act:'flee', parts:[
+    { name:'Mist', act:'flee', parts:[
       ...base({head:'rgba(111,227,195,.32)', foot:'rgba(111,227,195,.32)', cls:'ghost'}),
       ['head',13,7.5,4,3,'rgba(111,227,195,.32)','ghost'],['head',8,11,14,3,'rgba(111,227,195,.32)','ghost'],
       ['head',6,18,6,6,'rgba(18,95,75,.55)','hole eye'],['head',18,18,6,6,'rgba(18,95,75,.55)','hole eye'],
       ['head',13.5,24,3,4,'rgba(18,95,75,.55)','hole'],
       ['body',9,32,3,8,'rgba(18,95,75,.3)','hole'],['body',13.5,32,3,8,'rgba(18,95,75,.3)','hole'],['body',18,32,3,8,'rgba(18,95,75,.3)','hole'],
       ...blush()]},
-    { name:'Pıtırcık', act:'shy', parts:[
+    { name:'Pip', act:'shy', parts:[
       ['head',14,3,2,9,'#eee6da',''],['head',13,11,4,2,'#e8607f',''],
       ...base({head:'#f2a7bc', leg:'#2a2224', foot:L}),
       ['body',6,41,18,2.2,'#7a6a50',''],['body',14,31,2,9,'#f3ece2','flat'],
       ...eyesBig(), ...blush()]},
-    { name:'Bal', act:'wave', parts:[
+    { name:'Honey', act:'wave', parts:[
       ['head',3,9.5,6,5,L,''],['head',21,9.5,6,5,L,''],
       ...base({head:'#f0d44d', body:'#2b1e22', arm:'#f0d44d', hand:'#3fd7ea', leg:'#2b1e22', foot:'#141112'}),
       ['body',6,30,3,13,'#f0d44d',''],['body',21,30,3,13,'#f0d44d',''],['body',14,32,2,2,'#e9e1d4','flat'],
       ...eyesBig(), ...blush()]},
-    { name:'Gözlük', act:'dance', parts:[
+    { name:'Goggles', act:'dance', parts:[
       ['head',26,11,1.6,10,'#d9d2c4',''],
       ...base({head:'#6a4a2c', body:'#5a3a22', leg:'#22324a', foot:'#161616', hand:'#e7e0d4'}),
       ['head',7,9,16,5,'#6b6a3c',''],['head',12.5,6.5,2,2.5,'#e7e0d4',''],['head',15.5,6.5,2,2.5,'#e7e0d4',''],
@@ -278,7 +278,7 @@
       ['body',9,31,12,9,'#151513','flat'],['body',12.5,32.5,1.8,5,'#b5f06a','glow'],['body',17,34,2.4,2,'#e03a2a','flat'],
       ['body',6,41,18,2,'#d8432d',''],
       ...blush()]},
-    { name:'Kaptan', act:'angry', parts:[
+    { name:'Captain', act:'angry', parts:[
       ['body',27,25,4.5,9,'#226b3c',''],
       ...base({head:'#2a74bd', leg:'#2a74bd', foot:'#e9c64a'}),
       ['head',5,4,5,5,'#6b6440',''],['head',20,4,5,5,'#6b6440',''],['head',0,9,30,6,'#6b6440',''],
@@ -286,21 +286,21 @@
       ['head',5,15.6,8,1.8,L,'nol brow browL'],['head',17,15.6,8,1.8,L,'nol brow browR'],
       ['body',3,29,24,3,'#25623a',''],['body',7,38,16,3,'#6b6440',''],
       ...blush()]},
-    { name:'Lavanta', act:'heart', parts:[
+    { name:'Lavender', act:'heart', parts:[
       ['head',6,3,4,11,'#9a70d6',''],['head',20,3,4,11,'#9a70d6',''],
       ...base({head:'#b08be0', leg:'#b08be0', foot:'#9a70d6'}),
       ['head',12,15.5,6,2,'#d8c6f3','flat'],
       ...eyesBig('#efe6fb','#6d4fa0'),
       ['body',9,32,12,7,'#dcc8f5',''],['body',5,39,20,2.2,'#a27fd8',''],
       ...blush()]},
-    { name:'Frak', act:'turn', parts:[
+    { name:'Tux', act:'turn', parts:[
       ...base({head:'#5b36a0', body:'#4d2d8e', hand:'#e8e4dc', leg:'#1f1d22', foot:'#1f1d22'}),
       ['head',9,8,12,6,'#1f2420',''],['head',10,5,4,3,'#d9dedb',''],['head',16,5,4,3,'#d9dedb',''],
       ...eyesBig(),
       ['body',13,31,4,2,'#3fe2ec','flat face'],['body',14,33,2,5,'#3fe2ec','flat face'],
       ['body',14.4,35,1.2,8,'#2e1a58','nol backonly'],['head',9,26,12,1.4,'#48297f','nol backonly'],
       ...blush()]},
-    { name:'Bay Şapka', act:'sleep', parts:[
+    { name:'Mr. Hat', act:'sleep', parts:[
       ...base({head:'#b89c5e', leg:'#b89c5e', foot:'#2fb58f', hand:'#e8e4dc'}),
       ['head',5,7,20,5,'#ece6d6',''],['head',5,8.5,18,2,'#2fb58f','nol'],['head',1.5,11.5,27,2.2,L,''],
       ...eyesBig('#f7f5ef','#9a948a'),
@@ -310,14 +310,14 @@
   ];
 
   const lines = {
-    wave:['Selam!','Merhaba!','Naber?','Hoş geldin!'],
-    flee:['Eyvah!','Kaçııın!','Bana dokunma!','Aaaa!'],
-    shy:['ıı... selam','Bakma öyle...','Utandım','Hıı...'],
-    silly:['Blip blop!','Wiii!','Ben bir tostum!','Hıçk!','Kafam nerde?'],
-    heart:['Seni sevdim!','Aşk olsun!','Çok tatlısın!'],
-    angry:['Hıh!','Dokunma bana!','Grrr!','Ne bakıyorsun?'],
-    dance:['Müzik aç!','Ritmi hisset!','Hop hop!'],
-    turn:['Küstüm.','Konuşmuyorum.','Hıh, arkamı döndüm.'],
+    wave:['Hi!','Hello!','What\'s up?','Welcome!'],
+    flee:['Uh oh!','Ruuun!','Don\'t touch me!','Aaaa!'],
+    shy:['um... hi','Don\'t stare...','So embarrassing','Hmm...'],
+    silly:['Blip blop!','Wheee!','I am a toast!','Hic!','Where\'s my head?'],
+    heart:['I like you!','Love is in the air!','You\'re so sweet!'],
+    angry:['Hmph!','Don\'t touch me!','Grrr!','What are you looking at?'],
+    dance:['Music on!','Feel the beat!','Hop hop!'],
+    turn:['I\'m sulking.','Not talking.','Hmph, back turned.'],
     sleep:['Zzz...']
   };
   const HEART = '<svg viewBox="0 0 7 6" shape-rendering="crispEdges"><path fill="#231c1f" d="M1 0h2v1h1V0h2v1h1v3H6v1H5v1H2V5H1V4H0V1h1z"/><path fill="#ff5c86" d="M1 1h2v1h1V1h2v2H5v1H4v1H3V4H2V3H1z"/><path fill="#ffc2d2" d="M1 1h1v1H1z"/></svg>';
@@ -345,7 +345,7 @@
   function build(b, i, parent){
     const btn = document.createElement('button');
     btn.className = 'bot'; btn.type = 'button';
-    btn.setAttribute('aria-label', b.name + ' karakterine tıkla');
+    btn.setAttribute('aria-label', 'Click ' + b.name);
     btn.style.setProperty('--d', (i*-0.37)+'s');
     btn.innerHTML = `<div class="shadow"></div><div class="bob"><div class="rig"></div></div><div class="say" aria-hidden="true"></div><span class="tag">${b.name}</span>`;
     const rig = btn.querySelector('.rig');
@@ -449,7 +449,7 @@
       const back = b.rig.animate([{transform:T(dist*0.6,0,-dir*5)},{transform:T(0,0,0)}],{duration:1500,easing:'ease-out'});
       out.cancel();
       await back.finished;
-      speak(b, 'Gitti mi?', 1100);
+      speak(b, 'Is it gone?', 1100);
       b.g.head.animate([{transform:T()},{transform:T(0,0,-10)},{transform:T(0,0,10)},{transform:T()}],{duration:900});
       await wait(900);
     },
@@ -531,12 +531,12 @@
         b.el.classList.toggle('back');
         await b.rig.animate([{transform:'scaleX(0.05)'},{transform:'scaleX(1)'}],{duration:220,easing:'ease-out'}).finished;
       };
-      speak(b, 'Hıh!', 600);
+      speak(b, 'Hmph!', 600);
       await flip();
       speak(b, pick(lines.turn), 1700);
       await b.g.head.animate([{transform:T()},{transform:T(0,0,-5)},{transform:T(0,0,5)},{transform:T()}],{duration:1800,easing:'ease-in-out'}).finished;
       await flip();
-      speak(b, 'Neyse, barıştık.', 1100);
+      speak(b, 'Okay, we\'re friends.', 1100);
       await wait(700);
     },
     async sleep(b){
@@ -550,7 +550,7 @@
       b.g.armR.animate([{transform:'rotate(0)'},{transform:'rotate(-8deg)'}],o);
       await b.rig.animate([{transform:T()},{transform:T(0,0,0,1.03)},{transform:T()},{transform:T(0,0,0,1.03)},{transform:T(0,u(b)*.5,2)}],o).finished;
       b.el.classList.remove('sleeping');
-      speak(b, 'Uyumuyordum!', 1200);
+      speak(b, 'I wasn\'t sleeping!', 1200);
       await b.rig.animate([{transform:T(0,u(b)*.5,2)},{transform:T(0,-u(b)*5,0,1.05)},{transform:T()}],{duration:400,easing:'ease-out'}).finished;
       await wait(500);
     }
@@ -562,7 +562,7 @@
   sndBtn.addEventListener('click', () => {
     soundOn = !soundOn;
     sndBtn.setAttribute('aria-pressed', soundOn);
-    sndBtn.textContent = soundOn ? 'Ses: açık' : 'Ses: kapalı';
+    sndBtn.textContent = soundOn ? 'Sound: on' : 'Sound: off';
   });
   function tone(f1, f2, t0, dur, type='square', vol=.05){
     const o = ac.createOscillator(), g = ac.createGain(), t = ac.currentTime + t0;
@@ -613,12 +613,12 @@
   async function celebrate(){
     celebrated = true;
     document.getElementById('found').classList.add('done');
-    document.getElementById('foundLabel').textContent = 'Hepsini buldun! 9/9';
+    document.getElementById('foundLabel').textContent = 'You found them all! 9/9';
     play('done');
     bots.forEach((b, i) => setTimeout(() => {
       if (b.busy) return;
       b.busy = true;
-      speak(b, 'Yaşasın!', 1300);
+      speak(b, 'Hooray!', 1300);
       floaty(b, HEART, {n:2, size:4, dur:1400, stagger:250, y:10});
       b.g.armL.animate([{transform:'rotate(0)'},{transform:'rotate(-160deg)'},{transform:'rotate(0)'}],{duration:700,easing:'ease-in-out'});
       b.g.armR.animate([{transform:'rotate(0)'},{transform:'rotate(160deg)'},{transform:'rotate(0)'}],{duration:700,easing:'ease-in-out'});
@@ -651,18 +651,18 @@
   const CARD = '<svg viewBox="0 0 9 11" shape-rendering="crispEdges"><rect x="0" y="0" width="9" height="11" fill="#231c1f"/><rect x="1" y="1" width="7" height="9" fill="#f6f1ea"/><rect x="2" y="2" width="5" height="4" fill="#7c5cff"/><rect x="2" y="4" width="5" height="2" fill="#2fb58f"/><rect x="5" y="2" width="1" height="1" fill="#ffd772"/><rect x="2" y="7" width="3" height="1" fill="#231c1f"/><rect x="2" y="8" width="5" height="1" fill="#b3a79f"/></svg>';
   const talks = [
     ['Gm!','Gm gm!'],
-    ['Naber?','Bloktan bloğa geziyorum.'],
-    ['Gas ne kadar bugün?','Çok ucuz, rahat ol.'],
+    ['What\'s up?','Just hopping from block to block.'],
+    ['How\'s gas today?','Super cheap, relax.'],
     ['Wagmi!','Wagmi!'],
-    ['Cüzdanın nerede?','Cebimde, 0x ile başlıyor.'],
-    ['Bu sokak çok güzel.','Bloklar da öyle.'],
-    ['Sana bir şey aldım!','Oo, kart mı bu?', true],
-    ['Al bakalım, hediye!','Çok teşekkürler!', true],
-    ['Pazara gidiyorum.','Bana da bir kart al!'],
-    ['Zzz... ah, selam!','Uyuyor muydun?'],
+    ['Where\'s your wallet?','In my pocket, starts with 0x.'],
+    ['This street is lovely.','So are the blocks.'],
+    ['I got you something!','Ooh, is that a card?', true],
+    ['Here, a gift for you!','Thank you so much!', true],
+    ['Heading to the market.','Get me a card too!'],
+    ['Zzz... oh, hi!','Were you sleeping?'],
     ['vibe?','vibe/vibe!'],
-    ['Buranın adı ne?','Vibe Sokağı!'],
-    ['vibe/vibe demek ne?','İyi hisset demek!']
+    ['What\'s this place called?','Vibe Street!'],
+    ['What does vibe/vibe mean?','It means feel good!']
   ];
   const LANES = [{bottom:4, z:3, scale:1}, {bottom:14, z:2, scale:.86}];
 
@@ -826,11 +826,11 @@
   const OUT_U = 6;                 // GIF'te 1 blok birimi = 6 piksel
   const BOX = {x:15, y:16, w:60, h:74}; // karakterin GIF içindeki yeri ve kare boyutu (blok biriminde)
   const W = BOX.w*OUT_U, H = BOX.h*OUT_U;
-  const huyAdi = {wave:'El sallayan',flee:'Kaçan',shy:'Utangaç',silly:'Saçma',heart:'Âşık',angry:'Kızgın',dance:'Dansçı',turn:'Küskün',sleep:'Uykucu'};
+  const huyAdi = {wave:'Waver',flee:'Runner',shy:'Shy',silly:'Silly',heart:'In love',angry:'Grumpy',dance:'Dancer',turn:'Sulker',sleep:'Sleepyhead'};
   const rec = document.getElementById('rec'), recText = document.getElementById('recText');
   const gifBtn = document.getElementById('gifBtn'), modal = document.getElementById('modal');
   const gifImg = document.getElementById('gifImg');
-  let gifUrl = null, gifBlob = null, gifName = 'vibe-ahali.gif', lastFocus = null;
+  let gifUrl = null, gifBlob = null, gifName = 'vibe-folk.gif', lastFocus = null;
 
   const svgCache = new Map();
   function svgImage(html){
@@ -975,12 +975,12 @@
   }
   gifBtn.addEventListener('click', () => {
     if (gifMode === 'picking') setGifMode('idle');
-    else if (gifMode === 'idle') setGifMode('picking', 'GIF için bir karakter seç');
+    else if (gifMode === 'idle') setGifMode('picking', 'Pick a character for your GIF');
   });
   document.getElementById('recCancel').addEventListener('click', () => setGifMode('idle'));
 
   async function record(b){
-    setGifMode('recording', 'Kaydediliyor…');
+    setGifMode('recording', 'Recording…');
     loadEncoder().catch(() => {});
     try { await document.fonts.ready; } catch(e){}
     while (b.busy) await wait(100);
@@ -1000,7 +1000,7 @@
     if (!celebrated && found.size === bots.length && bots.every(x => !x.busy)) setTimeout(celebrate, 1200);
     running = false;
 
-    setGifMode('recording', 'GIF hazırlanıyor…');
+    setGifMode('recording', 'Making your GIF…');
     try {
       const { GIFEncoder, quantize, applyPalette } = await loadEncoder();
       const gif = GIFEncoder();
@@ -1016,14 +1016,14 @@
       if (gifUrl) URL.revokeObjectURL(gifUrl);
       gifBlob = new Blob([gif.bytes()], {type:'image/gif'});
       gifUrl = URL.createObjectURL(gifBlob);
-      gifName = `vibe-ahali-${b.name.toLowerCase().replace(/ş/g,'s').replace(/ı/g,'i').replace(/ü/g,'u').replace(/ö/g,'o').replace(/ç/g,'c').replace(/ğ/g,'g').replace(/[^a-z0-9]+/g,'-')}.gif`;
-      gifImg.src = gifUrl; gifImg.alt = `${b.name} karakterinin ${huyAdi[b.act].toLowerCase()} animasyonu`;
+      gifName = `vibe-folk-${b.name.toLowerCase().replace(/ş/g,'s').replace(/ı/g,'i').replace(/ü/g,'u').replace(/ö/g,'o').replace(/ç/g,'c').replace(/ğ/g,'g').replace(/[^a-z0-9]+/g,'-')}.gif`;
+      gifImg.src = gifUrl; gifImg.alt = `${b.name} (${huyAdi[b.act].toLowerCase()}) animation`;
       document.getElementById('gifNote').hidden = window.self === window.top || !!(await getDownloads());
       setGifMode('idle');
       openModal();
     } catch(e){
       setGifMode('idle');
-      speak(b, 'GIF olmadı, tekrar dene', 1800);
+      speak(b, 'GIF failed, try again', 1800);
     }
   }
 
@@ -1047,7 +1047,7 @@
     document.body.appendChild(a); a.click(); a.remove();
   });
   document.getElementById('gifClose').addEventListener('click', closeModal);
-  document.getElementById('gifAgain').addEventListener('click', () => { closeModal(); setGifMode('picking', 'GIF için bir karakter seç'); });
+  document.getElementById('gifAgain').addEventListener('click', () => { closeModal(); setGifMode('picking', 'Pick a character for your GIF'); });
   modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
   document.addEventListener('keydown', e => {
     if (e.key !== 'Escape') return;

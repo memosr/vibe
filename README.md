@@ -1,12 +1,12 @@
-# Vibe Ahali
+# Vibe Folk
 
-**vibe/vibe** · Tıklayınca her biri farklı tepki veren dokuz küçük blok karakter ve onların gezindiği Vibe Sokağı.
-Beğendiğin karakterin animasyonunu GIF olarak indirebilirsin.
+**vibe/vibe** · Nine little block characters that each react differently when clicked, plus Vibe Street where they hang out.
+You can download any character's animation as a GIF.
 
-- Saf HTML, CSS ve JavaScript. Kurulum ya da build adımı yok.
-- GIF kodlayıcı: [gifenc](https://github.com/mattdesl/gifenc) (MIT), `vendor/` içinde.
+- Plain HTML, CSS and JavaScript. No install or build step.
+- GIF encoder: [gifenc](https://github.com/mattdesl/gifenc) (MIT), in `vendor/`.
 
-Yerelde açmak için:
+To open it locally:
 
 ```bash
 npx serve .
