@@ -93,6 +93,26 @@
   .foot a{color:var(--ink);font-weight:700;text-underline-offset:3px}
   .foot a:hover{color:#e0643a}
   .foot a:focus-visible{outline:3px dashed var(--ink);outline-offset:3px}
+  /* ---- Yan karakterler (geniş ekran) ---- */
+  .side{display:none}
+  @media (min-width:1640px){
+    .side{display:flex;flex-direction:column;align-items:center;gap:calc(var(--u)*5);position:fixed;top:50%;z-index:1;translate:-50% -50%;
+      --u: clamp(4.4px, calc((100vw - 1180px) / 84), 6.4px)}
+    .side-l{left:calc((100vw - 1180px) / 4)}
+    .side-r{left:calc(100vw - (100vw - 1180px) / 4)}
+  }
+  .side-stage{display:flex;justify-content:center}
+  .side .tag{bottom:calc(var(--u)*-5);font-size:15px}
+  .side-sign{display:flex;align-items:center;gap:10px;background:var(--paper);border:3px solid var(--line);box-shadow:4px 4px 0 var(--line);padding:8px 14px;
+    font-family:"Pixelify Sans", monospace;font-weight:700;font-size:18px;letter-spacing:.1em;white-space:nowrap;animation:sway 3.2s ease-in-out infinite;transform-origin:50% 0}
+  .side-dot{width:10px;height:10px;background:#e0643a;border:2px solid var(--line);animation:blinkrec 1.2s steps(1) infinite}
+  @keyframes sway{0%,100%{rotate:-2deg}50%{rotate:2deg}}
+  .side-heart{position:relative;width:calc(var(--u)*28);aspect-ratio:13/11;max-width:100%;animation:beat 1.6s ease-in-out infinite;filter:drop-shadow(4px 4px 0 rgba(35,28,31,.35))}
+  .side-heart svg{position:absolute;inset:0;width:100%;height:100%}
+  .side-heart span{position:absolute;inset:0 0 18% 0;display:grid;place-items:center;text-align:center;color:#fff7fa;font-family:"Pixelify Sans", monospace;font-weight:700;
+    font-size:calc(var(--u)*3.2);line-height:1.05;letter-spacing:.04em;text-shadow:2px 2px 0 #9e2447}
+  @keyframes beat{0%,40%,100%{scale:1}10%{scale:1.09}20%{scale:.98}30%{scale:1.06}}
+  @media (prefers-reduced-motion: reduce){ .side-sign,.side-dot,.side-heart{animation:none} }
   /* ---- Vibe Sokağı ---- */
   .street-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 20px;margin-top:10px}
   .street-head h2{margin:0;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:clamp(24px,3vw,32px)}
@@ -165,6 +185,17 @@
 </head>
 <body>
 
+<aside class="side side-l" aria-label="Tux, coming soon">
+  <div class="side-sign"><span class="side-dot"></span>COMING SOON</div>
+  <div class="side-stage" id="sideL"></div>
+</aside>
+<aside class="side side-r" aria-label="Pip, coming soon">
+  <div class="side-heart">
+    <svg viewBox="0 0 13 11" shape-rendering="crispEdges" aria-hidden="true"><path fill="#231c1f" d="M2 0h3v1h1v1h1V1h1V0h3v1h1v1h1v4h-1v1h-1v1h-1v1H9v1H8v1H5v-1H4V9H3V8H2V7H1V6H0V2h1V1h1z"/><path fill="#ff5c86" d="M2 1h3v1h1v1h1V2h1V1h3v1h1v4h-1v1h-1v1H9v1H8v1H5V9H4V8H3V7H2V6H1V2h1z"/><path fill="#ffc2d2" d="M2 2h2v1H3v1H2z"/><path fill="#d93b66" d="M11 3h1v3h-1v1h-1v1H9v1H8v1H7V9h1V8h1V7h1V6h1z"/></svg>
+    <span>Coming<br>soon</span>
+  </div>
+  <div class="side-stage" id="sideR"></div>
+</aside>
 <div class="wrap">
   <header>
     <div>
@@ -378,12 +409,13 @@
   }
   bots.forEach((b, i) => build(b, i, row));
   let walkers = [];
-  const everyone = () => bots.concat(walkers);
+  let sideBots = [];
+  const everyone = () => bots.concat(walkers, sideBots);
 
   // --- helpers
   // --u bir clamp() ifadesi; gerçek piksel değerini karakterin genişliğinden ölçüyoruz
   const u = (b = bots[0]) => (b.el.offsetWidth / 30) || 4;
-  const areaOf = b => (b.el.closest('.scene, .street') || scene).getBoundingClientRect();
+  const areaOf = b => (b.el.closest('.scene, .street, .side') || scene).getBoundingClientRect();
   const wait = ms => new Promise(r => setTimeout(r, ms));
   const T = (x=0,y=0,r=0,s=1) => `translate(${x}px,${y}px) rotate(${r}deg) scale(${s})`;
   function speak(b, txt, ms=1400){
@@ -401,7 +433,7 @@
   }
   const found = new Set();
   function discover(k){
-    if (found.has(k)) return false; found.add(k);
+    if (found.has(k) || !document.querySelector(`.chip[data-k="${k}"]`)) return false; found.add(k);
     const chip = document.querySelector(`.chip[data-k="${k}"]`);
     chip.classList.add('on');
     chip.animate([{transform:'scale(1)'},{transform:'scale(1.15)'},{transform:'scale(1)'}],{duration:300,easing:'ease-out'});
@@ -822,6 +854,54 @@
     }
     requestAnimationFrame(streetLoop);
   }
+  // ================= YAN KARAKTERLER =================
+  const SWORD = [
+    ['armR',27.6,36.8,2,4.6,'#6b4a2c',''],
+    ['armR',26,35.8,5.2,1.4,'#e9c64a',''],
+    ['armR',27.7,19,1.8,17,'#dfe4ea',''],
+    ['armR',28.8,19.5,.6,16,'#aab3bd','nol'],
+    ['armR',28,17.6,1.2,1.6,'#dfe4ea','']
+  ];
+  actions.slash = async b => {
+    speak(b, pick(['Stay tuned!','Coming soon!','En garde!']), 1300);
+    await slash(b);
+  };
+  actions.love = async b => {
+    speak(b, pick(['Soon, promise!','Can\'t wait!','Almost ready!']), 1500);
+    b.el.classList.add('blushing');
+    floaty(b, HEART, {n:6, size:5, dur:1700, stagger:160, y:10, spread:26});
+    await b.rig.animate([{transform:T()},{transform:T(0,-u(b)*4,0,1.05)},{transform:T()},{transform:T(0,-u(b)*2,0,1.02)},{transform:T()}],{duration:1100,easing:'ease-out'}).finished;
+    b.el.classList.remove('blushing');
+  };
+  sfx.slash = () => { tone(1400,300,0,.18,'sawtooth',.03); };
+  sfx.love = sfx.heart;
+  async function slash(b){
+    const k = u(b);
+    floaty(b, '<svg viewBox="0 0 3 3" shape-rendering="crispEdges"><rect x="1" width="1" height="3" fill="#fff"/><rect y="1" width="3" height="1" fill="#fff"/></svg>', {n:1, size:3, dur:700, rise:6, x:29, y:16, spread:2});
+    b.rig.animate([{transform:T()},{transform:T(-k,0,-3)},{transform:T(k*2,0,4)},{transform:T()}],{duration:700,easing:'ease-in-out'});
+    await b.g.armR.animate([
+      {transform:'rotate(0deg)'},{transform:'rotate(-35deg)',offset:.25},{transform:'rotate(-150deg)',offset:.45},{transform:'rotate(25deg)',offset:.7},{transform:'rotate(0deg)'}
+    ],{duration:750,easing:'ease-in-out'}).finished;
+  }
+  function buildSide(){
+    const tuxDef = bots.find(x => x.name === 'Tux'), pipDef = bots.find(x => x.name === 'Pip');
+    const tux = build({name:'Tux', act:'slash', parts:tuxDef.parts.concat(SWORD)}, 2, document.getElementById('sideL'));
+    const pip = build({name:'Pip', act:'love', parts:pipDef.parts}, 5, document.getElementById('sideR'));
+    sideBots = [tux, pip];
+    // kendi kendine hareket
+    setInterval(() => {
+      if (reduce || document.hidden || !tux.el.offsetWidth) return;
+      if (!tux.busy){ tux.busy = true; slash(tux).finally(() => { tux.busy = false; }); }
+    }, 3400);
+    setInterval(() => {
+      if (reduce || document.hidden || !pip.el.offsetWidth || pip.busy) return;
+      pip.el.classList.add('blushing');
+      floaty(pip, HEART, {n:1, size:4, dur:1600, y:10, spread:12});
+      pip.g.head.animate([{transform:T()},{transform:T(0,0,-6)},{transform:T(0,0,6)},{transform:T()}],{duration:900,easing:'ease-in-out'});
+      setTimeout(() => pip.el.classList.remove('blushing'), 1200);
+    }, 2600);
+  }
+  buildSide();
   buildStreet();
   requestAnimationFrame(streetLoop);
 
@@ -957,7 +1037,7 @@
     ctx.fillStyle = '#2a2226'; ctx.font = '700 20px "Pixelify Sans", monospace'; ctx.textBaseline = 'alphabetic';
     ctx.fillText(b.name, 16, H-18);
     ctx.fillStyle = '#5a4f52'; ctx.font = '500 14px "Pixelify Sans", monospace'; ctx.textAlign = 'right';
-    ctx.fillText(huyAdi[b.act] + ' · vibe/vibe', W-16, H-19); ctx.textAlign = 'start';
+    ctx.fillText((huyAdi[b.act] || 'Coming soon') + ' · vibe/vibe', W-16, H-19); ctx.textAlign = 'start';
   }
 
   let encoderMod = null;
@@ -1021,7 +1101,7 @@
       gifBlob = new Blob([gif.bytes()], {type:'image/gif'});
       gifUrl = URL.createObjectURL(gifBlob);
       gifName = `vibe-folk-${b.name.toLowerCase().replace(/ş/g,'s').replace(/ı/g,'i').replace(/ü/g,'u').replace(/ö/g,'o').replace(/ç/g,'c').replace(/ğ/g,'g').replace(/[^a-z0-9]+/g,'-')}.gif`;
-      gifImg.src = gifUrl; gifImg.alt = `${b.name} (${huyAdi[b.act].toLowerCase()}) animation`;
+      gifImg.src = gifUrl; gifImg.alt = `${b.name} (${(huyAdi[b.act] || 'coming soon').toLowerCase()}) animation`;
       document.getElementById('gifNote').hidden = window.self === window.top || !!(await getDownloads());
       setGifMode('idle');
       openModal();
