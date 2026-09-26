@@ -156,6 +156,21 @@
   .arena-foot{color:#4a3a3c;font-size:14px;margin:0}
   @media (max-width:640px){ .roster{gap:6px} .pick{padding:6px 2px 4px;box-shadow:3px 3px 0 var(--line)} .pick small{display:none} .pick b{font-size:12px} .mini{--mu:1.5px} .arena-in{gap:12px} .pick .num{width:20px;height:20px;top:-8px;right:-6px;font-size:12px} }
   @media (prefers-reduced-motion: reduce){ .banners i{animation:none} }
+  .fx{position:absolute;left:0;top:0;pointer-events:none;z-index:6}
+  .pop{font-family:"Pixelify Sans", monospace;font-weight:700;color:var(--c,#fff7ea);white-space:nowrap;letter-spacing:.04em;
+    text-shadow:2px 2px 0 var(--line),-2px -2px 0 var(--line),2px -2px 0 var(--line),-2px 2px 0 var(--line),0 3px 0 var(--line)}
+  .spark-px{width:calc(var(--u)*1.4);height:calc(var(--u)*1.4);background:var(--c,#fff);box-shadow:0 0 6px var(--c,#fff)}
+  .slash{border-radius:50%;border-top:calc(var(--u)*1.1) solid #fff;border-right:calc(var(--u)*.5) solid rgba(255,255,255,.6);filter:drop-shadow(0 0 4px #fff)}
+  .shock{border-radius:50%;border:calc(var(--u)*.8) solid #fff7ea;box-shadow:0 0 10px #fff7ea}
+  .speed{height:calc(var(--u)*.6);background:rgba(255,255,255,.85);border-radius:2px}
+  .dim{position:absolute;inset:0;z-index:4;background:rgba(25,12,30,.5);pointer-events:none}
+  .tint{position:absolute;inset:0;z-index:4;background:rgba(90,160,255,.22);pointer-events:none;mix-blend-mode:multiply}
+  .ice{background:rgba(190,230,255,.42);border:3px solid #e8f7ff;box-shadow:inset 0 0 18px rgba(255,255,255,.8),0 0 10px rgba(160,210,255,.8)}
+  .frozen .bob{animation-play-state:paused}
+  .charging .rig{animation:aura .45s ease-in-out infinite alternate}
+  @keyframes aura{from{filter:drop-shadow(0 0 2px #ffd772)}to{filter:drop-shadow(0 0 9px #ff9a3a) drop-shadow(0 0 3px #fff3b0)}}
+  .ult-name{position:absolute;left:50%;top:14%;translate:-50% 0;z-index:7;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:clamp(20px,calc(var(--u)*8),44px);color:#ffd772;
+    text-shadow:3px 3px 0 var(--line),-2px -2px 0 var(--line),2px -2px 0 var(--line),-2px 2px 0 var(--line);white-space:nowrap;pointer-events:none}
   /* ---- Vibe Sokağı ---- */
   .street-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 20px;margin-top:10px}
   .street-head h2{margin:0;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:clamp(24px,3vw,32px)}
@@ -245,7 +260,7 @@
       <div>
         <button class="btn" type="button" id="arenaBack">&larr; Back to Vibe Folk</button>
         <h2 style="margin-top:14px">Vibe Arena</h2>
-        <p>Pick two fighters. They drop in with random gear and start a very silly brawl. Poke them if you dare.</p>
+        <p>Pick two fighters. They drop in with random gear and start a very silly brawl. Tap a fighter to charge their special move.</p>
       </div>
       <div class="arena-ctrl">
         <button class="btn" type="button" id="arenaGear">Shuffle gear</button>
@@ -258,7 +273,7 @@
       <div class="banners" aria-hidden="true"><i style="--c:#e0643a"></i><i style="--c:#2fb58f"></i><i style="--c:#7c5cff"></i><i style="--c:#f0d44d"></i><i style="--c:#2a74bd"></i><i style="--c:#ff5c86"></i></div>
       <div class="ring-hint" id="ringHint">Pick two fighters above</div>
     </div>
-    <p class="arena-foot">Gear is random every match: spear, shield, bow, dagger or sword. Nobody wins. Everybody gets bonked.</p>
+    <p class="arena-foot">Gear is random every match: spear, shield, bow, dagger or sword. Specials recharge in a few seconds. Tap too much and they get grumpy. Nobody wins. Everybody gets bonked.</p>
   </div>
 </section>
 <div class="wrap">
@@ -458,6 +473,11 @@
       rig.appendChild(el); groups[g] = el;
     });
     b.parts.forEach(([g,x,y,w,h,c,cls]) => {
+      if (g === 'wpn' && !groups.wpn){ // silah: eldeki bileğe bağlı, kendi başına dönebilir
+        const wp = document.createElement('div'); wp.className = 'g g-wpn';
+        wp.style.transformOrigin = 'calc(26 * var(--u)) calc(40 * var(--u))';
+        groups.armR.appendChild(wp); groups.wpn = wp;
+      }
       const d = document.createElement('div');
       d.className = 'px ' + (cls||'');
       d.style.cssText = `left:calc(${x} * var(--u));top:calc(${y} * var(--u));width:calc(${w} * var(--u));height:calc(${h} * var(--u));--c:${c}`;
@@ -1068,7 +1088,8 @@
       if (child.classList.contains('spark')){ drawBlock(ctx, Mg, child, k, S); continue; }
       const f = getComputedStyle(child).filter;
       ctx.filter = (f && f !== 'none') ? f : 'none';
-      for (const part of child.children) drawBlock(ctx, Mg.multiply(local(part)), part, k, S);
+      const drawGroup = (M, el) => { for (const part of el.children){ const Mp = M.multiply(local(part)); if (part.classList.contains('g')) drawGroup(Mp, part); else drawBlock(ctx, Mp, part, k, S); } };
+      drawGroup(Mg, child);
       ctx.filter = 'none';
     }
     // toz, kalp, nota, Z gibi uçuşan şeyler
@@ -1215,13 +1236,14 @@
   let fighters = [], picks = [], matchTok = 0;
   arenaBots = [];
 
-  // --- ekipmanlar (hepsi sağ elde)
+  // --- ekipmanlar: bileğe bağlı "wpn" grubunda, kendi başına döner
+  const W_ = parts => parts.map(p => ['wpn', ...p.slice(1)]);
   const GEAR = {
-    sword:  {label:'sword',  parts:SWORD},
-    dagger: {label:'dagger', parts:[['armR',27.6,37.2,1.8,3.6,'#6b4a2c',''],['armR',26.6,36.3,3.8,1.1,'#9aa3ad',''],['armR',27.9,30.6,1.3,5.8,'#dfe4ea',''],['armR',28.1,29.4,.9,1.4,'#dfe4ea','']]},
-    spear:  {label:'spear',  parts:[['armR',28,9,1.3,35,'#8a5a3a',''],['armR',27.4,5.2,2.5,4,'#dfe4ea',''],['armR',28.05,3.4,1.2,2,'#dfe4ea',''],['armR',27.6,9.2,2.1,1.2,'#d8432d','nol']]},
-    bow:    {label:'bow',    parts:[['armR',29.4,26.5,1.5,3,'#8a5a3a',''],['armR',30.6,29.5,1.5,11,'#8a5a3a',''],['armR',29.4,40.5,1.5,3,'#8a5a3a',''],['armR',29,27.5,.4,15,'#f3ece2','nol']]},
-    shield: {label:'shield', parts:[['armR',25.4,32.5,7.4,9.5,'#8c2f22',''],['armR',26.2,33.3,5.8,7.9,'#d9573f',''],['armR',28,35.9,2.2,2.2,'#e9c64a','']]}
+    sword:  {label:'sword',  parts:W_(SWORD)},
+    dagger: {label:'dagger', parts:W_([['',27.6,37.2,1.8,3.6,'#6b4a2c',''],['',26.6,36.3,3.8,1.1,'#9aa3ad',''],['',27.9,30.6,1.3,5.8,'#dfe4ea',''],['',28.1,29.4,.9,1.4,'#dfe4ea','']])},
+    spear:  {label:'spear',  parts:W_([['',28,9,1.3,35,'#8a5a3a',''],['',27.4,5.2,2.5,4,'#dfe4ea',''],['',28.05,3.4,1.2,2,'#dfe4ea',''],['',27.6,9.2,2.1,1.2,'#d8432d','nol']])},
+    bow:    {label:'bow',    parts:W_([['',29.4,26.5,1.5,3,'#8a5a3a',''],['',30.6,29.5,1.5,11,'#8a5a3a',''],['',29.4,40.5,1.5,3,'#8a5a3a',''],['',29,27.5,.4,15,'#f3ece2','nol bowstring']])},
+    shield: {label:'shield', parts:W_([['',25.4,32.5,7.4,9.5,'#8c2f22',''],['',26.2,33.3,5.8,7.9,'#d9573f',''],['',28,35.9,2.2,2.2,'#e9c64a','']])}
   };
 
   // --- her karakterin kendi tarzı
@@ -1264,7 +1286,8 @@
     boom:  () => { tone(140,40,0,.4,'sawtooth',.06); },
     laser: () => tone(1600,200,0,.45,'sawtooth',.03),
     clap:  () => { tone(2000,900,0,.06,'square',.05); tone(1400,700,.05,.06,'square',.04); },
-    fight: () => { [392,523,784].forEach((f,i) => tone(f,f,i*.1,.14,'square',.05)); }
+    fight: () => { [392,523,784].forEach((f,i) => tone(f,f,i*.1,.14,'square',.05)); },
+    charge: () => { tone(200,900,0,.5,'square',.035); }
   });
 
   // --- yardımcılar
@@ -1324,10 +1347,69 @@
     await moveTo(f, tx, Math.min(1500, 260 + d*2.2/f.st.speed));
   }
 
+  // --- vuruş efektleri
+  function fxDiv(cls, pt, w, h){
+    const d = document.createElement('div'); d.className = 'fx ' + cls;
+    d.style.width = w + 'px'; d.style.height = h + 'px';
+    d.style.transform = `translate(${pt.x - w/2}px,${pt.y - h/2}px)`;
+    ring.appendChild(d); return d;
+  }
+  function popText(text, pt, color = '#fff7ea', size = 6){
+    const k = fighters[0] ? u(fighters[0].b) : 4;
+    const d = document.createElement('div'); d.className = 'fx pop'; d.textContent = text;
+    d.style.setProperty('--c', color); d.style.fontSize = Math.max(14, size*k) + 'px';
+    ring.appendChild(d);
+    const w = d.offsetWidth, h = d.offsetHeight, r = (Math.random() - .5)*16;
+    d.animate([
+      {transform:`translate(${pt.x - w/2}px,${pt.y - h/2}px) rotate(${r}deg) scale(.3)`, opacity:0},
+      {transform:`translate(${pt.x - w/2}px,${pt.y - h/2 - k*3}px) rotate(${r}deg) scale(1.25)`, opacity:1, offset:.2},
+      {transform:`translate(${pt.x - w/2}px,${pt.y - h/2 - k*6}px) rotate(${r}deg) scale(1)`, opacity:1, offset:.7},
+      {transform:`translate(${pt.x - w/2}px,${pt.y - h/2 - k*9}px) rotate(${r}deg) scale(.9)`, opacity:0}
+    ],{duration:850, easing:'ease-out'}).finished.then(() => d.remove());
+  }
+  function burst(pt, colors = ['#fff'], n = 8, spread = 12, dur = 500, inward = false){
+    const k = fighters[0] ? u(fighters[0].b) : 4;
+    for (let i = 0; i < n; i++){
+      const d = document.createElement('div'); d.className = 'fx spark-px'; d.style.setProperty('--c', colors[i % colors.length]);
+      ring.appendChild(d);
+      const a = (i / n) * Math.PI*2 + Math.random()*.5, r = spread*k*(.6 + Math.random()*.6);
+      const far = {x:pt.x + Math.cos(a)*r, y:pt.y + Math.sin(a)*r};
+      const [p0, p1] = inward ? [far, pt] : [pt, far];
+      d.animate([{transform:`translate(${p0.x}px,${p0.y}px) scale(1.3)`, opacity:1},{transform:`translate(${p1.x}px,${p1.y}px) scale(.4)`, opacity:inward ? 1 : 0}],
+        {duration:dur, easing:inward ? 'ease-in' : 'ease-out'}).finished.then(() => d.remove());
+    }
+  }
+  function slashArc(pt, angle = -30, size = 18){
+    const k = fighters[0] ? u(fighters[0].b) : 4, s = size*k;
+    const d = fxDiv('slash', pt, s, s);
+    d.animate([{rotate:`${angle - 40}deg`, scale:.6, opacity:0},{rotate:`${angle}deg`, scale:1, opacity:1, offset:.35},{rotate:`${angle + 25}deg`, scale:1.1, opacity:0}],{duration:380, easing:'ease-out'}).finished.then(() => d.remove());
+  }
+  function shockwave(pt, size = 22){
+    const k = fighters[0] ? u(fighters[0].b) : 4, s = size*k;
+    const d = fxDiv('shock', pt, s, s);
+    d.animate([{scale:.2, opacity:1},{scale:1.3, opacity:0}],{duration:450, easing:'ease-out'}).finished.then(() => d.remove());
+  }
+  function speedLines(f){
+    const k = u(f.b), c = ringPt(f.b.el, .5, .55);
+    for (let i = 0; i < 4; i++){
+      const y = c.y + (i - 1.5)*k*5, x = c.x - f.face*k*14, w = k*(8 + Math.random()*6);
+      const d = fxDiv('speed', {x, y}, w, k*.6);
+      d.animate([{translate:'0 0', opacity:.9},{translate:`${-f.face*k*10}px 0`, opacity:0}],{duration:320, delay:i*40, easing:'ease-out'}).finished.then(() => d.remove());
+    }
+  }
+  function hitFlash(o){ o.b.bob.animate([{filter:'brightness(1)'},{filter:'brightness(2.6) saturate(.4)'},{filter:'brightness(1)'}],{duration:220}); }
+  const headPt = o => ringPt(o.b.g.head, .5, .55);
+
   // --- savunmacının tepkisi
-  async function hit(o, power = 1, line){
-    const k = u(o.b);
-    play('bonk'); speak(o.b, line || pick(o.st.hurt), 1300); stars(o);
+  async function hit(o, power = 1, line, fx){
+    const k = u(o.b), pt = headPt(o);
+    play('bonk'); speak(o.b, line || pick(o.st.hurt), 1300); stars(o); hitFlash(o);
+    if (fx){
+      if (fx.slash !== undefined) slashArc(pt, fx.slash);
+      if (fx.shock) shockwave(pt);
+      burst(pt, fx.colors || ['#fff','#ffd772'], fx.n || 8, 10);
+      if (fx.text) popText(fx.text, {x:pt.x, y:pt.y - k*8}, fx.color || '#fff7ea', fx.size || 6);
+    }
     o.b.rig.animate([{transform:T()},{transform:T(-k*1.5,-k*2,-14)},{transform:T(k,0,6)},{transform:T()}],{duration:500,easing:'ease-out'});
     if (power > 1.3) shakeRing(5);
     await moveTo(o, o.x - o.face*k*7*power, 260, 'ease-out', 'none');
@@ -1336,6 +1418,7 @@
   async function dodge(o){
     const k = u(o.b);
     speak(o.b, pick(DODGE), 1000);
+    popText('WHIFF', {x:headPt(o).x, y:headPt(o).y - k*4}, '#d9d0c7', 4);
     o.b.rig.animate([{transform:T()},{transform:T(-k*2,-k*15,-12)},{transform:T()}],{duration:480,easing:'ease-out'});
     await moveTo(o, o.x - o.face*k*4, 480, 'ease-out', 'none');
     return 'dodge';
@@ -1344,57 +1427,90 @@
     const k = u(o.b);
     play('clang'); speak(o.b, pick(BLOCK), 1000);
     o.b.g.armR.animate([{transform:'rotate(0)'},{transform:'rotate(-55deg)',offset:.2},{transform:'rotate(-55deg)',offset:.8},{transform:'rotate(0)'}],{duration:600});
-    floaty(o.b, SPARK, {n:3, size:2.5, dur:500, rise:6, x:30, y:30, spread:8, stagger:40});
+    if (o.b.g.wpn) o.b.g.wpn.animate([{transform:'rotate(0)'},{transform:'rotate(55deg)',offset:.2},{transform:'rotate(55deg)',offset:.8},{transform:'rotate(0)'}],{duration:600});
+    const pt = ringPt(o.b.g.armR, .5, .6);
+    burst(pt, ['#ffd772','#fff'], 10, 9, 420); popText('CLANG!', {x:pt.x, y:pt.y - k*6}, '#ffd772', 5);
     await moveTo(f, f.x - f.face*k*5, 220, 'ease-out', 'none');
     return 'block';
   }
-  function outcome(o, f, power = 1){
+  function outcome(o, f, power = 1, fx){
     const r = Math.random();
     if (o.gear === 'shield' && r < .45) return block(o, f);
     if (r < .27) return dodge(o);
-    return hit(o, power);
+    return hit(o, power, null, fx);
   }
 
   // --- silaha göre saldırılar
+  // Not: kol -90° iken silahı ileri çevirmek için bilek 180° döner (yerel koordinatta ileri = rakip)
+  const aim = (f, kf, dur) => f.b.g.wpn ? f.b.g.wpn.animate(kf.map(r => ({transform:`rotate(${r}deg)`})), {duration:dur, easing:'ease-in-out'}) : null;
+  const arm = (f, kf, dur) => f.b.g.armR.animate(kf.map(r => ({transform:`rotate(${r}deg)`})), {duration:dur, easing:'ease-in-out'});
   const ATTACK = {
     async sword(f, o){
-      await approach(f, o, .8); play('whoosh');
-      const sw = f.b.g.armR.animate([{transform:'rotate(0)'},{transform:'rotate(-150deg)',offset:.4},{transform:'rotate(30deg)',offset:.7},{transform:'rotate(0)'}],{duration:700,easing:'ease-in-out'});
-      await wait(430); await outcome(o, f, 1); await sw.finished;
+      await approach(f, o, .8);
+      // kılıcı arkaya kaldır, bilekle savur: bıçak öne doğru iner
+      arm(f, [0, -160, -160, 25, 0], 820); aim(f, [0, 150, 150, 60, 0], 820);
+      await wait(430); play('whoosh');
+      slashArc(headPt(o), -35, 20);
+      await outcome(o, f, 1, {slash:-20, text:'SHING!', colors:['#fff','#dfe4ea']});
     },
     async dagger(f, o){
+      // önce hançeri parmakta çevir, sonra üç kez sapla
+      aim(f, [0, 360, 720], 420); await wait(420);
       await approach(f, o, .62);
       speak(f.b, 'Stab stab stab!', 900);
-      f.b.g.armR.animate([{transform:'rotate(0)'},{transform:'rotate(-85deg)'},{transform:'rotate(-40deg)'},{transform:'rotate(-85deg)'},{transform:'rotate(-40deg)'},{transform:'rotate(-85deg)'},{transform:'rotate(0)'}],{duration:760});
-      f.b.rig.animate([{transform:T()},{transform:T(u(f.b)*2,0)},{transform:T()},{transform:T(u(f.b)*2,0)},{transform:T()}],{duration:760});
-      await wait(520); await outcome(o, f, .7);
+      arm(f, [0, -90, -78, -94, -78, -94, 0], 900); aim(f, [0, 180, 180, 180, 180, 180, 0], 900);
+      f.b.rig.animate([{transform:T()},{transform:T(u(f.b)*2.5,0)},{transform:T()},{transform:T(u(f.b)*2.5,0)},{transform:T()},{transform:T(u(f.b)*2.5,0)},{transform:T()}],{duration:900});
+      const pt = headPt(o), k = u(o.b);
+      for (let i = 0; i < 3; i++){
+        await wait(i ? 230 : 200); play('bonk');
+        const p = {x:pt.x + (Math.random() - .5)*k*6, y:pt.y + k*4 + (Math.random() - .5)*k*6};
+        burst(p, ['#fff','#ff9a8a'], 6, 6, 300); popText('STAB!', {x:p.x, y:p.y - k*5}, '#ff9a8a', 3.8);
+      }
+      await outcome(o, f, .7, {colors:['#ff9a8a','#fff'], n:5});
     },
     async spear(f, o){
-      await approach(f, o, 1.1); play('whoosh');
-      f.b.g.armR.animate([{transform:'rotate(0)'},{transform:'rotate(-70deg)',offset:.3},{transform:'rotate(-70deg)',offset:.7},{transform:'rotate(0)'}],{duration:700});
-      f.b.rig.animate([{transform:T()},{transform:T(-u(f.b)*2,0)},{transform:T(u(f.b)*7,0,6)},{transform:T()}],{duration:700});
-      await wait(380); await outcome(o, f, 1.2);
+      // mızrağı çevir, sonra ileri doğru dümdüz it
+      arm(f, [0, -40, -40, 0], 520); aim(f, [0, 360, 720, 720], 520); await wait(520);
+      await approach(f, o, 1.15); play('whoosh');
+      arm(f, [0, -90, -90, -90, 0], 760); aim(f, [0, 180, 180, 180, 0], 760);
+      f.b.rig.animate([{transform:T()},{transform:T(-u(f.b)*2,0)},{transform:T(u(f.b)*8,0,5)},{transform:T(u(f.b)*8,0,5)},{transform:T()}],{duration:760});
+      await wait(300); speedLines(f); await wait(80);
+      await outcome(o, f, 1.25, {text:'POKE!', color:'#ffe9a8', colors:['#fff','#dfe4ea'], n:6});
     },
     async bow(f, o){
       speak(f.b, pick(['Hold still!','Pew!','Bullseye time.']), 900);
-      f.b.g.armR.animate([{transform:'rotate(0)'},{transform:'rotate(-90deg)',offset:.3},{transform:'rotate(-90deg)',offset:.8},{transform:'rotate(0)'}],{duration:1100});
-      await wait(520); play('whoosh');
-      const from = ringPt(f.b.g.armR, .5, .85), to = ringPt(o.b.g.head, .5, .45);
+      // kolu kaldır, yayı dik tut, kirişi ger
+      arm(f, [0, -90, -90, -90, 0], 1300); aim(f, [0, 90, 90, 90, 0], 1300);
+      const str = f.b.el.querySelector('.bowstring');
+      if (str) str.animate([{translate:'0 0'},{translate:`${-u(f.b)*2.2}px 0`, offset:.35},{translate:`${-u(f.b)*2.2}px 0`, offset:.55},{translate:'0 0', offset:.62},{translate:'0 0'}],{duration:1300});
+      await wait(720); play('whoosh');
+      const from = ringPt(f.b.g.wpn || f.b.g.armR, .5, .5), to = headPt(o);
       const r = Math.random(), res = (o.gear === 'shield' && r < .45) ? 'block' : r < .3 ? 'dodge' : 'hit';
       if (res === 'dodge') dodge(o);
-      const d = await throwAt(ARROW, from, res === 'dodge' ? {x: to.x + f.face*120, y: to.y - 30} : to, {w:9, h:2.2, dur:420, flip:f.face < 0});
+      trail(from, res === 'dodge' ? {x:to.x + f.face*120, y:to.y - 30} : to, 420);
+      const d = await throwAt(ARROW, from, res === 'dodge' ? {x:to.x + f.face*120, y:to.y - 30} : to, {w:9, h:2.2, dur:420, flip:f.face < 0});
       d.remove();
       if (res === 'block') return block(o, f);
-      if (res === 'hit'){ stickArrow(o); await hit(o, .8, pick(['An arrow?! Really?','Boing!','I\'m a pincushion!'])); }
+      if (res === 'hit'){ stickArrow(o); await hit(o, .8, pick(['An arrow?! Really?','Boing!','I\'m a pincushion!']), {text:'THWACK!', color:'#ffd772', n:6}); }
     },
     async shield(f, o){
-      await approach(f, o, .72);
       speak(f.b, 'Shield BONK!', 900);
-      f.b.g.armR.animate([{transform:'rotate(0)'},{transform:'rotate(-70deg)',offset:.4},{transform:'rotate(0)'}],{duration:600});
-      f.b.rig.animate([{transform:T()},{transform:T(-u(f.b)*2,0)},{transform:T(u(f.b)*5,0)},{transform:T()}],{duration:600});
-      await wait(300); play('clang'); await outcome(o, f, 1.6);
+      // kalkanı öne al, hızla koş ve çarp
+      arm(f, [0, -60, -60], 300); aim(f, [0, 60, 60], 300);
+      speedLines(f); await approach(f, o, .72);
+      arm(f, [-60, -80, 0], 560); aim(f, [60, 80, 0], 560);
+      f.b.rig.animate([{transform:T()},{transform:T(-u(f.b)*2,0)},{transform:T(u(f.b)*5,0)},{transform:T()}],{duration:560});
+      await wait(260); play('clang');
+      await outcome(o, f, 1.6, {shock:true, text:'BONK!', color:'#ffb08a', colors:['#ffd772','#fff'], n:10});
     }
   };
+  function trail(from, to, dur){ // okun arkasında kalan kesik çizgi
+    for (let i = 1; i <= 5; i++){
+      const t = i/6, pt = {x:from.x + (to.x - from.x)*t, y:from.y + (to.y - from.y)*t};
+      const d = fxDiv('spark-px', pt, 6, 3); d.style.setProperty('--c', '#fff7ea');
+      d.animate([{opacity:0},{opacity:.9, offset:.3},{opacity:0}],{duration:500, delay:dur*t}).finished.then(() => d.remove());
+    }
+  }
 
   async function throwAt(svg, from, to, {w = 6, h = w, dur = 700, arc = 0, spin = 0, flip = false} = {}){
     const k = fighters[0] ? u(fighters[0].b) : 4, d = document.createElement('div');
@@ -1564,6 +1680,17 @@
     let turn = Math.random() < .5 ? 0 : 1, lastSpecial = '';
     await wait(700);
     while (alive(tok) && fighters.length === 2){
+      const q = fighters.find(x => x.ultQueued);
+      if (q){
+        const o = fighters.find(x => x !== q);
+        q.ultQueued = false;
+        try { await ULT[q.name](q, o); } catch(e){ /* sahneden çıkarılmış olabilir */ }
+        q.b.el.classList.remove('charging');
+        if (!alive(tok)) return;
+        await Promise.all(fighters.map(x => Math.abs(x.x - home(x)) > 4 ? moveTo(x, home(x), 520) : null));
+        await wait(700);
+        continue;
+      }
       const f = fighters[turn], o = fighters[1 - turn], r = Math.random();
       try {
         if (r < .13) await pick(Object.values(INTERLUDE))(f, o);
@@ -1583,12 +1710,161 @@
     }
   }
 
-  // --- dokununca bize kızarlar
+  // --- dokununca açılan özel yetenekler (ultimate)
+  const BEE    = svgPx('0 0 6 5', [[1,1,4,3,'#231c1f'],[1,1,1,3,'#f5c542'],[3,1,1,3,'#f5c542'],[2,0,2,1,'#e8f4ff'],[5,2,1,1,'#231c1f']]);
+  const BALL   = svgPx('0 0 4 4', [[1,0,2,4,'#231c1f'],[0,1,4,2,'#231c1f'],[1,1,1,1,'#6b737b']]);
+  const CANNON = svgPx('0 0 16 11', [[3,1,11,5,'#231c1f'],[4,2,10,3,'#3d4247'],[13,1,3,5,'#231c1f'],[5,2,6,1,'#6b737b'],[1,5,9,2,'#6b4a2c'],[2,6,6,5,'#231c1f'],[3,7,4,3,'#8a5a3a'],[4,8,2,1,'#231c1f']]);
+  const ULT_CALL = {
+    Armor:['Fine. OVERDRIVE.','You asked for this.'], Honey:['You woke the bees...','Bee-lieve it.'],
+    Goggles:['Initiating... time freeze.','Science, activate!'], Captain:['Ready the cannons!','ALL HANDS!'], Tux:['One moment, please.','Allow me.']
+  };
+  function ultName(text){
+    const d = document.createElement('div'); d.className = 'ult-name'; d.textContent = text; ring.appendChild(d);
+    return d.animate([{opacity:0, scale:.5},{opacity:1, scale:1.1, offset:.15},{opacity:1, scale:1, offset:.8},{opacity:0, scale:1}],{duration:1600}).finished.then(() => d.remove());
+  }
+  function overlay(cls){ const d = document.createElement('div'); d.className = cls; ring.appendChild(d); d.animate([{opacity:0},{opacity:1}],{duration:250}); return d; }
+  const fadeOut = d => d.animate([{opacity:1},{opacity:0}],{duration:300}).finished.then(() => d.remove());
+  const clampX = (f, x) => Math.max(0, Math.min(ring.clientWidth - bwOf(f), x));
+
+  const ULT = {
+    async Armor(f, o){ // MEGA LASER
+      ultName('MEGA LASER'); speak(f.b, 'OVERDRIVE!!!', 1200);
+      const dim = overlay('dim'), k = u(f.b), eye = ringPt(f.b.g.head, .5, .42);
+      for (let i = 0; i < 3; i++){ burst(eye, ['#ff5a3a','#ffd772','#fff'], 12, 22, 380, true); tone(200 + i*200, 400 + i*300, 0, .35, 'square', .03); await wait(330); }
+      const tgt = headPt(o), len = Math.hypot(tgt.x - eye.x, tgt.y - eye.y), ang = Math.atan2(tgt.y - eye.y, tgt.x - eye.x);
+      const beam = document.createElement('div'); beam.className = 'beam';
+      beam.style.cssText = `left:${eye.x}px;top:${eye.y - k*2}px;width:${len}px;height:${k*4}px;rotate:${ang}rad;transform-origin:0 50%`;
+      ring.appendChild(beam); play('laser');
+      const fl = beam.animate([{scale:'0 1'},{scale:'1 1.3', offset:.2},{scale:'1 .8', offset:.4},{scale:'1 1.4', offset:.6},{scale:'1 .9', offset:.8},{scale:'1 0', opacity:0}],{duration:1000});
+      for (let i = 0; i < 4; i++){ await wait(200); burst(tgt, ['#ff5a3a','#ffd772'], 6, 8, 300); shakeRing(3); }
+      await fl.finished; beam.remove();
+      play('boom'); shakeRing(12); burst(tgt, ['#ff5a3a','#ffd772','#fff','#3d4247'], 22, 20, 700); shockwave(tgt, 30);
+      popText('KA-BOOM!', {x:tgt.x, y:tgt.y - k*10}, '#ffd772', 9);
+      fadeOut(dim);
+      await hit(o, 2.2, "I'm crispy!");
+      o.b.rig.animate([{transform:'rotate(0)'},{transform:'rotate(360deg)'}],{duration:600});
+      floaty(f.b, '<svg viewBox="0 0 3 3"><rect width="3" height="3" fill="#e9e1d9"/></svg>', {n:4, size:2.4, dur:900, y:10, stagger:120, spread:14});
+      speak(f.b, 'Cooling down... psssh.', 1300);
+    },
+    async Honey(f, o){ // ARI SÜRÜSÜ
+      ultName('BEE SWARM'); speak(f.b, 'BEES! Get \'em!', 1200);
+      const k = u(f.b), from = ringPt(f.b.g.head, .5, .3), tgt = headPt(o);
+      tone(210, 230, 0, 2.2, 'sawtooth', .015); tone(300, 320, .1, 2, 'square', .008);
+      const bees = [];
+      for (let i = 0; i < 8; i++){
+        const d = document.createElement('div'); d.className = 'fx proj'; d.innerHTML = BEE;
+        d.style.width = k*4 + 'px'; d.style.height = k*3.3 + 'px'; if (f.face < 0) d.style.scale = '-1 1';
+        ring.appendChild(d);
+        const kf = [{transform:`translate(${from.x}px,${from.y}px)`}];
+        for (let j = 0; j < 7; j++) kf.push({transform:`translate(${tgt.x + (Math.random() - .5)*k*26}px,${tgt.y + (Math.random() - .6)*k*22}px)`});
+        kf.push({transform:`translate(${from.x}px,${from.y}px)`, opacity:0});
+        bees.push(d.animate(kf, {duration:2600, delay:i*70, easing:'ease-in-out'}).finished.then(() => d.remove()));
+      }
+      await wait(500);
+      speak(o.b, 'NOT THE BEES!', 1600);
+      o.b.g.armL.animate([{transform:'rotate(-160deg)'},{transform:'rotate(-120deg)'}],{duration:120, iterations:14, direction:'alternate'});
+      o.b.g.armR.animate([{transform:'rotate(160deg)'},{transform:'rotate(120deg)'}],{duration:120, iterations:14, direction:'alternate'});
+      for (let i = 0; i < 3; i++){ await moveTo(o, clampX(o, o.x + (i % 2 ? 1 : -1)*k*9), 320, 'ease-in-out', 'scamper'); }
+      await Promise.all(bees);
+      await hit(o, .6, 'Ow, ow, itchy!', {text:'BZZT!', color:'#f5c542', colors:['#f5c542','#231c1f']});
+      speak(f.b, 'Good bees.', 1000);
+    },
+    async Goggles(f, o){ // ZAMAN DONDURMA
+      ultName('TIME FREEZE'); speak(f.b, 'Time... FREEZE!', 1200);
+      tone(1200, 200, 0, .6, 'sine', .05);
+      const tint = overlay('tint'), k = u(f.b);
+      const r = o.b.el.getBoundingClientRect(), s = ring.getBoundingClientRect();
+      const ice = document.createElement('div'); ice.className = 'fx ice';
+      ice.style.cssText = `width:${r.width + k*4}px;height:${r.height*.9}px;transform:translate(${r.left - s.left - k*2}px,${r.top - s.top + r.height*.1}px)`;
+      ring.appendChild(ice); ice.animate([{opacity:0, scale:'1 0'},{opacity:1, scale:'1 1'}],{duration:300});
+      const paused = o.b.el.getAnimations({subtree:true}); paused.forEach(a => a.pause()); o.b.el.classList.add('frozen');
+      popText('PAUSE', {x:headPt(o).x, y:headPt(o).y - k*14}, '#bfe6ff', 6);
+      await wait(500);
+      await approach(f, o, .75);
+      speak(f.b, 'boop boop boop', 1400);
+      for (let i = 0; i < 3; i++){
+        arm(f, [0, -90, 0], 260); tone(900 + i*120, 900 + i*120, 0, .08, 'square', .04);
+        popText('boop', {x:headPt(o).x, y:headPt(o).y - k*4}, '#bfe6ff', 3.6); await wait(300);
+      }
+      // bıyık çiz, sanat eseri
+      const m = document.createElement('div'); m.className = 'px flat';
+      m.style.cssText = 'left:calc(9.5 * var(--u));top:calc(24.4 * var(--u));width:calc(11 * var(--u));height:calc(1.8 * var(--u));--c:#231c1f';
+      o.b.g.head.appendChild(m); setTimeout(() => m.remove(), 7000);
+      arm(f, [0, -70, -60, -75, -60, 0], 700); await wait(700);
+      speak(f.b, 'Heh. Art.', 900);
+      await moveTo(f, home(f), 520); speak(f.b, '...and resume!', 1000); await wait(400);
+      burst(headPt(o), ['#e8f7ff','#bfe6ff','#fff'], 18, 18, 600); play('clang');
+      fadeOut(ice); fadeOut(tint);
+      paused.forEach(a => { try { a.play(); } catch(e){} }); o.b.el.classList.remove('frozen');
+      await wait(300); speak(o.b, 'Why is my face itchy?', 1500); await wait(1200);
+    },
+    async Captain(f, o){ // TOP YAĞMURU
+      ultName('CANNON BARRAGE'); speak(f.b, 'FIRE THE CANNONS!', 1300);
+      const k = u(f.b), cw = k*16, ch = k*11, H = ring.clientHeight;
+      const cx = f.x + bwOf(f)/2 + f.face*bwOf(f)*.55 - cw/2, cy = H - k*6 - ch;
+      const c = document.createElement('div'); c.className = 'fx proj'; c.innerHTML = CANNON;
+      c.style.width = cw + 'px'; c.style.height = ch + 'px'; if (f.face < 0) c.style.scale = '-1 1';
+      ring.appendChild(c);
+      await c.animate([{transform:`translate(${cx}px,${-ch}px)`},{transform:`translate(${cx}px,${cy}px)`}],{duration:420, easing:'ease-in', fill:'forwards'}).finished;
+      play('boom'); shakeRing(5);
+      const lines = ['Ow!', 'OW!', "Okay, that's a LOT of cannons."];
+      for (let i = 0; i < 3; i++){
+        await wait(350);
+        const muzzle = {x:cx + cw/2 + f.face*cw*.45, y:cy + ch*.3};
+        play('boom'); burst(muzzle, ['#cfc6bf','#9a918b','#fff'], 10, 8, 500);
+        c.animate([{translate:'0 0'},{translate:`${-f.face*k*1.5}px 0`},{translate:'0 0'}],{duration:200});
+        const tgt = headPt(o);
+        const b2 = await throwAt(BALL, muzzle, tgt, {w:3.4, dur:440, arc:14});
+        b2.remove(); burst(tgt, ['#ffd772','#ff5a3a','#231c1f'], 12, 12, 500);
+        popText('BOOM!', {x:tgt.x, y:tgt.y - k*8}, '#ffb08a', 6);
+        await hit(o, 1, lines[i]);
+      }
+      await wait(300);
+      c.animate([{opacity:1},{opacity:0, translate:'0 20px'}],{duration:400, fill:'forwards'}).finished.then(() => c.remove());
+      speak(f.b, 'YARR!', 900);
+    },
+    async Tux(f, o){ // BEYEFENDİ BASKINI
+      ultName("GENTLEMAN'S BLITZ"); speak(f.b, 'Excuse me for a moment.', 1200);
+      await wait(700);
+      const k = u(f.b), sparkle = pt => burst(pt, ['#fff','#bfa6ff','#ffd772'], 14, 12, 450);
+      sparkle(ringPt(f.b.el, .5, .5)); play('whoosh');
+      await f.wrap.animate([{opacity:1},{opacity:0}],{duration:120, fill:'forwards'}).finished;
+      place(f, clampX(f, o.x - o.face*bwOf(f)*.95));
+      sparkle(ringPt(f.b.el, .5, .5));
+      f.wrap.getAnimations().forEach(a => a.cancel());
+      speak(f.b, 'Pardon.', 700);
+      const tgt = headPt(o);
+      for (let i = 0; i < 6; i++){
+        play('whoosh');
+        arm(f, [0, -150, 30, 0], 200);
+        slashArc({x:tgt.x + (Math.random() - .5)*k*8, y:tgt.y + (Math.random() - .3)*k*10}, Math.random()*360, 16);
+        if (i % 2 === 0) popText('SLASH!', {x:tgt.x + (Math.random() - .5)*k*16, y:tgt.y - k*6 - i*k}, '#e6dcff', 4);
+        await wait(130);
+      }
+      sparkle(ringPt(f.b.el, .5, .5));
+      await f.wrap.animate([{opacity:1},{opacity:0}],{duration:120, fill:'forwards'}).finished;
+      place(f, home(f)); sparkle(ringPt(f.b.el, .5, .5));
+      f.wrap.getAnimations().forEach(a => a.cancel());
+      f.b.g.head.animate([{transform:T()},{transform:T(0,k,4)},{transform:T()}],{duration:500});
+      speak(f.b, 'Tidy.', 900);
+      await wait(900); speak(o.b, '...did something happen?', 1300);
+      await wait(1100);
+      await hit(o, 1.6, 'OW OW OW OW!', {shock:true, colors:['#e6dcff','#fff'], n:14, text:'x6', color:'#e6dcff'});
+    }
+  };
+
+  // --- dokununca: yetenek hazırsa özel güç, değilse kızarlar
   actions.poke = async b => {
     const f = b.fighter; if (!f) return;
     const now = performance.now();
     f.pokes = f.pokes.filter(t => now - t < 5000); f.pokes.push(now);
     const n = f.pokes.length, k = u(b);
+    if (fighters.length === 2 && !f.ultQueued && now > (f.ultReady || 0)){
+      f.ultQueued = true; f.ultReady = now + 8000;
+      speak(b, pick(ULT_CALL[f.name]), 1400); b.el.classList.add('charging'); play('charge');
+      burst(ringPt(b.el, .5, .5), ['#ffd772','#fff3b0'], 12, 16, 500, true);
+      await wait(600); return;
+    }
     speak(b, pick(n >= 4 ? POKE3 : n >= 2 ? POKE2 : POKE1), 1400);
     b.el.classList.add('angry');
     b.g.armL.animate([{transform:'rotate(0)'},{transform:'rotate(-150deg)'},{transform:'rotate(-130deg)'},{transform:'rotate(-150deg)'},{transform:'rotate(-130deg)'},{transform:'rotate(0)'}],{duration:800});
