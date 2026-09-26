@@ -103,6 +103,9 @@
   }
   .side-stage{display:flex;justify-content:center}
   .side .tag{bottom:calc(var(--u)*-5);font-size:15px}
+  a.side-sign{color:var(--ink);text-decoration:none;cursor:pointer}
+  a.side-sign:hover{background:#ffe3a3}
+  a.side-sign:focus-visible{outline:3px dashed var(--ink);outline-offset:4px}
   .side-sign{display:flex;align-items:center;gap:10px;background:var(--paper);border:3px solid var(--line);box-shadow:4px 4px 0 var(--line);padding:8px 14px;
     font-family:"Pixelify Sans", monospace;font-weight:700;font-size:18px;letter-spacing:.1em;white-space:nowrap;animation:sway 3.2s ease-in-out infinite;transform-origin:50% 0}
   .side-dot{width:10px;height:10px;background:#e0643a;border:2px solid var(--line);animation:blinkrec 1.2s steps(1) infinite}
@@ -281,8 +284,8 @@
 </head>
 <body>
 
-<aside class="side side-l" aria-label="Tux, coming soon">
-  <div class="side-sign"><span class="side-dot"></span>COMING SOON</div>
+<aside class="side side-l" aria-label="Tux, enter the arena">
+  <a class="side-sign" href="#arena"><span class="side-dot"></span>ENTER THE ARENA &rarr;</a>
   <div class="side-stage" id="sideL"></div>
 </aside>
 <aside class="side side-r" aria-label="Pip, coming soon">
