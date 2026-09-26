@@ -113,6 +113,49 @@
     font-size:calc(var(--u)*3.2);line-height:1.05;letter-spacing:.04em;text-shadow:2px 2px 0 #9e2447}
   @keyframes beat{0%,40%,100%{scale:1}10%{scale:1.09}20%{scale:.98}30%{scale:1.06}}
   @media (prefers-reduced-motion: reduce){ .side-sign,.side-dot,.side-heart{animation:none} }
+  /* ---- Vibe Arena ---- */
+  .arena{position:fixed;inset:0;z-index:40;overflow-y:auto;background:linear-gradient(180deg,#e7b58c 0%,#d99a7a 38%,#b8877a 70%,#a37c74 100%);color:var(--ink);
+    --u: clamp(3.2px, 0.34vw + 0.6px, 5px)}
+  .arena-in{max-width:1180px;margin:0 auto;padding:calc(env(safe-area-inset-top,0px) + 22px) 16px 36px;display:flex;flex-direction:column;gap:18px}
+  .arena-top{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px 24px}
+  .arena-top h2{margin:0;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:clamp(34px,5vw,54px);line-height:1}
+  .arena-top p{margin:6px 0 0;color:#4a3a3c;max-width:48ch}
+  .arena-ctrl{display:flex;gap:10px;flex-wrap:wrap}
+  .roster{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+  .pick{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 6px 8px;background:var(--paper);border:3px solid var(--line);box-shadow:4px 4px 0 var(--line);cursor:pointer;font:inherit;color:var(--ink)}
+  .pick:hover{translate:0 -2px}
+  .pick:focus-visible{outline:3px dashed var(--ink);outline-offset:3px}
+  .pick[aria-pressed="true"]{background:#ffe3a3}
+  .pick .num{position:absolute;top:-10px;right:-10px;width:26px;height:26px;display:grid;place-items:center;background:#e0643a;color:#fff8f0;border:2px solid var(--line);font-family:"Pixelify Sans", monospace;font-weight:700}
+  .pick .num:empty{display:none}
+  .mini{position:relative;width:calc(var(--mu)*30);height:calc(var(--mu)*51);--u:var(--mu);--mu:2.4px;pointer-events:none}
+  .mini .rig,.mini .bob{position:absolute;inset:0}
+  .pick b{font-family:"Pixelify Sans", monospace;font-size:16px}
+  .pick small{font-size:12px;color:var(--ink-soft);text-align:center;line-height:1.2}
+  .ring{position:relative;overflow:hidden;height:calc(var(--u)*96);border:3px solid var(--line);box-shadow:6px 6px 0 var(--line);
+    background:
+      linear-gradient(180deg,transparent 0 calc(100% - var(--u)*24),#6b4f3c calc(100% - var(--u)*24) calc(100% - var(--u)*23),#e6c690 calc(100% - var(--u)*23),#d6b27a 100%),
+      repeating-linear-gradient(90deg,transparent 0 calc(var(--u)*14 - 3px),rgba(60,40,30,.18) calc(var(--u)*14 - 3px) calc(var(--u)*14)),
+      linear-gradient(180deg,#f3cf9f,#e2a987)}
+  .ring .tag{display:none}
+  .banners{position:absolute;inset:0 0 auto 0;height:calc(var(--u)*14);display:flex;justify-content:space-around;pointer-events:none}
+  .banners i{display:block;width:calc(var(--u)*7);height:calc(var(--u)*12);background:var(--c);border:2px solid var(--line);border-top:0;clip-path:polygon(0 0,100% 0,100% 100%,50% 78%,0 100%);animation:flap 2.4s ease-in-out infinite;transform-origin:50% 0}
+  .banners i:nth-child(2n){animation-delay:-1.2s}
+  @keyframes flap{0%,100%{rotate:-3deg}50%{rotate:3deg}}
+  .fighter{position:absolute;left:0;bottom:calc(var(--u)*6);z-index:2}
+  .flip{scale:-1 1}
+  .flip .say{scale:-1 1}
+  .ring-msg{position:absolute;left:50%;top:38%;translate:-50% -50%;z-index:6;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:clamp(28px,calc(var(--u)*12),64px);color:#fff7ea;
+    text-shadow:3px 3px 0 var(--line),-2px -2px 0 var(--line),2px -2px 0 var(--line),-2px 2px 0 var(--line);white-space:nowrap;pointer-events:none;text-align:center}
+  .ring-hint{position:absolute;left:50%;top:44%;translate:-50% -50%;z-index:1;font-family:"Pixelify Sans", monospace;font-size:18px;color:#6b4f3c;text-align:center;pointer-events:none}
+  .proj{position:absolute;left:0;top:0;z-index:5;pointer-events:none}
+  .proj svg{display:block;width:100%;height:100%}
+  .beam{position:absolute;z-index:5;height:calc(var(--u)*1.6);background:linear-gradient(90deg,#fff6b0,#ff5a3a);box-shadow:0 0 12px #ff5a3a,0 0 4px #fff;transform-origin:0 50%;pointer-events:none}
+  .flash{position:absolute;inset:0;z-index:7;background:#fffbe8;pointer-events:none}
+  .vs{font-family:"Pixelify Sans", monospace;font-weight:700;font-size:18px;color:#4a3a3c;min-height:1.2em}
+  .arena-foot{color:#4a3a3c;font-size:14px;margin:0}
+  @media (max-width:640px){ .roster{gap:6px} .pick{padding:6px 2px 4px;box-shadow:3px 3px 0 var(--line)} .pick small{display:none} .pick b{font-size:12px} .mini{--mu:1.5px} .arena-in{gap:12px} .pick .num{width:20px;height:20px;top:-8px;right:-6px;font-size:12px} }
+  @media (prefers-reduced-motion: reduce){ .banners i{animation:none} }
   /* ---- Vibe Sokağı ---- */
   .street-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 20px;margin-top:10px}
   .street-head h2{margin:0;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:clamp(24px,3vw,32px)}
@@ -196,6 +239,28 @@
   </div>
   <div class="side-stage" id="sideR"></div>
 </aside>
+<section class="arena" id="arena" hidden aria-label="Vibe Arena">
+  <div class="arena-in">
+    <div class="arena-top">
+      <div>
+        <button class="btn" type="button" id="arenaBack">&larr; Back to Vibe Folk</button>
+        <h2 style="margin-top:14px">Vibe Arena</h2>
+        <p>Pick two fighters. They drop in with random gear and start a very silly brawl. Poke them if you dare.</p>
+      </div>
+      <div class="arena-ctrl">
+        <button class="btn" type="button" id="arenaGear">Shuffle gear</button>
+        <button class="btn" type="button" id="arenaClear">Clear ring</button>
+      </div>
+    </div>
+    <div class="roster" id="roster"></div>
+    <div class="vs" id="vs" aria-live="polite"></div>
+    <div class="ring" id="ring">
+      <div class="banners" aria-hidden="true"><i style="--c:#e0643a"></i><i style="--c:#2fb58f"></i><i style="--c:#7c5cff"></i><i style="--c:#f0d44d"></i><i style="--c:#2a74bd"></i><i style="--c:#ff5c86"></i></div>
+      <div class="ring-hint" id="ringHint">Pick two fighters above</div>
+    </div>
+    <p class="arena-foot">Gear is random every match: spear, shield, bow, dagger or sword. Nobody wins. Everybody gets bonked.</p>
+  </div>
+</section>
 <div class="wrap">
   <header>
     <div>
@@ -250,6 +315,7 @@
   <footer class="foot">
     <span class="foot-mark">vibe<i>/</i>vibe</span>
     <span>Click, watch, grab your GIF.</span>
+    <a href="#arena">Vibe Arena &rarr;</a>
     <a href="https://github.com/memosr/vibe" target="_blank" rel="noopener">Source code on GitHub</a>
   </footer>
   <p class="hint">Tip: move your mouse around, their eyes follow you. Find every personality for a surprise.</p>
@@ -409,8 +475,8 @@
   }
   bots.forEach((b, i) => build(b, i, row));
   let walkers = [];
-  let sideBots = [];
-  const everyone = () => bots.concat(walkers, sideBots);
+  let sideBots = [], arenaBots = [];
+  const everyone = () => bots.concat(walkers, sideBots, arenaBots);
 
   // --- helpers
   // --u bir clamp() ifadesi; gerçek piksel değerini karakterin genişliğinden ölçüyoruz
@@ -618,8 +684,11 @@
     sleep: () => { tone(500,250,0,.6,'sine',.05); },
     done:  () => { [523,659,784,1047,784,1047].forEach((f,i) => tone(f,f,i*.1,.14,'square',.04)); }
   };
+  // tarayıcılar sesi ancak kullanıcı bir yere dokunduktan sonra açar
+  let userActed = false;
+  ['pointerdown','keydown'].forEach(ev => window.addEventListener(ev, () => { userActed = true; }, {once:true, capture:true}));
   function play(k){
-    if (!soundOn) return;
+    if (!soundOn || !userActed) return;
     try {
       ac = ac || new (window.AudioContext || window.webkitAudioContext)();
       if (ac.state === 'suspended') ac.resume();
@@ -863,8 +932,9 @@
     ['armR',28,17.6,1.2,1.6,'#dfe4ea','']
   ];
   actions.slash = async b => {
-    speak(b, pick(['Stay tuned!','Coming soon!','En garde!']), 1300);
+    speak(b, 'To the arena!', 900);
     await slash(b);
+    location.hash = 'arena';
   };
   actions.love = async b => {
     speak(b, pick(['Soon, promise!','Can\'t wait!','Almost ready!']), 1500);
@@ -1138,6 +1208,488 @@
     if (!modal.hidden) closeModal();
     else if (gifMode === 'picking') setGifMode('idle');
   });
+
+  // ================= VIBE ARENA =================
+  const arenaEl = document.getElementById('arena'), ring = document.getElementById('ring'), roster = document.getElementById('roster');
+  const ringHint = document.getElementById('ringHint'), vsEl = document.getElementById('vs');
+  let fighters = [], picks = [], matchTok = 0;
+  arenaBots = [];
+
+  // --- ekipmanlar (hepsi sağ elde)
+  const GEAR = {
+    sword:  {label:'sword',  parts:SWORD},
+    dagger: {label:'dagger', parts:[['armR',27.6,37.2,1.8,3.6,'#6b4a2c',''],['armR',26.6,36.3,3.8,1.1,'#9aa3ad',''],['armR',27.9,30.6,1.3,5.8,'#dfe4ea',''],['armR',28.1,29.4,.9,1.4,'#dfe4ea','']]},
+    spear:  {label:'spear',  parts:[['armR',28,9,1.3,35,'#8a5a3a',''],['armR',27.4,5.2,2.5,4,'#dfe4ea',''],['armR',28.05,3.4,1.2,2,'#dfe4ea',''],['armR',27.6,9.2,2.1,1.2,'#d8432d','nol']]},
+    bow:    {label:'bow',    parts:[['armR',29.4,26.5,1.5,3,'#8a5a3a',''],['armR',30.6,29.5,1.5,11,'#8a5a3a',''],['armR',29.4,40.5,1.5,3,'#8a5a3a',''],['armR',29,27.5,.4,15,'#f3ece2','nol']]},
+    shield: {label:'shield', parts:[['armR',25.4,32.5,7.4,9.5,'#8c2f22',''],['armR',26.2,33.3,5.8,7.9,'#d9573f',''],['armR',28,35.9,2.2,2.2,'#e9c64a','']]}
+  };
+
+  // --- her karakterin kendi tarzı
+  const STYLE = {
+    Armor:   {walk:'stomp',   speed:.6,  blurb:'Slow robot. Laser eyes.',  specials:['laser','rocket'],
+              enter:'BOOT SEQUENCE: FIGHT.', taunt:['BEEP BOOP. Prepare.','Target acquired.','Resistance is adorable.'], hurt:['Error 404: dignity.','Does not compute!','Rebooting...']},
+    Honey:   {walk:'scamper', speed:1.5, blurb:'Tiny bear. Big hugs.',     specials:['honey','hug'],
+              enter:'Hi! I mean... RAWR!', taunt:['Rawr! (cute)','I bite! Softly.','Hug or fight?'], hurt:['Owie!','Not the fur!','Hey, I\'m fluffy!']},
+    Goggles: {walk:'glide',   speed:1.1, blurb:'Nerd with gadgets.',       specials:['flash','anvil'],
+              enter:'Did someone say science?', taunt:['Calculating...','Science time!','My goggles see all.'], hurt:['My lenses!','That\'s not scientific!','Ouch, variables!']},
+    Captain: {walk:'charge',  speed:1.25,blurb:'Loud. Loves belly flops.', specials:['cannon','hat'],
+              enter:'CAPTAIN ON DECK!', taunt:['Charge!','For the ship!','Yarr, mostly.'], hurt:['Man overboard!','Me hat!','Blimey!']},
+    Tux:     {walk:'fence',   speed:1,   blurb:'Fencer. Very polite.',     specials:['curtsy','flourish'],
+              enter:'Good evening, everyone.', taunt:['En garde!','Pardon me.','How dreadfully rude.'], hurt:['My suit!','Unacceptable!','How uncouth!']}
+  };
+  const FIGHTERS = Object.keys(STYLE);
+  const DODGE = ['Missed!','Too slow!','Nope!','Whoosh!','Not today!'];
+  const BLOCK = ['Clang!','Nice try!','Shield says no.'];
+  const POKE1 = ['Hey!','Stop it!','Hands off!','What are you doing?','Not now!','Excuse me?!'];
+  const POKE2 = ['Go away!','Seriously?!','I\'m fighting here!','Stop poking me!','Can I help you?!'];
+  const POKE3 = ['THAT\'S IT!','Leave me alone!!','I\'m telling mom!','Fine, you win!','ENOUGH!'];
+
+  // --- piksel çizimler
+  const svgPx = (vb, rects) => `<svg viewBox="${vb}" shape-rendering="crispEdges">${rects.map(([x,y,w,h,c]) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${c}"/>`).join('')}</svg>`;
+  const ARROW = svgPx('0 0 12 3', [[2,1,8,1,'#8a5a3a'],[10,0,1,3,'#9aa3ad'],[11,1,1,1,'#9aa3ad'],[0,0,2,1,'#e0643a'],[0,2,2,1,'#e0643a']]);
+  const POT   = svgPx('0 0 8 8', [[0,2,8,6,'#231c1f'],[1,3,6,4,'#e0a030'],[2,4,4,2,'#fff3c4'],[2,1,4,1,'#8a5a3a'],[5,0,1,3,'#f5c542']]);
+  const ANVIL = svgPx('0 0 12 8', [[0,0,12,3,'#3d4247'],[1,0,10,1,'#6b737b'],[3,3,6,2,'#3d4247'],[1,5,10,3,'#3d4247']]);
+  const HAT   = svgPx('0 0 12 7', [[2,0,3,3,'#6b6440'],[7,0,3,3,'#6b6440'],[1,2,10,3,'#6b6440'],[0,4,12,3,'#57502f']]);
+  const STAR  = svgPx('0 0 5 5', [[2,0,1,5,'#ffd772'],[0,2,5,1,'#ffd772'],[1,1,3,3,'#ffe9a8']]);
+  const DROP  = svgPx('0 0 3 4', [[1,0,1,1,'#f5c542'],[0,1,3,3,'#e0a030']]);
+  const SPARK = '<svg viewBox="0 0 3 3" shape-rendering="crispEdges"><rect x="1" width="1" height="3" fill="#fff"/><rect y="1" width="3" height="1" fill="#fff"/></svg>';
+
+  // --- sesler
+  Object.assign(sfx, {
+    poke:  () => tone(520,300,0,.12,'square',.04),
+    bonk:  () => { tone(300,120,0,.12,'square',.05); },
+    clang: () => { tone(1800,1500,0,.12,'triangle',.05); tone(2400,2000,.02,.1,'triangle',.03); },
+    whoosh:() => tone(900,250,0,.18,'sawtooth',.02),
+    step:  () => tone(90,60,0,.08,'square',.03),
+    boom:  () => { tone(140,40,0,.4,'sawtooth',.06); },
+    laser: () => tone(1600,200,0,.45,'sawtooth',.03),
+    clap:  () => { tone(2000,900,0,.06,'square',.05); tone(1400,700,.05,.06,'square',.04); },
+    fight: () => { [392,523,784].forEach((f,i) => tone(f,f,i*.1,.14,'square',.05)); }
+  });
+
+  // --- yardımcılar
+  const bwOf = f => f.b.el.offsetWidth;
+  const home = f => { const W = ring.clientWidth, w = bwOf(f); return f.side < 0 ? W*.26 - w/2 : W*.74 - w/2; };
+  const place = (f, x) => { f.x = x; f.wrap.style.transform = `translateX(${x}px)`; };
+  const alive = tok => tok === matchTok;
+  function shakeRing(p = 4){ ring.animate([{translate:'0 0'},{translate:`${-p}px ${p/2}px`},{translate:`${p}px ${-p/2}px`},{translate:'0 0'}],{duration:240}); }
+  function ringPt(el, fx = .5, fy = .5){ const r = el.getBoundingClientRect(), s = ring.getBoundingClientRect(); return {x:r.left - s.left + r.width*fx, y:r.top - s.top + r.height*fy}; }
+  function stars(f, n = 3){ floaty(f.b, STAR, {n, size:3.2, dur:1100, rise:9, y:9, spread:22, stagger:90}); }
+  function banner(text, ms = 900){
+    const d = document.createElement('div'); d.className = 'ring-msg'; d.textContent = text; ring.appendChild(d);
+    return d.animate([{scale:.3,opacity:0},{scale:1.15,opacity:1,offset:.25},{scale:1,opacity:1,offset:.8},{scale:1.1,opacity:0}],{duration:ms,easing:'ease-out'}).finished.then(() => d.remove());
+  }
+
+  function gait(f, dur, kind){
+    const b = f.b, k = u(b);
+    if (kind === 'glide'){ // tekerlekli gibi kayar
+      b.rig.animate([{transform:T()},{transform:T(0,0,8)},{transform:T(0,0,8)},{transform:T()}],{duration:dur});
+      b.g.armL.animate([{transform:'rotate(0)'},{transform:'rotate(50deg)'},{transform:'rotate(50deg)'},{transform:'rotate(0)'}],{duration:dur});
+      b.g.armR.animate([{transform:'rotate(0)'},{transform:'rotate(30deg)'},{transform:'rotate(30deg)'},{transform:'rotate(0)'}],{duration:dur});
+      return;
+    }
+    if (kind === 'stomp'){ // ağır robot adımları, yer sallanır
+      walk(b, dur, 300);
+      for (let i = 0; i < Math.max(1, Math.round(dur/300)); i++) setTimeout(() => { shakeRing(1.5); play('step'); }, i*300 + 150);
+      return;
+    }
+    if (kind === 'scamper'){ // minik sekmeler
+      walk(b, dur, 80);
+      b.rig.animate([{transform:T()},{transform:T(0,-k*2.2)},{transform:T()}],{duration:170, iterations:Math.max(1, Math.round(dur/170))});
+      return;
+    }
+    if (kind === 'charge'){ // kolu havada bağırarak koşar
+      walk(b, dur, 110);
+      b.g.armL.animate([{transform:'rotate(150deg)'},{transform:'rotate(172deg)'}],{duration:160, iterations:Math.max(2, Math.ceil(dur/160)), direction:'alternate'});
+      return;
+    }
+    if (kind === 'fence'){ // kibar, küçük adımlar, burnu havada
+      walk(b, dur, 240);
+      b.g.head.animate([{transform:T(0,-k*.6,-5)},{transform:T(0,-k*.6,-5)}],{duration:dur});
+      return;
+    }
+    walk(b, dur, 160);
+  }
+
+  async function moveTo(f, x, dur, ease = 'ease-in-out', kind){
+    const W = ring.clientWidth, w = bwOf(f);
+    x = Math.max(-w*.15, Math.min(W - w*.85, x));
+    if (kind !== 'none') gait(f, dur, kind || f.st.walk);
+    const a = f.wrap.animate([{transform:`translateX(${f.x}px)`},{transform:`translateX(${x}px)`}],{duration:dur, easing:ease, fill:'forwards'});
+    await a.finished; place(f, x); a.cancel();
+  }
+  async function approach(f, o, reach){
+    const tx = o.x - f.face*bwOf(f)*reach, d = Math.abs(tx - f.x);
+    if (d < 6) return;
+    await moveTo(f, tx, Math.min(1500, 260 + d*2.2/f.st.speed));
+  }
+
+  // --- savunmacının tepkisi
+  async function hit(o, power = 1, line){
+    const k = u(o.b);
+    play('bonk'); speak(o.b, line || pick(o.st.hurt), 1300); stars(o);
+    o.b.rig.animate([{transform:T()},{transform:T(-k*1.5,-k*2,-14)},{transform:T(k,0,6)},{transform:T()}],{duration:500,easing:'ease-out'});
+    if (power > 1.3) shakeRing(5);
+    await moveTo(o, o.x - o.face*k*7*power, 260, 'ease-out', 'none');
+    return 'hit';
+  }
+  async function dodge(o){
+    const k = u(o.b);
+    speak(o.b, pick(DODGE), 1000);
+    o.b.rig.animate([{transform:T()},{transform:T(-k*2,-k*15,-12)},{transform:T()}],{duration:480,easing:'ease-out'});
+    await moveTo(o, o.x - o.face*k*4, 480, 'ease-out', 'none');
+    return 'dodge';
+  }
+  async function block(o, f){
+    const k = u(o.b);
+    play('clang'); speak(o.b, pick(BLOCK), 1000);
+    o.b.g.armR.animate([{transform:'rotate(0)'},{transform:'rotate(-55deg)',offset:.2},{transform:'rotate(-55deg)',offset:.8},{transform:'rotate(0)'}],{duration:600});
+    floaty(o.b, SPARK, {n:3, size:2.5, dur:500, rise:6, x:30, y:30, spread:8, stagger:40});
+    await moveTo(f, f.x - f.face*k*5, 220, 'ease-out', 'none');
+    return 'block';
+  }
+  function outcome(o, f, power = 1){
+    const r = Math.random();
+    if (o.gear === 'shield' && r < .45) return block(o, f);
+    if (r < .27) return dodge(o);
+    return hit(o, power);
+  }
+
+  // --- silaha göre saldırılar
+  const ATTACK = {
+    async sword(f, o){
+      await approach(f, o, .8); play('whoosh');
+      const sw = f.b.g.armR.animate([{transform:'rotate(0)'},{transform:'rotate(-150deg)',offset:.4},{transform:'rotate(30deg)',offset:.7},{transform:'rotate(0)'}],{duration:700,easing:'ease-in-out'});
+      await wait(430); await outcome(o, f, 1); await sw.finished;
+    },
+    async dagger(f, o){
+      await approach(f, o, .62);
+      speak(f.b, 'Stab stab stab!', 900);
+      f.b.g.armR.animate([{transform:'rotate(0)'},{transform:'rotate(-85deg)'},{transform:'rotate(-40deg)'},{transform:'rotate(-85deg)'},{transform:'rotate(-40deg)'},{transform:'rotate(-85deg)'},{transform:'rotate(0)'}],{duration:760});
+      f.b.rig.animate([{transform:T()},{transform:T(u(f.b)*2,0)},{transform:T()},{transform:T(u(f.b)*2,0)},{transform:T()}],{duration:760});
+      await wait(520); await outcome(o, f, .7);
+    },
+    async spear(f, o){
+      await approach(f, o, 1.1); play('whoosh');
+      f.b.g.armR.animate([{transform:'rotate(0)'},{transform:'rotate(-70deg)',offset:.3},{transform:'rotate(-70deg)',offset:.7},{transform:'rotate(0)'}],{duration:700});
+      f.b.rig.animate([{transform:T()},{transform:T(-u(f.b)*2,0)},{transform:T(u(f.b)*7,0,6)},{transform:T()}],{duration:700});
+      await wait(380); await outcome(o, f, 1.2);
+    },
+    async bow(f, o){
+      speak(f.b, pick(['Hold still!','Pew!','Bullseye time.']), 900);
+      f.b.g.armR.animate([{transform:'rotate(0)'},{transform:'rotate(-90deg)',offset:.3},{transform:'rotate(-90deg)',offset:.8},{transform:'rotate(0)'}],{duration:1100});
+      await wait(520); play('whoosh');
+      const from = ringPt(f.b.g.armR, .5, .85), to = ringPt(o.b.g.head, .5, .45);
+      const r = Math.random(), res = (o.gear === 'shield' && r < .45) ? 'block' : r < .3 ? 'dodge' : 'hit';
+      if (res === 'dodge') dodge(o);
+      const d = await throwAt(ARROW, from, res === 'dodge' ? {x: to.x + f.face*120, y: to.y - 30} : to, {w:9, h:2.2, dur:420, flip:f.face < 0});
+      d.remove();
+      if (res === 'block') return block(o, f);
+      if (res === 'hit'){ stickArrow(o); await hit(o, .8, pick(['An arrow?! Really?','Boing!','I\'m a pincushion!'])); }
+    },
+    async shield(f, o){
+      await approach(f, o, .72);
+      speak(f.b, 'Shield BONK!', 900);
+      f.b.g.armR.animate([{transform:'rotate(0)'},{transform:'rotate(-70deg)',offset:.4},{transform:'rotate(0)'}],{duration:600});
+      f.b.rig.animate([{transform:T()},{transform:T(-u(f.b)*2,0)},{transform:T(u(f.b)*5,0)},{transform:T()}],{duration:600});
+      await wait(300); play('clang'); await outcome(o, f, 1.6);
+    }
+  };
+
+  async function throwAt(svg, from, to, {w = 6, h = w, dur = 700, arc = 0, spin = 0, flip = false} = {}){
+    const k = fighters[0] ? u(fighters[0].b) : 4, d = document.createElement('div');
+    d.className = 'proj'; d.innerHTML = svg; d.style.width = w*k + 'px'; d.style.height = h*k + 'px';
+    if (flip) d.style.scale = '-1 1';
+    ring.appendChild(d);
+    const hw = w*k/2, hh = h*k/2, mid = {x:(from.x + to.x)/2, y:Math.min(from.y, to.y) - arc*k};
+    await d.animate([
+      {transform:`translate(${from.x - hw}px,${from.y - hh}px) rotate(0deg)`},
+      {transform:`translate(${mid.x - hw}px,${mid.y - hh}px) rotate(${spin/2}deg)`},
+      {transform:`translate(${to.x - hw}px,${to.y - hh}px) rotate(${spin}deg)`}
+    ],{duration:dur, easing:'linear', fill:'forwards'}).finished;
+    return d;
+  }
+  function stickArrow(o){ // ok kafaya saplanır, komik
+    const a = document.createElement('div'); a.className = 'floaty'; a.innerHTML = ARROW;
+    a.style.cssText = 'left:calc(19 * var(--u));top:calc(12 * var(--u));width:calc(10 * var(--u));height:calc(2.4 * var(--u));rotate:-35deg';
+    o.b.g.head.appendChild(a);
+    setTimeout(() => a.animate([{opacity:1},{opacity:0}],{duration:300}).finished.then(() => a.remove()), 2600);
+  }
+
+  // --- karaktere özel hareketler
+  const SPECIAL = {
+    async laser(f, o){
+      speak(f.b, 'LASER MODE.', 1000); await wait(500);
+      const a = ringPt(f.b.g.head, .5, .4), b2 = ringPt(o.b.g.head, .5, .5);
+      const beam = document.createElement('div'); beam.className = 'beam';
+      const len = Math.hypot(b2.x - a.x, b2.y - a.y), ang = Math.atan2(b2.y - a.y, b2.x - a.x);
+      beam.style.cssText = `left:${a.x}px;top:${a.y}px;width:${len}px;rotate:${ang}rad`;
+      ring.appendChild(beam); play('laser');
+      await beam.animate([{scale:'0 1'},{scale:'1 1',offset:.3},{scale:'1 1.6',offset:.8},{scale:'1 0',opacity:0}],{duration:700}).finished;
+      beam.remove();
+      await hit(o, 1.1, pick(['Hot hot hot!','My eyebrows!','Who brings lasers?!']));
+    },
+    async rocket(f, o){
+      speak(f.b, 'Rocket punch!', 1000); await wait(400);
+      const k = u(f.b), d = Math.max(0, Math.abs(o.x - f.x) - bwOf(f)*.35);
+      play('whoosh');
+      f.b.g.armR.animate([{transform:'translate(0,0) rotate(-90deg)'},{transform:`translate(${d}px,${-k*6}px) rotate(-90deg)`,offset:.45},{transform:`translate(${d}px,${-k*6}px) rotate(-90deg)`,offset:.55},{transform:'translate(0,0) rotate(0deg)'}],{duration:1000,easing:'ease-in-out'});
+      puff(f.b, 1);
+      await wait(450); await hit(o, 1.4, pick(['Your arm came OFF!','That\'s cheating!','Is that legal?!']));
+      await wait(450); speak(f.b, 'Arm reattached.', 900);
+    },
+    async honey(f, o){
+      speak(f.b, 'Honey bomb!', 900); await wait(300);
+      f.b.g.armR.animate([{transform:'rotate(0)'},{transform:'rotate(-160deg)'},{transform:'rotate(10deg)'},{transform:'rotate(0)'}],{duration:600});
+      const from = ringPt(f.b.g.armR, .5, .7), to = ringPt(o.b.g.head, .5, .5);
+      const dodged = Math.random() < .25;
+      const d = await throwAt(POT, from, dodged ? {x:to.x + f.face*140, y:to.y + 40} : to, {w:6, dur:700, arc:26, spin:540});
+      d.remove();
+      if (dodged){ await dodge(o); return; }
+      play('bonk'); speak(o.b, pick(['Ew! Sticky!','Now I\'m a pancake!','Why is it WARM?']), 1400);
+      floaty(o.b, DROP, {n:6, size:2.2, dur:1200, rise:-14, y:16, spread:18, stagger:90});
+      await o.b.rig.animate([{transform:T()},{transform:T(0,0,-5,1)},{transform:T(0,0,5,1)},{transform:T(0,0,-4,1)},{transform:T()}],{duration:1200}).finished;
+    },
+    async hug(f, o){
+      speak(f.b, 'HUG ATTACK!', 1000);
+      await approach(f, o, .45);
+      f.b.g.armL.animate([{transform:'rotate(0)'},{transform:'rotate(-120deg)'},{transform:'rotate(-120deg)'},{transform:'rotate(0)'}],{duration:1600});
+      f.b.g.armR.animate([{transform:'rotate(0)'},{transform:'rotate(120deg)'},{transform:'rotate(120deg)'},{transform:'rotate(0)'}],{duration:1600});
+      [f, o].forEach(x => { x.b.el.classList.add('blushing'); x.b.rig.animate([{transform:T()},{transform:T(0,0,0,1.06)},{transform:T()}],{duration:500, iterations:3}); });
+      floaty(f.b, HEART, {n:4, size:4, dur:1400, stagger:180, y:10});
+      await wait(700); speak(o.b, '...okay, this is nice.', 1200);
+      await wait(1100); speak(o.b, 'WAIT, NO!', 900);
+      [f, o].forEach(x => x.b.el.classList.remove('blushing'));
+      await moveTo(f, f.x - f.face*u(f.b)*12, 300, 'ease-out', 'none');
+    },
+    async flash(f, o){
+      speak(f.b, 'Goggle FLASH!', 900); await wait(400);
+      const fl = document.createElement('div'); fl.className = 'flash'; ring.appendChild(fl);
+      play('laser');
+      fl.animate([{opacity:0},{opacity:.95,offset:.15},{opacity:0}],{duration:650}).finished.then(() => fl.remove());
+      await wait(200);
+      speak(o.b, pick(['MY EYES!','I can see sounds!','Who turned on the sun?']), 1400); stars(o, 4);
+      await o.b.rig.animate([{transform:'rotate(0deg)'},{transform:'rotate(720deg)'}],{duration:900,easing:'ease-in-out'}).finished;
+    },
+    async anvil(f, o){
+      speak(f.b, 'Physics!', 900);
+      f.b.g.armR.animate([{transform:'rotate(0)'},{transform:'rotate(-170deg)'},{transform:'rotate(-170deg)'},{transform:'rotate(0)'}],{duration:900});
+      await wait(400);
+      const top = ringPt(o.b.g.head, .5, .1);
+      const d = await throwAt(ANVIL, {x:top.x, y:-60}, top, {w:9, h:6, dur:520});
+      d.remove(); play('boom'); shakeRing(7); stars(o, 4);
+      speak(o.b, pick(['Ow, gravity!','Why an ANVIL?!','I\'m a pancake now.']), 1400);
+      await o.b.rig.animate([{transform:'scale(1,1)'},{transform:'scale(1.35,.5)',offset:.2},{transform:'scale(1.35,.5)',offset:.7},{transform:'scale(.9,1.15)',offset:.85},{transform:'scale(1,1)'}],{duration:1100}).finished;
+    },
+    async cannon(f, o){
+      speak(f.b, 'CANNONBALL!', 1000); await wait(300);
+      const k = u(f.b);
+      f.b.rig.animate([{transform:T()},{transform:T(0,-k*38,180)},{transform:T(0,0,360)}],{duration:820,easing:'ease-in-out'});
+      await moveTo(f, o.x - f.face*bwOf(f)*.3, 820, 'ease-in-out', 'none');
+      play('boom'); shakeRing(9); puff(o.b, -1); puff(o.b, 1); stars(o, 4);
+      speak(o.b, 'Oof!', 900);
+      o.b.rig.animate([{transform:'scale(1,1)'},{transform:'scale(1.4,.45)',offset:.2},{transform:'scale(1.4,.45)',offset:.6},{transform:'scale(1,1)'}],{duration:1000});
+      await moveTo(f, f.x - f.face*k*14, 450, 'ease-out', 'none');
+      speak(f.b, 'Nailed it.', 900);
+    },
+    async hat(f, o){
+      speak(f.b, 'Hat-a-rang!', 900); await wait(300);
+      const hatEls = [...f.b.g.head.children].filter(e => e.style.getPropertyValue('--c').trim() === '#6b6440');
+      const from = ringPt(f.b.g.head, .5, .05), to = ringPt(o.b.g.head, .5, .35);
+      hatEls.forEach(e => e.style.visibility = 'hidden');
+      let d = await throwAt(HAT, from, to, {w:11, h:6.5, dur:520, arc:10, spin:720}); d.remove();
+      await Promise.all([hit(o, .8, pick(['Nice hat, though.','Hat to the face!','Rude hat!'])), (async () => { d = await throwAt(HAT, to, from, {w:11, h:6.5, dur:520, arc:18, spin:-720}); d.remove(); })()]);
+      hatEls.forEach(e => e.style.visibility = '');
+      speak(f.b, 'Always comes back.', 900);
+    },
+    async curtsy(f, o){
+      const k = u(f.b);
+      speak(f.b, 'After you.', 1000);
+      f.b.rig.animate([{transform:T()},{transform:T(0,k*2,10,.96)},{transform:T(0,k*2,10,.96)},{transform:T()}],{duration:1300});
+      await wait(450);
+      speak(o.b, 'No, after YOU.', 1000);
+      await o.b.rig.animate([{transform:T()},{transform:T(0,k*2,10,.96)},{transform:T(0,k*2,10,.96)},{transform:T()}],{duration:1100}).finished;
+      await approach(f, o, .7);
+      f.b.g.armR.animate([{transform:'rotate(0)'},{transform:'rotate(-90deg)'},{transform:'rotate(0)'}],{duration:350});
+      await wait(150); await hit(o, 1, 'CHEATER!');
+      speak(f.b, 'Manners, darling.', 1000);
+    },
+    async flourish(f, o){
+      await approach(f, o, .8);
+      speak(f.b, 'Touché! Touché! Touché!', 1300);
+      f.b.g.armR.animate([{transform:'rotate(0)'},{transform:'rotate(-120deg)'},{transform:'rotate(-60deg)'},{transform:'rotate(-120deg)'},{transform:'rotate(-60deg)'},{transform:'rotate(-120deg)'},{transform:'rotate(0)'}],{duration:900});
+      floaty(o.b, SPARK, {n:6, size:3, dur:600, rise:5, y:22, spread:18, stagger:120});
+      await wait(600); await hit(o, .9, 'Stop it, fancy man!');
+    }
+  };
+
+  // --- iki karakterin birlikte yaptığı komik araları
+  const INTERLUDE = {
+    async highfive(f, o){
+      const W = ring.clientWidth, w = bwOf(f);
+      speak(f.b, 'Hey!', 700); speak(o.b, 'Hey!', 700);
+      await Promise.all([moveTo(f, W/2 - w/2 - f.face*w*.55, 600), moveTo(o, W/2 - w/2 - o.face*w*.55, 600)]);
+      [f, o].forEach(x => x.b.g.armR.animate([{transform:'rotate(0)'},{transform:'rotate(-150deg)',offset:.4},{transform:'rotate(-150deg)',offset:.8},{transform:'rotate(0)'}],{duration:900}));
+      await wait(380); play('clap'); floaty(f.b, STAR, {n:3, size:3, dur:700, x:30, y:6, spread:8});
+      speak(f.b, 'Nice!', 800); speak(o.b, 'Nice!', 800);
+      await wait(1000); speak(o.b, '...wait.', 800);
+      await wait(800); speak(f.b, 'WE\'RE FIGHTING!', 1000);
+      await Promise.all([f, o].map(x => x.b.rig.animate([{transform:T()},{transform:T(0,-u(x.b)*10)},{transform:T()}],{duration:450}).finished));
+    },
+    async snack(f, o){
+      speak(f.b, 'Snack break?', 900); await wait(700); speak(o.b, 'Snack break.', 900);
+      await Promise.all([moveTo(f, home(f), 600), moveTo(o, home(o), 600)]);
+      [f, o].forEach(x => { floaty(x.b, '...', {n:1, size:3.5, dur:1500, x:15, y:8, spread:2}); x.b.rig.animate([{transform:T()},{transform:T(0,u(x.b)*1.5,0,.95)},{transform:T(0,u(x.b)*1.5,0,.95)},{transform:T()}],{duration:1600}); });
+      await wait(1700);
+      speak(f.b, 'ROUND 2!', 900); speak(o.b, 'ROUND 2!', 900); play('fight');
+      await Promise.all([f, o].map(x => x.b.rig.animate([{transform:T()},{transform:T(0,-u(x.b)*8)},{transform:T()}],{duration:400}).finished));
+    },
+    async danceoff(f, o){
+      speak(f.b, 'DANCE-OFF!', 900); await wait(500);
+      await Promise.all([actions.dance(f.b), wait(300).then(() => actions.dance(o.b))]);
+      speak(o.b, pick(['Okay, you\'ve got moves.','Nice. Anyway...','I\'ll allow it.']), 1000);
+    },
+    async stare(f, o){
+      speak(f.b, '...', 1500); speak(o.b, '...', 1500);
+      await Promise.all([moveTo(f, f.x + f.face*u(f.b)*6, 500), moveTo(o, o.x + o.face*u(o.b)*6, 500)]);
+      await wait(1100);
+      o.b.el.querySelectorAll('.eye').forEach(e => e.animate([{transform:'scaleY(1)'},{transform:'scaleY(.1)'},{transform:'scaleY(1)'}],{duration:200}));
+      await wait(250); speak(f.b, 'You BLINKED!', 1000);
+      await wait(700); speak(o.b, 'Did NOT!', 1000);
+      await wait(600);
+    }
+  };
+
+  async function director(tok){
+    let turn = Math.random() < .5 ? 0 : 1, lastSpecial = '';
+    await wait(700);
+    while (alive(tok) && fighters.length === 2){
+      const f = fighters[turn], o = fighters[1 - turn], r = Math.random();
+      try {
+        if (r < .13) await pick(Object.values(INTERLUDE))(f, o);
+        else if (r < .45){
+          let s; do { s = pick(f.st.specials); } while (s === lastSpecial && f.st.specials.length > 1);
+          lastSpecial = s; await SPECIAL[s](f, o);
+        } else {
+          if (Math.random() < .35){ speak(f.b, pick(f.st.taunt), 900); await wait(500); }
+          await ATTACK[f.gear](f, o);
+        }
+      } catch(e){ /* sahneden çıkarılmış olabilir */ }
+      if (!alive(tok)) return;
+      await wait(250);
+      await Promise.all(fighters.map(x => Math.abs(x.x - home(x)) > 4 ? moveTo(x, home(x), 520) : null));
+      await wait(450 + Math.random()*650);
+      turn = Math.random() < .72 ? 1 - turn : turn;
+    }
+  }
+
+  // --- dokununca bize kızarlar
+  actions.poke = async b => {
+    const f = b.fighter; if (!f) return;
+    const now = performance.now();
+    f.pokes = f.pokes.filter(t => now - t < 5000); f.pokes.push(now);
+    const n = f.pokes.length, k = u(b);
+    speak(b, pick(n >= 4 ? POKE3 : n >= 2 ? POKE2 : POKE1), 1400);
+    b.el.classList.add('angry');
+    b.g.armL.animate([{transform:'rotate(0)'},{transform:'rotate(-150deg)'},{transform:'rotate(-130deg)'},{transform:'rotate(-150deg)'},{transform:'rotate(-130deg)'},{transform:'rotate(0)'}],{duration:800});
+    b.g.head.animate([{transform:T()},{transform:T(-k,0,-8)},{transform:T(k,0,8)},{transform:T(-k,0,-6)},{transform:T()}],{duration:500});
+    if (n >= 4){ shakeRing(4); b.rig.animate([{transform:T()},{transform:T(0,-k*10,0,1.1)},{transform:T()}],{duration:450}); }
+    const o = fighters.find(x => x !== f);
+    if (o && Math.random() < .35) setTimeout(() => speak(o.b, pick(['Ha! Even the hand hates you.','Get \'em, hand!','Hey, poke ME too!','Focus on ME!']), 1300), 750);
+    await wait(900);
+    b.el.classList.remove('angry');
+  };
+
+  // --- ringe iniş ve ringin kurulumu
+  function makeFighter(name, gearKey, side){
+    const def = bots.find(x => x.name === name);
+    const wrap = document.createElement('div'); wrap.className = 'fighter';
+    const flip = document.createElement('div'); if (side > 0) flip.className = 'flip';
+    wrap.appendChild(flip); ring.appendChild(wrap);
+    const b = build({name, act:'poke', parts:def.parts.concat(GEAR[gearKey].parts), sparks:def.sparks}, side > 0 ? 3 : 0, flip);
+    b.el.setAttribute('aria-label', `Poke ${name}`);
+    const f = {b, name, gear:gearKey, st:STYLE[name], side, face:side < 0 ? 1 : -1, wrap, x:0, pokes:[]};
+    b.fighter = f;
+    return f;
+  }
+  async function drop(f){
+    const H = ring.clientHeight, x = f.x;
+    speak(f.b, f.st.enter, 1500);
+    await f.wrap.animate([
+      {transform:`translate(${x}px,${-H}px)`},
+      {transform:`translate(${x}px,0)`, offset:.62, easing:'ease-out'},
+      {transform:`translate(${x}px,${-u(f.b)*6}px)`, offset:.8, easing:'ease-in'},
+      {transform:`translate(${x}px,0)`}
+    ],{duration:760, easing:'ease-in'}).finished;
+    play('boom'); shakeRing(6); puff(f.b, -1); puff(f.b, 1);
+    f.b.rig.animate([{transform:'scale(1,1)'},{transform:'scale(1.15,.85)'},{transform:'scale(1,1)'}],{duration:260});
+  }
+  function shuffled(a){ return a.slice().sort(() => Math.random() - .5); }
+  async function setupRing(){
+    const tok = ++matchTok;
+    const old = fighters; fighters = []; arenaBots = [];
+    old.forEach(f => f.wrap.animate([{transform:`translate(${f.x}px,0)`},{transform:`translate(${f.x}px,${-ring.clientHeight - 80}px)`}],{duration:380,easing:'ease-in',fill:'forwards'}).finished.then(() => f.wrap.remove()));
+    ringHint.hidden = picks.length === 2;
+    ringHint.textContent = picks.length === 1 ? 'Pick one more fighter' : 'Pick two fighters above';
+    vsEl.textContent = picks.length === 1 ? `${picks[0]} is waiting for a rival...` : '';
+    if (!picks.length) return;
+    if (old.length) await wait(360);
+    if (!alive(tok)) return;
+    const gears = shuffled(Object.keys(GEAR));
+    picks.forEach((name, i) => { const f = makeFighter(name, gears[i], i === 0 ? -1 : 1); fighters.push(f); arenaBots.push(f.b); });
+    fighters.forEach(f => place(f, home(f)));
+    for (const f of fighters){ drop(f); await wait(420); }
+    if (fighters.length === 2){
+      ringHint.hidden = true;
+      vsEl.textContent = `${fighters[0].name} with a ${fighters[0].gear}  vs  ${fighters[1].name} with a ${fighters[1].gear}`;
+      await wait(700); if (!alive(tok)) return;
+      play('fight'); await banner('FIGHT!');
+      director(tok);
+    } else {
+      await wait(900); if (alive(tok) && fighters[0]) speak(fighters[0].b, 'Who wants some?', 1600);
+    }
+  }
+
+  function updateRoster(){
+    roster.querySelectorAll('.pick').forEach(c => {
+      const i = picks.indexOf(c.dataset.name);
+      c.setAttribute('aria-pressed', i >= 0);
+      c.querySelector('.num').textContent = i >= 0 ? i + 1 : '';
+    });
+  }
+  function buildRoster(){
+    FIGHTERS.forEach(name => {
+      const card = document.createElement('button'); card.type = 'button'; card.className = 'pick'; card.dataset.name = name;
+      const tmp = document.createElement('div'); build({name, act:'poke', parts:bots.find(x => x.name === name).parts}, 0, tmp);
+      card.innerHTML = `<span class="num"></span><div class="mini">${tmp.querySelector('.bob').outerHTML}</div><b>${name}</b><small>${STYLE[name].blurb}</small>`;
+      card.addEventListener('click', () => {
+        const i = picks.indexOf(name);
+        if (i >= 0) picks.splice(i, 1); else { picks.push(name); if (picks.length > 2) picks.shift(); }
+        updateRoster(); setupRing();
+      });
+      roster.appendChild(card);
+    });
+  }
+  document.getElementById('arenaGear').addEventListener('click', () => { if (picks.length) setupRing(); });
+  document.getElementById('arenaClear').addEventListener('click', () => { picks = []; updateRoster(); setupRing(); });
+  document.getElementById('arenaBack').addEventListener('click', () => { location.hash = ''; });
+
+  function route(){
+    const on = location.hash === '#arena';
+    arenaEl.hidden = !on;
+    document.documentElement.style.overflow = on ? 'hidden' : '';
+    if (on){
+      if (!roster.children.length) buildRoster();
+      if (!picks.length){ picks = ['Tux']; updateRoster(); setupRing(); }
+      arenaEl.scrollTop = 0;
+    } else if (fighters.length || picks.length){
+      matchTok++; fighters.forEach(f => f.wrap.remove()); fighters = []; arenaBots = []; picks = []; updateRoster();
+    }
+  }
+  window.addEventListener('hashchange', route);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !arenaEl.hidden && modal.hidden) location.hash = ''; });
+  route();
+
 })();
 </script>
 </body>
