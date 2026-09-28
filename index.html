@@ -194,6 +194,49 @@
   @keyframes aura{from{filter:drop-shadow(0 0 2px #ffd772)}to{filter:drop-shadow(0 0 9px #ff9a3a) drop-shadow(0 0 3px #fff3b0)}}
   .ult-name{position:absolute;left:50%;top:14%;translate:-50% 0;z-index:7;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:clamp(20px,calc(var(--u)*8),44px);color:#ffd772;
     text-shadow:3px 3px 0 var(--line),-2px -2px 0 var(--line),2px -2px 0 var(--line),-2px 2px 0 var(--line);white-space:nowrap;pointer-events:none}
+  /* ---- Oyun modu ---- */
+  .arena.play .watch-only, .arena:not(.play) .play-only{display:none !important}
+  .modes{display:flex;gap:0}
+  .modes .mode{box-shadow:none;margin-right:-2px}
+  .modes .mode[aria-selected="true"]{background:#e0643a;color:#fff8f0}
+  .modes{box-shadow:4px 4px 0 var(--line)}
+  .hud{position:absolute;left:0;right:0;top:calc(var(--u)*2);z-index:7;display:grid;grid-template-columns:1fr auto 1fr;align-items:start;gap:10px;padding:0 12px;pointer-events:none}
+  .card-hp{background:rgba(246,241,234,.94);border:3px solid var(--line);box-shadow:3px 3px 0 var(--line);padding:6px 8px;display:flex;flex-direction:column;gap:5px;max-width:300px}
+  .card-hp.r{justify-self:end;width:100%}
+  .hp-name{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-family:"Pixelify Sans", monospace}
+  .hp-name b{font-size:17px} .hp-name small{font-size:12px;color:var(--ink-soft)}
+  .bar{position:relative;height:14px;background:#3a2a2c;border:2px solid var(--line);overflow:hidden}
+  .bar.st{height:9px}
+  .bar i{position:absolute;inset:0 auto 0 0;width:100%;transition:width .35s ease-out}
+  .bar.hp i{background:linear-gradient(180deg,#7ee07a,#3fae4a)}
+  .bar.hp.low i{background:linear-gradient(180deg,#ff8a7a,#d8432d)}
+  .bar.st i{background:linear-gradient(180deg,#ffe27a,#e9b43a)}
+  .bar span{position:absolute;inset:0;display:grid;place-items:center;font-family:"Pixelify Sans", monospace;font-size:11px;color:#fff;text-shadow:1px 1px 0 #000;line-height:1}
+  .bar.st span{display:none}
+  .turn-tag{margin-top:6px;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:15px;padding:5px 10px;background:#e0643a;color:#fff8f0;border:3px solid var(--line);box-shadow:3px 3px 0 var(--line);white-space:nowrap}
+  .turn-tag.enemy{background:#3a3236}
+  .actions{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+  .act{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 4px;background:var(--paper);border:3px solid var(--line);box-shadow:3px 3px 0 var(--line);cursor:pointer;font:inherit;color:var(--ink)}
+  .act b{font-family:"Pixelify Sans", monospace;font-size:15px}
+  .act small{font-size:11px;color:var(--ink-soft);text-align:center;line-height:1.2}
+  .act kbd{font-family:"Pixelify Sans", monospace;font-size:10px;color:var(--ink-soft)}
+  .act:hover:not(:disabled){background:#ffe3a3;translate:0 -2px}
+  .act:active:not(:disabled){translate:2px 2px;box-shadow:1px 1px 0 var(--line)}
+  .act:focus-visible{outline:3px dashed var(--ink);outline-offset:3px}
+  .act:disabled{opacity:.42;cursor:not-allowed}
+  .act.atk b{color:#b8402f}
+  .log{margin:0;min-height:1.4em;font-family:"Pixelify Sans", monospace;font-size:15px;color:#3a2a2c}
+  .result{position:absolute;left:50%;top:50%;translate:-50% -50%;z-index:9;background:var(--paper);border:4px solid var(--line);box-shadow:6px 6px 0 var(--line);padding:18px 24px;text-align:center;display:flex;flex-direction:column;gap:10px;align-items:center;min-width:min(320px,86%)}
+  .result h3{margin:0;font-family:"Pixelify Sans", monospace;font-size:34px}
+  .result p{margin:0;color:var(--ink-soft)}
+  .result.lose h3{color:#b8402f}
+  .result.win h3{color:#2f9a4a}
+  @media (max-width:640px){
+    .actions{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .act small{display:none}
+    .hud{padding:0 6px;gap:6px} .card-hp{padding:4px 5px} .hp-name b{font-size:13px} .hp-name small{display:none}
+    .turn-tag{font-size:11px;padding:3px 6px}
+  }
   /* ---- Arena flamaları ---- */
   .pennant{display:none}
   @media (min-width:1480px){
@@ -303,15 +346,20 @@
       <div>
         <button class="btn" type="button" id="arenaBack">&larr; Back to Vibe Folk</button>
         <h2 style="margin-top:14px">Vibe Arena</h2>
-        <p>Pick two fighters. They drop in with random gear and start a very silly brawl. Tap a fighter to charge their special move.</p>
+        <p class="play-only">Turn-based duels. Close the distance, pick your strike, watch your stamina. Beat your rival.</p>
+        <p class="watch-only">Pick two fighters. They drop in with random gear and start a very silly brawl. Tap a fighter to charge their special move.</p>
       </div>
       <div class="arena-ctrl">
-        <button class="btn" type="button" id="arenaGear">Shuffle gear</button>
-        <button class="btn" type="button" id="arenaClear">Clear ring</button>
+        <div class="modes" role="tablist" aria-label="Arena mode">
+          <button class="btn mode" type="button" role="tab" id="modePlay" aria-selected="true">Play</button>
+          <button class="btn mode" type="button" role="tab" id="modeWatch" aria-selected="false">Watch brawl</button>
+        </div>
+        <button class="btn watch-only" type="button" id="arenaGear">Shuffle gear</button>
+        <button class="btn watch-only" type="button" id="arenaClear">Clear ring</button>
       </div>
     </div>
-    <div class="roster" id="roster"></div>
-    <div class="vs" id="vs" aria-live="polite"></div>
+    <div class="roster watch-only" id="roster"></div>
+    <div class="vs watch-only" id="vs" aria-live="polite"></div>
     <div class="ring" id="ring">
       <div class="stands" id="stands" aria-hidden="true"></div>
       <div class="rail" aria-hidden="true"></div>
@@ -325,9 +373,22 @@
       <div class="torch" aria-hidden="true" style="left:15%;top:calc(var(--u)*30)"><u></u><b></b><i></i></div>
       <div class="torch" aria-hidden="true" style="right:15%;top:calc(var(--u)*30)"><u></u><b></b><i></i></div>
       <div class="banners" aria-hidden="true"><i style="--c:#e0643a"></i><i style="--c:#2fb58f"></i><i style="--c:#7c5cff"></i><i style="--c:#f0d44d"></i><i style="--c:#2a74bd"></i><i style="--c:#ff5c86"></i></div>
-      <div class="ring-hint" id="ringHint">Pick two fighters above</div>
+      <div class="ring-hint watch-only" id="ringHint">Pick two fighters above</div>
+      <div class="hud play-only" id="hud">
+        <div class="card-hp" id="hudP"><div class="hp-name"><b>Tux</b><small>Sword</small></div><div class="bar hp"><i></i><span></span></div><div class="bar st"><i></i><span></span></div></div>
+        <div class="turn-tag" id="turnTag">YOUR TURN</div>
+        <div class="card-hp r" id="hudE"><div class="hp-name"><b>?</b><small></small></div><div class="bar hp"><i></i><span></span></div><div class="bar st"><i></i><span></span></div></div>
+      </div>
+      <div class="result play-only" id="result" hidden>
+        <h3 id="resTitle">VICTORY!</h3>
+        <p id="resText"></p>
+        <button class="btn primary" type="button" id="resAgain">Fight again</button>
+      </div>
     </div>
-    <p class="arena-foot">Gear is random every match: spear, shield, bow, dagger or sword. Specials recharge in a few seconds. Tap too much and they get grumpy. Nobody wins. Everybody gets bonked.</p>
+    <div class="actions play-only" id="actions" role="group" aria-label="Your moves"></div>
+    <p class="log play-only" id="log" aria-live="polite"></p>
+    <p class="arena-foot play-only">Tip: power strikes hit hard but miss a lot. Taunt to rattle your rival, rest to refill stamina. Keys 1 to 7 work too.</p>
+    <p class="arena-foot watch-only">Gear is random every match: spear, shield, bow, dagger or sword. Specials recharge in a few seconds. Tap too much and they get grumpy. Nobody wins. Everybody gets bonked.</p>
   </div>
 </section>
 <div class="wrap">
@@ -1932,7 +1993,7 @@
     const now = performance.now();
     f.pokes = f.pokes.filter(t => now - t < 5000); f.pokes.push(now);
     const n = f.pokes.length, k = u(b);
-    if (fighters.length === 2 && !f.ultQueued && now > (f.ultReady || 0)){
+    if (!f.game && fighters.length === 2 && !f.ultQueued && now > (f.ultReady || 0)){
       f.ultQueued = true; f.ultReady = now + 8000;
       speak(b, pick(ULT_CALL[f.name]), 1400); b.el.classList.add('charging'); play('charge');
       burst(ringPt(b.el, .5, .5), ['#ffd772','#fff3b0'], 12, 16, 500, true);
@@ -2023,16 +2084,250 @@
   document.getElementById('arenaClear').addEventListener('click', () => { picks = []; updateRoster(); setupRing(); });
   document.getElementById('arenaBack').addEventListener('click', () => { location.hash = ''; });
 
+
+  // ================= OYUN MODU: sıra tabanlı düello (Adım 1) =================
+  let COLS = 8;                          // ring sütunlara bölünür; sütun sayısı ekran genişliğine göre ayarlanır
+  const MOVES = {
+    fwd:    {key:'1', label:'Advance', note:'Step closer', sta:4},
+    back:   {key:'2', label:'Retreat', note:'Step back', sta:4},
+    quick:  {key:'3', label:'Quick',   note:'5-8 dmg · 90%', sta:10, dmg:[5,8],   acc:.90, atk:true},
+    strike: {key:'4', label:'Strike',  note:'9-13 dmg · 75%', sta:18, dmg:[9,13], acc:.75, atk:true},
+    power:  {key:'5', label:'Power',   note:'16-22 dmg · 50%', sta:30, dmg:[16,22], acc:.50, atk:true},
+    taunt:  {key:'6', label:'Taunt',   note:'Rattle rival', sta:0},
+    rest:   {key:'7', label:'Rest',    note:'+35 stamina', sta:0}
+  };
+  // ilk rakip: Paper Hands. Canı azalınca kaçmayı sever.
+  const RIVAL = {
+    id:'paper', name:'Paper Hands', base:'Mist', gear:'dagger', hp:90,
+    st:{walk:'scamper', speed:1.3, enter:'Uh... is it safe here?', taunt:['I\'m selling!','Too risky for me!','Diamond hands? Never heard of it.'], hurt:['SELL SELL SELL!','My portfolio!','I knew I should\'ve sold!']},
+    ko:'I... I panic sold my HP.'
+  };
+  const PLAYER = {name:'Tux', gear:'sword', hp:100,
+    st:{...STYLE.Tux, hurt:['My suit!','How uncouth!','A mere scratch.']}, ko:'I shall... return... dressed better.'};
+  const G = {on:false, busy:false, turn:'p', p:null, e:null, tok:0};
+  const hud = {p:document.getElementById('hudP'), e:document.getElementById('hudE')};
+  const turnTag = document.getElementById('turnTag'), logEl = document.getElementById('log');
+  const actionsEl = document.getElementById('actions'), resultEl = document.getElementById('result');
+  const rnd = (a, b) => a + Math.floor(Math.random()*(b - a + 1));
+
+  function colX(f, c){ const W = ring.clientWidth, w = bwOf(f), pad = W*.035; return pad + c*(W - 2*pad - w)/(COLS - 1); }
+  const dist = () => Math.abs(G.p.col - G.e.col);
+  function log(t){ logEl.textContent = t; }
+  function drawHud(){
+    [['p', G.p], ['e', G.e]].forEach(([k, f]) => {
+      const el = hud[k], hpPct = Math.max(0, f.hp) / f.max * 100;
+      el.querySelector('.hp i').style.width = hpPct + '%';
+      el.querySelector('.hp span').textContent = `${Math.max(0, f.hp)} / ${f.max}`;
+      el.querySelector('.hp').classList.toggle('low', hpPct < 30);
+      el.querySelector('.st i').style.width = f.sta + '%';
+    });
+  }
+  function canDo(f, k){
+    const m = MOVES[k], o = f === G.p ? G.e : G.p;
+    if (f.sta < m.sta) return false;
+    if (m.atk) return dist() <= 1;
+    if (k === 'fwd') return dist() > 1;
+    if (k === 'back'){ const c = f.col - f.face; return c >= 0 && c < COLS; }
+    if (k === 'rest') return f.sta < 100;
+    return true;
+  }
+  function buildActions(){
+    actionsEl.innerHTML = '';
+    Object.entries(MOVES).forEach(([k, m]) => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'act' + (m.atk ? ' atk' : ''); b.dataset.k = k;
+      b.innerHTML = `<b>${m.label}</b><small>${m.note}${m.sta ? ' · ' + m.sta + ' sta' : ''}</small><kbd>${m.key}</kbd>`;
+      b.addEventListener('click', () => playerMove(k));
+      actionsEl.appendChild(b);
+    });
+  }
+  function refreshActions(){
+    const mine = G.on && G.turn === 'p' && !G.busy;
+    actionsEl.querySelectorAll('.act').forEach(b => { b.disabled = !mine || !canDo(G.p, b.dataset.k); });
+    turnTag.textContent = !G.on ? 'READY' : G.turn === 'p' ? 'YOUR TURN' : 'RIVAL TURN';
+    turnTag.classList.toggle('enemy', G.turn !== 'p');
+  }
+
+  // --- hamlelerin kendisi (hem oyuncu hem rakip kullanır)
+  async function stepMove(f, dir){ // dir: +1 ileri, -1 geri
+    f.col += dir*f.face; f.sta -= 4;
+    await moveTo(f, colX(f, f.col), 380);
+  }
+  async function attackMove(att, def, k){
+    const m = MOVES[k], k2 = u(att.b);
+    att.sta -= m.sta;
+    // animasyon: saldırı türüne göre kol + bilek hareketi
+    if (k === 'quick'){ arm(att, [0, -85, 0], 320); aim(att, [0, 180, 0], 320); att.b.rig.animate([{transform:T()},{transform:T(k2*3,0)},{transform:T()}],{duration:320}); await wait(170); }
+    else if (k === 'strike'){ arm(att, [0, -160, 25, 0], 620); aim(att, [0, 150, 60, 0], 620); await wait(360); }
+    else { // power: uzun hazırlık, sıçrayarak iner
+      speak(att.b, pick(['HAAA!','Full send!','All in!']), 800);
+      arm(att, [0, -175, -175, 35, 0], 1000); aim(att, [0, 160, 160, 70, 0], 1000);
+      att.b.rig.animate([{transform:T()},{transform:T(-k2*2,k2,0,.95)},{transform:T(k2*4,-k2*8,6)},{transform:T(k2*3,0,4)},{transform:T()}],{duration:1000});
+      await wait(620); speedLines(att);
+    }
+    play('whoosh');
+    let acc = m.acc - (att.shaken ? .2 : 0);
+    const crit = Math.random() < (att.pumped ? .3 : .08);
+    att.shaken = att.pumped = false;
+    const pt = headPt(def);
+    if (Math.random() > acc){ // ıska
+      def.b.rig.animate([{transform:T()},{transform:T(-k2*2,-k2*12,-10)},{transform:T()}],{duration:420,easing:'ease-out'});
+      popText('MISS', {x:pt.x, y:pt.y - k2*6}, '#d9d0c7', 5);
+      speak(def.b, pick(DODGE), 900);
+      log(`${att.name} swings... and misses.`);
+      await wait(450); return;
+    }
+    let dmg = rnd(m.dmg[0], m.dmg[1]); if (crit) dmg = Math.round(dmg*1.6);
+    def.hp -= dmg;
+    play('bonk'); hitFlash(def); cheer(k === 'power' || crit ? 1400 : 700);
+    if (k === 'quick') burst(pt, ['#fff','#ff9a8a'], 6, 7, 300); else slashArc(pt, -25, k === 'power' ? 24 : 18);
+    burst(pt, ['#fff','#ffd772'], k === 'power' ? 14 : 8, 11);
+    if (crit) popText('CRIT!', {x:pt.x, y:pt.y - k2*14}, '#ffd772', 6);
+    popText(`-${dmg}`, {x:pt.x, y:pt.y - k2*6}, '#ff8a7a', crit || k === 'power' ? 8 : 6);
+    if (k === 'power') shakeRing(7);
+    stars(def, k === 'power' ? 4 : 2);
+    def.b.rig.animate([{transform:T()},{transform:T(-k2*2,-k2*2,-12)},{transform:T(k2,0,5)},{transform:T()}],{duration:480,easing:'ease-out'});
+    if (def.hp > 0 && Math.random() < .55) speak(def.b, pick(def.st.hurt), 1100);
+    log(`${att.name} lands a ${m.label.toLowerCase()} for ${dmg}${crit ? ' (critical!)' : ''}.`);
+    drawHud(); await wait(520);
+  }
+  async function tauntMove(f, o){
+    const k = u(f.b);
+    speak(f.b, pick(f.st.taunt), 1200); cheer(1200);
+    f.b.g.armL.animate([{transform:'rotate(0)'},{transform:'rotate(-150deg)'},{transform:'rotate(-120deg)'},{transform:'rotate(-150deg)'},{transform:'rotate(0)'}],{duration:900});
+    f.b.rig.animate([{transform:T()},{transform:T(0,-k*4)},{transform:T()},{transform:T(0,-k*4)},{transform:T()}],{duration:900});
+    o.shaken = true; f.pumped = true;
+    popText('RATTLED', {x:headPt(o).x, y:headPt(o).y - k*10}, '#bfa6ff', 4.5);
+    log(`${f.name} taunts. ${o.name} is rattled, next hit has a better crit chance.`);
+    await wait(950);
+  }
+  async function restMove(f){
+    const k = u(f.b);
+    f.sta = Math.min(100, f.sta + 35); f.hp = Math.min(f.max, f.hp + 3);
+    floaty(f.b, '...', {n:1, size:3.5, dur:1100, x:15, y:8, spread:2});
+    await f.b.rig.animate([{transform:T()},{transform:T(0,k*1.5,0,.95)},{transform:T()}],{duration:800}).finished;
+    popText('+35 STA', {x:headPt(f).x, y:headPt(f).y - k*8}, '#ffe27a', 4.5);
+    log(`${f.name} catches a breath.`);
+    drawHud(); await wait(250);
+  }
+  async function runMove(f, k){
+    const o = f === G.p ? G.e : G.p;
+    if (k === 'fwd') await stepMove(f, 1);
+    else if (k === 'back') await stepMove(f, -1);
+    else if (MOVES[k].atk) await attackMove(f, o, k);
+    else if (k === 'taunt') await tauntMove(f, o);
+    else if (k === 'rest') await restMove(f);
+    drawHud();
+  }
+
+  // --- rakibin kararı: Paper Hands kişiliği
+  function rivalChoice(){
+    const e = G.e, d = dist(), r = Math.random(), hpPct = e.hp / e.max;
+    if (d > 1){
+      if (e.sta < 12) return 'rest';
+      if (hpPct < .35 && r < .35) return canDo(e, 'back') ? 'back' : 'rest'; // panik: uzakta kal
+      return 'fwd';
+    }
+    if (hpPct < .35 && r < .35 && canDo(e, 'back')){ speak(e.b, pick(['I\'m out!','Selling my position!','Nope nope nope!']), 900); return 'back'; }
+    if (r < .1) return 'taunt';
+    if (e.sta >= 30 && r < .32) return 'power';
+    if (e.sta >= 18 && r < .7) return 'strike';
+    if (e.sta >= 10) return 'quick';
+    return 'rest';
+  }
+
+  async function playerMove(k){
+    if (!G.on || G.busy || G.turn !== 'p' || !canDo(G.p, k)) return;
+    const tok = G.tok;
+    G.busy = true; refreshActions();
+    await runMove(G.p, k);
+    if (tok !== G.tok) return;
+    if (await checkEnd()) return;
+    G.turn = 'e'; G.busy = false; refreshActions();
+    await wait(450); if (tok !== G.tok) return;
+    G.busy = true;
+    G.e.sta = Math.min(100, G.e.sta + 6);
+    await runMove(G.e, rivalChoice());
+    if (tok !== G.tok) return;
+    if (await checkEnd()) return;
+    G.p.sta = Math.min(100, G.p.sta + 6);
+    G.turn = 'p'; G.busy = false; drawHud(); refreshActions();
+  }
+
+  async function checkEnd(){
+    const loser = G.e.hp <= 0 ? G.e : G.p.hp <= 0 ? G.p : null;
+    if (!loser) return false;
+    const winner = loser === G.e ? G.p : G.e, k = u(loser.b);
+    G.on = false; refreshActions();
+    speak(loser.b, loser.ko, 1800);
+    play('boom'); shakeRing(8); cheer(2500);
+    await loser.b.rig.animate([{transform:T()},{transform:T(0,-k*6,-20)},{transform:T(-k*4,k*6,-90)}],{duration:700,easing:'ease-in',fill:'forwards'}).finished;
+    puff(loser.b, -1); puff(loser.b, 1);
+    winner.b.g.armR.animate([{transform:'rotate(0)'},{transform:'rotate(-170deg)'},{transform:'rotate(-170deg)'}],{duration:600,fill:'forwards'});
+    speak(winner.b, winner === G.p ? pick(['Victory, darling.','Well fought. By me.','Tidy.']) : pick(['I didn\'t sell! I WON!','Stonks!']), 1800);
+    await banner(winner === G.p ? 'VICTORY!' : 'K.O.', 1200);
+    const win = winner === G.p;
+    resultEl.className = 'result play-only ' + (win ? 'win' : 'lose');
+    document.getElementById('resTitle').textContent = win ? 'VICTORY!' : 'DEFEATED';
+    document.getElementById('resText').textContent = win ? `${G.e.name} panic sold. You win the duel!` : `${G.e.name} got lucky. Dust off that suit and try again.`;
+    resultEl.hidden = false;
+    document.getElementById('resAgain').focus();
+    log(win ? 'You won the duel!' : 'You were knocked out.');
+    return true;
+  }
+
+  async function startGame(){
+    const tok = ++G.tok; matchTok++;
+    fighters.forEach(f => f.wrap.remove()); fighters = []; arenaBots = [];
+    resultEl.hidden = true; G.on = false; G.busy = true;
+    const p = makeFighter(PLAYER.name, PLAYER.gear, -1);
+    const e = makeFighter(RIVAL.base, RIVAL.gear, 1);
+    // yan yana iki sütun arası en az bir karakter genişliği kadar olsun, üst üste binmesinler
+    { const W = ring.clientWidth, w = bwOf(p), pad = W*.035; COLS = Math.max(4, Math.min(8, Math.floor((W - 2*pad - w)/(w*.9)) + 1)); }
+    Object.assign(p, {name:PLAYER.name, st:PLAYER.st, ko:PLAYER.ko, hp:PLAYER.hp, max:PLAYER.hp, sta:100, col:0, game:true});
+    Object.assign(e, {name:RIVAL.name, st:RIVAL.st, ko:RIVAL.ko, hp:RIVAL.hp, max:RIVAL.hp, sta:100, col:COLS - 1, game:true});
+    e.b.el.setAttribute('aria-label', `Poke ${RIVAL.name}`);
+    fighters = [p, e]; arenaBots = [p.b, e.b]; G.p = p; G.e = e;
+    hud.p.querySelector('b').textContent = p.name; hud.p.querySelector('small').textContent = GEAR[p.gear].label;
+    hud.e.querySelector('b').textContent = e.name; hud.e.querySelector('small').textContent = GEAR[e.gear].label;
+    place(p, colX(p, p.col)); place(e, colX(e, e.col));
+    drawHud(); refreshActions(); log('');
+    drop(p); await wait(420); drop(e); await wait(1000);
+    if (tok !== G.tok) return;
+    play('fight'); cheer(1800); await banner('FIGHT!');
+    if (tok !== G.tok) return;
+    G.on = true; G.busy = false; G.turn = 'p'; refreshActions();
+    log('Your turn. Close the distance: you need to be next to your rival to hit.');
+  }
+  function stopGame(){ G.tok++; G.on = false; G.busy = false; resultEl.hidden = true; }
+
+  function setMode(mode){
+    const play = mode === 'play';
+    arenaEl.classList.toggle('play', play);
+    document.getElementById('modePlay').setAttribute('aria-selected', play);
+    document.getElementById('modeWatch').setAttribute('aria-selected', !play);
+    if (play){ picks = []; updateRoster(); startGame(); }
+    else { stopGame(); fighters.forEach(f => f.wrap.remove()); fighters = []; arenaBots = []; picks = ['Tux']; updateRoster(); setupRing(); }
+  }
+  document.getElementById('modePlay').addEventListener('click', () => { if (!arenaEl.classList.contains('play')) setMode('play'); });
+  document.getElementById('modeWatch').addEventListener('click', () => { if (arenaEl.classList.contains('play')) setMode('watch'); });
+  document.getElementById('resAgain').addEventListener('click', startGame);
+  document.addEventListener('keydown', e => {
+    if (arenaEl.hidden || !arenaEl.classList.contains('play') || e.metaKey || e.ctrlKey || e.altKey) return;
+    const k = Object.keys(MOVES).find(x => MOVES[x].key === e.key);
+    if (k) playerMove(k);
+  });
+  buildActions();
+
   function route(){
     const on = location.hash === '#arena';
     arenaEl.hidden = !on;
     document.documentElement.style.overflow = on ? 'hidden' : '';
     if (on){
       if (!roster.children.length){ buildRoster(); buildCrowd(); }
-      if (!picks.length){ picks = ['Tux']; updateRoster(); setupRing(); }
+      if (!fighters.length) setMode('play');
       arenaEl.scrollTop = 0;
     } else if (fighters.length || picks.length){
-      matchTok++; fighters.forEach(f => f.wrap.remove()); fighters = []; arenaBots = []; picks = []; updateRoster();
+      stopGame(); matchTok++; fighters.forEach(f => f.wrap.remove()); fighters = []; arenaBots = []; picks = []; updateRoster();
     }
   }
   window.addEventListener('hashchange', route);
