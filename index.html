@@ -307,6 +307,28 @@
   .port button:disabled{opacity:.4;cursor:not-allowed}
   .port .empty{color:var(--ink-soft);font-size:13px;margin:0}
   @media (max-width:640px){ .tape::before{content:"SIM"} .tape-in{padding-left:60px;font-size:13px} .mkt-toast{font-size:12px;white-space:normal;text-align:center} .port .row{grid-template-columns:44px 1fr auto;} .port .row .pv{display:none} .sgrid{grid-template-columns:repeat(3,minmax(0,1fr))} .sgrid .logo{width:34px;height:34px;font-size:10px} .sgrid .wpn{padding:6px 2px} }
+  /* ---- İksirler ve silah seviyeleri ---- */
+  .potions{position:absolute;left:12px;top:90px;z-index:8;display:flex;gap:10px}
+  .potion{position:relative;width:46px;height:58px;padding:4px 5px;background:rgba(246,241,234,.92);border:3px solid var(--line);box-shadow:3px 3px 0 var(--line);cursor:pointer}
+  .potion svg{display:block;width:100%;height:100%}
+  .potion .cnt{position:absolute;right:-9px;top:-9px;min-width:22px;height:22px;padding:0 3px;display:grid;place-items:center;background:#3a2a2c;color:#fff;border:2px solid var(--line);font-family:"Pixelify Sans", monospace;font-weight:700;font-size:13px}
+  .potion.hp .cnt{background:#b8402f} .potion.en .cnt{background:#c7901f}
+  .potion:not(:disabled):hover{background:#fff;translate:0 -2px}
+  .potion:not(:disabled):active{translate:2px 2px;box-shadow:1px 1px 0 var(--line)}
+  .potion:focus-visible{outline:3px dashed var(--ink);outline-offset:3px}
+  .potion:disabled{cursor:not-allowed}
+  .potion.empty svg,.potion.wait svg{opacity:.45;filter:grayscale(.5)}
+  .potion.empty .cnt{background:#6b6064}
+  .px.glowb{box-shadow:0 0 0 max(1.5px,calc(var(--u)*.35)) var(--line),0 0 calc(var(--u)*1.4) var(--c)}
+  .g-wpn.legend{animation:legend 1.1s ease-in-out infinite alternate}
+  @keyframes legend{from{filter:drop-shadow(0 0 1px #fff6a8)}to{filter:drop-shadow(0 0 5px #ffd772) drop-shadow(0 0 2px #fff)}}
+  .px.twinkle{animation:twinkle 1.3s steps(3) infinite;box-shadow:0 0 4px #fff}
+  .px.twinkle:nth-last-child(2){animation-delay:-.45s} .px.twinkle:nth-last-child(3){animation-delay:-.9s}
+  @keyframes twinkle{0%,100%{opacity:0;scale:.4}50%{opacity:1;scale:1.4}}
+  .wi.lv3 svg,.ii.lv3 svg{animation:legend 1.1s ease-in-out infinite alternate}
+  .wi.diag svg,.ii.diag svg{rotate:38deg;scale:1.3}
+  @media (max-width:640px){ .potions{left:6px;gap:8px} .potion{width:36px;height:46px;padding:3px 4px} .potion .cnt{min-width:18px;height:18px;font-size:11px;right:-7px;top:-7px} }
+  @media (prefers-reduced-motion: reduce){ .g-wpn.legend,.px.twinkle,.wi.lv3 svg,.ii.lv3 svg{animation:none} }
   /* ---- Kamp ve dükkân ---- */
   .coin{display:inline-block;width:16px;height:16px;background:radial-gradient(circle at 40% 35%,#fff3b0 0 18%,#f5c542 20% 62%,#c7901f 64%);border:2px solid var(--line);border-radius:50%;vertical-align:-3px}
   .purse{display:flex;align-items:center;gap:8px;margin-left:auto;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:16px}
@@ -341,13 +363,13 @@
   .camp-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;color:var(--ink-soft)}
   .act .badge{position:absolute;top:4px;right:6px;font-family:"Pixelify Sans", monospace;font-size:12px;background:#3a2a2c;color:#fff;padding:0 5px;border-radius:2px}
   .act{position:relative}
-  .actions{grid-template-columns:repeat(10,minmax(0,1fr))}
+  .actions{grid-template-columns:repeat(8,minmax(0,1fr))}
   @media (max-width:640px){
     .stats{grid-template-columns:repeat(2,minmax(0,1fr))} .shop{grid-template-columns:1fr}
     .lvl-row{grid-template-columns:auto 1fr} .lvl-row small{grid-column:1 / -1}
     .camp-card{padding:12px}
     .purse{font-size:13px}
-    .actions{grid-template-columns:repeat(5,minmax(0,1fr))}
+    .actions{grid-template-columns:repeat(4,minmax(0,1fr))}
   }
   /* ---- Arena flamaları ---- */
   .pennant{display:none}
@@ -512,6 +534,7 @@
         <div class="card-hp r" id="hudE"><div class="hp-name"><b>?</b><small></small></div><div class="bar hp"><i></i><span></span></div><div class="bar st"><i></i><span></span></div></div>
       </div>
       <div class="mkt-toast play-only" id="mktToast" hidden aria-live="polite"></div>
+      <div class="potions play-only" id="potions" role="group" aria-label="Potions"></div>
       <div class="chooser play-only" id="chooser" hidden>
         <h3 id="chooserTitle">Choose your fighter</h3>
         <p id="chooserSub">Win fights to unlock more of the folk.</p>
@@ -1504,6 +1527,55 @@
     shield: {label:'shield', parts:W_([['',25.4,32.5,7.4,9.5,'#8c2f22',''],['',26.2,33.3,5.8,7.9,'#d9573f',''],['',28,35.9,2.2,2.2,'#e9c64a','']])}
   };
 
+  // --- silah seviyeleri (blok birimi, bileğe bağlı). Seviye 3 parlar ve pırıldar.
+  const TW = '#fff';
+  const WT = {
+    sword:[
+      [[27.7,37,1.8,4.2,'#6b4a2c',''],[26.6,36.2,4,1.2,'#7a7068',''],[27.8,23,1.6,13.4,'#b8b0a0',''],[28.2,21.8,.9,1.4,'#b8b0a0',''],[28.6,26,.6,1,'#8a6a4a','nol'],[28,31,.5,1.2,'#8a6a4a','nol']],
+      [[27.6,36.8,2,4.6,'#6b4a2c',''],[26,35.8,5.2,1.4,'#e9c64a',''],[27.7,19,1.8,17,'#dfe4ea',''],[28.8,19.5,.6,16,'#aab3bd','nol'],[28,17.6,1.2,1.6,'#dfe4ea','']],
+      [[27.6,37,2,4.4,'#3a2a2c',''],[27.4,41.2,2.4,1.4,'#e9c64a',''],[25.2,35.6,6.8,1.6,'#e9c64a',''],[28,35.8,1.2,1.2,'#d8432d','nol'],[27.3,16,2.6,19.6,'#e8edf2',''],[28.9,16.5,.7,19,'#aab3bd','nol'],[27.8,14.2,1.6,1.8,'#e8edf2','']],
+      [[27.6,37,2,4.4,'#2a1f3a',''],[27.4,41.2,2.4,1.6,'#e9c64a',''],[24.4,35.4,8.4,1.8,'#e9c64a',''],[24,33.8,1.4,1.8,'#e9c64a',''],[31.4,33.8,1.4,1.8,'#e9c64a',''],[28,35.7,1.2,1.2,'#b98bff','nol'],[27.2,14,2.8,21.4,'#e8fbff','glowb'],[28.2,15,.8,19,'#9ff3ff','nol'],[27.8,12,1.6,2.2,'#e8fbff',''],[25,18,1,1,TW,'nol twinkle'],[31,24,1,1,TW,'nol twinkle'],[26,29,.8,.8,TW,'nol twinkle']]
+    ],
+    spear:[
+      [[28.1,12,1.2,32,'#9a6a45',''],[27.8,8.8,1.8,3.4,'#9a9288',''],[28.3,7.6,.8,1.4,'#9a9288','']],
+      [[28,9,1.3,35,'#8a5a3a',''],[27.4,5.2,2.5,4,'#dfe4ea',''],[28.05,3.4,1.2,2,'#dfe4ea',''],[27.6,9.2,2.1,1.2,'#d8432d','nol']],
+      [[28,8,1.4,36,'#5a3a22',''],[27.6,14,2.2,1,'#e9c64a','nol'],[27.6,24,2.2,1,'#e9c64a','nol'],[27.2,3.4,2.8,4.8,'#e8edf2',''],[28,1.6,1.2,2,'#e8edf2',''],[26.2,5.6,1,2.2,'#e8edf2',''],[30,5.6,1,2.2,'#e8edf2','']],
+      [[28,8,1.4,36,'#2a2226',''],[27.6,12,2.2,1,'#e9c64a','nol'],[27.6,20,2.2,1,'#e9c64a','nol'],[27.6,28,2.2,1,'#e9c64a','nol'],[27,1.4,3.2,6.8,'#9ff3ff','glowb'],[28.1,-.6,1,2.2,'#e8fbff',''],[25.8,4,1.2,2.6,'#e9c64a',''],[30.2,4,1.2,2.6,'#e9c64a',''],[29.4,9,3.4,2.2,'#d8432d',''],[29.4,11.2,2.4,1,'#b8402f','nol'],[26,2,1,1,TW,'nol twinkle'],[31.5,6,1,1,TW,'nol twinkle']]
+    ],
+    dagger:[
+      [[27.7,37.4,1.6,3.4,'#6b4a2c',''],[27,36.6,3,1,'#7a7068',''],[28,32.2,1.1,4.4,'#b8b0a0',''],[28.2,31.2,.7,1,'#b8b0a0','']],
+      [[27.6,37.2,1.8,3.6,'#6b4a2c',''],[26.6,36.3,3.8,1.1,'#9aa3ad',''],[27.9,30.6,1.3,5.8,'#dfe4ea',''],[28.1,29.4,.9,1.4,'#dfe4ea','']],
+      [[27.6,37.2,1.8,3.6,'#3a2a2c',''],[27.9,40.6,1.2,1.2,'#2fb58f',''],[26.2,36.1,4.6,1.2,'#e9c64a',''],[27.7,30,1.7,6.2,'#e8edf2',''],[28.9,30.4,.4,5.6,'#aab3bd','nol'],[28,28.6,1.1,1.5,'#e8edf2','']],
+      [[27.6,37.2,1.8,3.6,'#2a1f3a',''],[27.9,40.6,1.2,1.3,'#b98bff',''],[25.8,36,5.4,1.3,'#e9c64a',''],[27.6,28.4,1.9,7.8,'#7c5cff','glowb'],[28.3,28.8,.6,7,'#d6c2ff','nol'],[27.9,26.8,1.3,1.8,'#7c5cff',''],[26,31,.8,.8,TW,'nol twinkle'],[30.4,34,.8,.8,TW,'nol twinkle']]
+    ],
+    shield:[
+      [[25.6,33,7,9,'#6f4a31',''],[26.3,33.7,5.6,7.6,'#9a6a45',''],[27.9,33.7,.4,7.6,'#6f4a31','nol'],[29.8,33.7,.4,7.6,'#6f4a31','nol'],[28.4,36.4,1.8,1.8,'#8a939c','']],
+      [[25.4,32.5,7.4,9.5,'#8c2f22',''],[26.2,33.3,5.8,7.9,'#d9573f',''],[28,35.9,2.2,2.2,'#e9c64a','']],
+      [[25,32,8.2,10.4,'#6b737b',''],[25.8,32.8,6.6,8.8,'#2a74bd',''],[28.6,33.2,1,8,'#e9c64a','nol'],[26.2,36.3,5.8,1,'#e9c64a','nol'],[26.6,42.4,5,1,'#6b737b','']],
+      [[24.6,31.4,9,11.4,'#e9c64a','glowb'],[25.4,32.2,7.4,9.8,'#f6f1ea',''],[28.2,33,1.8,1.8,'#b98bff',''],[26.4,35.6,1.4,3,'#7c5cff','nol'],[30.4,35.6,1.4,3,'#7c5cff','nol'],[27.8,38.6,2.6,1.6,'#7c5cff','nol'],[26.4,43,5.6,1.2,'#e9c64a',''],[24,34,1,1,TW,'nol twinkle'],[33.2,39,1,1,TW,'nol twinkle']]
+    ],
+    bow:[
+      [[29.6,28,1.1,2.6,'#b0885a',''],[30.4,30.4,1.1,9,'#b0885a',''],[29.6,39.2,1.1,2.6,'#b0885a',''],[29.2,28.6,.35,12.6,'#f3ece2','nol bowstring']],
+      [[29.4,26.5,1.5,3,'#8a5a3a',''],[30.6,29.5,1.5,11,'#8a5a3a',''],[29.4,40.5,1.5,3,'#8a5a3a',''],[29,27.5,.4,15,'#f3ece2','nol bowstring']],
+      [[28.4,25,1.4,1.6,'#3a2a2c',''],[29.4,26,1.6,3.4,'#5a3a22',''],[30.6,29.2,1.6,11.6,'#5a3a22',''],[29.4,40.6,1.6,3.4,'#5a3a22',''],[28.4,43.6,1.4,1.6,'#3a2a2c',''],[30.6,33.6,1.6,2.8,'#e9c64a','nol'],[29,26.6,.4,17,'#f3ece2','nol bowstring']],
+      [[28.2,24,1.6,2,'#e9c64a',''],[29.4,25.6,1.7,3.8,'#9ff3ff','glowb'],[30.8,29,1.8,12,'#9ff3ff','glowb'],[29.4,40.8,1.7,3.8,'#9ff3ff','glowb'],[28.2,44.2,1.6,2,'#e9c64a',''],[30.8,33.4,1.8,3.2,'#e9c64a','nol'],[29,26,.4,18,'#fff6b0','nol bowstring'],[32.6,27,1,1,TW,'nol twinkle'],[33,40,1,1,TW,'nol twinkle']]
+    ]
+  };
+  const wtParts = (gear, lv) => WT[gear][Math.max(0, Math.min(3, lv))].map(p => ['wpn', ...p]);
+  // silah parçalarından ikon üretir (dükkân ve seçim ekranı için)
+  function wIcon(gear, lv){
+    const ps = WT[gear][lv];
+    let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+    ps.forEach(([x,y,w,h]) => { x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x + w); y1 = Math.max(y1, y + h); });
+    const pad = .8, W = x1 - x0 + pad*2, H = y1 - y0 + pad*2, sz = Math.max(W, H);
+    const ox = x0 - pad - (sz - W)/2, oy = y0 - pad - (sz - H)/2;
+    const r = ps.map(([x,y,w,h,c,cls]) => (cls.includes('nol') ? '' : `<rect x="${x - .35}" y="${y - .35}" width="${w + .7}" height="${h + .7}" fill="#231c1f"/>`) + `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${c}"/>`);
+    const bg = ps.filter(p => !p[5].includes('nol')).map(p => r[ps.indexOf(p)].split('/>')[0] + '/>').join('');
+    const fg = ps.map(([x,y,w,h,c]) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${c}"/>`).join('');
+    return {svg:`<svg viewBox="${ox} ${oy} ${sz} ${sz}" shape-rendering="crispEdges">${bg}${fg}</svg>`, diag:(y1 - y0) > (x1 - x0)*2.5};
+  }
+  const wIconHtml = (gear, lv, cls) => { const ic = wIcon(gear, lv); return `<span class="${cls}${ic.diag ? ' diag' : ''}${lv >= 3 ? ' lv3' : ''}" aria-hidden="true">${ic.svg}</span>`; };
+
   // --- her karakterin kendi tarzı
   const STYLE = {
     Armor:   {walk:'stomp',   speed:.6,  blurb:'Slow robot. Laser eyes.',  specials:['laser','rocket'],
@@ -2154,12 +2226,13 @@
   };
 
   // --- ringe iniş ve ringin kurulumu
-  function makeFighter(name, gearKey, side){
+  function makeFighter(name, gearKey, side, lvl){
     const def = bots.find(x => x.name === name);
     const wrap = document.createElement('div'); wrap.className = 'fighter';
     const flip = document.createElement('div'); if (side > 0) flip.className = 'flip';
     wrap.appendChild(flip); ring.appendChild(wrap);
-    const b = build({name, act:'poke', parts:def.parts.concat(GEAR[gearKey].parts), sparks:def.sparks}, side > 0 ? 3 : 0, flip);
+    const b = build({name, act:'poke', parts:def.parts.concat(lvl == null ? GEAR[gearKey].parts : wtParts(gearKey, lvl)), sparks:def.sparks}, side > 0 ? 3 : 0, flip);
+    if (lvl >= 3 && b.g.wpn) b.g.wpn.classList.add('legend');
     b.el.setAttribute('aria-label', `Poke ${name}`);
     const f = {b, name, gear:gearKey, st:STYLE[name], side, face:side < 0 ? 1 : -1, wrap, x:0, pokes:[]};
     b.fighter = f;
@@ -2262,9 +2335,9 @@
      st:{walk:'fence', speed:1, enter:'Everything goes down eventually.', taunt:['Down only.','I\'m betting against you.','Short everything!'], hurt:['Margin call!','Squeezed!','Not the squeeze!']}, ko:'I got... short squeezed.'},
     {name:'Gas Goblin', base:'Goggles', gear:'bow', hp:115, ai:{kite:true, drain:12, power:.2},
      st:{walk:'glide', speed:1.1, enter:'Every move costs gas, friend.', taunt:['That\'ll be 20 gwei.','Pay the fee!','Priority fee, please.'], hurt:['Tx reverted!','Out of gas!','Nonce too low!']}, ko:'Transaction... failed.'},
-    {name:'The Whale', base:'Lavender', gear:'shield', hp:150, ai:{slow:true, power:.45, regen:10},
+    {name:'The Whale', base:'Lavender', gear:'shield', wlv:2, hp:150, ai:{slow:true, power:.45, regen:10},
      st:{walk:'stomp', speed:.7, enter:'Blub. I am very large.', taunt:['I move markets.','Splash!','You are liquidity.'], hurt:['A ripple!','My bags!','Blub!']}, ko:'Beached... again.'},
-    {name:'The Bear Market', base:'Honey', gear:'sword', hp:200, boss:true, scale:1.25, ai:{power:.35, crash:4},
+    {name:'The Bear Market', base:'Honey', gear:'sword', wlv:3, hp:200, boss:true, scale:1.25, ai:{power:.35, crash:4},
      recolor:{'#f0d44d':'#6b4a2c','#2b1e22':'#2a1414','#141112':'#140a0a','#3fd7ea':'#d8432d','#f3efe6':'#ffd2c2'},
      st:{walk:'stomp', speed:.9, enter:'ROAR. The market is closed.', taunt:['Everything is red.','Winter is here.','Capitulate!'], hurt:['A relief rally?!','Green candle?!','GRR!']}, ko:'Fine... bull run... it is.'}
   ];
@@ -2377,9 +2450,32 @@
     if (m.special) return mine(f) && (f.hype || 0) >= 100;
     return true;
   }
+  // iksir şişeleri (12x16 piksel)
+  const bottle = (c, lt, dk, mark) => svgPx('0 0 12 16', [[3,1,6,4,INK],[4,0,4,2,'#8a5a3a'],[4,2,4,2,'#cfe6f0'],[0,4,12,12,INK],[1,5,10,10,'#e8f6fb'],[1,8,10,7,c],[1,8,10,1,lt],[1,14,10,1,dk],[2,6,1,3,'#fff'],...mark]);
+  const BOTTLE = {
+    hp: bottle('#d8432d','#ff8a7a','#8c2f22', [[5,9,2,4,'#fff'],[4,10,4,2,'#fff']]),
+    en: bottle('#f5c542','#fff0a0','#c7901f', [[6,9,2,1,'#fff'],[5,10,2,1,'#fff'],[4,11,4,1,'#fff'],[5,12,2,1,'#fff']])
+  };
+  const potionsEl = document.getElementById('potions');
+  function buildPotions(){
+    potionsEl.innerHTML = '';
+    [['hpkit','hp','Health potion'],['enkit','en','Energy potion']].forEach(([k, kind, name]) => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'potion ' + kind; b.dataset.k = k;
+      b.title = `${name} (key ${MOVES[k].key})`;
+      b.innerHTML = `${BOTTLE[kind]}<span class="cnt"></span>`;
+      b.addEventListener('click', () => playerMove(k));
+      potionsEl.appendChild(b);
+    });
+  }
+  function placePotions(){ // oyuncu kartının hemen altına
+    const hudEl = hud.p.parentElement;
+    potionsEl.style.top = (hudEl.offsetTop + hud.p.offsetTop + hud.p.offsetHeight + 10) + 'px';
+  }
+  window.addEventListener('resize', placePotions);
   function buildActions(){
     actionsEl.innerHTML = '';
     Object.entries(MOVES).forEach(([k, m]) => {
+      if (m.kit) return; // iksirler ringin içinde
       const b = document.createElement('button'); b.type = 'button'; b.className = 'act' + (m.atk ? ' atk' : '') + (m.special ? ' sp' : ''); b.dataset.k = k;
       b.setAttribute('aria-label', m.label);
       b.innerHTML = `${m.kit ? '<span class="badge"></span>' : ''}<span class="ico" aria-hidden="true">${m.icon}</span><b>${m.label}</b><span class="pips" aria-hidden="true">${'<i></i>'.repeat(m.pips)}</span><kbd>${m.key}</kbd>`;
@@ -2394,6 +2490,14 @@
       const m = MOVES[b.dataset.k]; if (m.kit) b.querySelector('.badge').textContent = S.kits[m.kit];
       if (m.special) b.querySelector('b').textContent = (CHARS[S.char] || CHARS.Tux).short;
     });
+    potionsEl.querySelectorAll('.potion').forEach(b => {
+      const m = MOVES[b.dataset.k], n = S.kits[m.kit];
+      b.disabled = !myTurn || !canDo(G.p, b.dataset.k);
+      b.querySelector('.cnt').textContent = n;
+      b.classList.toggle('empty', n === 0); b.classList.toggle('wait', !myTurn);
+      b.setAttribute('aria-label', `${m.kit === 'hp' ? 'Health' : 'Energy'} potion, ${n} left`);
+    });
+    placePotions();
     turnTag.textContent = !G.on ? 'READY' : G.turn === 'p' ? 'YOUR TURN' : 'RIVAL TURN';
     turnTag.classList.toggle('enemy', G.turn !== 'p');
   }
@@ -2589,12 +2693,12 @@
       burst(pt, ['#7ee07a','#fff'], 12, 12, 600, true); play('heart');
       floaty(f.b, HEART, {n:3, size:4, dur:1200, y:10, spread:14});
       popText(`+${f.hp - before} HP`, {x:pt.x, y:pt.y - k*8}, '#7ee07a', 5.5);
-      log(`${f.name} patches up with a health kit.`);
+      log(`${f.name} drinks a red potion.`);
     } else {
       f.sta = Math.min(100, f.sta + KIT.en.sta);
       burst(pt, ['#ffe27a','#fff'], 12, 12, 600, true); play('charge');
       popText('+ENERGY', {x:pt.x, y:pt.y - k*8}, '#ffe27a', 5.5);
-      log(`${f.name} downs an energy kit.`);
+      log(`${f.name} drinks a yellow potion.`);
     }
     await f.b.rig.animate([{transform:T()},{transform:T(0,-k*5,0,1.05)},{transform:T()}],{duration:500}).finished;
     drawHud(); await wait(200);
@@ -2711,7 +2815,7 @@
   function clearRing(){ fighters.forEach(f => f.wrap.remove()); fighters = []; arenaBots = []; }
   function recolorParts(parts, map){ return parts.map(p => map[p[5]] ? [...p.slice(0,5), map[p[5]], p[6]] : p); }
   function makeRival(r){
-    const e = makeFighter(r.base, r.gear, 1);
+    const e = makeFighter(r.base, r.gear, 1, r.wlv == null ? 1 : r.wlv);
     if (r.recolor || r.scale){
       e.wrap.remove();
       const def = bots.find(x => x.name === r.base);
@@ -2719,7 +2823,8 @@
       const flip = document.createElement('div'); flip.className = 'flip';
       if (r.scale){ flip.style.scale = `-${r.scale} ${r.scale}`; flip.style.transformOrigin = '50% 100%'; }
       wrap.appendChild(flip); ring.appendChild(wrap);
-      const b = build({name:r.name, act:'poke', parts:recolorParts(def.parts, r.recolor || {}).concat(GEAR[r.gear].parts)}, 3, flip);
+      const b = build({name:r.name, act:'poke', parts:recolorParts(def.parts, r.recolor || {}).concat(wtParts(r.gear, r.wlv == null ? 1 : r.wlv))}, 3, flip);
+      if ((r.wlv || 0) >= 3 && b.g.wpn) b.g.wpn.classList.add('legend');
       Object.assign(e, {b, wrap}); b.fighter = e;
     }
     e.b.el.setAttribute('aria-label', `Poke ${r.name}`);
@@ -2764,7 +2869,7 @@
     document.getElementById('chooserTitle').textContent = 'Choose your weapon';
     document.getElementById('chooserSub').textContent = 'You keep it for the whole tournament. Lose, and you can pick again.';
     document.getElementById('fgrid').hidden = true; document.getElementById('wgrid').hidden = false; document.getElementById('sgrid').hidden = true; document.getElementById('chooserBackF').hidden = false;
-    turnTag.textContent = 'PICK A WEAPON'; hudPlayerIdle();
+    buildChooser(); turnTag.textContent = 'PICK A WEAPON'; hudPlayerIdle();
     const first = chooserEl.querySelector('.wpn'); if (first) setTimeout(() => first.focus(), 50);
   }
   function buildFighterGrid(){
@@ -2784,7 +2889,8 @@
     const g = document.getElementById('wgrid'); g.innerHTML = '';
     Object.entries(WEAPONS).forEach(([k, w]) => {
       const b = document.createElement('button'); b.type = 'button'; b.className = 'wpn';
-      b.innerHTML = `<span class="wi" aria-hidden="true">${w.icon}</span><b>${w.name}</b><small>${w.trait}</small>`;
+      const lv = S.up[k] || 0;
+      b.innerHTML = `${wIconHtml(k, lv, 'wi')}<b>${w.name}</b><small>${w.trait}</small><small class="stars">${'&#9733;'.repeat(lv)}${'&#9734;'.repeat(3 - lv)}</small>`;
       b.addEventListener('click', () => { G.weapon = k; showSponsorPick(); });
       g.appendChild(b);
     });
@@ -2798,7 +2904,7 @@
     if (old.length) await wait(380);
     if (tok !== G.tok) return;
     const r = RIVALS[G.stage];
-    const p = makeFighter(S.char, G.weapon, -1);
+    const p = makeFighter(S.char, G.weapon, -1, S.up[G.weapon] || 0);
     Object.assign(p, {name:S.char, st:STYLE[S.char], ko:CHARS[S.char].ko, hp:playerMax(), max:playerMax(), sta:100, hype:spon('HOOD') ? 35 : 0, game:true, ai:null});
     G.mom = {};
     const e = makeRival(r);
@@ -2841,20 +2947,21 @@
       st.appendChild(d);
     });
     const sh = document.getElementById('campShop'); sh.innerHTML = '';
-    const item = (icon, name, desc, price, can, onBuy, label) => {
+    const item = (icon, name, desc, price, can, onBuy, label, icls) => {
       const d = document.createElement('div'); d.className = 'item';
-      d.innerHTML = `<span class="ii" aria-hidden="true">${icon}</span><b>${name}</b><small>${desc}</small><button type="button" ${can ? '' : 'disabled'}>${label || (COIN + ' ' + price)}</button>`;
+      d.innerHTML = `<span class="ii${icls ? ' ' + icls : ''}" aria-hidden="true">${icon}</span><b>${name}</b><small>${desc}</small><button type="button" ${can ? '' : 'disabled'}>${label || (COIN + ' ' + price)}</button>`;
       d.querySelector('button').addEventListener('click', () => { if (!can) return; S.coins -= price; onBuy(); save(); drawCamp(); drawPurse(); play('clap'); });
       sh.appendChild(d);
     };
-    item(MOVES.hpkit.icon, 'Health kit', `Heals ${KIT.hp.heal} HP in a fight. You have ${S.kits.hp}/${KIT.max}.`, KIT.hp.price, S.coins >= KIT.hp.price && S.kits.hp < KIT.max, () => S.kits.hp++, S.kits.hp >= KIT.max ? 'Full' : null);
-    item(MOVES.enkit.icon, 'Energy kit', `Refills stamina in a fight. You have ${S.kits.en}/${KIT.max}.`, KIT.en.price, S.coins >= KIT.en.price && S.kits.en < KIT.max, () => S.kits.en++, S.kits.en >= KIT.max ? 'Full' : null);
+    item(BOTTLE.hp, 'Health potion', `Red bottle. Heals ${KIT.hp.heal} HP in a fight. You have ${S.kits.hp}/${KIT.max}.`, KIT.hp.price, S.coins >= KIT.hp.price && S.kits.hp < KIT.max, () => S.kits.hp++, S.kits.hp >= KIT.max ? 'Full' : null);
+    item(BOTTLE.en, 'Energy potion', `Yellow bottle. Refills stamina in a fight. You have ${S.kits.en}/${KIT.max}.`, KIT.en.price, S.coins >= KIT.en.price && S.kits.en < KIT.max, () => S.kits.en++, S.kits.en >= KIT.max ? 'Full' : null);
     const na = ARMORS[S.armor + 1];
     item(ARMOR_ICON, na ? na.name : ARMORS[S.armor].name, na ? `Armor: take less damage. Now: ${ARMORS[S.armor].name}.` : 'Best armor. You are a tank.', na ? na.price : 0, !!na && S.coins >= na.price, () => S.armor++, na ? null : 'Maxed');
     Object.entries(WEAPONS).forEach(([k, w]) => {
       const lv = S.up[k], price = UP_PRICE[lv];
       const stars = '<span class="stars">' + '&#9733;'.repeat(lv) + '&#9734;'.repeat(3 - lv) + '</span>';
-      item(w.icon, `${w.name} ${stars}`, lv < 3 ? `Sharpen it: more damage with the ${w.name.toLowerCase()}.` : 'Fully upgraded.', price, lv < 3 && S.coins >= price, () => S.up[k]++, lv >= 3 ? 'Maxed' : null);
+      const ic = wIcon(k, lv);
+      item(ic.svg, `${w.name} ${stars}`, lv < 3 ? (lv === 2 ? 'Last upgrade: it becomes legendary and glows.' : 'Upgrade it: more damage and a new look.') : 'Legendary. Fully upgraded.', price, lv < 3 && S.coins >= price, () => S.up[k]++, lv >= 3 ? 'Maxed' : null, (ic.diag ? 'diag' : '') + (lv >= 3 ? ' lv3' : ''));
     });
   }
   let campReturn = null, resetArm = false;
@@ -2895,7 +3002,7 @@
     const k = Object.keys(MOVES).find(x => MOVES[x].key === e.key);
     if (k) playerMove(k);
   });
-  buildActions(); buildChooser(); drawTape();
+  buildActions(); buildPotions(); buildChooser(); drawTape();
 
   function route(){
     const on = location.hash === '#arena';
