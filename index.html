@@ -266,6 +266,25 @@
     .hud{padding:0 6px;gap:6px} .card-hp{padding:4px 5px} .hp-name b{font-size:13px} .hp-name small{display:none}
     .turn-tag{font-size:11px;padding:3px 6px}
   }
+  /* ---- Karakter seçimi ve hype ---- */
+  .fgrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+  .fpick{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 4px;background:#fff;border:3px solid var(--line);box-shadow:3px 3px 0 var(--line);cursor:pointer;font:inherit;color:var(--ink)}
+  .fpick:hover:not(:disabled){background:#ffe3a3;translate:0 -2px}
+  .fpick:focus-visible{outline:3px dashed var(--ink);outline-offset:3px}
+  .fpick .mini{--mu:1.8px}
+  .fpick b{font-family:"Pixelify Sans", monospace;font-size:15px}
+  .fpick small{font-size:11px;color:var(--ink-soft);line-height:1.2}
+  .fpick .sp{font-family:"Pixelify Sans", monospace;font-size:11px;color:#7c5cff}
+  .fpick:disabled{cursor:not-allowed;background:#e9e3dc}
+  .fpick:disabled .mini{filter:brightness(0) opacity(.35)}
+  .fpick .lock{position:absolute;inset:auto 4px 6px 4px;font-size:11px;color:#b8402f;font-weight:700;line-height:1.2}
+  .fpick:disabled small,.fpick:disabled .sp{visibility:hidden}
+  .bar.hy{height:7px} .bar.hy i{background:linear-gradient(180deg,#d6c2ff,#8a5cff)}
+  .bar.hy.full{box-shadow:0 0 0 2px #ffd772,0 0 10px #b98bff;animation:hypefull .6s ease-in-out infinite alternate}
+  @keyframes hypefull{to{box-shadow:0 0 0 2px #fff3b0,0 0 16px #b98bff}}
+  .act.sp b{color:#7c5cff}
+  .act.sp:not(:disabled){background:#efe6ff;animation:hypefull .6s ease-in-out infinite alternate}
+  @media (max-width:640px){ .fgrid{grid-template-columns:repeat(3,minmax(0,1fr))} .fpick .mini{--mu:1.5px} }
   /* ---- Kamp ve dükkân ---- */
   .coin{display:inline-block;width:16px;height:16px;background:radial-gradient(circle at 40% 35%,#fff3b0 0 18%,#f5c542 20% 62%,#c7901f 64%);border:2px solid var(--line);border-radius:50%;vertical-align:-3px}
   .purse{display:flex;align-items:center;gap:8px;margin-left:auto;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:16px}
@@ -300,7 +319,7 @@
   .camp-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;color:var(--ink-soft)}
   .act .badge{position:absolute;top:4px;right:6px;font-family:"Pixelify Sans", monospace;font-size:12px;background:#3a2a2c;color:#fff;padding:0 5px;border-radius:2px}
   .act{position:relative}
-  .actions{grid-template-columns:repeat(9,minmax(0,1fr))}
+  .actions{grid-template-columns:repeat(10,minmax(0,1fr))}
   @media (max-width:640px){
     .stats{grid-template-columns:repeat(2,minmax(0,1fr))} .shop{grid-template-columns:1fr}
     .lvl-row{grid-template-columns:auto 1fr} .lvl-row small{grid-column:1 / -1}
@@ -463,14 +482,16 @@
       <div class="banners" aria-hidden="true"><i style="--c:#e0643a"></i><i style="--c:#2fb58f"></i><i style="--c:#7c5cff"></i><i style="--c:#f0d44d"></i><i style="--c:#2a74bd"></i><i style="--c:#ff5c86"></i></div>
       <div class="ring-hint watch-only" id="ringHint">Pick two fighters above</div>
       <div class="hud play-only" id="hud">
-        <div class="card-hp" id="hudP"><div class="hp-name"><b>Tux</b><small>Sword</small></div><div class="bar hp"><i></i><span></span></div><div class="bar st"><i></i><span></span></div></div>
+        <div class="card-hp" id="hudP"><div class="hp-name"><b>Tux</b><small>Sword</small></div><div class="bar hp"><i></i><span></span></div><div class="bar st"><i></i><span></span></div><div class="bar hy" title="Hype: fills up as you fight. Full = special move"><i></i></div></div>
         <div class="turn-tag" id="turnTag">YOUR TURN</div>
         <div class="card-hp r" id="hudE"><div class="hp-name"><b>?</b><small></small></div><div class="bar hp"><i></i><span></span></div><div class="bar st"><i></i><span></span></div></div>
       </div>
       <div class="chooser play-only" id="chooser" hidden>
-        <h3>Choose your weapon</h3>
-        <p>You keep it for the whole tournament. Lose, and you can pick again.</p>
-        <div class="wgrid" id="wgrid"></div>
+        <h3 id="chooserTitle">Choose your fighter</h3>
+        <p id="chooserSub">Win fights to unlock more of the folk.</p>
+        <div class="fgrid" id="fgrid"></div>
+        <div class="wgrid" id="wgrid" hidden></div>
+        <button class="btn" type="button" id="chooserBackF" hidden style="margin-top:12px;margin-right:8px">&larr; Change fighter</button>
         <button class="btn" type="button" id="chooserCamp" style="margin-top:12px">Visit camp first</button>
       </div>
       <div class="result play-only" id="result" hidden>
@@ -482,7 +503,7 @@
     </div>
     <div class="actions play-only" id="actions" role="group" aria-label="Your moves"></div>
     <p class="log play-only" id="log" aria-live="polite"></p>
-    <p class="arena-foot play-only">Tip: power strikes hit hard but miss a lot. Taunt to rattle your rival, rest to refill stamina. Keys 1 to 7 work too.</p>
+    <p class="arena-foot play-only">Tip: hitting, getting hit and taunting fill your purple Hype bar. When it glows, unleash your special. Keys 1 to 9 and 0 work too.</p>
     <p class="arena-foot watch-only">Gear is random every match: spear, shield, bow, dagger or sword. Specials recharge in a few seconds. Tap too much and they get grumpy. Nobody wins. Everybody gets bonked.</p>
   </div>
 </section>
@@ -2193,6 +2214,7 @@
     power:  {key:'5', label:'Power',   pips:3, sta:30, dmg:[16,22], acc:.75, atk:true, icon:I([[5,0,2,12,'#e0482a'],[0,5,12,2,'#e0482a'],[2,2,2,2,'#ff9a3a'],[8,2,2,2,'#ff9a3a'],[2,8,2,2,'#ff9a3a'],[8,8,2,2,'#ff9a3a'],[4,4,4,4,'#ffd772']])},
     taunt:  {key:'6', label:'Taunt',   pips:0, sta:0, icon:I([[1,1,10,7,INK],[2,2,8,5,'#fff'],[5,2,2,2,'#e0482a'],[5,5,2,1,'#e0482a'],[3,8,2,2,INK],[2,10,1,1,INK]])},
     rest:   {key:'7', label:'Rest',    pips:0, sta:0, icon:I([[1,1,6,1,'#5b7fd6'],[5,2,1,1,'#5b7fd6'],[4,3,1,1,'#5b7fd6'],[3,4,1,1,'#5b7fd6'],[2,5,1,1,'#5b7fd6'],[1,6,6,1,'#5b7fd6'],[7,7,4,1,'#8fa8e8'],[9,8,1,1,'#8fa8e8'],[8,9,1,1,'#8fa8e8'],[7,10,4,1,'#8fa8e8']])},
+    special:{key:'0', label:'Special', pips:0, sta:0, special:true, icon:I([[5,0,2,3,'#b98bff'],[0,4,12,3,'#b98bff'],[2,7,3,3,'#9a6cf0'],[7,7,3,3,'#9a6cf0'],[4,3,4,5,'#e6dcff'],[1,10,3,2,'#9a6cf0'],[8,10,3,2,'#9a6cf0']])},
     hpkit:  {key:'8', label:'Health', pips:0, sta:0, kit:'hp', icon:I([[1,2,10,9,INK],[2,3,8,7,'#f6f1ea'],[5,4,2,5,'#d8432d'],[3,5,6,2,'#d8432d'],[4,1,4,1,INK]])},
     enkit:  {key:'9', label:'Energy', pips:0, sta:0, kit:'en', icon:I([[3,0,6,2,INK],[2,2,8,10,INK],[3,3,6,8,'#ffe27a'],[6,4,2,2,'#e9b43a'],[5,6,2,2,'#e9b43a'],[4,8,2,2,'#e9b43a']])}
   };
@@ -2219,12 +2241,26 @@
      recolor:{'#f0d44d':'#6b4a2c','#2b1e22':'#2a1414','#141112':'#140a0a','#3fd7ea':'#d8432d','#f3efe6':'#ffd2c2'},
      st:{walk:'stomp', speed:.9, enter:'ROAR. The market is closed.', taunt:['Everything is red.','Winter is here.','Capitulate!'], hurt:['A relief rally?!','Green candle?!','GRR!']}, ko:'Fine... bull run... it is.'}
   ];
-  const PLAYER = {name:'Tux', hp:100, st:{...STYLE.Tux, hurt:['My suit!','How uncouth!','A mere scratch.']}, ko:'I shall... return... dressed better.'};
+  // oynanabilir karakterler: gizli küçük farklar + kendine özel yetenek
+  const CHARS = {
+    Tux:     {special:"Gentleman's Blitz", short:'Blitz',   blurb:'Balanced fencer',       mod:{},                               ko:'I shall... return... dressed better.'},
+    Honey:   {special:'Bee Swarm',         short:'Bees',    blurb:'Tough little bear',     mod:{hp:15, acc:.03},                 ko:'...need... honey...'},
+    Goggles: {special:'Time Freeze',       short:'Freeze',  blurb:'Precise, crits often',  mod:{acc:.06, crit:.04},              ko:'Recalculating... life choices.'},
+    Captain: {special:'Cannon Barrage',    short:'Cannons', blurb:'Hits hard',             mod:{hp:10, pow:.08},                 ko:'Abandon... ship...'},
+    Armor:   {special:'Mega Laser',        short:'Laser',   blurb:'Tanky robot',           mod:{hp:30, guard:.08, acc:-.03},     ko:'SYSTEM... SHUTDOWN.'}
+  };
+  const UNLOCKS = [
+    {name:'Honey',   req:'Beat stage 2',         ok:() => S.best >= 2},
+    {name:'Goggles', req:'Beat stage 4',         ok:() => S.best >= 4},
+    {name:'Captain', req:'Win a tournament',     ok:() => S.wins >= 1},
+    {name:'Armor',   req:'Win 2 tournaments',    ok:() => S.wins >= 2}
+  ];
+  const PLAYER = {hp:100};
   const G = {on:false, busy:false, turn:'p', p:null, e:null, tok:0, stage:0, weapon:null, round:0};
 
   // --- kalıcı ilerleme (tarayıcıda saklanır)
   const SAVE_KEY = 'vibefolk-save-v1';
-  const freshSave = () => ({coins:0, xp:0, level:1, points:0, stats:{pow:0, spd:0, grd:0, vit:0}, kits:{hp:1, en:1}, up:{sword:0, spear:0, dagger:0, shield:0, bow:0}, armor:0, best:0, wins:0});
+  const freshSave = () => ({coins:0, xp:0, level:1, points:0, stats:{pow:0, spd:0, grd:0, vit:0}, kits:{hp:1, en:1}, up:{sword:0, spear:0, dagger:0, shield:0, bow:0}, armor:0, best:0, wins:0, unlocked:['Tux'], char:'Tux'});
   let S = freshSave();
   try { const raw = localStorage.getItem(SAVE_KEY); if (raw) S = Object.assign(freshSave(), JSON.parse(raw)); } catch(e){}
   const save = () => { try { localStorage.setItem(SAVE_KEY, JSON.stringify(S)); } catch(e){} };
@@ -2234,11 +2270,17 @@
   const KIT = {hp:{name:'Health kit', heal:40, price:40}, en:{name:'Energy kit', sta:50, price:25}, max:3};
   // oyuncu için çarpanlar (rakipte hepsi nötr)
   const mine = f => f === G.p;
-  const dmgMult = f => mine(f) ? (1 + S.stats.pow*.04) * (1 + (S.up[f.gear] || 0)*.08) : 1;
-  const takenMult = f => mine(f) ? (1 - Math.min(.5, S.stats.grd*.03 + ARMORS[S.armor].cut)) : 1;
-  const accBonus = f => mine(f) ? S.stats.spd*.015 : 0;
-  const critBonus = f => mine(f) ? S.stats.spd*.01 : 0;
-  const playerMax = () => 100 + S.stats.vit*8;
+  const cmod = () => (CHARS[S.char] || CHARS.Tux).mod;
+  const dmgMult = f => mine(f) ? (1 + S.stats.pow*.04 + (cmod().pow || 0)) * (1 + (S.up[f.gear] || 0)*.08) : 1;
+  const takenMult = f => mine(f) ? (1 - Math.min(.5, S.stats.grd*.03 + ARMORS[S.armor].cut + (cmod().guard || 0))) : 1;
+  const accBonus = f => mine(f) ? S.stats.spd*.015 + (cmod().acc || 0) : 0;
+  const critBonus = f => mine(f) ? S.stats.spd*.01 + (cmod().crit || 0) : 0;
+  const playerMax = () => 100 + S.stats.vit*8 + (cmod().hp || 0);
+  function checkUnlocks(){
+    const fresh = UNLOCKS.filter(x => !S.unlocked.includes(x.name) && x.ok()).map(x => x.name);
+    if (fresh.length){ S.unlocked.push(...fresh); save(); }
+    return fresh;
+  }
   function grant(coins, xp){
     S.coins += coins; S.xp += xp;
     let ups = 0;
@@ -2269,6 +2311,9 @@
       el.querySelector('.hp').classList.toggle('low', hpPct < 30);
       el.querySelector('.st i').style.width = Math.max(0, f.sta) + '%';
     });
+    const hy = hud.p.querySelector('.hy');
+    hy.querySelector('i').style.width = Math.min(100, G.p.hype || 0) + '%';
+    hy.classList.toggle('full', (G.p.hype || 0) >= 100);
   }
   function drawStages(){
     const s = G.stage, r = RIVALS[s];
@@ -2289,12 +2334,13 @@
     if (k === 'back'){ const c = f.col - f.face; return c >= 0 && c < COLS; }
     if (k === 'rest') return f.sta < 100;
     if (m.kit) return mine(f) && S.kits[m.kit] > 0 && (m.kit === 'hp' ? f.hp < f.max : f.sta < 100);
+    if (m.special) return mine(f) && (f.hype || 0) >= 100;
     return true;
   }
   function buildActions(){
     actionsEl.innerHTML = '';
     Object.entries(MOVES).forEach(([k, m]) => {
-      const b = document.createElement('button'); b.type = 'button'; b.className = 'act' + (m.atk ? ' atk' : ''); b.dataset.k = k;
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'act' + (m.atk ? ' atk' : '') + (m.special ? ' sp' : ''); b.dataset.k = k;
       b.setAttribute('aria-label', m.label);
       b.innerHTML = `${m.kit ? '<span class="badge"></span>' : ''}<span class="ico" aria-hidden="true">${m.icon}</span><b>${m.label}</b><span class="pips" aria-hidden="true">${'<i></i>'.repeat(m.pips)}</span><kbd>${m.key}</kbd>`;
       b.addEventListener('click', () => playerMove(k));
@@ -2306,6 +2352,7 @@
     actionsEl.querySelectorAll('.act').forEach(b => {
       b.disabled = !myTurn || !canDo(G.p, b.dataset.k);
       const m = MOVES[b.dataset.k]; if (m.kit) b.querySelector('.badge').textContent = S.kits[m.kit];
+      if (m.special) b.querySelector('b').textContent = (CHARS[S.char] || CHARS.Tux).short;
     });
     turnTag.textContent = !G.on ? 'READY' : G.turn === 'p' ? 'YOUR TURN' : 'RIVAL TURN';
     turnTag.classList.toggle('enemy', G.turn !== 'p');
@@ -2347,6 +2394,7 @@
       popText('MISS', {x:pt.x, y:pt.y - k2*6}, '#d9d0c7', 5);
       speak(def.b, pick(DODGE), 900);
       log(`${att.name} swings... and misses.`);
+      if (mine(att)) addHype(5);
       await wait(450); return;
     }
     let dmg = rnd(m.dmg[0], m.dmg[1]) + (k === 'quick' ? (wa.quickBonus || 0) : 0);
@@ -2354,6 +2402,7 @@
     if (crit) dmg *= 1.6;
     dmg = Math.max(1, Math.round(dmg));
     def.hp -= dmg;
+    if (mine(att)) addHype(k === 'power' ? 20 : 14); else if (mine(def)) addHype(10);
     play('bonk'); hitFlash(def); cheer(k === 'power' || crit ? 1400 : 700);
     if (k === 'quick' || ranged) burst(pt, ['#fff','#ff9a8a'], 6, 7, 300); else slashArc(pt, -25, k === 'power' ? 24 : 18);
     burst(pt, ['#fff','#ffd772'], k === 'power' ? 14 : 8, 11);
@@ -2385,6 +2434,7 @@
     f.b.g.armL.animate([{transform:'rotate(0)'},{transform:'rotate(-150deg)'},{transform:'rotate(-120deg)'},{transform:'rotate(-150deg)'},{transform:'rotate(0)'}],{duration:900});
     f.b.rig.animate([{transform:T()},{transform:T(0,-k*4)},{transform:T()},{transform:T(0,-k*4)},{transform:T()}],{duration:900});
     o.shaken = true; f.pumped = true;
+    if (mine(f)) addHype(20);
     popText('RATTLED', {x:headPt(o).x, y:headPt(o).y - k*10}, '#bfa6ff', 4.5);
     log(`${f.name} taunts. ${o.name} is rattled.`);
     await wait(950);
@@ -2397,6 +2447,33 @@
     popText('+STA', {x:headPt(f).x, y:headPt(f).y - k*8}, '#ffe27a', 4.5);
     log(`${f.name} catches a breath.`);
     drawHud(); await wait(250);
+  }
+  function addHype(n){
+    if (!G.p) return;
+    const was = G.p.hype || 0;
+    G.p.hype = Math.min(100, was + n);
+    if (was < 100 && G.p.hype >= 100){ popText('HYPE!', {x:headPt(G.p).x, y:headPt(G.p).y - u(G.p.b)*14}, '#d6c2ff', 5.5); cheer(1200); }
+  }
+  async function specialMove(f, o){
+    const C = CHARS[S.char] || CHARS.Tux;
+    f.hype = 0; drawHud();
+    const hpBefore = o.hp;
+    await ULT[S.char](f, o);
+    const R = (a, b) => Math.round(rnd(a, b) * dmgMult(f));
+    let dmg = 0;
+    if (S.char === 'Tux') for (let i = 0; i < 6; i++) dmg += R(5, 7);
+    else if (S.char === 'Honey'){ dmg = R(18, 24); o.skip = 1; o.skipTag = 'PANIC!'; }
+    else if (S.char === 'Goggles'){ dmg = R(7, 9); o.skip = 2; o.skipTag = 'FROZEN'; }
+    else if (S.char === 'Captain') for (let i = 0; i < 3; i++) dmg += Math.random() < .85 ? R(10, 14) : 0;
+    else dmg = R(30, 40);
+    o.hp = hpBefore - dmg;
+    const pt = headPt(o);
+    popText(`-${dmg}`, {x:pt.x, y:pt.y - u(o.b)*4}, '#e6dcff', 9);
+    if (o.skip) setTimeout(() => popText(o.skipTag, {x:pt.x, y:pt.y - u(o.b)*16}, '#bfe6ff', 5), 350);
+    log(`${f.name} unleashes ${C.special} for ${dmg}!${o.skip ? ` ${o.name} will lose ${o.skip > 1 ? 'two turns' : 'a turn'}.` : ''}`);
+    // özel hareketler dövüşçüleri kaydırabilir: sütunlarına geri dönsünler
+    await Promise.all([moveTo(f, colX(f, f.col), 350), moveTo(o, colX(o, o.col), 350)]);
+    drawHud(); await wait(300);
   }
   async function kitMove(f, kind){
     const k = u(f.b), pt = headPt(f);
@@ -2425,6 +2502,7 @@
     else if (k === 'taunt') await tauntMove(f, o);
     else if (k === 'rest') await restMove(f);
     else if (MOVES[k].kit) await kitMove(f, MOVES[k].kit);
+    else if (MOVES[k].special) await specialMove(f, o);
     drawHud();
   }
 
@@ -2455,6 +2533,16 @@
     if (await checkEnd()) return;
     G.turn = 'e'; refreshActions();
     await wait(450); if (tok !== G.tok) return;
+    if (G.e.skip > 0){ // panik ya da donma: rakip sırasını kaçırır
+      G.e.skip--;
+      popText(G.e.skipTag, {x:headPt(G.e).x, y:headPt(G.e).y - u(G.e.b)*10}, '#bfe6ff', 5);
+      speak(G.e.b, G.e.skipTag === 'FROZEN' ? '...' : pick(['AAAH BEES!','Get them off!']), 900);
+      log(`${G.e.name} loses the turn.`);
+      await wait(800); if (tok !== G.tok) return;
+      G.round++; G.p.sta = Math.min(100, G.p.sta + 6);
+      G.turn = 'p'; G.busy = false; drawHud(); refreshActions();
+      return;
+    }
     G.e.sta = Math.min(100, G.e.sta + (G.e.ai.regen || 6));
     await runMove(G.e, rivalChoice());
     if (tok !== G.tok) return;
@@ -2490,7 +2578,9 @@
     if (win){ S.best = Math.max(S.best, G.stage + 1); if (last) S.wins++; }
     else S.kits.hp = Math.max(S.kits.hp, 1); // yeni tura en az bir can kitiyle başla
     const ups = grant(coins, xp);
-    const reward = `+${coins} ${COIN} &nbsp; +${xp} XP${ups ? ` &nbsp; LEVEL UP! +${ups*3} skill points` : ''}`;
+    const fresh = checkUnlocks();
+    const reward = `+${coins} ${COIN} &nbsp; +${xp} XP${ups ? ` &nbsp; LEVEL UP! +${ups*3} skill points` : ''}${fresh.length ? `<br>NEW FIGHTER UNLOCKED: ${fresh.join(', ')}!` : ''}`;
+    if (fresh.length) setTimeout(() => banner('NEW FIGHTER!', 1400), 200);
     await banner(win ? (last ? 'CHAMPION!' : 'VICTORY!') : 'K.O.', 1200);
     if (!win){
       showResult('lose', 'DEFEATED', `${G.e.name} knocked you out at ${RIVALS[G.stage].boss ? 'the boss fight' : 'stage ' + (G.stage + 1)}. Start a new run. Maybe try a different weapon?`, 'New run', startTournament, reward);
@@ -2529,24 +2619,56 @@
 
   // --- turnuva akışı
   function startTournament(){
-    G.tok++; matchTok++; G.on = false; G.busy = true; G.stage = 0; G.weapon = null;
+    G.tok++; matchTok++; G.on = false; G.busy = true; G.stage = 0; G.weapon = null; G.p = null;
+    if (!S.unlocked.includes(S.char)) S.char = 'Tux';
     resultEl.hidden = true; clearRing(); log('');
     drawStages();
-    // Tux ringde bekler, silah seçilir
-    const p = makeFighter(PLAYER.name, 'sword', -1);
-    p.b.g.wpn && (p.b.g.wpn.style.visibility = 'hidden');
-    Object.assign(p, {name:PLAYER.name, st:PLAYER.st, game:true});
-    fighters = [p]; arenaBots = [p.b];
-    place(p, ring.clientWidth/2 - bwOf(p)/2);
-    drop(p);
-    chooserEl.hidden = false;
-    turnTag.textContent = 'PICK A WEAPON';
-    [['p', {hp:100, max:100, sta:100}], ['e', {hp:0, max:1, sta:0}]].forEach(([k, f]) => { hud[k].querySelector('.hp i').style.width = (f.hp/f.max*100) + '%'; hud[k].querySelector('.hp span').textContent = k === 'p' ? `${playerMax()} / ${playerMax()}` : '?'; hud[k].querySelector('.st i').style.width = f.sta + '%'; });
-    hud.p.querySelector('b').textContent = 'Tux'; hud.p.querySelector('small').textContent = '';
     hud.e.querySelector('b').textContent = RIVALS[0].name; hud.e.querySelector('small').textContent = '';
-    refreshActions(); turnTag.textContent = 'PICK A WEAPON';
+    hud.e.querySelector('.hp i').style.width = '0%'; hud.e.querySelector('.hp span').textContent = '?'; hud.e.querySelector('.st i').style.width = '0%';
+    showFighterPick();
+  }
+  function hudPlayerIdle(){
+    hud.p.querySelector('b').textContent = S.char; hud.p.querySelector('small').textContent = G.weapon ? WEAPONS[G.weapon].name : '';
+    hud.p.querySelector('.hp i').style.width = '100%'; hud.p.querySelector('.hp span').textContent = `${playerMax()} / ${playerMax()}`;
+    hud.p.querySelector('.st i').style.width = '100%'; hud.p.querySelector('.hy i').style.width = '0%'; hud.p.querySelector('.hy').classList.remove('full');
+  }
+  function dropIdle(name){ // seçilen karakter ringde bekler
+    clearRing();
+    const p = makeFighter(name, 'sword', -1);
+    if (p.b.g.wpn) p.b.g.wpn.style.visibility = 'hidden';
+    Object.assign(p, {name, st:STYLE[name], game:true});
+    fighters = [p]; arenaBots = [p.b];
+    place(p, ring.clientWidth/2 - bwOf(p)/2); drop(p);
+  }
+  function showFighterPick(){
+    document.getElementById('chooserTitle').textContent = 'Choose your fighter';
+    document.getElementById('chooserSub').textContent = 'Win fights to unlock more of the folk.';
+    document.getElementById('fgrid').hidden = false; document.getElementById('wgrid').hidden = true; document.getElementById('chooserBackF').hidden = true;
+    buildFighterGrid();
+    chooserEl.hidden = false; refreshActions(); turnTag.textContent = 'PICK A FIGHTER';
+    hudPlayerIdle();
+    const first = chooserEl.querySelector('.fpick:not(:disabled)'); if (first) setTimeout(() => first.focus(), 50);
+  }
+  function showWeaponPick(){
+    document.getElementById('chooserTitle').textContent = 'Choose your weapon';
+    document.getElementById('chooserSub').textContent = 'You keep it for the whole tournament. Lose, and you can pick again.';
+    document.getElementById('fgrid').hidden = true; document.getElementById('wgrid').hidden = false; document.getElementById('chooserBackF').hidden = false;
+    turnTag.textContent = 'PICK A WEAPON'; hudPlayerIdle();
     const first = chooserEl.querySelector('.wpn'); if (first) setTimeout(() => first.focus(), 50);
   }
+  function buildFighterGrid(){
+    const g = document.getElementById('fgrid'); g.innerHTML = '';
+    Object.entries(CHARS).forEach(([name, c]) => {
+      const open = S.unlocked.includes(name), lock = UNLOCKS.find(x => x.name === name);
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'fpick'; b.disabled = !open;
+      const tmp = document.createElement('div'); build({name, act:'poke', parts:bots.find(x => x.name === name).parts}, 0, tmp);
+      b.innerHTML = `<div class="mini">${tmp.querySelector('.bob').outerHTML}</div><b>${name}</b><small>${c.blurb}</small><span class="sp">${c.special}</span>${open ? '' : `<span class="lock">&#128274; ${lock.req}</span>`}`;
+      b.setAttribute('aria-label', open ? `${name}, ${c.blurb}, special: ${c.special}` : `${name} is locked. ${lock.req} to unlock.`);
+      if (open) b.addEventListener('click', () => { S.char = name; save(); dropIdle(name); showWeaponPick(); });
+      g.appendChild(b);
+    });
+  }
+  document.getElementById('chooserBackF').addEventListener('click', showFighterPick);
   function buildChooser(){
     const g = document.getElementById('wgrid'); g.innerHTML = '';
     Object.entries(WEAPONS).forEach(([k, w]) => {
@@ -2565,13 +2687,14 @@
     if (old.length) await wait(380);
     if (tok !== G.tok) return;
     const r = RIVALS[G.stage];
-    const p = makeFighter(PLAYER.name, G.weapon, -1);
-    Object.assign(p, {name:PLAYER.name, st:PLAYER.st, ko:PLAYER.ko, hp:playerMax(), max:playerMax(), sta:100, game:true, ai:null});
+    const p = makeFighter(S.char, G.weapon, -1);
+    Object.assign(p, {name:S.char, st:STYLE[S.char], ko:CHARS[S.char].ko, hp:playerMax(), max:playerMax(), sta:100, hype:0, game:true, ai:null});
     const e = makeRival(r);
     { const W = ring.clientWidth, w = bwOf(p), pad = W*.035; COLS = Math.max(4, Math.min(8, Math.floor((W - 2*pad - w)/(w*.9)) + 1)); }
     p.col = 0; e.col = COLS - 1;
     fighters = [p, e]; arenaBots = [p.b, e.b]; G.p = p; G.e = e;
     hud.p.querySelector('b').textContent = p.name; hud.p.querySelector('small').textContent = WEAPONS[p.gear].name;
+    refreshActions();
     hud.e.querySelector('b').textContent = e.name; hud.e.querySelector('small').textContent = r.boss ? 'BOSS' : WEAPONS[e.gear].name;
     place(p, colX(p, p.col)); place(e, colX(e, e.col));
     drawHud(); refreshActions(); log('');
@@ -2627,6 +2750,7 @@
     campEl.hidden = true; refreshActions();
     // kamptayken can özelliği arttıysa ringde bekleyen oyuncuya yansısın
     if (G.p && !G.on && fighters.includes(G.p)){ G.p.max = playerMax(); G.p.hp = G.p.max; }
+    if (!G.p && !chooserEl.hidden) hudPlayerIdle();
     if (G.p && fighters.includes(G.p)) drawHud();
     if (campReturn) campReturn.focus();
   }
