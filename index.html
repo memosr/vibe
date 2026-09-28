@@ -135,7 +135,7 @@
   .mini .rig,.mini .bob{position:absolute;inset:0}
   .pick b{font-family:"Pixelify Sans", monospace;font-size:16px}
   .pick small{font-size:12px;color:var(--ink-soft);text-align:center;line-height:1.2}
-  .ring{position:relative;overflow:hidden;height:calc(var(--u)*100);border:3px solid var(--line);box-shadow:6px 6px 0 var(--line);background:#c4a987;isolation:isolate}
+  .ring{position:relative;overflow:hidden;overflow:clip;height:calc(var(--u)*100);border:3px solid var(--line);box-shadow:6px 6px 0 var(--line);background:#c4a987;isolation:isolate}
   .ring::after{content:"";position:absolute;inset:0;z-index:8;pointer-events:none;box-shadow:inset 0 0 calc(var(--u)*14) rgba(40,20,10,.35)}
   .stands{position:absolute;inset:0 0 auto 0;height:calc(var(--u)*22);background:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' shape-rendering='crispEdges'%3E%3Crect width='16' height='16' fill='%234a332c'/%3E%3Crect y='7' width='16' height='2' fill='%235c4036'/%3E%3Crect y='15' width='16' height='1' fill='%233a2722'/%3E%3C/svg%3E") 0 0/calc(var(--u)*8) calc(var(--u)*8);z-index:0}
   .fan{position:absolute;width:calc(var(--u)*5);height:calc(var(--u)*5);background:var(--c);box-shadow:0 0 0 2px #2a1c18;animation:fan 1.4s ease-in-out infinite;animation-delay:var(--d)}
@@ -329,6 +329,14 @@
   .wi.diag svg,.ii.diag svg{rotate:38deg;scale:1.3}
   @media (max-width:640px){ .potions{left:6px;gap:8px} .potion{width:36px;height:46px;padding:3px 4px} .potion .cnt{min-width:18px;height:18px;font-size:11px;right:-7px;top:-7px} }
   @media (prefers-reduced-motion: reduce){ .g-wpn.legend,.px.twinkle,.wi.lv3 svg,.ii.lv3 svg{animation:none} }
+  .dpad{position:absolute;left:12px;bottom:12px;z-index:8;display:flex;gap:8px}
+  .dbtn{display:grid;place-items:center;width:54px;height:54px;padding:8px;background:rgba(246,241,234,.92);border:3px solid var(--line);box-shadow:3px 3px 0 var(--line);cursor:pointer}
+  .dbtn svg{display:block;width:100%;height:100%}
+  .dbtn:not(:disabled):hover{background:#fff;translate:0 -2px}
+  .dbtn:not(:disabled):active{translate:2px 2px;box-shadow:1px 1px 0 var(--line)}
+  .dbtn:focus-visible{outline:3px dashed var(--ink);outline-offset:3px}
+  .dbtn:disabled{cursor:not-allowed} .dbtn:disabled svg{opacity:.3}
+  @media (max-width:640px){ .dpad{left:6px;bottom:6px;gap:6px} .dbtn{width:40px;height:40px;padding:6px} }
   /* ---- Kamp ve dükkân ---- */
   .coin{display:inline-block;width:16px;height:16px;background:radial-gradient(circle at 40% 35%,#fff3b0 0 18%,#f5c542 20% 62%,#c7901f 64%);border:2px solid var(--line);border-radius:50%;vertical-align:-3px}
   .purse{display:flex;align-items:center;gap:8px;margin-left:auto;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:16px}
@@ -363,13 +371,13 @@
   .camp-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;color:var(--ink-soft)}
   .act .badge{position:absolute;top:4px;right:6px;font-family:"Pixelify Sans", monospace;font-size:12px;background:#3a2a2c;color:#fff;padding:0 5px;border-radius:2px}
   .act{position:relative}
-  .actions{grid-template-columns:repeat(8,minmax(0,1fr))}
+  .actions{grid-template-columns:repeat(6,minmax(0,1fr))}
   @media (max-width:640px){
     .stats{grid-template-columns:repeat(2,minmax(0,1fr))} .shop{grid-template-columns:1fr}
     .lvl-row{grid-template-columns:auto 1fr} .lvl-row small{grid-column:1 / -1}
     .camp-card{padding:12px}
     .purse{font-size:13px}
-    .actions{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .actions{grid-template-columns:repeat(3,minmax(0,1fr))}
   }
   /* ---- Arena flamaları ---- */
   .pennant{display:none}
@@ -535,6 +543,7 @@
       </div>
       <div class="mkt-toast play-only" id="mktToast" hidden aria-live="polite"></div>
       <div class="potions play-only" id="potions" role="group" aria-label="Potions"></div>
+      <div class="dpad play-only" id="dpad" role="group" aria-label="Move"></div>
       <div class="chooser play-only" id="chooser" hidden>
         <h3 id="chooserTitle">Choose your fighter</h3>
         <p id="chooserSub">Win fights to unlock more of the folk.</p>
@@ -553,7 +562,7 @@
     </div>
     <div class="actions play-only" id="actions" role="group" aria-label="Your moves"></div>
     <p class="log play-only" id="log" aria-live="polite"></p>
-    <p class="arena-foot play-only">Tip: hitting, getting hit and taunting fill your purple Hype bar. When it glows, unleash your special. Keys 1 to 9 and 0 work too.</p>
+    <p class="arena-foot play-only">Tip: hitting, getting hit and taunting fill your purple Hype bar. When it glows, unleash your special. Move with the arrow buttons or arrow keys.</p>
     <p class="arena-foot watch-only">Gear is random every match: spear, shield, bow, dagger or sword. Specials recharge in a few seconds. Tap too much and they get grumpy. Nobody wins. Everybody gets bonked.</p>
   </div>
 </section>
@@ -1483,8 +1492,8 @@
     }
   }
 
-  function openModal(){ lastFocus = document.activeElement; modal.hidden = false; document.getElementById('gifDl').focus(); }
-  function closeModal(){ modal.hidden = true; if (lastFocus) lastFocus.focus(); }
+  function openModal(){ lastFocus = document.activeElement; modal.hidden = false; document.getElementById('gifDl').focus({preventScroll:true}); }
+  function closeModal(){ modal.hidden = true; if (lastFocus) lastFocus.focus({preventScroll:true}); }
   // Claude önizlemesinde "downloads" izniyle, normal sitede (Vercel) klasik indirme bağlantısıyla kaydet
   let dlApi;
   const getDownloads = async () => {
@@ -2307,8 +2316,8 @@
   const I = (rects) => svgPx('0 0 12 12', rects);
   const INK = '#231c1f';
   const MOVES = {
-    fwd:    {key:'1', label:'Advance', pips:0, sta:4, icon:I([[1,5,6,2,INK],[7,2,1,8,INK],[8,3,1,6,INK],[9,4,1,4,INK],[10,5,1,2,INK]])},
-    back:   {key:'2', label:'Retreat', pips:0, sta:4, icon:I([[5,5,6,2,INK],[4,2,1,8,INK],[3,3,1,6,INK],[2,4,1,4,INK],[1,5,1,2,INK]])},
+    fwd:    {key:'1', move:true, label:'Advance', pips:0, sta:4, icon:I([[1,5,6,2,INK],[7,2,1,8,INK],[8,3,1,6,INK],[9,4,1,4,INK],[10,5,1,2,INK]])},
+    back:   {key:'2', move:true, label:'Retreat', pips:0, sta:4, icon:I([[5,5,6,2,INK],[4,2,1,8,INK],[3,3,1,6,INK],[2,4,1,4,INK],[1,5,1,2,INK]])},
     quick:  {key:'3', label:'Quick',   pips:1, sta:10, dmg:[5,8],   acc:1,   atk:true, icon:I([[6,0,3,2,'#e9b43a'],[5,2,3,2,'#e9b43a'],[3,4,6,2,'#f5c542'],[6,6,3,2,'#e9b43a'],[5,8,2,2,'#e9b43a'],[4,10,2,2,'#e9b43a']])},
     strike: {key:'4', label:'Strike',  pips:2, sta:18, dmg:[9,13],  acc:.9,  atk:true, icon:I([[5,0,2,7,'#9aa3ad'],[6,0,1,7,'#dfe4ea'],[3,7,6,1,'#e9b43a'],[5,8,2,3,'#6b4a2c'],[4,11,4,1,'#e9b43a']])},
     power:  {key:'5', label:'Power',   pips:3, sta:30, dmg:[16,22], acc:.75, atk:true, icon:I([[5,0,2,12,'#e0482a'],[0,5,12,2,'#e0482a'],[2,2,2,2,'#ff9a3a'],[8,2,2,2,'#ff9a3a'],[2,8,2,2,'#ff9a3a'],[8,8,2,2,'#ff9a3a'],[4,4,4,4,'#ffd772']])},
@@ -2349,11 +2358,12 @@
     Captain: {special:'Cannon Barrage',    short:'Cannons', blurb:'Hits hard',             mod:{hp:10, pow:.08},                 ko:'Abandon... ship...'},
     Armor:   {special:'Mega Laser',        short:'Laser',   blurb:'Tanky robot',           mod:{hp:30, guard:.08, acc:-.03},     ko:'SYSTEM... SHUTDOWN.'}
   };
+  // her turnuva zaferi sıradaki tek karakteri açar
   const UNLOCKS = [
-    {name:'Honey',   req:'Beat stage 2',         ok:() => S.best >= 2},
-    {name:'Goggles', req:'Beat stage 4',         ok:() => S.best >= 4},
-    {name:'Captain', req:'Win a tournament',     ok:() => S.wins >= 1},
-    {name:'Armor',   req:'Win 2 tournaments',    ok:() => S.wins >= 2}
+    {name:'Honey',   req:'Win 1 tournament',  ok:() => S.wins >= 1},
+    {name:'Goggles', req:'Win 2 tournaments', ok:() => S.wins >= 2},
+    {name:'Captain', req:'Win 3 tournaments', ok:() => S.wins >= 3},
+    {name:'Armor',   req:'Win 4 tournaments', ok:() => S.wins >= 4}
   ];
   const PLAYER = {hp:100};
   const G = {on:false, busy:false, turn:'p', p:null, e:null, tok:0, stage:0, weapon:null, round:0, sponsor:null, mom:{}};
@@ -2390,10 +2400,14 @@
   const critBonus = f => mine(f) ? S.stats.spd*.01 + (cmod().crit || 0) + (spon('TSLA') ? .05 : 0) : 0;
   const playerMax = () => 100 + S.stats.vit*8 + (cmod().hp || 0);
   function checkUnlocks(){
-    const fresh = UNLOCKS.filter(x => !S.unlocked.includes(x.name) && x.ok()).map(x => x.name);
-    if (fresh.length){ S.unlocked.push(...fresh); save(); }
+    const should = ['Tux', ...UNLOCKS.filter(x => x.ok()).map(x => x.name)];
+    const fresh = should.filter(n => !S.unlocked.includes(n));
+    S.unlocked = should; // eski kurala göre fazladan açılanlar yeniden kilitlenir
+    if (!S.unlocked.includes(S.char)) S.char = 'Tux';
+    save();
     return fresh;
   }
+  checkUnlocks();
   function grant(coins, xp){
     S.coins += coins; S.xp += xp;
     let ups = 0;
@@ -2467,6 +2481,17 @@
       potionsEl.appendChild(b);
     });
   }
+  const dpadEl = document.getElementById('dpad');
+  function buildPad(){
+    dpadEl.innerHTML = '';
+    [['back','Move left (retreat)'],['fwd','Move right (advance)']].forEach(([k, label]) => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'dbtn'; b.dataset.k = k;
+      b.setAttribute('aria-label', label); b.title = `${label}. Arrow key or ${MOVES[k].key}`;
+      b.innerHTML = MOVES[k].icon;
+      b.addEventListener('click', () => playerMove(k));
+      dpadEl.appendChild(b);
+    });
+  }
   function placePotions(){ // oyuncu kartının hemen altına
     const hudEl = hud.p.parentElement;
     potionsEl.style.top = (hudEl.offsetTop + hud.p.offsetTop + hud.p.offsetHeight + 10) + 'px';
@@ -2475,7 +2500,7 @@
   function buildActions(){
     actionsEl.innerHTML = '';
     Object.entries(MOVES).forEach(([k, m]) => {
-      if (m.kit) return; // iksirler ringin içinde
+      if (m.kit || m.move) return; // iksirler ve hareket okları ringin içinde
       const b = document.createElement('button'); b.type = 'button'; b.className = 'act' + (m.atk ? ' atk' : '') + (m.special ? ' sp' : ''); b.dataset.k = k;
       b.setAttribute('aria-label', m.label);
       b.innerHTML = `${m.kit ? '<span class="badge"></span>' : ''}<span class="ico" aria-hidden="true">${m.icon}</span><b>${m.label}</b><span class="pips" aria-hidden="true">${'<i></i>'.repeat(m.pips)}</span><kbd>${m.key}</kbd>`;
@@ -2490,6 +2515,7 @@
       const m = MOVES[b.dataset.k]; if (m.kit) b.querySelector('.badge').textContent = S.kits[m.kit];
       if (m.special) b.querySelector('b').textContent = (CHARS[S.char] || CHARS.Tux).short;
     });
+    dpadEl.querySelectorAll('.dbtn').forEach(b => { b.disabled = !myTurn || !canDo(G.p, b.dataset.k); });
     potionsEl.querySelectorAll('.potion').forEach(b => {
       const m = MOVES[b.dataset.k], n = S.kits[m.kit];
       b.disabled = !myTurn || !canDo(G.p, b.dataset.k);
@@ -2636,7 +2662,7 @@
       g.appendChild(b);
     });
     turnTag.textContent = 'PICK A SPONSOR';
-    setTimeout(() => { const f = g.querySelector('.wpn'); if (f) f.focus(); }, 50);
+    setTimeout(() => { const f = g.querySelector('.wpn'); if (f) f.focus({preventScroll:true}); }, 50);
   }
   function drawPortfolio(){
     const el = document.getElementById('campPort'); el.innerHTML = '';
@@ -2770,7 +2796,7 @@
     document.getElementById('resTitle').textContent = title;
     document.getElementById('resText').textContent = text;
     const b = document.getElementById('resAgain'); b.textContent = btn; b.onclick = fn;
-    resultEl.hidden = false; b.focus();
+    resultEl.hidden = false; b.focus({preventScroll:true});
   }
   async function checkEnd(){
     const loser = G.e.hp <= 0 ? G.e : G.p.hp <= 0 ? G.p : null;
@@ -2863,14 +2889,14 @@
     buildFighterGrid();
     chooserEl.hidden = false; refreshActions(); turnTag.textContent = 'PICK A FIGHTER';
     hudPlayerIdle();
-    const first = chooserEl.querySelector('.fpick:not(:disabled)'); if (first) setTimeout(() => first.focus(), 50);
+    const first = chooserEl.querySelector('.fpick:not(:disabled)'); if (first) setTimeout(() => first.focus({preventScroll:true}), 50);
   }
   function showWeaponPick(){
     document.getElementById('chooserTitle').textContent = 'Choose your weapon';
     document.getElementById('chooserSub').textContent = 'You keep it for the whole tournament. Lose, and you can pick again.';
     document.getElementById('fgrid').hidden = true; document.getElementById('wgrid').hidden = false; document.getElementById('sgrid').hidden = true; document.getElementById('chooserBackF').hidden = false;
     buildChooser(); turnTag.textContent = 'PICK A WEAPON'; hudPlayerIdle();
-    const first = chooserEl.querySelector('.wpn'); if (first) setTimeout(() => first.focus(), 50);
+    const first = chooserEl.querySelector('.wpn'); if (first) setTimeout(() => first.focus({preventScroll:true}), 50);
   }
   function buildFighterGrid(){
     const g = document.getElementById('fgrid'); g.innerHTML = '';
@@ -2896,7 +2922,7 @@
     });
   }
   async function startStage(){
-    const tok = ++G.tok; matchTok++;
+    const tok = ++G.tok; matchTok++; ring.scrollLeft = 0; ring.scrollTop = 0;
     resultEl.hidden = true; chooserEl.hidden = true; G.on = false; G.busy = true; G.round = 0;
     const old = fighters; fighters = []; arenaBots = [];
     old.forEach(f => f.wrap.animate([{transform:`translate(${f.x}px,0)`},{transform:`translate(${f.x}px,${-ring.clientHeight - 80}px)`}],{duration:380,easing:'ease-in',fill:'forwards'}).finished.then(() => f.wrap.remove()));
@@ -2965,14 +2991,14 @@
     });
   }
   let campReturn = null, resetArm = false;
-  function openCamp(){ campReturn = document.activeElement; drawCamp(); campEl.hidden = false; resetArm = false; document.getElementById('campReset').textContent = 'Reset progress'; document.getElementById('campClose').focus(); }
+  function openCamp(){ campReturn = document.activeElement; drawCamp(); campEl.hidden = false; resetArm = false; document.getElementById('campReset').textContent = 'Reset progress'; document.getElementById('campClose').focus({preventScroll:true}); }
   function closeCamp(){
     campEl.hidden = true; refreshActions();
     // kamptayken can özelliği arttıysa ringde bekleyen oyuncuya yansısın
     if (G.p && !G.on && fighters.includes(G.p)){ G.p.max = playerMax(); G.p.hp = G.p.max; }
     if (!G.p && !chooserEl.hidden) hudPlayerIdle();
     if (G.p && fighters.includes(G.p)) drawHud();
-    if (campReturn) campReturn.focus();
+    if (campReturn) campReturn.focus({preventScroll:true});
   }
   document.getElementById('campBtn').addEventListener('click', openCamp);
   document.getElementById('resCamp').addEventListener('click', openCamp);
@@ -2999,10 +3025,11 @@
   document.getElementById('modeWatch').addEventListener('click', () => { if (arenaEl.classList.contains('play')) setMode('watch'); });
   document.addEventListener('keydown', e => {
     if (arenaEl.hidden || !campEl.hidden || !arenaEl.classList.contains('play') || e.metaKey || e.ctrlKey || e.altKey) return;
-    const k = Object.keys(MOVES).find(x => MOVES[x].key === e.key);
+    const k = e.key === 'ArrowRight' ? 'fwd' : e.key === 'ArrowLeft' ? 'back' : Object.keys(MOVES).find(x => MOVES[x].key === e.key);
+    if (k && e.key.startsWith('Arrow')) e.preventDefault();
     if (k) playerMove(k);
   });
-  buildActions(); buildPotions(); buildChooser(); drawTape();
+  buildActions(); buildPotions(); buildPad(); buildChooser(); drawTape();
 
   function route(){
     const on = location.hash === '#arena';
