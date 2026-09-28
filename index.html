@@ -337,6 +337,32 @@
   .dbtn:focus-visible{outline:3px dashed var(--ink);outline-offset:3px}
   .dbtn:disabled{cursor:not-allowed} .dbtn:disabled svg{opacity:.3}
   @media (max-width:640px){ .dpad{left:6px;bottom:6px;gap:6px} .dbtn{width:40px;height:40px;padding:6px} }
+  /* ---- Madalyon hamle düğmeleri ---- */
+  .actions{gap:6px;justify-items:center}
+  .act{background:none !important;border:0;box-shadow:none;padding:4px 2px;gap:4px;translate:none !important;animation:none !important}
+  .act .med{position:relative;display:grid;place-items:center;width:84px;height:84px;border-radius:50%;
+    background:radial-gradient(circle at 34% 28%,rgba(255,255,255,.45) 0 12%,transparent 34%),radial-gradient(circle at 50% 55%,var(--in1),var(--in2) 72%);
+    border:4px solid #231c1f;box-shadow:inset 0 0 0 5px var(--ring),inset 0 0 0 7px rgba(35,28,31,.55),inset 0 -8px 12px rgba(0,0,0,.35),3px 4px 0 #231c1f;transition:transform .15s, box-shadow .15s}
+  .act .med svg{width:58px;height:58px;display:block;filter:drop-shadow(2px 3px 0 rgba(0,0,0,.4))}
+  .act b{font-size:15px;color:var(--ink) !important;text-shadow:1px 1px 0 rgba(255,255,255,.5)}
+  .act .pips{min-height:7px}
+  .act:hover:not(:disabled) .med{transform:translateY(-3px) scale(1.05);box-shadow:inset 0 0 0 5px var(--ring),inset 0 0 0 7px rgba(35,28,31,.55),inset 0 -8px 12px rgba(0,0,0,.35),3px 7px 0 #231c1f,0 0 16px var(--ring)}
+  .act:active:not(:disabled) .med{transform:translateY(2px) scale(.97)}
+  .act:disabled .med{filter:saturate(.55) brightness(.88)}
+  .act:disabled b{opacity:.7}
+  .act.sp:not(:disabled) .med{animation:ultglow .7s ease-in-out infinite alternate}
+  @keyframes ultglow{from{box-shadow:inset 0 0 0 5px var(--ring),inset 0 0 0 7px rgba(35,28,31,.55),3px 4px 0 #231c1f,0 0 6px #b98bff}to{box-shadow:inset 0 0 0 5px #e6dcff,inset 0 0 0 7px rgba(35,28,31,.55),3px 4px 0 #231c1f,0 0 22px #b98bff}}
+  .act .lockov{display:none;position:absolute;inset:0;border-radius:50%;background:rgba(20,14,16,.62);place-items:center;align-content:center;gap:1px}
+  .act .lockov svg{width:26px;height:26px;filter:none}
+  .act .lockov em{font-style:normal;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:13px;color:#ffd772;display:flex;align-items:center;gap:3px}
+  .act .lockov .coin{width:12px;height:12px;border-width:1.5px}
+  .act.locked .lockov{display:grid}
+  .act.locked .med svg:first-child{filter:grayscale(1) brightness(.7)}
+  .act.locked{cursor:pointer}
+  .act.locked:hover .med{transform:translateY(-3px)}
+  .mv-med{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 50% 55%,var(--in1),var(--in2) 72%);border:3px solid #231c1f;box-shadow:inset 0 0 0 3px var(--ring)}
+  .mv-med svg{width:28px;height:28px}
+  @media (max-width:640px){ .act .med{width:64px;height:64px;border-width:3px} .act .med svg{width:44px;height:44px} .act b{font-size:13px} .act .lockov svg{width:20px;height:20px} .act .lockov em{font-size:11px} }
   /* ---- Kamp ve dükkân ---- */
   .coin{display:inline-block;width:16px;height:16px;background:radial-gradient(circle at 40% 35%,#fff3b0 0 18%,#f5c542 20% 62%,#c7901f 64%);border:2px solid var(--line);border-radius:50%;vertical-align:-3px}
   .purse{display:flex;align-items:center;gap:8px;margin-left:auto;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:16px}
@@ -491,7 +517,9 @@
         <button class="btn" type="button" id="campClose">Back to the arena</button>
       </div>
       <div class="lvl-row"><b id="campLvl">Level 1</b><div class="bar xp"><i id="campXp"></i><span id="campXpT"></span></div><small id="campPts"></small></div>
-      <h4>Skills</h4>
+      <h4>Moves</h4>
+      <div class="shop" id="campMoves"></div>
+      <h4>Stats</h4>
       <div class="stats" id="campStats"></div>
       <h4>Portfolio</h4>
       <div class="port" id="campPort"></div>
@@ -2315,15 +2343,46 @@
   // hamle ikonları (12x12 piksel)
   const I = (rects) => svgPx('0 0 12 12', rects);
   const INK = '#231c1f';
+  // satır satır piksel çizim: her harf bir renk, '.' boş
+  function pix(rows, pal){
+    let r = '';
+    rows.forEach((row, y) => { for (let x = 0; x < row.length;){ const ch = row[x]; if (ch === '.'){ x++; continue; } let w = 1; while (row[x + w] === ch) w++; r += `<rect x="${x}" y="${y}" width="${w}" height="1" fill="${pal[ch]}"/>`; x += w; } });
+    return `<svg viewBox="0 0 16 16" shape-rendering="crispEdges">${r}</svg>`;
+  }
+  const PK = '#1c1416';
+  const ICON = {
+    quick: pix(['................','.........KKK....','........KYYK....','.......KYYK.....','......KYYWK.....','.....KYYWK......','....KYYYYYYK....','...KKKKOYYYK....','.......KOYK.....','......KOYK......','.....KOWK.......','....KOYK........','....KOK.........','....KK..........','................','................'],
+      {K:PK, Y:'#ffd23f', W:'#fff8d0', O:'#ff9a1a'}),
+    strike: pix(['..............KK','.............KWK','............KWSK','...........KWSK.','..........KWSK..','.....A...KWSK...','....A...KWSK....','...A...KWSK.....','..A..KKWSK......','..A.KGGSK.......','...AKGGK........','....KGKGK.......','...KBK.KGK......','..KBK...KK......','..KK............','................'],
+      {K:PK, W:'#ffffff', S:'#9fb4c8', G:'#ffc53d', B:'#8a5a3a', A:'#bfe6ff'}),
+    power: pix(['.......RR.......','......ROOR......','..RR..ROYOR..RR..','..ROR.ROYOR.ROR..','...ROR.RYR.ROR...','...RORROYORROR...','....ROOYYYOOR....','...ROYYYWYYYOR...','..ROYYWWWWWYYOR..','..ROYWWWWWWWYOR..','..ROYYWWWWWYYOR..','...ROYYYWYYYOR...','....RROOOOORR....','......RRRRR.....','................','................'],
+      {R:'#ff3a1a', O:'#ff8a1a', Y:'#ffd23f', W:'#fff8d0'}),
+    taunt: pix(['................','..KKKKKKKKKKKK..','.KPPPPPPPPPPPPK.','.KPWWWWWWWWWWPK.','.KPWWRRWWRRWWPK.','.KPWWRRWWRRWWPK.','.KPWWRRWWRRWWPK.','.KPWWWWWWWWWWPK.','.KPWWRRWWRRWWPK.','.KPPPPPPPPPPPPK.','..KKKPPKKKKKKK..','....KPPK........','....KPK.........','....KK..........','................','................'],
+      {K:PK, P:'#ff5c86', W:'#ffffff', R:'#e0301e'}),
+    rest: pix(['..........KKKK..','..........KZZK..','....KKK....KZK..','...KMMMK..KZZK..','..KMMMK...KKKK..','..KMMK..........','.KMMMK...KKKK...','.KMMMK...KZZK...','.KMMMMK...KZK...','.KMMMMMKKKZZK...','..KMMMMMMMKKK...','..KMMMMMMMK.....','...KMMMMMK......','....KKKKK.......','................','................'],
+      {K:PK, M:'#fff0a0', Z:'#9fc3ff'}),
+    special: pix(['.......KK.......','......KPPK......','......KLLK......','.KKK..KLLK..KKK.','.KPPKKPLLPKKPPK.','..KPPPLWWLPPPK..','...KPLWWWWLPK...','KKKKPLWWWWLPKKKK','KPPPPLWWWWLPPPPK','KKKKPLLWWLLPKKKK','...KPPLLLLPPK...','..KPPKPPPPKPPK..','.KPPK.KPPK.KPPK.','.KKK..KPPK..KKK.','......KKKK......','................'],
+      {K:PK, P:'#9a6cf0', L:'#d6c2ff', W:'#ffffff'})
+  };
+  const LOCK = pix(['................','.....KKKKKK.....','....KGGGGGGK....','...KGK....KGK...','...KGK....KGK...','...KGK....KGK...','..KKKKKKKKKKKK..','..KYYYYYYYYYYK..','..KYYYYKKYYYYK..','..KYYYYKKYYYYK..','..KYYYYYKYYYYK..','..KYYYYYYYYYYK..','..KOOOOOOOOOOK..','..KKKKKKKKKKKK..','................','................'],
+    {K:PK, G:'#b8b0a0', Y:'#ffc53d', O:'#c7901f'});
+  // madalyon renkleri: halka + iç
+  const MED = {
+    quick:{ring:'#ffb400', in1:'#6b3a12', in2:'#2a140a'}, strike:{ring:'#6fa8ff', in1:'#1f3a6b', in2:'#0e1a33'},
+    power:{ring:'#ff5a2a', in1:'#7a1a10', in2:'#2e0a06'}, taunt:{ring:'#ff5c86', in1:'#6b1a36', in2:'#2a0a16'},
+    rest:{ring:'#6f8fe8', in1:'#1f2a5b', in2:'#0c1230'},   special:{ring:'#b98bff', in1:'#3e1f7a', in2:'#170b33'}
+  };
+  // bu hamleler altınla açılır
+  const MOVE_PRICE = {strike:200, power:300, special:500};
   const MOVES = {
     fwd:    {key:'1', move:true, label:'Advance', pips:0, sta:4, icon:I([[1,5,6,2,INK],[7,2,1,8,INK],[8,3,1,6,INK],[9,4,1,4,INK],[10,5,1,2,INK]])},
     back:   {key:'2', move:true, label:'Retreat', pips:0, sta:4, icon:I([[5,5,6,2,INK],[4,2,1,8,INK],[3,3,1,6,INK],[2,4,1,4,INK],[1,5,1,2,INK]])},
-    quick:  {key:'3', label:'Quick',   pips:1, sta:10, dmg:[5,8],   acc:1,   atk:true, icon:I([[6,0,3,2,'#e9b43a'],[5,2,3,2,'#e9b43a'],[3,4,6,2,'#f5c542'],[6,6,3,2,'#e9b43a'],[5,8,2,2,'#e9b43a'],[4,10,2,2,'#e9b43a']])},
-    strike: {key:'4', label:'Strike',  pips:2, sta:18, dmg:[9,13],  acc:.9,  atk:true, icon:I([[5,0,2,7,'#9aa3ad'],[6,0,1,7,'#dfe4ea'],[3,7,6,1,'#e9b43a'],[5,8,2,3,'#6b4a2c'],[4,11,4,1,'#e9b43a']])},
-    power:  {key:'5', label:'Power',   pips:3, sta:30, dmg:[16,22], acc:.75, atk:true, icon:I([[5,0,2,12,'#e0482a'],[0,5,12,2,'#e0482a'],[2,2,2,2,'#ff9a3a'],[8,2,2,2,'#ff9a3a'],[2,8,2,2,'#ff9a3a'],[8,8,2,2,'#ff9a3a'],[4,4,4,4,'#ffd772']])},
-    taunt:  {key:'6', label:'Taunt',   pips:0, sta:0, icon:I([[1,1,10,7,INK],[2,2,8,5,'#fff'],[5,2,2,2,'#e0482a'],[5,5,2,1,'#e0482a'],[3,8,2,2,INK],[2,10,1,1,INK]])},
-    rest:   {key:'7', label:'Rest',    pips:0, sta:0, icon:I([[1,1,6,1,'#5b7fd6'],[5,2,1,1,'#5b7fd6'],[4,3,1,1,'#5b7fd6'],[3,4,1,1,'#5b7fd6'],[2,5,1,1,'#5b7fd6'],[1,6,6,1,'#5b7fd6'],[7,7,4,1,'#8fa8e8'],[9,8,1,1,'#8fa8e8'],[8,9,1,1,'#8fa8e8'],[7,10,4,1,'#8fa8e8']])},
-    special:{key:'0', label:'Special', pips:0, sta:0, special:true, icon:I([[5,0,2,3,'#b98bff'],[0,4,12,3,'#b98bff'],[2,7,3,3,'#9a6cf0'],[7,7,3,3,'#9a6cf0'],[4,3,4,5,'#e6dcff'],[1,10,3,2,'#9a6cf0'],[8,10,3,2,'#9a6cf0']])},
+    quick:  {key:'3', label:'Quick',   pips:1, sta:10, dmg:[5,8],   acc:1,   atk:true, icon:ICON.quick},
+    strike: {key:'4', label:'Strike',  pips:2, sta:18, dmg:[9,13],  acc:.9,  atk:true, icon:ICON.strike},
+    power:  {key:'5', label:'Power',   pips:3, sta:30, dmg:[16,22], acc:.75, atk:true, icon:ICON.power},
+    taunt:  {key:'6', label:'Taunt',   pips:0, sta:0, icon:ICON.taunt},
+    rest:   {key:'7', label:'Rest',    pips:0, sta:0, icon:ICON.rest},
+    special:{key:'0', label:'Special', pips:0, sta:0, special:true, icon:ICON.special},
     hpkit:  {key:'8', label:'Health', pips:0, sta:0, kit:'hp', icon:I([[1,2,10,9,INK],[2,3,8,7,'#f6f1ea'],[5,4,2,5,'#d8432d'],[3,5,6,2,'#d8432d'],[4,1,4,1,INK]])},
     enkit:  {key:'9', label:'Energy', pips:0, sta:0, kit:'en', icon:I([[3,0,6,2,INK],[2,2,8,10,INK],[3,3,6,8,'#ffe27a'],[6,4,2,2,'#e9b43a'],[5,6,2,2,'#e9b43a'],[4,8,2,2,'#e9b43a']])}
   };
@@ -2370,7 +2429,7 @@
 
   // --- kalıcı ilerleme (tarayıcıda saklanır)
   const SAVE_KEY = 'vibefolk-save-v1';
-  const freshSave = () => ({coins:0, xp:0, level:1, points:0, stats:{pow:0, spd:0, grd:0, vit:0}, kits:{hp:1, en:1}, up:{sword:0, spear:0, dagger:0, shield:0, bow:0}, armor:0, best:0, wins:0, unlocked:['Tux'], char:'Tux', mkt:null, shares:{}});
+  const freshSave = () => ({coins:0, xp:0, level:1, points:0, stats:{pow:0, spd:0, grd:0, vit:0}, kits:{hp:1, en:1}, up:{sword:0, spear:0, dagger:0, shield:0, bow:0}, armor:0, best:0, wins:0, unlocked:['Tux'], char:'Tux', mkt:null, shares:{}, moves:{strike:false, power:false, special:false}});
   let S = freshSave();
   try { const raw = localStorage.getItem(SAVE_KEY); if (raw) S = Object.assign(freshSave(), JSON.parse(raw)); } catch(e){}
   const save = () => { try { localStorage.setItem(SAVE_KEY, JSON.stringify(S)); } catch(e){} };
@@ -2387,6 +2446,8 @@
   if (!S.mkt) S.mkt = Object.fromEntries(Object.entries(MKT).map(([t, m]) => [t, {p:m.base, ch:0}]));
   Object.keys(MKT).forEach(t => { if (!S.mkt[t]) S.mkt[t] = {p:MKT[t].base, ch:0}; });
   const spon = t => G.sponsor === t;
+  if (!S.moves) S.moves = {strike:false, power:false, special:false};
+  const moveLocked = k => MOVE_PRICE[k] != null && !S.moves[k];
   const xpNeed = lv => 60 + (lv - 1)*40;
   const ARMORS = [{name:'No armor', cut:0}, {name:'Leather', cut:.05, price:120}, {name:'Chainmail', cut:.10, price:260}, {name:'Plate', cut:.15, price:450}];
   const UP_PRICE = [80, 160, 280];
@@ -2455,6 +2516,7 @@
   const staCost = (f, k) => Math.max(0, MOVES[k].sta - (MOVES[k].atk ? (wOf(f).cheap || 0) : 0));
   function canDo(f, k){
     const m = MOVES[k];
+    if (mine(f) && moveLocked(k)) return false;
     if (f.sta < staCost(f, k)) return false;
     if (m.atk) return dist() <= wOf(f).range;
     if (k === 'fwd') return dist() > 1;
@@ -2502,18 +2564,21 @@
     Object.entries(MOVES).forEach(([k, m]) => {
       if (m.kit || m.move) return; // iksirler ve hareket okları ringin içinde
       const b = document.createElement('button'); b.type = 'button'; b.className = 'act' + (m.atk ? ' atk' : '') + (m.special ? ' sp' : ''); b.dataset.k = k;
-      b.setAttribute('aria-label', m.label);
-      b.innerHTML = `${m.kit ? '<span class="badge"></span>' : ''}<span class="ico" aria-hidden="true">${m.icon}</span><b>${m.label}</b><span class="pips" aria-hidden="true">${'<i></i>'.repeat(m.pips)}</span><kbd>${m.key}</kbd>`;
-      b.addEventListener('click', () => playerMove(k));
+      const c = MED[k];
+      b.innerHTML = `<span class="med" aria-hidden="true" style="--ring:${c.ring};--in1:${c.in1};--in2:${c.in2}">${m.icon}<span class="lockov">${LOCK}<em>${MOVE_PRICE[k] || ''} <span class="coin"></span></em></span></span><b>${m.label}</b><span class="pips" aria-hidden="true">${'<i></i>'.repeat(m.pips)}</span><kbd>${m.key}</kbd>`;
+      b.addEventListener('click', () => { if (moveLocked(k)) openCamp(); else playerMove(k); });
       actionsEl.appendChild(b);
     });
   }
   function refreshActions(){
     const myTurn = G.on && G.turn === 'p' && !G.busy;
     actionsEl.querySelectorAll('.act').forEach(b => {
-      b.disabled = !myTurn || !canDo(G.p, b.dataset.k);
+      const lk = moveLocked(b.dataset.k), m0 = MOVES[b.dataset.k];
+      b.classList.toggle('locked', lk);
+      b.disabled = lk ? false : (!myTurn || !canDo(G.p, b.dataset.k));
+      b.setAttribute('aria-label', lk ? `${m0.special ? 'Ultimate' : m0.label}, locked. Unlock for ${MOVE_PRICE[b.dataset.k]} coins in the camp` : (m0.special ? 'Ultimate' : m0.label));
       const m = MOVES[b.dataset.k]; if (m.kit) b.querySelector('.badge').textContent = S.kits[m.kit];
-      if (m.special) b.querySelector('b').textContent = (CHARS[S.char] || CHARS.Tux).short;
+      if (m.special) b.querySelector('b').textContent = moveLocked('special') ? 'Ultimate' : (CHARS[S.char] || CHARS.Tux).short;
     });
     dpadEl.querySelectorAll('.dbtn').forEach(b => { b.disabled = !myTurn || !canDo(G.p, b.dataset.k); });
     potionsEl.querySelectorAll('.potion').forEach(b => {
@@ -2819,7 +2884,7 @@
     const fresh = checkUnlocks();
     const shareGain = win && G.sponsor ? (last ? 3 : 1) : 0;
     if (shareGain){ S.shares[G.sponsor] = (S.shares[G.sponsor] || 0) + shareGain; save(); }
-    const reward = `+${coins} ${COIN} &nbsp; +${xp} XP${shareGain ? ` &nbsp; +${shareGain} ${G.sponsor} share${shareGain > 1 ? 's' : ''}` : ''}${ups ? ` &nbsp; LEVEL UP! +${ups*3} skill points` : ''}${fresh.length ? `<br>NEW FIGHTER UNLOCKED: ${fresh.join(', ')}!` : ''}`;
+    const reward = `+${coins} ${COIN} &nbsp; +${xp} XP${shareGain ? ` &nbsp; +${shareGain} ${G.sponsor} share${shareGain > 1 ? 's' : ''}` : ''}${ups ? ` &nbsp; LEVEL UP! +${ups*3} stat points` : ''}${fresh.length ? `<br>NEW FIGHTER UNLOCKED: ${fresh.join(', ')}!` : ''}`;
     if (fresh.length) setTimeout(() => banner('NEW FIGHTER!', 1400), 200);
     await banner(win ? (last ? 'CHAMPION!' : 'VICTORY!') : 'K.O.', 1200);
     if (!win){
@@ -2958,13 +3023,33 @@
     ['grd','Guard','Take less damage'], ['vit','Vitality','More health']
   ];
   const ARMOR_ICON = W16([[3,1,10,3,'#8a8f96'],[2,3,12,9,'#6b737b'],[4,4,8,7,'#9aa3ad'],[7,4,2,7,'#6b737b'],[4,12,8,3,'#6b737b']]);
+  function drawMoves(){
+    const el = document.getElementById('campMoves'); el.innerHTML = '';
+    const info = {
+      quick:['Quick','Your basic hit. Always open.'],
+      strike:['Strike','A solid slash. Stronger than Quick.'],
+      power:['Power','A huge leaping blow. Big damage.'],
+      special:['Ultimate',`Your fighter's special move (${(CHARS[S.char] || CHARS.Tux).special}). Fire it when Hype is full.`]
+    };
+    Object.entries(info).forEach(([k, [name, desc]]) => {
+      const c = MED[k], price = MOVE_PRICE[k], owned = !price || S.moves[k];
+      const d = document.createElement('div'); d.className = 'item';
+      d.innerHTML = `<span class="ii" aria-hidden="true"><span class="mv-med" style="--ring:${c.ring};--in1:${c.in1};--in2:${c.in2}">${ICON[k]}</span></span><b>${name}</b><small>${desc}</small><button type="button" ${!owned && S.coins >= price ? '' : 'disabled'}>${owned ? 'Unlocked' : `Unlock &nbsp;<span class="coin"></span> ${price}`}</button>`;
+      d.querySelector('button').addEventListener('click', () => {
+        if (owned || S.coins < price) return;
+        S.coins -= price; S.moves[k] = true; save(); drawCamp(); drawPurse(); play('fight');
+      });
+      el.appendChild(d);
+    });
+  }
   function drawCamp(){
+    drawMoves();
     drawPortfolio();
     document.getElementById('campCoins').textContent = S.coins;
     document.getElementById('campLvl').textContent = `Level ${S.level}`;
     document.getElementById('campXp').style.width = (S.xp / xpNeed(S.level) * 100) + '%';
     document.getElementById('campXpT').textContent = `${S.xp} / ${xpNeed(S.level)} XP`;
-    document.getElementById('campPts').textContent = S.points ? `${S.points} skill points to spend` : '';
+    document.getElementById('campPts').textContent = S.points ? `${S.points} stat points to spend` : '';
     const st = document.getElementById('campStats'); st.innerHTML = '';
     STATS.forEach(([k, name, desc]) => {
       const d = document.createElement('div'); d.className = 'stat';
