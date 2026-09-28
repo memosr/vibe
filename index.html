@@ -354,7 +354,7 @@
   @keyframes ultglow{from{box-shadow:inset 0 0 0 5px var(--ring),inset 0 0 0 7px rgba(35,28,31,.55),3px 4px 0 #231c1f,0 0 6px #b98bff}to{box-shadow:inset 0 0 0 5px #e6dcff,inset 0 0 0 7px rgba(35,28,31,.55),3px 4px 0 #231c1f,0 0 22px #b98bff}}
   .act .lockov{display:none;position:absolute;inset:0;border-radius:50%;background:rgba(20,14,16,.62);place-items:center;align-content:center;gap:1px}
   .act .lockov svg{width:26px;height:26px;filter:none}
-  .act .lockov em{font-style:normal;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:13px;color:#ffd772;display:flex;align-items:center;gap:3px}
+  .act .lockov em{font-style:normal;font-family:"Nunito", system-ui, sans-serif;font-weight:700;font-size:15px;line-height:1;letter-spacing:.02em;color:#fff3c4;display:flex;align-items:center;gap:4px;padding:3px 7px 3px 8px;margin-top:2px;background:#231c1f;border:2px solid #ffc53d;border-radius:999px;font-variant-numeric:tabular-nums}
   .act .lockov .coin{width:12px;height:12px;border-width:1.5px}
   .act.locked .lockov{display:grid}
   .act.locked .med svg:first-child{filter:grayscale(1) brightness(.7)}
@@ -362,7 +362,7 @@
   .act.locked:hover .med{transform:translateY(-3px)}
   .mv-med{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 50% 55%,var(--in1),var(--in2) 72%);border:3px solid #231c1f;box-shadow:inset 0 0 0 3px var(--ring)}
   .mv-med svg{width:28px;height:28px}
-  @media (max-width:640px){ .act .med{width:64px;height:64px;border-width:3px} .act .med svg{width:44px;height:44px} .act b{font-size:13px} .act .lockov svg{width:20px;height:20px} .act .lockov em{font-size:11px} }
+  @media (max-width:640px){ .act .med{width:64px;height:64px;border-width:3px} .act .med svg{width:44px;height:44px} .act b{font-size:13px} .act .lockov svg{width:20px;height:20px} .act .lockov em{font-size:12px;padding:2px 5px} }
   /* ---- Kamp ve dükkân ---- */
   .coin{display:inline-block;width:16px;height:16px;background:radial-gradient(circle at 40% 35%,#fff3b0 0 18%,#f5c542 20% 62%,#c7901f 64%);border:2px solid var(--line);border-radius:50%;vertical-align:-3px}
   .purse{display:flex;align-items:center;gap:8px;margin-left:auto;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:16px}
@@ -391,7 +391,7 @@
   .item .ii{grid-row:span 2;width:40px;height:40px} .item .ii svg{width:100%;height:100%;display:block}
   .item b{font-family:"Pixelify Sans", monospace;font-size:15px}
   .item small{font-size:11px;color:var(--ink-soft);line-height:1.25}
-  .item button{grid-column:1 / -1;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:6px;font:inherit;font-family:"Pixelify Sans", monospace;font-size:14px;padding:5px;border:2px solid var(--line);background:#ffe3a3;cursor:pointer}
+  .item button{grid-column:1 / -1;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:6px;font:inherit;font-family:"Nunito", system-ui, sans-serif;font-weight:700;font-size:14px;font-variant-numeric:tabular-nums;padding:5px;border:2px solid var(--line);background:#ffe3a3;cursor:pointer}
   .item button:disabled{opacity:.4;cursor:not-allowed;background:#eee}
   .stars{color:#e9b43a;letter-spacing:1px}
   .camp-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;color:var(--ink-soft)}
@@ -591,7 +591,7 @@
     <div class="actions play-only" id="actions" role="group" aria-label="Your moves"></div>
     <p class="log play-only" id="log" aria-live="polite"></p>
     <p class="arena-foot play-only">Tip: hitting, getting hit and taunting fill your purple Hype bar. When it glows, unleash your special. Move with the arrow buttons or arrow keys.</p>
-    <p class="arena-foot watch-only">Gear is random every match: spear, shield, bow, dagger or sword. Specials recharge in a few seconds. Tap too much and they get grumpy. Nobody wins. Everybody gets bonked.</p>
+    <p class="arena-foot watch-only">Gear is random every match: spear, axe, bow, dagger or sword. Specials recharge in a few seconds. Tap too much and they get grumpy. Nobody wins. Everybody gets bonked.</p>
   </div>
 </section>
 <div class="wrap">
@@ -1561,7 +1561,7 @@
     dagger: {label:'dagger', parts:W_([['',27.6,37.2,1.8,3.6,'#6b4a2c',''],['',26.6,36.3,3.8,1.1,'#9aa3ad',''],['',27.9,30.6,1.3,5.8,'#dfe4ea',''],['',28.1,29.4,.9,1.4,'#dfe4ea','']])},
     spear:  {label:'spear',  parts:W_([['',28,9,1.3,35,'#8a5a3a',''],['',27.4,5.2,2.5,4,'#dfe4ea',''],['',28.05,3.4,1.2,2,'#dfe4ea',''],['',27.6,9.2,2.1,1.2,'#d8432d','nol']])},
     bow:    {label:'bow',    parts:W_([['',29.4,26.5,1.5,3,'#8a5a3a',''],['',30.6,29.5,1.5,11,'#8a5a3a',''],['',29.4,40.5,1.5,3,'#8a5a3a',''],['',29,27.5,.4,15,'#f3ece2','nol bowstring']])},
-    shield: {label:'shield', parts:W_([['',25.4,32.5,7.4,9.5,'#8c2f22',''],['',26.2,33.3,5.8,7.9,'#d9573f',''],['',28,35.9,2.2,2.2,'#e9c64a','']])}
+    axe:    {label:'axe',    parts:W_([['',28,20,1.4,22,'#8a5a3a',''],['',29.3,20,4.2,5.6,'#aab3bd',''],['',33.2,19,1.3,7.6,'#e8edf2',''],['',26.6,21,1.5,3,'#aab3bd',''],['',27.8,36,1.8,2,'#5a3a22','nol']])}
   };
 
   // --- silah seviyeleri (blok birimi, bileğe bağlı). Seviye 3 parlar ve pırıldar.
@@ -1585,11 +1585,11 @@
       [[27.6,37.2,1.8,3.6,'#3a2a2c',''],[27.9,40.6,1.2,1.2,'#2fb58f',''],[26.2,36.1,4.6,1.2,'#e9c64a',''],[27.7,30,1.7,6.2,'#e8edf2',''],[28.9,30.4,.4,5.6,'#aab3bd','nol'],[28,28.6,1.1,1.5,'#e8edf2','']],
       [[27.6,37.2,1.8,3.6,'#2a1f3a',''],[27.9,40.6,1.2,1.3,'#b98bff',''],[25.8,36,5.4,1.3,'#e9c64a',''],[27.6,28.4,1.9,7.8,'#7c5cff','glowb'],[28.3,28.8,.6,7,'#d6c2ff','nol'],[27.9,26.8,1.3,1.8,'#7c5cff',''],[26,31,.8,.8,TW,'nol twinkle'],[30.4,34,.8,.8,TW,'nol twinkle']]
     ],
-    shield:[
-      [[25.6,33,7,9,'#6f4a31',''],[26.3,33.7,5.6,7.6,'#9a6a45',''],[27.9,33.7,.4,7.6,'#6f4a31','nol'],[29.8,33.7,.4,7.6,'#6f4a31','nol'],[28.4,36.4,1.8,1.8,'#8a939c','']],
-      [[25.4,32.5,7.4,9.5,'#8c2f22',''],[26.2,33.3,5.8,7.9,'#d9573f',''],[28,35.9,2.2,2.2,'#e9c64a','']],
-      [[25,32,8.2,10.4,'#6b737b',''],[25.8,32.8,6.6,8.8,'#2a74bd',''],[28.6,33.2,1,8,'#e9c64a','nol'],[26.2,36.3,5.8,1,'#e9c64a','nol'],[26.6,42.4,5,1,'#6b737b','']],
-      [[24.6,31.4,9,11.4,'#e9c64a','glowb'],[25.4,32.2,7.4,9.8,'#f6f1ea',''],[28.2,33,1.8,1.8,'#b98bff',''],[26.4,35.6,1.4,3,'#7c5cff','nol'],[30.4,35.6,1.4,3,'#7c5cff','nol'],[27.8,38.6,2.6,1.6,'#7c5cff','nol'],[26.4,43,5.6,1.2,'#e9c64a',''],[24,34,1,1,TW,'nol twinkle'],[33.2,39,1,1,TW,'nol twinkle']]
+    axe:[
+      [[28,24,1.3,18,'#9a6a45',''],[29.2,24,3.4,4.4,'#8a8f96',''],[32.2,23.4,1,5.6,'#b8b0a0',''],[27.2,24.8,1,2.4,'#8a8f96','']],
+      [[28,20,1.4,22,'#8a5a3a',''],[29.3,20,4.2,5.6,'#aab3bd',''],[33.2,19,1.3,7.6,'#e8edf2',''],[26.6,21,1.5,3,'#aab3bd',''],[27.8,36,1.8,2,'#5a3a22','nol']],
+      [[28,18,1.5,24,'#3a2a2c',''],[27.7,30,2.1,1,'#e9c64a','nol'],[27.7,34,2.1,1,'#e9c64a','nol'],[29.4,17.6,4.6,6.4,'#dfe4ea',''],[33.6,16.4,1.4,8.8,'#ffffff',''],[24.2,17.6,3.9,6.4,'#dfe4ea',''],[23.2,16.4,1.3,8.8,'#ffffff',''],[28.1,15.6,1.3,2.4,'#dfe4ea',''],[28.2,19.8,1.1,1.1,'#d8432d','nol']],
+      [[28,17,1.6,25,'#2a1f3a',''],[27.7,26,2.2,1,'#e9c64a','nol'],[27.7,31,2.2,1,'#e9c64a','nol'],[27.7,36,2.2,1,'#e9c64a','nol'],[29.4,16.4,5,7.2,'#ffb13a','glowb'],[34,15,1.5,10,'#fff3b0','glowb'],[23.8,16.4,4.2,7.2,'#ffb13a','glowb'],[22.6,15,1.4,10,'#fff3b0',''],[28.2,13.6,1.2,3,'#fff3b0',''],[28.2,18.8,1.2,1.2,'#b98bff','nol'],[36,17,1,1,TW,'nol twinkle'],[21.4,22,1,1,TW,'nol twinkle'],[31,26,.8,.8,TW,'nol twinkle']]
     ],
     bow:[
       [[29.6,28,1.1,2.6,'#b0885a',''],[30.4,30.4,1.1,9,'#b0885a',''],[29.6,39.2,1.1,2.6,'#b0885a',''],[29.2,28.6,.35,12.6,'#f3ece2','nol bowstring']],
@@ -1628,7 +1628,7 @@
   };
   const FIGHTERS = Object.keys(STYLE);
   const DODGE = ['Missed!','Too slow!','Nope!','Whoosh!','Not today!'];
-  const BLOCK = ['Clang!','Nice try!','Shield says no.'];
+  const BLOCK = ['Clang!','Nice try!','Blocked!'];
   const POKE1 = ['Hey!','Stop it!','Hands off!','What are you doing?','Not now!','Excuse me?!'];
   const POKE2 = ['Go away!','Seriously?!','I\'m fighting here!','Stop poking me!','Can I help you?!'];
   const POKE3 = ['THAT\'S IT!','Leave me alone!!','I\'m telling mom!','Fine, you win!','ENOUGH!'];
@@ -1821,7 +1821,6 @@
   }
   function outcome(o, f, power = 1, fx){
     const r = Math.random();
-    if (o.gear === 'shield' && r < .45) return block(o, f);
     if (r < .27) return dodge(o);
     return hit(o, power, null, fx);
   }
@@ -1871,7 +1870,7 @@
       if (str) str.animate([{translate:'0 0'},{translate:`${-u(f.b)*2.2}px 0`, offset:.35},{translate:`${-u(f.b)*2.2}px 0`, offset:.55},{translate:'0 0', offset:.62},{translate:'0 0'}],{duration:1300});
       await wait(720); play('whoosh');
       const from = ringPt(f.b.g.wpn || f.b.g.armR, .5, .5), to = headPt(o);
-      const r = Math.random(), res = (o.gear === 'shield' && r < .45) ? 'block' : r < .3 ? 'dodge' : 'hit';
+      const r = Math.random(), res = r < .3 ? 'dodge' : 'hit';
       if (res === 'dodge') dodge(o);
       trail(from, res === 'dodge' ? {x:to.x + f.face*120, y:to.y - 30} : to, 420);
       const d = await throwAt(ARROW, from, res === 'dodge' ? {x:to.x + f.face*120, y:to.y - 30} : to, {w:9, h:2.2, dur:420, flip:f.face < 0});
@@ -1879,15 +1878,14 @@
       if (res === 'block') return block(o, f);
       if (res === 'hit'){ stickArrow(o); await hit(o, .8, pick(['An arrow?! Really?','Boing!','I\'m a pincushion!']), {text:'THWACK!', color:'#ffd772', n:6}); }
     },
-    async shield(f, o){
-      speak(f.b, 'Shield BONK!', 900);
-      // kalkanı öne al, hızla koş ve çarp
-      arm(f, [0, -60, -60], 300); aim(f, [0, 60, 60], 300);
-      speedLines(f); await approach(f, o, .72);
-      arm(f, [-60, -80, 0], 560); aim(f, [60, 80, 0], 560);
-      f.b.rig.animate([{transform:T()},{transform:T(-u(f.b)*2,0)},{transform:T(u(f.b)*5,0)},{transform:T()}],{duration:560});
-      await wait(260); play('clang');
-      await outcome(o, f, 1.6, {shock:true, text:'BONK!', color:'#ffb08a', colors:['#ffd772','#fff'], n:10});
+    async axe(f, o){
+      await approach(f, o, .75);
+      speak(f.b, pick(['Timber!','CHOP CHOP!','Here\'s Johnny!']), 900);
+      // baltayı başın üstüne kaldır, tüm gücüyle indir
+      arm(f, [0, -170, -170, 30, 0], 820); aim(f, [0, 160, 160, 80, 0], 820);
+      f.b.rig.animate([{transform:T()},{transform:T(0,-u(f.b)*3)},{transform:T(u(f.b)*3,u(f.b),4)},{transform:T()}],{duration:820});
+      await wait(500); play('whoosh'); shockwave(headPt(o));
+      await outcome(o, f, 1.4, {slash:-70, shock:true, text:'CHOP!', color:'#ffb08a', colors:['#ffd772','#fff'], n:10});
     }
   };
   function trail(from, to, dur){ // okun arkasında kalan kesik çizgi
@@ -2392,7 +2390,7 @@
     sword:  {name:'TSLA Sword',  tk:'TSLA', trait:'Volatile: big crits', range:1, dmg:1,   acc:-.03, crit:.07, icon:W16([[7,0,2,10,'#dfe4ea'],[8,0,1,10,'#fff'],[4,10,8,2,'#e9c64a'],[7,12,2,3,'#6b4a2c'],[6,15,4,1,'#e9c64a']])},
     spear:  {name:'NVDA Spear',  tk:'NVDA', trait:'Long reach',     range:2, dmg:.95, acc:0,   icon:W16([[7,4,2,12,'#8a5a3a'],[6,1,4,3,'#dfe4ea'],[7,0,2,1,'#dfe4ea'],[6,4,4,1,'#d8432d']])},
     dagger: {name:'MSFT Dagger', tk:'MSFT', trait:'Quick and sure', range:1, dmg:.9,  acc:.05, cheap:3, quickBonus:2, icon:W16([[7,2,2,7,'#dfe4ea'],[7,1,1,1,'#dfe4ea'],[5,9,6,1,'#9aa3ad'],[7,10,2,4,'#6b4a2c'],[6,14,4,1,'#9aa3ad']])},
-    shield: {name:'AAPL Shield', tk:'AAPL', trait:'Soaks up hits',  range:1, dmg:.85, acc:0,   guard:.22, icon:W16([[3,1,10,11,'#8c2f22'],[4,2,8,9,'#d9573f'],[5,12,6,2,'#8c2f22'],[6,14,4,1,'#8c2f22'],[7,5,2,2,'#e9c64a']])},
+    axe:    {name:'AAPL Axe',    tk:'AAPL', trait:'Heavy hitter',   range:1, dmg:1.22, acc:-.08, icon:''},
     bow:    {name:'AMZN Bow',    tk:'AMZN', trait:'Hits from afar', range:3, dmg:.8,  acc:0,   close:.15, icon:W16([[4,1,2,2,'#8a5a3a'],[5,3,2,3,'#8a5a3a'],[6,6,2,4,'#8a5a3a'],[5,10,2,3,'#8a5a3a'],[4,13,2,2,'#8a5a3a'],[4,2,1,12,'#f3ece2'],[1,7,11,1,'#8a5a3a'],[12,6,2,3,'#9aa3ad'],[0,6,2,1,'#e0643a'],[0,8,2,1,'#e0643a']])}
   };
   // turnuva: 4 rakip + boss, her birinin kendi huyu var
@@ -2403,7 +2401,7 @@
      st:{walk:'fence', speed:1, enter:'Everything goes down eventually.', taunt:['Down only.','I\'m betting against you.','Short everything!'], hurt:['Margin call!','Squeezed!','Not the squeeze!']}, ko:'I got... short squeezed.'},
     {name:'Gas Goblin', base:'Goggles', gear:'bow', hp:115, ai:{kite:true, drain:12, power:.2},
      st:{walk:'glide', speed:1.1, enter:'Every move costs gas, friend.', taunt:['That\'ll be 20 gwei.','Pay the fee!','Priority fee, please.'], hurt:['Tx reverted!','Out of gas!','Nonce too low!']}, ko:'Transaction... failed.'},
-    {name:'The Whale', base:'Lavender', gear:'shield', wlv:2, hp:150, ai:{slow:true, power:.45, regen:10},
+    {name:'The Whale', base:'Lavender', gear:'axe', wlv:2, hp:150, ai:{slow:true, power:.45, regen:10},
      st:{walk:'stomp', speed:.7, enter:'Blub. I am very large.', taunt:['I move markets.','Splash!','You are liquidity.'], hurt:['A ripple!','My bags!','Blub!']}, ko:'Beached... again.'},
     {name:'The Bear Market', base:'Honey', gear:'sword', wlv:3, hp:200, boss:true, scale:1.25, ai:{power:.35, crash:4},
      recolor:{'#f0d44d':'#6b4a2c','#2b1e22':'#2a1414','#141112':'#140a0a','#3fd7ea':'#d8432d','#f3efe6':'#ffd2c2'},
@@ -2429,14 +2427,14 @@
 
   // --- kalıcı ilerleme (tarayıcıda saklanır)
   const SAVE_KEY = 'vibefolk-save-v1';
-  const freshSave = () => ({coins:0, xp:0, level:1, points:0, stats:{pow:0, spd:0, grd:0, vit:0}, kits:{hp:1, en:1}, up:{sword:0, spear:0, dagger:0, shield:0, bow:0}, armor:0, best:0, wins:0, unlocked:['Tux'], char:'Tux', mkt:null, shares:{}, moves:{strike:false, power:false, special:false}});
+  const freshSave = () => ({coins:0, xp:0, level:1, points:0, stats:{pow:0, spd:0, grd:0, vit:0}, kits:{hp:1, en:1}, up:{sword:0, spear:0, dagger:0, axe:0, bow:0}, armor:0, best:0, wins:0, unlocked:['Tux'], char:'Tux', mkt:null, shares:{}, moves:{strike:false, power:false, special:false}});
   let S = freshSave();
   try { const raw = localStorage.getItem(SAVE_KEY); if (raw) S = Object.assign(freshSave(), JSON.parse(raw)); } catch(e){}
   const save = () => { try { localStorage.setItem(SAVE_KEY, JSON.stringify(S)); } catch(e){} };
   // --- arena borsası (simülasyon): fiyatlar coin cinsinden, olaylarla oynar
   const MKT = {
     TSLA:{color:'#e0482a', base:40, weapon:'sword'},  NVDA:{color:'#5fae1a', base:55, weapon:'spear'},
-    AAPL:{color:'#8a939c', base:35, weapon:'shield'}, MSFT:{color:'#2a74bd', base:45, weapon:'dagger'},
+    AAPL:{color:'#8a939c', base:35, weapon:'axe'}, MSFT:{color:'#2a74bd', base:45, weapon:'dagger'},
     AMZN:{color:'#e08a1a', base:38, weapon:'bow'},    HOOD:{color:'#2f9a6a', base:20}
   };
   const SPONSORS = {
@@ -2447,6 +2445,8 @@
   Object.keys(MKT).forEach(t => { if (!S.mkt[t]) S.mkt[t] = {p:MKT[t].base, ch:0}; });
   const spon = t => G.sponsor === t;
   if (!S.moves) S.moves = {strike:false, power:false, special:false};
+  if (S.up.shield != null){ S.up.axe = Math.max(S.up.axe || 0, S.up.shield); delete S.up.shield; save(); }
+  if (S.up.axe == null) S.up.axe = 0;
   const moveLocked = k => MOVE_PRICE[k] != null && !S.moves[k];
   const xpNeed = lv => 60 + (lv - 1)*40;
   const ARMORS = [{name:'No armor', cut:0}, {name:'Leather', cut:.05, price:120}, {name:'Chainmail', cut:.10, price:260}, {name:'Plate', cut:.15, price:450}];
