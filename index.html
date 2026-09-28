@@ -432,6 +432,12 @@
   .val{font-family:"Nunito", sans-serif;font-weight:700;font-size:14px;display:flex;align-items:center;gap:4px}
   .val .up{color:#2f9a4a} .val .dn{color:#b8402f}
   .cempty{grid-column:1 / -1;margin:0;color:var(--ink-soft);font-size:14px}
+  .wpn.wlock{cursor:not-allowed;background:#e9e3dc}
+  .wpn.wlock .wi{filter:brightness(0) opacity(.35)}
+  .wpn .wreq{color:#b8402f;font-weight:700;display:flex;align-items:center;gap:3px;font-family:"Nunito", sans-serif}
+  .wpn .wreq .coin{width:12px;height:12px}
+  .orb .lk{position:absolute;inset:0;display:grid;place-items:center}
+  .orb .lk svg,.orb.locked .lk svg{width:30px;height:30px;rotate:0deg;scale:1;filter:drop-shadow(1px 1px 0 #000);animation:none}
   .orb .pk{position:absolute;left:-6px;bottom:-4px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#231c1f;border:2px solid var(--pc)}
   .orb .pk svg{width:15px;height:15px;rotate:0deg;scale:1;animation:none;filter:none}
   .orb .pk.off{border-color:#6b6064}
@@ -2464,11 +2470,11 @@
   // silahların gizli özellikleri; oyuncu sadece kısa bir tarif görür
   const W16 = r => svgPx('0 0 16 16', r);
   const WEAPONS = {
-    sword:  {name:'TSLA Sword',  tk:'TSLA', trait:'Volatile: big crits', range:1, dmg:1,   acc:-.03, crit:.07, icon:W16([[7,0,2,10,'#dfe4ea'],[8,0,1,10,'#fff'],[4,10,8,2,'#e9c64a'],[7,12,2,3,'#6b4a2c'],[6,15,4,1,'#e9c64a']])},
-    spear:  {name:'NVDA Spear',  tk:'NVDA', trait:'Long reach',     range:2, dmg:.95, acc:0,   icon:W16([[7,4,2,12,'#8a5a3a'],[6,1,4,3,'#dfe4ea'],[7,0,2,1,'#dfe4ea'],[6,4,4,1,'#d8432d']])},
-    dagger: {name:'MSFT Dagger', tk:'MSFT', trait:'Quick and sure', range:1, dmg:.9,  acc:.05, cheap:3, quickBonus:2, icon:W16([[7,2,2,7,'#dfe4ea'],[7,1,1,1,'#dfe4ea'],[5,9,6,1,'#9aa3ad'],[7,10,2,4,'#6b4a2c'],[6,14,4,1,'#9aa3ad']])},
-    axe:    {name:'AAPL Axe',    tk:'AAPL', trait:'Heavy hitter',   range:1, dmg:1.22, acc:-.08, icon:''},
-    bow:    {name:'AMZN Bow',    tk:'AMZN', trait:'Hits from afar', range:3, dmg:.8,  acc:0,   close:.15, icon:W16([[4,1,2,2,'#8a5a3a'],[5,3,2,3,'#8a5a3a'],[6,6,2,4,'#8a5a3a'],[5,10,2,3,'#8a5a3a'],[4,13,2,2,'#8a5a3a'],[4,2,1,12,'#f3ece2'],[1,7,11,1,'#8a5a3a'],[12,6,2,3,'#9aa3ad'],[0,6,2,1,'#e0643a'],[0,8,2,1,'#e0643a']])}
+    sword:  {name:'TSLA Sword',  tk:'TSLA', trait:'Volatile: big crits', range:1, dmg:1,   acc:0,   crit:.07, icon:W16([[7,0,2,10,'#dfe4ea'],[8,0,1,10,'#fff'],[4,10,8,2,'#e9c64a'],[7,12,2,3,'#6b4a2c'],[6,15,4,1,'#e9c64a']])},
+    spear:  {name:'NVDA Spear',  tk:'NVDA', trait:'Long reach',     range:2, dmg:1.08, acc:0,   icon:W16([[7,4,2,12,'#8a5a3a'],[6,1,4,3,'#dfe4ea'],[7,0,2,1,'#dfe4ea'],[6,4,4,1,'#d8432d']])},
+    dagger: {name:'MSFT Dagger', tk:'MSFT', trait:'Quick and sure', range:1, dmg:.85, acc:.05, cheap:3, quickBonus:2, icon:W16([[7,2,2,7,'#dfe4ea'],[7,1,1,1,'#dfe4ea'],[5,9,6,1,'#9aa3ad'],[7,10,2,4,'#6b4a2c'],[6,14,4,1,'#9aa3ad']])},
+    axe:    {name:'AAPL Axe',    tk:'AAPL', trait:'Heavy hitter',   range:1, dmg:1.25, acc:-.06, icon:''},
+    bow:    {name:'AMZN Bow',    tk:'AMZN', trait:'Hits from afar', range:3, dmg:.85, acc:0,   close:.15, icon:W16([[4,1,2,2,'#8a5a3a'],[5,3,2,3,'#8a5a3a'],[6,6,2,4,'#8a5a3a'],[5,10,2,3,'#8a5a3a'],[4,13,2,2,'#8a5a3a'],[4,2,1,12,'#f3ece2'],[1,7,11,1,'#8a5a3a'],[12,6,2,3,'#9aa3ad'],[0,6,2,1,'#e0643a'],[0,8,2,1,'#e0643a']])}
   };
   // turnuva: 4 rakip + boss, her birinin kendi huyu var
   const RIVALS = [
@@ -2515,12 +2521,17 @@
     dagger: {tag:'DEADLY',    color:'#ffd23f', icon:PICON.star,  crit:true},
     axe:    {tag:'LIFESTEAL', color:'#ff5c86', icon:PICON.heart, steal:.4}
   };
+  // silahlar sırayla açılır: hançer açık, yay 1 turnuva, sonra altınla
+  const WORDER = ['dagger', 'bow', 'sword', 'spear', 'axe'];
+  const WUNLOCK = {dagger:{}, bow:{wins:1}, sword:{price:500}, spear:{price:600}, axe:{price:1000}};
+  const ownsW = k => S.owned.includes(k);
+  const nextW = () => WORDER.find(k => !ownsW(k));
   const PLAYER = {hp:100};
   const G = {on:false, busy:false, turn:'p', p:null, e:null, tok:0, stage:0, weapon:null, round:0, sponsor:null, mom:{}};
 
   // --- kalıcı ilerleme (tarayıcıda saklanır)
   const SAVE_KEY = 'vibefolk-save-v1';
-  const freshSave = () => ({coins:0, xp:0, level:1, points:0, stats:{pow:0, spd:0, grd:0, vit:0}, kits:{hp:1, en:1}, up:{sword:0, spear:0, dagger:0, axe:0, bow:0}, armor:0, best:0, wins:0, unlocked:['Tux'], char:'Tux', mkt:null, shares:{}, moves:{strike:false, power:false, special:false}});
+  const freshSave = () => ({coins:0, xp:0, level:1, points:0, stats:{pow:0, spd:0, grd:0, vit:0}, kits:{hp:1, en:1}, up:{sword:0, spear:0, dagger:0, axe:0, bow:0}, armor:0, best:0, wins:0, unlocked:['Tux'], char:'Tux', mkt:null, shares:{}, moves:{strike:false, power:false, special:false}, owned:['dagger']});
   let S = freshSave();
   try { const raw = localStorage.getItem(SAVE_KEY); if (raw) S = Object.assign(freshSave(), JSON.parse(raw)); } catch(e){}
   const save = () => { try { localStorage.setItem(SAVE_KEY, JSON.stringify(S)); } catch(e){} };
@@ -2540,6 +2551,7 @@
   if (!S.moves) S.moves = {strike:false, power:false, special:false};
   if (S.up.shield != null){ S.up.axe = Math.max(S.up.axe || 0, S.up.shield); delete S.up.shield; save(); }
   if (S.up.axe == null) S.up.axe = 0;
+  if (!Array.isArray(S.owned) || (S.owned.length === 1 && WORDER.some(k => k !== 'dagger' && (S.up[k] || 0) > 0))) S.owned = ['dagger', ...WORDER.filter(k => k !== 'dagger' && (S.up[k] || 0) > 0)];
   const moveLocked = k => MOVE_PRICE[k] != null && !S.moves[k];
   const xpNeed = lv => 60 + (lv - 1)*40;
   const ARMORS = [{name:'No armor', cut:0}, {name:'Leather', cut:.05, price:120}, {name:'Chainmail', cut:.10, price:260}, {name:'Plate', cut:.15, price:450}];
@@ -2558,6 +2570,7 @@
     const fresh = should.filter(n => !S.unlocked.includes(n));
     S.unlocked = should; // eski kurala göre fazladan açılanlar yeniden kilitlenir
     if (!S.unlocked.includes(S.char)) S.char = 'Tux';
+    if (S.wins >= 1 && !ownsW('bow')) S.owned.push('bow');
     save();
     return fresh;
   }
@@ -3121,11 +3134,13 @@
   document.getElementById('chooserBackF').addEventListener('click', showFighterPick);
   function buildChooser(){
     const g = document.getElementById('wgrid'); g.innerHTML = '';
-    Object.entries(WEAPONS).forEach(([k, w]) => {
-      const b = document.createElement('button'); b.type = 'button'; b.className = 'wpn';
+    WORDER.forEach(k => {
+      const w = WEAPONS[k], own = ownsW(k), un = WUNLOCK[k];
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'wpn' + (own ? '' : ' wlock'); b.disabled = !own;
       const lv = S.up[k] || 0;
-      b.innerHTML = `${wIconHtml(k, lv, 'wi')}<b>${w.name}</b><small>${w.trait}</small><small class="stars">${'&#9733;'.repeat(lv)}${'&#9734;'.repeat(MAXLV - lv)}</small>`;
-      b.addEventListener('click', () => { G.weapon = k; G.sponsor = w.tk; chooserEl.hidden = true; startStage(); });
+      b.innerHTML = `${wIconHtml(k, own ? lv : 0, 'wi')}<b>${w.name}</b>` + (own ? `<small class="stars">${'&#9733;'.repeat(lv)}${'&#9734;'.repeat(MAXLV - lv)}</small>` : `<small class="wreq">&#128274; ${un.wins ? 'Win 1 tournament' : `${un.price} ${COIN}`}</small>`);
+      b.setAttribute('aria-label', own ? `${w.name}, level ${lv}` : `${w.name} is locked. ${un.wins ? 'Win 1 tournament' : `Unlock for ${un.price} coins in the camp`}.`);
+      if (own) b.addEventListener('click', () => { G.weapon = k; G.sponsor = w.tk; chooserEl.hidden = true; startStage(); });
       g.appendChild(b);
     });
   }
@@ -3195,7 +3210,14 @@
       });
     },
     weapons(el){
-      Object.entries(WEAPONS).forEach(([k, w]) => {
+      WORDER.forEach(k => {
+        const w = WEAPONS[k];
+        if (!ownsW(k)){
+          const un = WUNLOCK[k], ic0 = wIcon(k, 0), isNext = nextW() === k;
+          const pill = un.wins ? {html:'&#127942; 1'} : {html:priceTxt(un.price), on:isNext && S.coins >= un.price ? buy(un.price, () => { S.owned.push(k); }, 'fight') : null, aria:`Unlock ${w.name} for ${un.price} coins`};
+          el.appendChild(tile(orb(ic0.svg + `<span class="lk">${LOCK}</span>`, {ring:'#6b6064', in1:'#3a3238', in2:'#141013'}, null, 'locked' + (ic0.diag ? ' diag' : '')), w.name, [pill], `${w.name}, locked`));
+          return;
+        }
         const lv = S.up[k], price = UP_PRICE[lv], ic = wIcon(k, lv), col = MKT[w.tk] ? MKT[w.tk].color : '#e9c64a', pk = PERK[k];
         const stars = '&#9733;'.repeat(lv) + '&#9734;'.repeat(MAXLV - lv);
         const pill = lv >= MAXLV ? {cls:'max', html:'MAX'} : {html:priceTxt(price), on:S.coins >= price ? buy(price, () => { S.up[k]++; }, lv === MAXLV - 1 ? 'charge' : 'clap') : null, aria:`Upgrade ${w.name} for ${price} coins`};
@@ -3266,6 +3288,7 @@
   function openCamp(){ campReturn = document.activeElement; drawCamp(); campEl.hidden = false; resetArm = false; document.getElementById('campReset').textContent = 'Reset progress'; document.getElementById('campClose').focus({preventScroll:true}); }
   function closeCamp(){
     campEl.hidden = true; refreshActions();
+    if (!chooserEl.hidden && !document.getElementById('wgrid').hidden) buildChooser();
     // kamptayken can özelliği arttıysa ringde bekleyen oyuncuya yansısın
     if (G.p && !G.on && fighters.includes(G.p)){ G.p.max = playerMax(); G.p.hp = G.p.max; }
     if (!G.p && !chooserEl.hidden) hudPlayerIdle();
