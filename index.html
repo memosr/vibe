@@ -280,6 +280,17 @@
   .fpick .mini{--mu:1.8px}
   .fpick b{font-family:"Pixelify Sans", monospace;font-size:15px}
   .fpick small{font-size:11px;color:var(--ink-soft);line-height:1.2}
+  .fpick .tiers{display:flex;flex-direction:column;gap:3px;margin:2px 0}
+  .fpick .tr{display:flex;align-items:center;gap:2px}
+  .fpick .tr::before{content:"";width:12px;height:12px;margin-right:3px;background-size:contain;background-repeat:no-repeat;image-rendering:pixelated}
+  .fpick .tr.pw::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Cpath fill='%23ff5a2a' d='M5 0h3v3H7v1H6v1H5v1H4V5H3V4h1V3h1z'/%3E%3Cpath fill='%23231c1f' d='M1 4h2v1h1v1h1v1H4v1H2V7H0V6h1z'/%3E%3C/svg%3E")}
+  .fpick .tr.ul::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Cpath fill='%239a6cf0' d='M3 0h2v3h3v2H5v3H3V5H0V3h3z'/%3E%3Cpath fill='%23d6c2ff' d='M3 3h2v2H3z'/%3E%3C/svg%3E")}
+  .fpick .tr i{width:9px;height:7px;background:#e4ddd6;border:1.5px solid var(--line)}
+  .fpick .tr.pw i.on{background:#ff7a3a}
+  .fpick .tr.ul i.on{background:#9a6cf0}
+  .fpick:disabled .tiers{opacity:.6}
+  .fpick:disabled .sp{display:none}
+  .fpick:disabled .lock{position:static;margin-top:2px}
   .fpick .sp{font-family:"Pixelify Sans", monospace;font-size:11px;color:#7c5cff}
   .fpick:disabled{cursor:not-allowed;background:#e9e3dc}
   .fpick:disabled .mini{filter:brightness(0) opacity(.35)}
@@ -1081,6 +1092,7 @@
     sndBtn.textContent = soundOn ? 'Sound: on' : 'Sound: off';
   });
   function tone(f1, f2, t0, dur, type='square', vol=.05){
+    if (!ac) return;
     const o = ac.createOscillator(), g = ac.createGain(), t = ac.currentTime + t0;
     o.type = type; o.frequency.setValueAtTime(f1, t); o.frequency.exponentialRampToValueAtTime(f2, t + dur);
     g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + .01); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
@@ -2492,11 +2504,12 @@
   ];
   // oynanabilir karakterler: gizli küçük farklar + kendine özel yetenek
   const CHARS = {
-    Tux:     {special:"Gentleman's Blitz", short:'Blitz',   blurb:'Balanced fencer',       mod:{},                               ko:'I shall... return... dressed better.'},
-    Honey:   {special:'Bee Swarm',         short:'Bees',    blurb:'Tough little bear',     mod:{hp:15, acc:.03},                 ko:'...need... honey...'},
-    Goggles: {special:'Time Freeze',       short:'Freeze',  blurb:'Precise, crits often',  mod:{acc:.06, crit:.04},              ko:'Recalculating... life choices.'},
-    Captain: {special:'Cannon Barrage',    short:'Cannons', blurb:'Hits hard',             mod:{hp:10, pow:.08},                 ko:'Abandon... ship...'},
-    Armor:   {special:'Mega Laser',        short:'Laser',   blurb:'Tanky robot',           mod:{hp:30, guard:.08, acc:-.03},     ko:'SYSTEM... SHUTDOWN.'}
+    // tier: güç ve ulti seviyesi (1-5), açılma sırasıyla artar
+    Tux:     {special:"Gentleman's Blitz", short:'Blitz',   blurb:'Balanced fencer',       tier:[1,1], mod:{},                                   ko:'I shall... return... dressed better.'},
+    Honey:   {special:'Bee Swarm',         short:'Bees',    blurb:'Tough little bear',     tier:[2,2], mod:{hp:10, acc:.03},                     ko:'...need... honey...'},
+    Goggles: {special:'Time Freeze',       short:'Freeze',  blurb:'Precise, crits often',  tier:[3,3], mod:{hp:5, acc:.06, crit:.05},            ko:'Recalculating... life choices.'},
+    Captain: {special:'Cannon Barrage',    short:'Cannons', blurb:'Hits hard',             tier:[4,4], mod:{hp:15, pow:.08, crit:.02},           ko:'Abandon... ship...'},
+    Armor:   {special:'Mega Laser',        short:'Laser',   blurb:'Tanky robot',           tier:[5,5], mod:{hp:30, pow:.10, guard:.08, acc:-.02}, ko:'SYSTEM... SHUTDOWN.'}
   };
   // her turnuva zaferi sıradaki tek karakteri açar
   const UNLOCKS = [
@@ -2915,11 +2928,12 @@
     await ULT[S.char](f, o);
     const R = (a, b) => Math.round(rnd(a, b) * dmgMult(f));
     let dmg = 0;
-    if (S.char === 'Tux') for (let i = 0; i < 6; i++) dmg += R(5, 7);
-    else if (S.char === 'Honey'){ dmg = R(18, 24); o.skip = 1; o.skipTag = 'PANIC!'; }
-    else if (S.char === 'Goggles'){ dmg = R(7, 9); o.skip = 2; o.skipTag = 'FROZEN'; }
-    else if (S.char === 'Captain') for (let i = 0; i < 3; i++) dmg += Math.random() < .85 ? R(10, 14) : 0;
-    else dmg = R(30, 40);
+    // ulti gücü açılma sırasıyla artar: Tux < Honey < Goggles < Captain < Armor
+    if (S.char === 'Tux') for (let i = 0; i < 5; i++) dmg += R(4, 6);
+    else if (S.char === 'Honey'){ dmg = R(20, 26); o.skip = 1; o.skipTag = 'PANIC!'; }
+    else if (S.char === 'Goggles'){ dmg = R(14, 18); o.skip = 2; o.skipTag = 'FROZEN'; }
+    else if (S.char === 'Captain') for (let i = 0; i < 3; i++) dmg += Math.random() < .9 ? R(13, 17) : 0;
+    else { dmg = R(45, 55); o.dot = {tag:'BURN', n:2, dmg:6, color:'#ff7a1a'}; o.wrap.dataset.dot = 'BURN'; o.wrap.style.setProperty('--dc', '#ff7a1a'); }
     o.hp = hpBefore - dmg;
     const pt = headPt(o);
     popText(`-${dmg}`, {x:pt.x, y:pt.y - u(o.b)*4}, '#e6dcff', 9);
@@ -3125,8 +3139,8 @@
       const open = S.unlocked.includes(name), lock = UNLOCKS.find(x => x.name === name);
       const b = document.createElement('button'); b.type = 'button'; b.className = 'fpick'; b.disabled = !open;
       const tmp = document.createElement('div'); build({name, act:'poke', parts:bots.find(x => x.name === name).parts}, 0, tmp);
-      b.innerHTML = `<div class="mini">${tmp.querySelector('.bob').outerHTML}</div><b>${name}</b><small>${c.blurb}</small><span class="sp">${c.special}</span>${open ? '' : `<span class="lock">&#128274; ${lock.req}</span>`}`;
-      b.setAttribute('aria-label', open ? `${name}, ${c.blurb}, special: ${c.special}` : `${name} is locked. ${lock.req} to unlock.`);
+      b.innerHTML = `<div class="mini">${tmp.querySelector('.bob').outerHTML}</div><b>${name}</b><span class="tiers" aria-hidden="true"><span class="tr pw">${'<i></i>'.repeat(5).replace(/<i><\/i>/g, (m, o2) => o2/7 < c.tier[0] ? '<i class="on"></i>' : m)}</span><span class="tr ul">${'<i></i>'.repeat(5).replace(/<i><\/i>/g, (m, o2) => o2/7 < c.tier[1] ? '<i class="on"></i>' : m)}</span></span><span class="sp">${c.special}</span>${open ? '' : `<span class="lock">&#128274; ${lock.req}</span>`}`;
+      b.setAttribute('aria-label', open ? `${name}, power ${c.tier[0]} of 5, ultimate ${c.tier[1]} of 5: ${c.special}` : `${name} is locked. ${lock.req} to unlock.`);
       if (open) b.addEventListener('click', () => { S.char = name; save(); dropIdle(name); showWeaponPick(); });
       g.appendChild(b);
     });
