@@ -261,10 +261,52 @@
     .chooser h3{font-size:20px} .chooser p{display:none}
     .stage-lbl{font-size:15px} .node{width:26px;height:26px;font-size:12px} .node.boss{width:32px;height:32px} .link{width:10px}
     .act .ico{width:24px;height:24px}
-    .actions{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .actions{grid-template-columns:repeat(5,minmax(0,1fr))}
     .act small{display:none}
     .hud{padding:0 6px;gap:6px} .card-hp{padding:4px 5px} .hp-name b{font-size:13px} .hp-name small{display:none}
     .turn-tag{font-size:11px;padding:3px 6px}
+  }
+  /* ---- Kamp ve dükkân ---- */
+  .coin{display:inline-block;width:16px;height:16px;background:radial-gradient(circle at 40% 35%,#fff3b0 0 18%,#f5c542 20% 62%,#c7901f 64%);border:2px solid var(--line);border-radius:50%;vertical-align:-3px}
+  .purse{display:flex;align-items:center;gap:8px;margin-left:auto;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:16px}
+  .purse .lv{background:#3a2a2c;color:#ffd772;padding:3px 7px;border:2px solid var(--line)}
+  .res-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+  .reward{margin:0;font-family:"Pixelify Sans", monospace;font-weight:700;color:#8a5a1a !important}
+  .reward:empty{display:none}
+  .camp{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:16px;background:rgba(35,28,31,.6);overflow-y:auto}
+  .camp-card{width:min(760px,100%);background:var(--paper);border:4px solid var(--line);box-shadow:8px 8px 0 var(--line);padding:18px;display:flex;flex-direction:column;gap:12px;max-height:calc(100vh - 32px);overflow-y:auto}
+  .camp-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .camp-head h3{margin:0;font-family:"Pixelify Sans", monospace;font-size:30px;margin-right:auto}
+  .camp-purse{display:flex;align-items:center;gap:6px;font-family:"Pixelify Sans", monospace;font-size:22px}
+  .camp h4{margin:4px 0 0;font-family:"Pixelify Sans", monospace;font-size:18px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+  .lvl-row{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;font-family:"Pixelify Sans", monospace}
+  .bar.xp{height:14px} .bar.xp i{background:linear-gradient(180deg,#b9a2ff,#7c5cff)}
+  .lvl-row small{font-size:14px;color:#b8402f;font-weight:700}
+  .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+  .stat{border:3px solid var(--line);background:#fff;padding:8px;display:flex;flex-direction:column;gap:4px;align-items:center;text-align:center}
+  .stat b{font-family:"Pixelify Sans", monospace;font-size:16px}
+  .stat small{font-size:11px;color:var(--ink-soft);line-height:1.2}
+  .stat .val{font-family:"Pixelify Sans", monospace;font-size:24px}
+  .stat button{font:inherit;font-family:"Pixelify Sans", monospace;font-size:14px;padding:3px 10px;border:2px solid var(--line);background:#ffe3a3;cursor:pointer}
+  .stat button:disabled{opacity:.35;cursor:not-allowed}
+  .shop{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  .item{border:3px solid var(--line);background:#fff;padding:10px;display:grid;grid-template-columns:40px 1fr;gap:4px 10px;align-items:center}
+  .item .ii{grid-row:span 2;width:40px;height:40px} .item .ii svg{width:100%;height:100%;display:block}
+  .item b{font-family:"Pixelify Sans", monospace;font-size:15px}
+  .item small{font-size:11px;color:var(--ink-soft);line-height:1.25}
+  .item button{grid-column:1 / -1;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:6px;font:inherit;font-family:"Pixelify Sans", monospace;font-size:14px;padding:5px;border:2px solid var(--line);background:#ffe3a3;cursor:pointer}
+  .item button:disabled{opacity:.4;cursor:not-allowed;background:#eee}
+  .stars{color:#e9b43a;letter-spacing:1px}
+  .camp-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;color:var(--ink-soft)}
+  .act .badge{position:absolute;top:4px;right:6px;font-family:"Pixelify Sans", monospace;font-size:12px;background:#3a2a2c;color:#fff;padding:0 5px;border-radius:2px}
+  .act{position:relative}
+  .actions{grid-template-columns:repeat(9,minmax(0,1fr))}
+  @media (max-width:640px){
+    .stats{grid-template-columns:repeat(2,minmax(0,1fr))} .shop{grid-template-columns:1fr}
+    .lvl-row{grid-template-columns:auto 1fr} .lvl-row small{grid-column:1 / -1}
+    .camp-card{padding:12px}
+    .purse{font-size:13px}
+    .actions{grid-template-columns:repeat(5,minmax(0,1fr))}
   }
   /* ---- Arena flamaları ---- */
   .pennant{display:none}
@@ -370,6 +412,21 @@
 <section class="arena" id="arena" hidden aria-label="Vibe Arena">
   <div class="pennant pl" aria-hidden="true"><div class="cloth"><span>VIBE ARENA</span></div></div>
   <div class="pennant pr" aria-hidden="true"><div class="cloth"><span>vibe<em>/</em>vibe</span></div></div>
+  <div class="camp" id="camp" hidden role="dialog" aria-modal="true" aria-labelledby="campTitle">
+    <div class="camp-card">
+      <div class="camp-head">
+        <h3 id="campTitle">Camp</h3>
+        <div class="camp-purse"><span class="coin"></span><b id="campCoins">0</b></div>
+        <button class="btn" type="button" id="campClose">Back to the arena</button>
+      </div>
+      <div class="lvl-row"><b id="campLvl">Level 1</b><div class="bar xp"><i id="campXp"></i><span id="campXpT"></span></div><small id="campPts"></small></div>
+      <h4>Skills</h4>
+      <div class="stats" id="campStats"></div>
+      <h4>Shop</h4>
+      <div class="shop" id="campShop"></div>
+      <div class="camp-foot"><small>Progress is saved in this browser.</small><button class="btn" type="button" id="campReset">Reset progress</button></div>
+    </div>
+  </div>
   <div class="arena-in">
     <div class="arena-top">
       <div>
@@ -383,6 +440,7 @@
           <button class="btn mode" type="button" role="tab" id="modePlay" aria-selected="true">Play</button>
           <button class="btn mode" type="button" role="tab" id="modeWatch" aria-selected="false">Watch brawl</button>
         </div>
+        <button class="btn play-only" type="button" id="campBtn">Camp &amp; shop</button>
         <button class="btn watch-only" type="button" id="arenaGear">Shuffle gear</button>
         <button class="btn watch-only" type="button" id="arenaClear">Clear ring</button>
       </div>
@@ -413,11 +471,13 @@
         <h3>Choose your weapon</h3>
         <p>You keep it for the whole tournament. Lose, and you can pick again.</p>
         <div class="wgrid" id="wgrid"></div>
+        <button class="btn" type="button" id="chooserCamp" style="margin-top:12px">Visit camp first</button>
       </div>
       <div class="result play-only" id="result" hidden>
         <h3 id="resTitle">VICTORY!</h3>
         <p id="resText"></p>
-        <button class="btn primary" type="button" id="resAgain">Fight again</button>
+        <p class="reward" id="resReward"></p>
+        <div class="res-btns"><button class="btn primary" type="button" id="resAgain">Fight again</button><button class="btn" type="button" id="resCamp">Camp &amp; shop</button></div>
       </div>
     </div>
     <div class="actions play-only" id="actions" role="group" aria-label="Your moves"></div>
@@ -2132,7 +2192,9 @@
     strike: {key:'4', label:'Strike',  pips:2, sta:18, dmg:[9,13],  acc:.9,  atk:true, icon:I([[5,0,2,7,'#9aa3ad'],[6,0,1,7,'#dfe4ea'],[3,7,6,1,'#e9b43a'],[5,8,2,3,'#6b4a2c'],[4,11,4,1,'#e9b43a']])},
     power:  {key:'5', label:'Power',   pips:3, sta:30, dmg:[16,22], acc:.75, atk:true, icon:I([[5,0,2,12,'#e0482a'],[0,5,12,2,'#e0482a'],[2,2,2,2,'#ff9a3a'],[8,2,2,2,'#ff9a3a'],[2,8,2,2,'#ff9a3a'],[8,8,2,2,'#ff9a3a'],[4,4,4,4,'#ffd772']])},
     taunt:  {key:'6', label:'Taunt',   pips:0, sta:0, icon:I([[1,1,10,7,INK],[2,2,8,5,'#fff'],[5,2,2,2,'#e0482a'],[5,5,2,1,'#e0482a'],[3,8,2,2,INK],[2,10,1,1,INK]])},
-    rest:   {key:'7', label:'Rest',    pips:0, sta:0, icon:I([[1,1,6,1,'#5b7fd6'],[5,2,1,1,'#5b7fd6'],[4,3,1,1,'#5b7fd6'],[3,4,1,1,'#5b7fd6'],[2,5,1,1,'#5b7fd6'],[1,6,6,1,'#5b7fd6'],[7,7,4,1,'#8fa8e8'],[9,8,1,1,'#8fa8e8'],[8,9,1,1,'#8fa8e8'],[7,10,4,1,'#8fa8e8']])}
+    rest:   {key:'7', label:'Rest',    pips:0, sta:0, icon:I([[1,1,6,1,'#5b7fd6'],[5,2,1,1,'#5b7fd6'],[4,3,1,1,'#5b7fd6'],[3,4,1,1,'#5b7fd6'],[2,5,1,1,'#5b7fd6'],[1,6,6,1,'#5b7fd6'],[7,7,4,1,'#8fa8e8'],[9,8,1,1,'#8fa8e8'],[8,9,1,1,'#8fa8e8'],[7,10,4,1,'#8fa8e8']])},
+    hpkit:  {key:'8', label:'Health', pips:0, sta:0, kit:'hp', icon:I([[1,2,10,9,INK],[2,3,8,7,'#f6f1ea'],[5,4,2,5,'#d8432d'],[3,5,6,2,'#d8432d'],[4,1,4,1,INK]])},
+    enkit:  {key:'9', label:'Energy', pips:0, sta:0, kit:'en', icon:I([[3,0,6,2,INK],[2,2,8,10,INK],[3,3,6,8,'#ffe27a'],[6,4,2,2,'#e9b43a'],[5,6,2,2,'#e9b43a'],[4,8,2,2,'#e9b43a']])}
   };
   // silahların gizli özellikleri; oyuncu sadece kısa bir tarif görür
   const W16 = r => svgPx('0 0 16 16', r);
@@ -2159,6 +2221,36 @@
   ];
   const PLAYER = {name:'Tux', hp:100, st:{...STYLE.Tux, hurt:['My suit!','How uncouth!','A mere scratch.']}, ko:'I shall... return... dressed better.'};
   const G = {on:false, busy:false, turn:'p', p:null, e:null, tok:0, stage:0, weapon:null, round:0};
+
+  // --- kalıcı ilerleme (tarayıcıda saklanır)
+  const SAVE_KEY = 'vibefolk-save-v1';
+  const freshSave = () => ({coins:0, xp:0, level:1, points:0, stats:{pow:0, spd:0, grd:0, vit:0}, kits:{hp:1, en:1}, up:{sword:0, spear:0, dagger:0, shield:0, bow:0}, armor:0, best:0, wins:0});
+  let S = freshSave();
+  try { const raw = localStorage.getItem(SAVE_KEY); if (raw) S = Object.assign(freshSave(), JSON.parse(raw)); } catch(e){}
+  const save = () => { try { localStorage.setItem(SAVE_KEY, JSON.stringify(S)); } catch(e){} };
+  const xpNeed = lv => 60 + (lv - 1)*40;
+  const ARMORS = [{name:'No armor', cut:0}, {name:'Leather', cut:.05, price:120}, {name:'Chainmail', cut:.10, price:260}, {name:'Plate', cut:.15, price:450}];
+  const UP_PRICE = [80, 160, 280];
+  const KIT = {hp:{name:'Health kit', heal:40, price:40}, en:{name:'Energy kit', sta:50, price:25}, max:3};
+  // oyuncu için çarpanlar (rakipte hepsi nötr)
+  const mine = f => f === G.p;
+  const dmgMult = f => mine(f) ? (1 + S.stats.pow*.04) * (1 + (S.up[f.gear] || 0)*.08) : 1;
+  const takenMult = f => mine(f) ? (1 - Math.min(.5, S.stats.grd*.03 + ARMORS[S.armor].cut)) : 1;
+  const accBonus = f => mine(f) ? S.stats.spd*.015 : 0;
+  const critBonus = f => mine(f) ? S.stats.spd*.01 : 0;
+  const playerMax = () => 100 + S.stats.vit*8;
+  function grant(coins, xp){
+    S.coins += coins; S.xp += xp;
+    let ups = 0;
+    while (S.xp >= xpNeed(S.level)){ S.xp -= xpNeed(S.level); S.level++; S.points += 3; ups++; }
+    save(); drawPurse();
+    return ups;
+  }
+  const COIN = '<span class="coin" aria-hidden="true"></span>';
+  function drawPurse(){
+    const pu = stagesEl.querySelector('.purse');
+    if (pu) pu.innerHTML = `${COIN}<span>${S.coins}</span><span class="lv">LV ${S.level}</span>`;
+  }
   const hud = {p:document.getElementById('hudP'), e:document.getElementById('hudE')};
   const turnTag = document.getElementById('turnTag'), logEl = document.getElementById('log');
   const actionsEl = document.getElementById('actions'), resultEl = document.getElementById('result');
@@ -2185,7 +2277,8 @@
       if (i) nodes += `<span class="link${i <= s ? ' done' : ''}"></span>`;
       nodes += `<span class="node${x.boss ? ' boss' : ''}${i < s ? ' done' : i === s ? ' now' : ''}" title="${x.name}">${x.boss ? '&#9760;' : i + 1}</span>`;
     });
-    stagesEl.innerHTML = `<span class="stage-lbl">${r.boss ? 'BOSS' : 'STAGE ' + (s + 1)} / ${RIVALS.length}<small>${r.name}</small></span><span class="nodes">${nodes}</span>`;
+    stagesEl.innerHTML = `<span class="stage-lbl">${r.boss ? 'BOSS' : 'STAGE ' + (s + 1)} / ${RIVALS.length}<small>${r.name}</small></span><span class="nodes">${nodes}</span><span class="purse"></span>`;
+    drawPurse();
   }
   const staCost = (f, k) => Math.max(0, MOVES[k].sta - (MOVES[k].atk ? (wOf(f).cheap || 0) : 0));
   function canDo(f, k){
@@ -2195,6 +2288,7 @@
     if (k === 'fwd') return dist() > 1;
     if (k === 'back'){ const c = f.col - f.face; return c >= 0 && c < COLS; }
     if (k === 'rest') return f.sta < 100;
+    if (m.kit) return mine(f) && S.kits[m.kit] > 0 && (m.kit === 'hp' ? f.hp < f.max : f.sta < 100);
     return true;
   }
   function buildActions(){
@@ -2202,14 +2296,17 @@
     Object.entries(MOVES).forEach(([k, m]) => {
       const b = document.createElement('button'); b.type = 'button'; b.className = 'act' + (m.atk ? ' atk' : ''); b.dataset.k = k;
       b.setAttribute('aria-label', m.label);
-      b.innerHTML = `<span class="ico" aria-hidden="true">${m.icon}</span><b>${m.label}</b><span class="pips" aria-hidden="true">${'<i></i>'.repeat(m.pips)}</span><kbd>${m.key}</kbd>`;
+      b.innerHTML = `${m.kit ? '<span class="badge"></span>' : ''}<span class="ico" aria-hidden="true">${m.icon}</span><b>${m.label}</b><span class="pips" aria-hidden="true">${'<i></i>'.repeat(m.pips)}</span><kbd>${m.key}</kbd>`;
       b.addEventListener('click', () => playerMove(k));
       actionsEl.appendChild(b);
     });
   }
   function refreshActions(){
-    const mine = G.on && G.turn === 'p' && !G.busy;
-    actionsEl.querySelectorAll('.act').forEach(b => { b.disabled = !mine || !canDo(G.p, b.dataset.k); });
+    const myTurn = G.on && G.turn === 'p' && !G.busy;
+    actionsEl.querySelectorAll('.act').forEach(b => {
+      b.disabled = !myTurn || !canDo(G.p, b.dataset.k);
+      const m = MOVES[b.dataset.k]; if (m.kit) b.querySelector('.badge').textContent = S.kits[m.kit];
+    });
     turnTag.textContent = !G.on ? 'READY' : G.turn === 'p' ? 'YOUR TURN' : 'RIVAL TURN';
     turnTag.classList.toggle('enemy', G.turn !== 'p');
   }
@@ -2241,8 +2338,8 @@
       await wait(620); speedLines(att);
     }
     play('whoosh');
-    let acc = m.acc + (wa.acc || 0) - (att.shaken ? .2 : 0) - (att.gear === 'bow' && d <= 1 ? wa.close : 0);
-    const crit = Math.random() < (att.pumped ? .3 : .08);
+    let acc = m.acc + (wa.acc || 0) + accBonus(att) - (att.shaken ? .2 : 0) - (att.gear === 'bow' && d <= 1 ? wa.close : 0);
+    const crit = Math.random() < (att.pumped ? .3 : .08) + critBonus(att);
     att.shaken = att.pumped = false;
     const pt = headPt(def);
     if (Math.random() > Math.min(1, acc)){
@@ -2253,7 +2350,7 @@
       await wait(450); return;
     }
     let dmg = rnd(m.dmg[0], m.dmg[1]) + (k === 'quick' ? (wa.quickBonus || 0) : 0);
-    dmg = dmg * (wa.dmg || 1) * (1 - (wd.guard || 0));
+    dmg = dmg * (wa.dmg || 1) * dmgMult(att) * (1 - (wd.guard || 0)) * takenMult(def);
     if (crit) dmg *= 1.6;
     dmg = Math.max(1, Math.round(dmg));
     def.hp -= dmg;
@@ -2301,6 +2398,24 @@
     log(`${f.name} catches a breath.`);
     drawHud(); await wait(250);
   }
+  async function kitMove(f, kind){
+    const k = u(f.b), pt = headPt(f);
+    S.kits[kind]--; save();
+    if (kind === 'hp'){
+      const before = f.hp; f.hp = Math.min(f.max, f.hp + KIT.hp.heal);
+      burst(pt, ['#7ee07a','#fff'], 12, 12, 600, true); play('heart');
+      floaty(f.b, HEART, {n:3, size:4, dur:1200, y:10, spread:14});
+      popText(`+${f.hp - before} HP`, {x:pt.x, y:pt.y - k*8}, '#7ee07a', 5.5);
+      log(`${f.name} patches up with a health kit.`);
+    } else {
+      f.sta = Math.min(100, f.sta + KIT.en.sta);
+      burst(pt, ['#ffe27a','#fff'], 12, 12, 600, true); play('charge');
+      popText('+ENERGY', {x:pt.x, y:pt.y - k*8}, '#ffe27a', 5.5);
+      log(`${f.name} downs an energy kit.`);
+    }
+    await f.b.rig.animate([{transform:T()},{transform:T(0,-k*5,0,1.05)},{transform:T()}],{duration:500}).finished;
+    drawHud(); await wait(200);
+  }
   async function runMove(f, k){
     const o = f === G.p ? G.e : G.p;
     if (k === 'fwd') await stepMove(f, 1);
@@ -2309,6 +2424,7 @@
     else if (MOVES[k].atk) await attackMove(f, o, k);
     else if (k === 'taunt') await tauntMove(f, o);
     else if (k === 'rest') await restMove(f);
+    else if (MOVES[k].kit) await kitMove(f, MOVES[k].kit);
     drawHud();
   }
 
@@ -2348,7 +2464,8 @@
     G.turn = 'p'; G.busy = false; drawHud(); refreshActions();
   }
 
-  function showResult(kind, title, text, btn, fn){
+  function showResult(kind, title, text, btn, fn, reward){
+    document.getElementById('resReward').innerHTML = reward || '';
     resultEl.className = 'result play-only ' + kind;
     document.getElementById('resTitle').textContent = title;
     document.getElementById('resText').textContent = text;
@@ -2367,17 +2484,24 @@
     winner.b.g.armR.animate([{transform:'rotate(0)'},{transform:'rotate(-170deg)'},{transform:'rotate(-170deg)'}],{duration:600,fill:'forwards'});
     speak(winner.b, win ? pick(['Victory, darling.','Well fought. By me.','Tidy.']) : pick(['Too easy.','Next!','Stay down.']), 1800);
     const last = G.stage === RIVALS.length - 1;
+    // ödül: zaferde tam, yenilgide teselli
+    const coins = win ? 30 + G.stage*20 + (last ? 150 : 0) : 10 + G.stage*5;
+    const xp = win ? 25 + G.stage*15 + (last ? 60 : 0) : 10 + G.stage*5;
+    if (win){ S.best = Math.max(S.best, G.stage + 1); if (last) S.wins++; }
+    else S.kits.hp = Math.max(S.kits.hp, 1); // yeni tura en az bir can kitiyle başla
+    const ups = grant(coins, xp);
+    const reward = `+${coins} ${COIN} &nbsp; +${xp} XP${ups ? ` &nbsp; LEVEL UP! +${ups*3} skill points` : ''}`;
     await banner(win ? (last ? 'CHAMPION!' : 'VICTORY!') : 'K.O.', 1200);
     if (!win){
-      showResult('lose', 'DEFEATED', `${G.e.name} knocked you out at ${RIVALS[G.stage].boss ? 'the boss fight' : 'stage ' + (G.stage + 1)}. Start a new run. Maybe try a different weapon?`, 'New run', startTournament);
+      showResult('lose', 'DEFEATED', `${G.e.name} knocked you out at ${RIVALS[G.stage].boss ? 'the boss fight' : 'stage ' + (G.stage + 1)}. Start a new run. Maybe try a different weapon?`, 'New run', startTournament, reward);
       log('You were knocked out.');
     } else if (last){
       drawStagesDone();
-      showResult('win', 'CHAMPION!', `You beat The Bear Market with the ${WEAPONS[G.weapon].name}. The crowd goes wild. Try another weapon?`, 'New run', startTournament);
+      showResult('win', 'CHAMPION!', `You beat The Bear Market with the ${WEAPONS[G.weapon].name}. The crowd goes wild. Try another weapon?`, 'New run', startTournament, reward);
       log('Tournament complete!');
     } else {
       const next = RIVALS[G.stage + 1];
-      showResult('win', 'VICTORY!', `Next up: ${next.name}${next.boss ? ' (BOSS)' : ''}.`, 'Next fight', () => { G.stage++; startStage(); });
+      showResult('win', 'VICTORY!', `Next up: ${next.name}${next.boss ? ' (BOSS)' : ''}.`, 'Next fight', () => { G.stage++; startStage(); }, reward);
       log('You won the duel!');
     }
     return true;
@@ -2417,7 +2541,7 @@
     drop(p);
     chooserEl.hidden = false;
     turnTag.textContent = 'PICK A WEAPON';
-    [['p', {hp:100, max:100, sta:100}], ['e', {hp:0, max:1, sta:0}]].forEach(([k, f]) => { hud[k].querySelector('.hp i').style.width = (f.hp/f.max*100) + '%'; hud[k].querySelector('.hp span').textContent = k === 'p' ? '100 / 100' : '?'; hud[k].querySelector('.st i').style.width = f.sta + '%'; });
+    [['p', {hp:100, max:100, sta:100}], ['e', {hp:0, max:1, sta:0}]].forEach(([k, f]) => { hud[k].querySelector('.hp i').style.width = (f.hp/f.max*100) + '%'; hud[k].querySelector('.hp span').textContent = k === 'p' ? `${playerMax()} / ${playerMax()}` : '?'; hud[k].querySelector('.st i').style.width = f.sta + '%'; });
     hud.p.querySelector('b').textContent = 'Tux'; hud.p.querySelector('small').textContent = '';
     hud.e.querySelector('b').textContent = RIVALS[0].name; hud.e.querySelector('small').textContent = '';
     refreshActions(); turnTag.textContent = 'PICK A WEAPON';
@@ -2442,7 +2566,7 @@
     if (tok !== G.tok) return;
     const r = RIVALS[G.stage];
     const p = makeFighter(PLAYER.name, G.weapon, -1);
-    Object.assign(p, {name:PLAYER.name, st:PLAYER.st, ko:PLAYER.ko, hp:PLAYER.hp, max:PLAYER.hp, sta:100, game:true, ai:null});
+    Object.assign(p, {name:PLAYER.name, st:PLAYER.st, ko:PLAYER.ko, hp:playerMax(), max:playerMax(), sta:100, game:true, ai:null});
     const e = makeRival(r);
     { const W = ring.clientWidth, w = bwOf(p), pad = W*.035; COLS = Math.max(4, Math.min(8, Math.floor((W - 2*pad - w)/(w*.9)) + 1)); }
     p.col = 0; e.col = COLS - 1;
@@ -2460,6 +2584,63 @@
     G.on = true; G.busy = false; G.turn = 'p'; refreshActions();
     log(wOf(p).range > 1 ? `Your ${WEAPONS[p.gear].name.toLowerCase()} can hit from a distance.` : 'Close the distance: you need to be next to your rival to hit.');
   }
+  // --- kamp: özellik puanları ve dükkân
+  const campEl = document.getElementById('camp');
+  const STATS = [
+    ['pow','Power','Hit harder'], ['spd','Speed','Hit more often, crit more'],
+    ['grd','Guard','Take less damage'], ['vit','Vitality','More health']
+  ];
+  const ARMOR_ICON = W16([[3,1,10,3,'#8a8f96'],[2,3,12,9,'#6b737b'],[4,4,8,7,'#9aa3ad'],[7,4,2,7,'#6b737b'],[4,12,8,3,'#6b737b']]);
+  function drawCamp(){
+    document.getElementById('campCoins').textContent = S.coins;
+    document.getElementById('campLvl').textContent = `Level ${S.level}`;
+    document.getElementById('campXp').style.width = (S.xp / xpNeed(S.level) * 100) + '%';
+    document.getElementById('campXpT').textContent = `${S.xp} / ${xpNeed(S.level)} XP`;
+    document.getElementById('campPts').textContent = S.points ? `${S.points} skill points to spend` : '';
+    const st = document.getElementById('campStats'); st.innerHTML = '';
+    STATS.forEach(([k, name, desc]) => {
+      const d = document.createElement('div'); d.className = 'stat';
+      d.innerHTML = `<b>${name}</b><span class="val">${S.stats[k]}</span><small>${desc}</small><button type="button" ${S.points ? '' : 'disabled'} aria-label="Add a point to ${name}">+1</button>`;
+      d.querySelector('button').addEventListener('click', () => { if (!S.points) return; S.points--; S.stats[k]++; save(); drawCamp(); play('clap'); });
+      st.appendChild(d);
+    });
+    const sh = document.getElementById('campShop'); sh.innerHTML = '';
+    const item = (icon, name, desc, price, can, onBuy, label) => {
+      const d = document.createElement('div'); d.className = 'item';
+      d.innerHTML = `<span class="ii" aria-hidden="true">${icon}</span><b>${name}</b><small>${desc}</small><button type="button" ${can ? '' : 'disabled'}>${label || (COIN + ' ' + price)}</button>`;
+      d.querySelector('button').addEventListener('click', () => { if (!can) return; S.coins -= price; onBuy(); save(); drawCamp(); drawPurse(); play('clap'); });
+      sh.appendChild(d);
+    };
+    item(MOVES.hpkit.icon, 'Health kit', `Heals ${KIT.hp.heal} HP in a fight. You have ${S.kits.hp}/${KIT.max}.`, KIT.hp.price, S.coins >= KIT.hp.price && S.kits.hp < KIT.max, () => S.kits.hp++, S.kits.hp >= KIT.max ? 'Full' : null);
+    item(MOVES.enkit.icon, 'Energy kit', `Refills stamina in a fight. You have ${S.kits.en}/${KIT.max}.`, KIT.en.price, S.coins >= KIT.en.price && S.kits.en < KIT.max, () => S.kits.en++, S.kits.en >= KIT.max ? 'Full' : null);
+    const na = ARMORS[S.armor + 1];
+    item(ARMOR_ICON, na ? na.name : ARMORS[S.armor].name, na ? `Armor: take less damage. Now: ${ARMORS[S.armor].name}.` : 'Best armor. You are a tank.', na ? na.price : 0, !!na && S.coins >= na.price, () => S.armor++, na ? null : 'Maxed');
+    Object.entries(WEAPONS).forEach(([k, w]) => {
+      const lv = S.up[k], price = UP_PRICE[lv];
+      const stars = '<span class="stars">' + '&#9733;'.repeat(lv) + '&#9734;'.repeat(3 - lv) + '</span>';
+      item(w.icon, `${w.name} ${stars}`, lv < 3 ? `Sharpen it: more damage with the ${w.name.toLowerCase()}.` : 'Fully upgraded.', price, lv < 3 && S.coins >= price, () => S.up[k]++, lv >= 3 ? 'Maxed' : null);
+    });
+  }
+  let campReturn = null, resetArm = false;
+  function openCamp(){ campReturn = document.activeElement; drawCamp(); campEl.hidden = false; resetArm = false; document.getElementById('campReset').textContent = 'Reset progress'; document.getElementById('campClose').focus(); }
+  function closeCamp(){
+    campEl.hidden = true; refreshActions();
+    // kamptayken can özelliği arttıysa ringde bekleyen oyuncuya yansısın
+    if (G.p && !G.on && fighters.includes(G.p)){ G.p.max = playerMax(); G.p.hp = G.p.max; }
+    if (G.p && fighters.includes(G.p)) drawHud();
+    if (campReturn) campReturn.focus();
+  }
+  document.getElementById('campBtn').addEventListener('click', openCamp);
+  document.getElementById('resCamp').addEventListener('click', openCamp);
+  document.getElementById('chooserCamp').addEventListener('click', openCamp);
+  document.getElementById('campClose').addEventListener('click', closeCamp);
+  campEl.addEventListener('click', e => { if (e.target === campEl) closeCamp(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !campEl.hidden){ e.stopImmediatePropagation(); closeCamp(); } }, true);
+  document.getElementById('campReset').addEventListener('click', e => {
+    if (!resetArm){ resetArm = true; e.target.textContent = 'Click again to reset'; return; }
+    S = freshSave(); save(); drawCamp(); drawPurse(); resetArm = false; e.target.textContent = 'Progress reset';
+  });
+
   function stopGame(){ G.tok++; G.on = false; G.busy = false; resultEl.hidden = true; chooserEl.hidden = true; }
 
   function setMode(mode){
@@ -2473,7 +2654,7 @@
   document.getElementById('modePlay').addEventListener('click', () => { if (!arenaEl.classList.contains('play')) setMode('play'); });
   document.getElementById('modeWatch').addEventListener('click', () => { if (arenaEl.classList.contains('play')) setMode('watch'); });
   document.addEventListener('keydown', e => {
-    if (arenaEl.hidden || !arenaEl.classList.contains('play') || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (arenaEl.hidden || !campEl.hidden || !arenaEl.classList.contains('play') || e.metaKey || e.ctrlKey || e.altKey) return;
     const k = Object.keys(MOVES).find(x => MOVES[x].key === e.key);
     if (k) playerMove(k);
   });
