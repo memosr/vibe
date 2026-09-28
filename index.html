@@ -185,6 +185,12 @@
   .spark-px{width:calc(var(--u)*1.4);height:calc(var(--u)*1.4);background:var(--c,#fff);box-shadow:0 0 6px var(--c,#fff)}
   .slash{border-radius:50%;border-top:calc(var(--u)*1.1) solid var(--c,#fff);border-right:calc(var(--u)*.5) solid rgba(255,255,255,.6);filter:drop-shadow(0 0 4px var(--c,#fff))}
   .shock{border-radius:50%;border:calc(var(--u)*.8) solid var(--c,#fff7ea);box-shadow:0 0 10px var(--c,#fff7ea),inset 0 0 8px var(--c,#fff7ea)}
+  .perkpop{display:flex;align-items:center;gap:6px;padding:4px 10px 4px 6px;background:#231c1f;border:3px solid var(--pc);box-shadow:0 0 14px var(--pc),3px 3px 0 #000;white-space:nowrap;z-index:9}
+  .perkpop svg{width:22px;height:22px;display:block}
+  .perkpop b{font-family:"Pixelify Sans", monospace;font-size:20px;color:var(--pc);text-shadow:2px 2px 0 #000;letter-spacing:.04em}
+  .wpn .wperk{display:inline-flex;align-items:center;gap:3px;font-family:"Pixelify Sans", monospace;font-size:10px;font-weight:700;padding:1px 5px;background:#231c1f;color:var(--pc);border:2px solid var(--pc)}
+  .wpn .wperk svg{width:11px;height:11px}
+  @media (max-width:640px){ .perkpop b{font-size:15px} .perkpop svg{width:16px;height:16px} }
   .impact{background:var(--c,#fff);clip-path:polygon(50% 0,60% 38%,100% 50%,60% 62%,50% 100%,40% 62%,0 50%,40% 38%);filter:drop-shadow(0 0 6px var(--c,#fff))}
   .cut{background:linear-gradient(90deg,transparent,#fff 30%,var(--c) 60%,transparent);box-shadow:0 0 8px var(--c);border-radius:2px}
   .whiteflash{background:radial-gradient(circle,#fff8e0,rgba(255,200,120,.5) 60%,transparent);z-index:5;mix-blend-mode:screen}
@@ -2805,7 +2811,8 @@
     play('bonk'); hitFlash(def); cheer(k === 'power' || crit ? 1400 : 700);
     hitFx(k, pt, att, def);
     if (wd.guard){ const sp = ringPt(def.b.g.armR, .5, .6); burst(sp, ['#ffd772'], 5, 6, 300); }
-    if (crit) popText(perk && perk.crit ? 'DEADLY!' : 'CRIT!', {x:pt.x, y:pt.y - k2*14}, '#ffd772', perk && perk.crit ? 7 : 6);
+    if (crit && perk && perk.crit) perkProc(perk, def, pt);
+    else if (crit) popText('CRIT!', {x:pt.x, y:pt.y - k2*14}, '#ffd772', 6);
     popText(`-${dmg}`, {x:pt.x, y:pt.y - k2*6}, '#ff8a7a', crit || k === 'power' ? 8 : 6);
     stars(def, k === 'power' ? 4 : 2);
     def.b.rig.animate([{transform:T()},{transform:T(-k2*2,-k2*2,-12)},{transform:T(k2,0,5)},{transform:T()}],{duration:480,easing:'ease-out'});
@@ -2865,18 +2872,38 @@
     else if (kind === 'BLEED') dripFx({x:pt.x, y:pt.y + u(f.b)*4}, '#ff3048', 6);
     else floaty(f.b, PICON.bubble, {n:5, size:2.2, dur:1000, rise:16, y:6, spread:18, stagger:80});
   }
+  // silah özelliği tetiklenince: büyük rozet, renkli şok dalgası, hedefte renk parlaması
+  function perkProc(pk, f, pt){
+    const k = u(f.b), top = {x:pt.x, y:pt.y - k*22};
+    const d = document.createElement('div'); d.className = 'fx perkpop'; d.style.setProperty('--pc', pk.color);
+    d.innerHTML = `${pk.icon}<b>${pk.tag}!</b>`; ring.appendChild(d);
+    const w = d.offsetWidth, h = d.offsetHeight; d.style.left = (top.x - w/2) + 'px'; d.style.top = (top.y - h/2) + 'px';
+    d.animate([{scale:.2, translate:'0 10px', opacity:0},{scale:1.25, translate:'0 0', opacity:1, offset:.18},{scale:1, translate:'0 -4px', opacity:1, offset:.75},{scale:.9, translate:'0 -18px', opacity:0}],{duration:1300, easing:'ease-out'}).finished.then(() => d.remove());
+    shockwave(pt, 30, pk.color); setTimeout(() => shockwave(pt, 18, '#fff'), 90);
+    burst(pt, [pk.color, '#fff', pk.color], 14, 15, 600);
+    f.b.bob.animate([{filter:'none'},{filter:`drop-shadow(0 0 10px ${pk.color}) brightness(1.4)`},{filter:'none'}],{duration:600});
+    play('charge');
+  }
   function applyPerk(pk, att, def, dmg, pt){
-    const kk = u(def.b);
     if (pk.dot){
+      const re = def.dot && def.dot.tag === pk.tag;
       def.dot = {tag:pk.tag, n:pk.dot.n, dmg:pk.dot.dmg, color:pk.color};
       def.wrap.dataset.dot = pk.tag; def.wrap.style.setProperty('--dc', pk.color);
-      setTimeout(() => { popText(pk.tag + '!', {x:pt.x, y:pt.y - kk*20}, pk.color, 5.5); dotFx(def, pk.tag); }, 260);
+      setTimeout(() => { perkProc(re ? {...pk, tag:pk.tag + ' +'} : pk, def, pt); dotFx(def, pk.tag); drawHud(); }, 220);
     } else if (pk.steal){
-      const heal = Math.max(1, Math.round(dmg*pk.steal));
-      att.hp = Math.min(att.max, att.hp + heal);
+      // can çalma: can doluysa taşan kısım enerji olur
+      const heal = Math.max(1, Math.round(dmg*pk.steal)), gain = Math.min(att.max - att.hp, heal), sta = (heal - gain)*2;
+      att.hp += gain; if (sta) att.sta = Math.min(100, att.sta + sta);
       const to = headPt(att);
-      for (let i = 0; i < 3; i++) setTimeout(() => throwAt(PICON.heart, pt, to, {w:3, dur:420, arc:8}).then(a => a.remove()), 120 + i*90);
-      setTimeout(() => { popText(`+${heal}`, {x:to.x, y:to.y - u(att.b)*8}, '#8dff9a', 5.5); floaty(att.b, HEART, {n:3, size:3, dur:900, y:10, spread:12}); drawHud(); }, 520);
+      setTimeout(() => perkProc(pk, def, pt), 150);
+      for (let i = 0; i < 5; i++) setTimeout(() => throwAt(PICON.heart, pt, to, {w:3.4, dur:480, arc:10 + i*3}).then(a => a.remove()), 200 + i*80);
+      setTimeout(() => {
+        if (gain) popText(`+${gain} HP`, {x:to.x, y:to.y - u(att.b)*8}, '#8dff9a', 6);
+        if (sta) popText(`+${sta} STA`, {x:to.x, y:to.y - u(att.b)*(gain ? 15 : 8)}, '#ffe27a', 5);
+        floaty(att.b, HEART, {n:4, size:3.4, dur:1000, y:10, spread:14});
+        att.b.bob.animate([{filter:'none'},{filter:'drop-shadow(0 0 10px #8dff9a) brightness(1.3)'},{filter:'none'}],{duration:700});
+        drawHud();
+      }, 650);
     }
   }
   async function tickDot(f){
@@ -3255,7 +3282,7 @@
       const w = WEAPONS[k], own = ownsW(k), un = WUNLOCK[k];
       const b = document.createElement('button'); b.type = 'button'; b.className = 'wpn' + (own ? '' : ' wlock'); b.disabled = !own;
       const lv = S.up[k] || 0;
-      b.innerHTML = `${wIconHtml(k, own ? lv : 0, 'wi')}<b>${w.name}</b>` + (own ? `<small class="stars">${'&#9733;'.repeat(lv)}${'&#9734;'.repeat(MAXLV - lv)}</small>` : `<small class="wreq">&#128274; ${un.wins ? 'Win 1 tournament' : `${un.price} ${COIN}`}</small>`);
+      b.innerHTML = `${wIconHtml(k, own ? lv : 0, 'wi')}<b>${w.name}</b>` + (own ? `<small class="stars">${'&#9733;'.repeat(lv)}${'&#9734;'.repeat(MAXLV - lv)}</small>${lv >= MAXLV ? `<span class="wperk" style="--pc:${PERK[k].color}">${PERK[k].icon}${PERK[k].tag}</span>` : ''}` : `<small class="wreq">&#128274; ${un.wins ? 'Win 1 tournament' : `${un.price} ${COIN}`}</small>`);
       b.setAttribute('aria-label', own ? `${w.name}, level ${lv}` : `${w.name} is locked. ${un.wins ? 'Win 1 tournament' : `Unlock for ${un.price} coins in the camp`}.`);
       if (own) b.addEventListener('click', () => { G.weapon = k; G.sponsor = w.tk; chooserEl.hidden = true; startStage(); });
       g.appendChild(b);
