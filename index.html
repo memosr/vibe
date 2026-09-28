@@ -231,7 +231,36 @@
   .result p{margin:0;color:var(--ink-soft)}
   .result.lose h3{color:#b8402f}
   .result.win h3{color:#2f9a4a}
+  .act .ico{width:30px;height:30px;display:block}
+  .act .ico svg{display:block;width:100%;height:100%;filter:drop-shadow(1px 1px 0 rgba(35,28,31,.35))}
+  .pips{display:flex;gap:3px;min-height:7px}
+  .pips i{width:7px;height:7px;background:#e9b43a;border:1px solid var(--line)}
+  .stages{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .stage-lbl{font-family:"Pixelify Sans", monospace;font-weight:700;font-size:18px;margin-right:6px;white-space:nowrap}
+  .stage-lbl small{font-weight:500;font-size:14px;color:#4a3a3c;margin-left:6px}
+  .nodes{display:flex;align-items:center}
+  .node{display:grid;place-items:center;width:34px;height:34px;background:var(--paper);border:3px solid var(--line);font-family:"Pixelify Sans", monospace;font-weight:700;font-size:15px;color:var(--ink-soft)}
+  .node.boss{width:42px;height:42px;background:#3a2a2c;color:#ffd772}
+  .node.done{background:#3fae4a;color:#fff}
+  .node.now{background:#e0643a;color:#fff8f0;box-shadow:0 0 0 3px #ffd772;animation:nodepulse 1.2s ease-in-out infinite}
+  @keyframes nodepulse{50%{scale:1.1}}
+  .link{width:22px;height:4px;background:var(--line);opacity:.45}
+  .link.done{background:#3fae4a;opacity:1}
+  .chooser{position:absolute;left:50%;top:54%;translate:-50% -50%;z-index:9;width:min(620px,94%);background:var(--paper);border:4px solid var(--line);box-shadow:6px 6px 0 var(--line);padding:14px 16px;text-align:center}
+  .chooser h3{margin:0;font-family:"Pixelify Sans", monospace;font-size:26px}
+  .chooser p{margin:4px 0 12px;color:var(--ink-soft);font-size:14px}
+  .wgrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+  .wpn{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px;background:#fff;border:3px solid var(--line);box-shadow:3px 3px 0 var(--line);cursor:pointer;font:inherit;color:var(--ink)}
+  .wpn:hover{background:#ffe3a3;translate:0 -2px}
+  .wpn:focus-visible{outline:3px dashed var(--ink);outline-offset:3px}
+  .wpn .wi{width:42px;height:42px} .wpn .wi svg{width:100%;height:100%;display:block}
+  .wpn b{font-family:"Pixelify Sans", monospace;font-size:15px}
+  .wpn small{font-size:11px;color:var(--ink-soft);line-height:1.2}
   @media (max-width:640px){
+    .wgrid{grid-template-columns:repeat(3,minmax(0,1fr))} .chooser{top:58%;padding:10px}
+    .chooser h3{font-size:20px} .chooser p{display:none}
+    .stage-lbl{font-size:15px} .node{width:26px;height:26px;font-size:12px} .node.boss{width:32px;height:32px} .link{width:10px}
+    .act .ico{width:24px;height:24px}
     .actions{grid-template-columns:repeat(4,minmax(0,1fr))}
     .act small{display:none}
     .hud{padding:0 6px;gap:6px} .card-hp{padding:4px 5px} .hp-name b{font-size:13px} .hp-name small{display:none}
@@ -360,6 +389,7 @@
     </div>
     <div class="roster watch-only" id="roster"></div>
     <div class="vs watch-only" id="vs" aria-live="polite"></div>
+    <div class="stages play-only" id="stages" aria-label="Tournament progress"></div>
     <div class="ring" id="ring">
       <div class="stands" id="stands" aria-hidden="true"></div>
       <div class="rail" aria-hidden="true"></div>
@@ -378,6 +408,11 @@
         <div class="card-hp" id="hudP"><div class="hp-name"><b>Tux</b><small>Sword</small></div><div class="bar hp"><i></i><span></span></div><div class="bar st"><i></i><span></span></div></div>
         <div class="turn-tag" id="turnTag">YOUR TURN</div>
         <div class="card-hp r" id="hudE"><div class="hp-name"><b>?</b><small></small></div><div class="bar hp"><i></i><span></span></div><div class="bar st"><i></i><span></span></div></div>
+      </div>
+      <div class="chooser play-only" id="chooser" hidden>
+        <h3>Choose your weapon</h3>
+        <p>You keep it for the whole tournament. Lose, and you can pick again.</p>
+        <div class="wgrid" id="wgrid"></div>
       </div>
       <div class="result play-only" id="result" hidden>
         <h3 id="resTitle">VICTORY!</h3>
@@ -2085,30 +2120,51 @@
   document.getElementById('arenaBack').addEventListener('click', () => { location.hash = ''; });
 
 
-  // ================= OYUN MODU: sıra tabanlı düello (Adım 1) =================
-  let COLS = 8;                          // ring sütunlara bölünür; sütun sayısı ekran genişliğine göre ayarlanır
+  // ================= OYUN MODU: turnuva (Adım 2) =================
+  let COLS = 8;                          // ring sütunlara bölünür; sayı ekran genişliğine göre ayarlanır
+  // hamle ikonları (12x12 piksel)
+  const I = (rects) => svgPx('0 0 12 12', rects);
+  const INK = '#231c1f';
   const MOVES = {
-    fwd:    {key:'1', label:'Advance', note:'Step closer', sta:4},
-    back:   {key:'2', label:'Retreat', note:'Step back', sta:4},
-    quick:  {key:'3', label:'Quick',   note:'5-8 dmg · 90%', sta:10, dmg:[5,8],   acc:.90, atk:true},
-    strike: {key:'4', label:'Strike',  note:'9-13 dmg · 75%', sta:18, dmg:[9,13], acc:.75, atk:true},
-    power:  {key:'5', label:'Power',   note:'16-22 dmg · 50%', sta:30, dmg:[16,22], acc:.50, atk:true},
-    taunt:  {key:'6', label:'Taunt',   note:'Rattle rival', sta:0},
-    rest:   {key:'7', label:'Rest',    note:'+35 stamina', sta:0}
+    fwd:    {key:'1', label:'Advance', pips:0, sta:4, icon:I([[1,5,6,2,INK],[7,2,1,8,INK],[8,3,1,6,INK],[9,4,1,4,INK],[10,5,1,2,INK]])},
+    back:   {key:'2', label:'Retreat', pips:0, sta:4, icon:I([[5,5,6,2,INK],[4,2,1,8,INK],[3,3,1,6,INK],[2,4,1,4,INK],[1,5,1,2,INK]])},
+    quick:  {key:'3', label:'Quick',   pips:1, sta:10, dmg:[5,8],   acc:1,   atk:true, icon:I([[6,0,3,2,'#e9b43a'],[5,2,3,2,'#e9b43a'],[3,4,6,2,'#f5c542'],[6,6,3,2,'#e9b43a'],[5,8,2,2,'#e9b43a'],[4,10,2,2,'#e9b43a']])},
+    strike: {key:'4', label:'Strike',  pips:2, sta:18, dmg:[9,13],  acc:.9,  atk:true, icon:I([[5,0,2,7,'#9aa3ad'],[6,0,1,7,'#dfe4ea'],[3,7,6,1,'#e9b43a'],[5,8,2,3,'#6b4a2c'],[4,11,4,1,'#e9b43a']])},
+    power:  {key:'5', label:'Power',   pips:3, sta:30, dmg:[16,22], acc:.75, atk:true, icon:I([[5,0,2,12,'#e0482a'],[0,5,12,2,'#e0482a'],[2,2,2,2,'#ff9a3a'],[8,2,2,2,'#ff9a3a'],[2,8,2,2,'#ff9a3a'],[8,8,2,2,'#ff9a3a'],[4,4,4,4,'#ffd772']])},
+    taunt:  {key:'6', label:'Taunt',   pips:0, sta:0, icon:I([[1,1,10,7,INK],[2,2,8,5,'#fff'],[5,2,2,2,'#e0482a'],[5,5,2,1,'#e0482a'],[3,8,2,2,INK],[2,10,1,1,INK]])},
+    rest:   {key:'7', label:'Rest',    pips:0, sta:0, icon:I([[1,1,6,1,'#5b7fd6'],[5,2,1,1,'#5b7fd6'],[4,3,1,1,'#5b7fd6'],[3,4,1,1,'#5b7fd6'],[2,5,1,1,'#5b7fd6'],[1,6,6,1,'#5b7fd6'],[7,7,4,1,'#8fa8e8'],[9,8,1,1,'#8fa8e8'],[8,9,1,1,'#8fa8e8'],[7,10,4,1,'#8fa8e8']])}
   };
-  // ilk rakip: Paper Hands. Canı azalınca kaçmayı sever.
-  const RIVAL = {
-    id:'paper', name:'Paper Hands', base:'Mist', gear:'dagger', hp:90,
-    st:{walk:'scamper', speed:1.3, enter:'Uh... is it safe here?', taunt:['I\'m selling!','Too risky for me!','Diamond hands? Never heard of it.'], hurt:['SELL SELL SELL!','My portfolio!','I knew I should\'ve sold!']},
-    ko:'I... I panic sold my HP.'
+  // silahların gizli özellikleri; oyuncu sadece kısa bir tarif görür
+  const W16 = r => svgPx('0 0 16 16', r);
+  const WEAPONS = {
+    sword:  {name:'Sword',  trait:'Balanced',       range:1, dmg:1,   acc:0,   icon:W16([[7,0,2,10,'#dfe4ea'],[8,0,1,10,'#fff'],[4,10,8,2,'#e9c64a'],[7,12,2,3,'#6b4a2c'],[6,15,4,1,'#e9c64a']])},
+    spear:  {name:'Spear',  trait:'Long reach',     range:2, dmg:.95, acc:0,   icon:W16([[7,4,2,12,'#8a5a3a'],[6,1,4,3,'#dfe4ea'],[7,0,2,1,'#dfe4ea'],[6,4,4,1,'#d8432d']])},
+    dagger: {name:'Dagger', trait:'Quick and sure', range:1, dmg:.9,  acc:.05, cheap:3, quickBonus:2, icon:W16([[7,2,2,7,'#dfe4ea'],[7,1,1,1,'#dfe4ea'],[5,9,6,1,'#9aa3ad'],[7,10,2,4,'#6b4a2c'],[6,14,4,1,'#9aa3ad']])},
+    shield: {name:'Shield', trait:'Soaks up hits',  range:1, dmg:.85, acc:0,   guard:.22, icon:W16([[3,1,10,11,'#8c2f22'],[4,2,8,9,'#d9573f'],[5,12,6,2,'#8c2f22'],[6,14,4,1,'#8c2f22'],[7,5,2,2,'#e9c64a']])},
+    bow:    {name:'Bow',    trait:'Hits from afar', range:3, dmg:.8,  acc:0,   close:.15, icon:W16([[4,1,2,2,'#8a5a3a'],[5,3,2,3,'#8a5a3a'],[6,6,2,4,'#8a5a3a'],[5,10,2,3,'#8a5a3a'],[4,13,2,2,'#8a5a3a'],[4,2,1,12,'#f3ece2'],[1,7,11,1,'#8a5a3a'],[12,6,2,3,'#9aa3ad'],[0,6,2,1,'#e0643a'],[0,8,2,1,'#e0643a']])}
   };
-  const PLAYER = {name:'Tux', gear:'sword', hp:100,
-    st:{...STYLE.Tux, hurt:['My suit!','How uncouth!','A mere scratch.']}, ko:'I shall... return... dressed better.'};
-  const G = {on:false, busy:false, turn:'p', p:null, e:null, tok:0};
+  // turnuva: 4 rakip + boss, her birinin kendi huyu var
+  const RIVALS = [
+    {name:'Paper Hands', base:'Mist', gear:'dagger', hp:90, ai:{flee:.35, power:.25},
+     st:{walk:'scamper', speed:1.3, enter:'Uh... is it safe here?', taunt:['I\'m selling!','Too risky for me!','Diamond hands? Never heard of it.'], hurt:['SELL SELL SELL!','My portfolio!','I knew I should\'ve sold!']}, ko:'I... I panic sold my HP.'},
+    {name:'The Shorter', base:'Mr. Hat', gear:'spear', hp:105, ai:{kite:true, power:.2},
+     st:{walk:'fence', speed:1, enter:'Everything goes down eventually.', taunt:['Down only.','I\'m betting against you.','Short everything!'], hurt:['Margin call!','Squeezed!','Not the squeeze!']}, ko:'I got... short squeezed.'},
+    {name:'Gas Goblin', base:'Goggles', gear:'bow', hp:115, ai:{kite:true, drain:12, power:.2},
+     st:{walk:'glide', speed:1.1, enter:'Every move costs gas, friend.', taunt:['That\'ll be 20 gwei.','Pay the fee!','Priority fee, please.'], hurt:['Tx reverted!','Out of gas!','Nonce too low!']}, ko:'Transaction... failed.'},
+    {name:'The Whale', base:'Lavender', gear:'shield', hp:150, ai:{slow:true, power:.45, regen:10},
+     st:{walk:'stomp', speed:.7, enter:'Blub. I am very large.', taunt:['I move markets.','Splash!','You are liquidity.'], hurt:['A ripple!','My bags!','Blub!']}, ko:'Beached... again.'},
+    {name:'The Bear Market', base:'Honey', gear:'sword', hp:200, boss:true, scale:1.25, ai:{power:.35, crash:4},
+     recolor:{'#f0d44d':'#6b4a2c','#2b1e22':'#2a1414','#141112':'#140a0a','#3fd7ea':'#d8432d','#f3efe6':'#ffd2c2'},
+     st:{walk:'stomp', speed:.9, enter:'ROAR. The market is closed.', taunt:['Everything is red.','Winter is here.','Capitulate!'], hurt:['A relief rally?!','Green candle?!','GRR!']}, ko:'Fine... bull run... it is.'}
+  ];
+  const PLAYER = {name:'Tux', hp:100, st:{...STYLE.Tux, hurt:['My suit!','How uncouth!','A mere scratch.']}, ko:'I shall... return... dressed better.'};
+  const G = {on:false, busy:false, turn:'p', p:null, e:null, tok:0, stage:0, weapon:null, round:0};
   const hud = {p:document.getElementById('hudP'), e:document.getElementById('hudE')};
   const turnTag = document.getElementById('turnTag'), logEl = document.getElementById('log');
   const actionsEl = document.getElementById('actions'), resultEl = document.getElementById('result');
+  const stagesEl = document.getElementById('stages'), chooserEl = document.getElementById('chooser');
   const rnd = (a, b) => a + Math.floor(Math.random()*(b - a + 1));
+  const wOf = f => WEAPONS[f.gear];
 
   function colX(f, c){ const W = ring.clientWidth, w = bwOf(f), pad = W*.035; return pad + c*(W - 2*pad - w)/(COLS - 1); }
   const dist = () => Math.abs(G.p.col - G.e.col);
@@ -2119,13 +2175,23 @@
       el.querySelector('.hp i').style.width = hpPct + '%';
       el.querySelector('.hp span').textContent = `${Math.max(0, f.hp)} / ${f.max}`;
       el.querySelector('.hp').classList.toggle('low', hpPct < 30);
-      el.querySelector('.st i').style.width = f.sta + '%';
+      el.querySelector('.st i').style.width = Math.max(0, f.sta) + '%';
     });
   }
+  function drawStages(){
+    const s = G.stage, r = RIVALS[s];
+    let nodes = '';
+    RIVALS.forEach((x, i) => {
+      if (i) nodes += `<span class="link${i <= s ? ' done' : ''}"></span>`;
+      nodes += `<span class="node${x.boss ? ' boss' : ''}${i < s ? ' done' : i === s ? ' now' : ''}" title="${x.name}">${x.boss ? '&#9760;' : i + 1}</span>`;
+    });
+    stagesEl.innerHTML = `<span class="stage-lbl">${r.boss ? 'BOSS' : 'STAGE ' + (s + 1)} / ${RIVALS.length}<small>${r.name}</small></span><span class="nodes">${nodes}</span>`;
+  }
+  const staCost = (f, k) => Math.max(0, MOVES[k].sta - (MOVES[k].atk ? (wOf(f).cheap || 0) : 0));
   function canDo(f, k){
-    const m = MOVES[k], o = f === G.p ? G.e : G.p;
-    if (f.sta < m.sta) return false;
-    if (m.atk) return dist() <= 1;
+    const m = MOVES[k];
+    if (f.sta < staCost(f, k)) return false;
+    if (m.atk) return dist() <= wOf(f).range;
     if (k === 'fwd') return dist() > 1;
     if (k === 'back'){ const c = f.col - f.face; return c >= 0 && c < COLS; }
     if (k === 'rest') return f.sta < 100;
@@ -2135,7 +2201,8 @@
     actionsEl.innerHTML = '';
     Object.entries(MOVES).forEach(([k, m]) => {
       const b = document.createElement('button'); b.type = 'button'; b.className = 'act' + (m.atk ? ' atk' : ''); b.dataset.k = k;
-      b.innerHTML = `<b>${m.label}</b><small>${m.note}${m.sta ? ' · ' + m.sta + ' sta' : ''}</small><kbd>${m.key}</kbd>`;
+      b.setAttribute('aria-label', m.label);
+      b.innerHTML = `<span class="ico" aria-hidden="true">${m.icon}</span><b>${m.label}</b><span class="pips" aria-hidden="true">${'<i></i>'.repeat(m.pips)}</span><kbd>${m.key}</kbd>`;
       b.addEventListener('click', () => playerMove(k));
       actionsEl.appendChild(b);
     });
@@ -2147,48 +2214,73 @@
     turnTag.classList.toggle('enemy', G.turn !== 'p');
   }
 
-  // --- hamlelerin kendisi (hem oyuncu hem rakip kullanır)
-  async function stepMove(f, dir){ // dir: +1 ileri, -1 geri
+  // --- hamleler
+  async function stepMove(f, dir){
     f.col += dir*f.face; f.sta -= 4;
     await moveTo(f, colX(f, f.col), 380);
   }
-  async function attackMove(att, def, k){
-    const m = MOVES[k], k2 = u(att.b);
-    att.sta -= m.sta;
-    // animasyon: saldırı türüne göre kol + bilek hareketi
-    if (k === 'quick'){ arm(att, [0, -85, 0], 320); aim(att, [0, 180, 0], 320); att.b.rig.animate([{transform:T()},{transform:T(k2*3,0)},{transform:T()}],{duration:320}); await wait(170); }
+  async function attackMove(att, def, k, over){
+    const m = {...MOVES[k], ...(over || {})}, k2 = u(att.b), wa = wOf(att), wd = wOf(def), d = dist();
+    att.sta -= over ? (over.sta || 0) : staCost(att, k);
+    const ranged = att.gear === 'bow' && d > 1;
+    // animasyon
+    if (ranged){
+      arm(att, [0, -90, -90, -90, 0], 900); aim(att, [0, 90, 90, 90, 0], 900);
+      const str = att.b.el.querySelector('.bowstring');
+      if (str) str.animate([{translate:'0 0'},{translate:`${-k2*2.2}px 0`, offset:.4},{translate:'0 0', offset:.55},{translate:'0 0'}],{duration:900});
+      await wait(430);
+      const from = ringPt(att.b.g.wpn || att.b.g.armR, .5, .5), to = headPt(def);
+      trail(from, to, 360);
+      const a = await throwAt(ARROW, from, to, {w:9, h:2.2, dur:360, flip:att.face < 0}); a.remove();
+    } else if (k === 'quick'){ arm(att, [0, -85, 0], 320); aim(att, [0, 180, 0], 320); att.b.rig.animate([{transform:T()},{transform:T(k2*3,0)},{transform:T()}],{duration:320}); await wait(170); }
     else if (k === 'strike'){ arm(att, [0, -160, 25, 0], 620); aim(att, [0, 150, 60, 0], 620); await wait(360); }
-    else { // power: uzun hazırlık, sıçrayarak iner
-      speak(att.b, pick(['HAAA!','Full send!','All in!']), 800);
+    else {
+      if (!over) speak(att.b, pick(['HAAA!','Full send!','All in!']), 800);
       arm(att, [0, -175, -175, 35, 0], 1000); aim(att, [0, 160, 160, 70, 0], 1000);
       att.b.rig.animate([{transform:T()},{transform:T(-k2*2,k2,0,.95)},{transform:T(k2*4,-k2*8,6)},{transform:T(k2*3,0,4)},{transform:T()}],{duration:1000});
       await wait(620); speedLines(att);
     }
     play('whoosh');
-    let acc = m.acc - (att.shaken ? .2 : 0);
+    let acc = m.acc + (wa.acc || 0) - (att.shaken ? .2 : 0) - (att.gear === 'bow' && d <= 1 ? wa.close : 0);
     const crit = Math.random() < (att.pumped ? .3 : .08);
     att.shaken = att.pumped = false;
     const pt = headPt(def);
-    if (Math.random() > acc){ // ıska
+    if (Math.random() > Math.min(1, acc)){
       def.b.rig.animate([{transform:T()},{transform:T(-k2*2,-k2*12,-10)},{transform:T()}],{duration:420,easing:'ease-out'});
       popText('MISS', {x:pt.x, y:pt.y - k2*6}, '#d9d0c7', 5);
       speak(def.b, pick(DODGE), 900);
       log(`${att.name} swings... and misses.`);
       await wait(450); return;
     }
-    let dmg = rnd(m.dmg[0], m.dmg[1]); if (crit) dmg = Math.round(dmg*1.6);
+    let dmg = rnd(m.dmg[0], m.dmg[1]) + (k === 'quick' ? (wa.quickBonus || 0) : 0);
+    dmg = dmg * (wa.dmg || 1) * (1 - (wd.guard || 0));
+    if (crit) dmg *= 1.6;
+    dmg = Math.max(1, Math.round(dmg));
     def.hp -= dmg;
     play('bonk'); hitFlash(def); cheer(k === 'power' || crit ? 1400 : 700);
-    if (k === 'quick') burst(pt, ['#fff','#ff9a8a'], 6, 7, 300); else slashArc(pt, -25, k === 'power' ? 24 : 18);
+    if (k === 'quick' || ranged) burst(pt, ['#fff','#ff9a8a'], 6, 7, 300); else slashArc(pt, -25, k === 'power' ? 24 : 18);
     burst(pt, ['#fff','#ffd772'], k === 'power' ? 14 : 8, 11);
+    if (wd.guard){ const sp = ringPt(def.b.g.armR, .5, .6); burst(sp, ['#ffd772'], 5, 6, 300); }
     if (crit) popText('CRIT!', {x:pt.x, y:pt.y - k2*14}, '#ffd772', 6);
     popText(`-${dmg}`, {x:pt.x, y:pt.y - k2*6}, '#ff8a7a', crit || k === 'power' ? 8 : 6);
     if (k === 'power') shakeRing(7);
     stars(def, k === 'power' ? 4 : 2);
     def.b.rig.animate([{transform:T()},{transform:T(-k2*2,-k2*2,-12)},{transform:T(k2,0,5)},{transform:T()}],{duration:480,easing:'ease-out'});
     if (def.hp > 0 && Math.random() < .55) speak(def.b, pick(def.st.hurt), 1100);
-    log(`${att.name} lands a ${m.label.toLowerCase()} for ${dmg}${crit ? ' (critical!)' : ''}.`);
+    // Gas Goblin: her isabette dayanıklılık çalar
+    if (att.ai && att.ai.drain && def.hp > 0){
+      def.sta = Math.max(0, def.sta - att.ai.drain);
+      setTimeout(() => popText('GAS FEE', {x:pt.x, y:pt.y + k2*4}, '#bfe6ff', 4), 250);
+    }
+    log(`${att.name} lands ${over ? over.label : 'a ' + m.label.toLowerCase()} for ${dmg}${crit ? ' (critical!)' : ''}.`);
     drawHud(); await wait(520);
+  }
+  async function crashMove(att, def){ // Bear Market'in özel hamlesi
+    ultName('MARKET CRASH'); speak(att.b, 'EVERYTHING. IS. RED.', 1300);
+    const dim = overlay('dim'); dim.style.background = 'rgba(120,10,10,.35)';
+    await wait(700);
+    await attackMove(att, def, 'power', {label:'a Market Crash', dmg:[22,28], acc:.85, sta:20});
+    fadeOut(dim);
   }
   async function tauntMove(f, o){
     const k = u(f.b);
@@ -2197,7 +2289,7 @@
     f.b.rig.animate([{transform:T()},{transform:T(0,-k*4)},{transform:T()},{transform:T(0,-k*4)},{transform:T()}],{duration:900});
     o.shaken = true; f.pumped = true;
     popText('RATTLED', {x:headPt(o).x, y:headPt(o).y - k*10}, '#bfa6ff', 4.5);
-    log(`${f.name} taunts. ${o.name} is rattled, next hit has a better crit chance.`);
+    log(`${f.name} taunts. ${o.name} is rattled.`);
     await wait(950);
   }
   async function restMove(f){
@@ -2205,7 +2297,7 @@
     f.sta = Math.min(100, f.sta + 35); f.hp = Math.min(f.max, f.hp + 3);
     floaty(f.b, '...', {n:1, size:3.5, dur:1100, x:15, y:8, spread:2});
     await f.b.rig.animate([{transform:T()},{transform:T(0,k*1.5,0,.95)},{transform:T()}],{duration:800}).finished;
-    popText('+35 STA', {x:headPt(f).x, y:headPt(f).y - k*8}, '#ffe27a', 4.5);
+    popText('+STA', {x:headPt(f).x, y:headPt(f).y - k*8}, '#ffe27a', 4.5);
     log(`${f.name} catches a breath.`);
     drawHud(); await wait(250);
   }
@@ -2213,25 +2305,28 @@
     const o = f === G.p ? G.e : G.p;
     if (k === 'fwd') await stepMove(f, 1);
     else if (k === 'back') await stepMove(f, -1);
+    else if (k === 'crash') await crashMove(f, o);
     else if (MOVES[k].atk) await attackMove(f, o, k);
     else if (k === 'taunt') await tauntMove(f, o);
     else if (k === 'rest') await restMove(f);
     drawHud();
   }
 
-  // --- rakibin kararı: Paper Hands kişiliği
+  // --- rakibin kararı: her rakibin kişiliğine göre
   function rivalChoice(){
-    const e = G.e, d = dist(), r = Math.random(), hpPct = e.hp / e.max;
-    if (d > 1){
+    const e = G.e, ai = e.ai, d = dist(), r = Math.random(), hpPct = e.hp / e.max, wr = wOf(e).range;
+    if (ai.crash && G.round > 0 && G.round % ai.crash === 0 && d <= wr && e.sta >= 20) return 'crash';
+    if (ai.flee && hpPct < ai.flee && r < .35 && canDo(e, 'back')){ speak(e.b, pick(['I\'m out!','Selling my position!','Nope nope nope!']), 900); return 'back'; }
+    if (ai.kite && d < wr && r < .55 && canDo(e, 'back')) return 'back';
+    if (d > wr){
       if (e.sta < 12) return 'rest';
-      if (hpPct < .35 && r < .35) return canDo(e, 'back') ? 'back' : 'rest'; // panik: uzakta kal
+      if (ai.slow && r < .35) return e.sta < 100 ? 'rest' : 'taunt';
       return 'fwd';
     }
-    if (hpPct < .35 && r < .35 && canDo(e, 'back')){ speak(e.b, pick(['I\'m out!','Selling my position!','Nope nope nope!']), 900); return 'back'; }
-    if (r < .1) return 'taunt';
-    if (e.sta >= 30 && r < .32) return 'power';
-    if (e.sta >= 18 && r < .7) return 'strike';
-    if (e.sta >= 10) return 'quick';
+    if (r < .08) return 'taunt';
+    if (e.sta >= staCost(e, 'power') && r < (ai.power || .3)) return 'power';
+    if (e.sta >= staCost(e, 'strike') && r < .7) return 'strike';
+    if (e.sta >= staCost(e, 'quick')) return 'quick';
     return 'rest';
   }
 
@@ -2242,81 +2337,147 @@
     await runMove(G.p, k);
     if (tok !== G.tok) return;
     if (await checkEnd()) return;
-    G.turn = 'e'; G.busy = false; refreshActions();
+    G.turn = 'e'; refreshActions();
     await wait(450); if (tok !== G.tok) return;
-    G.busy = true;
-    G.e.sta = Math.min(100, G.e.sta + 6);
+    G.e.sta = Math.min(100, G.e.sta + (G.e.ai.regen || 6));
     await runMove(G.e, rivalChoice());
     if (tok !== G.tok) return;
     if (await checkEnd()) return;
+    G.round++;
     G.p.sta = Math.min(100, G.p.sta + 6);
     G.turn = 'p'; G.busy = false; drawHud(); refreshActions();
   }
 
+  function showResult(kind, title, text, btn, fn){
+    resultEl.className = 'result play-only ' + kind;
+    document.getElementById('resTitle').textContent = title;
+    document.getElementById('resText').textContent = text;
+    const b = document.getElementById('resAgain'); b.textContent = btn; b.onclick = fn;
+    resultEl.hidden = false; b.focus();
+  }
   async function checkEnd(){
     const loser = G.e.hp <= 0 ? G.e : G.p.hp <= 0 ? G.p : null;
     if (!loser) return false;
-    const winner = loser === G.e ? G.p : G.e, k = u(loser.b);
+    const winner = loser === G.e ? G.p : G.e, k = u(loser.b), win = winner === G.p;
     G.on = false; refreshActions();
     speak(loser.b, loser.ko, 1800);
     play('boom'); shakeRing(8); cheer(2500);
     await loser.b.rig.animate([{transform:T()},{transform:T(0,-k*6,-20)},{transform:T(-k*4,k*6,-90)}],{duration:700,easing:'ease-in',fill:'forwards'}).finished;
     puff(loser.b, -1); puff(loser.b, 1);
     winner.b.g.armR.animate([{transform:'rotate(0)'},{transform:'rotate(-170deg)'},{transform:'rotate(-170deg)'}],{duration:600,fill:'forwards'});
-    speak(winner.b, winner === G.p ? pick(['Victory, darling.','Well fought. By me.','Tidy.']) : pick(['I didn\'t sell! I WON!','Stonks!']), 1800);
-    await banner(winner === G.p ? 'VICTORY!' : 'K.O.', 1200);
-    const win = winner === G.p;
-    resultEl.className = 'result play-only ' + (win ? 'win' : 'lose');
-    document.getElementById('resTitle').textContent = win ? 'VICTORY!' : 'DEFEATED';
-    document.getElementById('resText').textContent = win ? `${G.e.name} panic sold. You win the duel!` : `${G.e.name} got lucky. Dust off that suit and try again.`;
-    resultEl.hidden = false;
-    document.getElementById('resAgain').focus();
-    log(win ? 'You won the duel!' : 'You were knocked out.');
+    speak(winner.b, win ? pick(['Victory, darling.','Well fought. By me.','Tidy.']) : pick(['Too easy.','Next!','Stay down.']), 1800);
+    const last = G.stage === RIVALS.length - 1;
+    await banner(win ? (last ? 'CHAMPION!' : 'VICTORY!') : 'K.O.', 1200);
+    if (!win){
+      showResult('lose', 'DEFEATED', `${G.e.name} knocked you out at ${RIVALS[G.stage].boss ? 'the boss fight' : 'stage ' + (G.stage + 1)}. Start a new run. Maybe try a different weapon?`, 'New run', startTournament);
+      log('You were knocked out.');
+    } else if (last){
+      drawStagesDone();
+      showResult('win', 'CHAMPION!', `You beat The Bear Market with the ${WEAPONS[G.weapon].name}. The crowd goes wild. Try another weapon?`, 'New run', startTournament);
+      log('Tournament complete!');
+    } else {
+      const next = RIVALS[G.stage + 1];
+      showResult('win', 'VICTORY!', `Next up: ${next.name}${next.boss ? ' (BOSS)' : ''}.`, 'Next fight', () => { G.stage++; startStage(); });
+      log('You won the duel!');
+    }
     return true;
   }
+  function drawStagesDone(){ stagesEl.querySelectorAll('.node').forEach(n => { n.classList.remove('now'); n.classList.add('done'); }); stagesEl.querySelectorAll('.link').forEach(l => l.classList.add('done')); }
 
-  async function startGame(){
+  function clearRing(){ fighters.forEach(f => f.wrap.remove()); fighters = []; arenaBots = []; }
+  function recolorParts(parts, map){ return parts.map(p => map[p[5]] ? [...p.slice(0,5), map[p[5]], p[6]] : p); }
+  function makeRival(r){
+    const e = makeFighter(r.base, r.gear, 1);
+    if (r.recolor || r.scale){
+      e.wrap.remove();
+      const def = bots.find(x => x.name === r.base);
+      const wrap = document.createElement('div'); wrap.className = 'fighter';
+      const flip = document.createElement('div'); flip.className = 'flip';
+      if (r.scale){ flip.style.scale = `-${r.scale} ${r.scale}`; flip.style.transformOrigin = '50% 100%'; }
+      wrap.appendChild(flip); ring.appendChild(wrap);
+      const b = build({name:r.name, act:'poke', parts:recolorParts(def.parts, r.recolor || {}).concat(GEAR[r.gear].parts)}, 3, flip);
+      Object.assign(e, {b, wrap}); b.fighter = e;
+    }
+    e.b.el.setAttribute('aria-label', `Poke ${r.name}`);
+    Object.assign(e, {name:r.name, st:r.st, ko:r.ko, hp:r.hp, max:r.hp, sta:100, ai:r.ai, game:true});
+    return e;
+  }
+
+  // --- turnuva akışı
+  function startTournament(){
+    G.tok++; matchTok++; G.on = false; G.busy = true; G.stage = 0; G.weapon = null;
+    resultEl.hidden = true; clearRing(); log('');
+    drawStages();
+    // Tux ringde bekler, silah seçilir
+    const p = makeFighter(PLAYER.name, 'sword', -1);
+    p.b.g.wpn && (p.b.g.wpn.style.visibility = 'hidden');
+    Object.assign(p, {name:PLAYER.name, st:PLAYER.st, game:true});
+    fighters = [p]; arenaBots = [p.b];
+    place(p, ring.clientWidth/2 - bwOf(p)/2);
+    drop(p);
+    chooserEl.hidden = false;
+    turnTag.textContent = 'PICK A WEAPON';
+    [['p', {hp:100, max:100, sta:100}], ['e', {hp:0, max:1, sta:0}]].forEach(([k, f]) => { hud[k].querySelector('.hp i').style.width = (f.hp/f.max*100) + '%'; hud[k].querySelector('.hp span').textContent = k === 'p' ? '100 / 100' : '?'; hud[k].querySelector('.st i').style.width = f.sta + '%'; });
+    hud.p.querySelector('b').textContent = 'Tux'; hud.p.querySelector('small').textContent = '';
+    hud.e.querySelector('b').textContent = RIVALS[0].name; hud.e.querySelector('small').textContent = '';
+    refreshActions(); turnTag.textContent = 'PICK A WEAPON';
+    const first = chooserEl.querySelector('.wpn'); if (first) setTimeout(() => first.focus(), 50);
+  }
+  function buildChooser(){
+    const g = document.getElementById('wgrid'); g.innerHTML = '';
+    Object.entries(WEAPONS).forEach(([k, w]) => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'wpn';
+      b.innerHTML = `<span class="wi" aria-hidden="true">${w.icon}</span><b>${w.name}</b><small>${w.trait}</small>`;
+      b.addEventListener('click', () => { G.weapon = k; chooserEl.hidden = true; startStage(); });
+      g.appendChild(b);
+    });
+  }
+  async function startStage(){
     const tok = ++G.tok; matchTok++;
-    fighters.forEach(f => f.wrap.remove()); fighters = []; arenaBots = [];
-    resultEl.hidden = true; G.on = false; G.busy = true;
-    const p = makeFighter(PLAYER.name, PLAYER.gear, -1);
-    const e = makeFighter(RIVAL.base, RIVAL.gear, 1);
-    // yan yana iki sütun arası en az bir karakter genişliği kadar olsun, üst üste binmesinler
+    resultEl.hidden = true; chooserEl.hidden = true; G.on = false; G.busy = true; G.round = 0;
+    const old = fighters; fighters = []; arenaBots = [];
+    old.forEach(f => f.wrap.animate([{transform:`translate(${f.x}px,0)`},{transform:`translate(${f.x}px,${-ring.clientHeight - 80}px)`}],{duration:380,easing:'ease-in',fill:'forwards'}).finished.then(() => f.wrap.remove()));
+    drawStages();
+    if (old.length) await wait(380);
+    if (tok !== G.tok) return;
+    const r = RIVALS[G.stage];
+    const p = makeFighter(PLAYER.name, G.weapon, -1);
+    Object.assign(p, {name:PLAYER.name, st:PLAYER.st, ko:PLAYER.ko, hp:PLAYER.hp, max:PLAYER.hp, sta:100, game:true, ai:null});
+    const e = makeRival(r);
     { const W = ring.clientWidth, w = bwOf(p), pad = W*.035; COLS = Math.max(4, Math.min(8, Math.floor((W - 2*pad - w)/(w*.9)) + 1)); }
-    Object.assign(p, {name:PLAYER.name, st:PLAYER.st, ko:PLAYER.ko, hp:PLAYER.hp, max:PLAYER.hp, sta:100, col:0, game:true});
-    Object.assign(e, {name:RIVAL.name, st:RIVAL.st, ko:RIVAL.ko, hp:RIVAL.hp, max:RIVAL.hp, sta:100, col:COLS - 1, game:true});
-    e.b.el.setAttribute('aria-label', `Poke ${RIVAL.name}`);
+    p.col = 0; e.col = COLS - 1;
     fighters = [p, e]; arenaBots = [p.b, e.b]; G.p = p; G.e = e;
-    hud.p.querySelector('b').textContent = p.name; hud.p.querySelector('small').textContent = GEAR[p.gear].label;
-    hud.e.querySelector('b').textContent = e.name; hud.e.querySelector('small').textContent = GEAR[e.gear].label;
+    hud.p.querySelector('b').textContent = p.name; hud.p.querySelector('small').textContent = WEAPONS[p.gear].name;
+    hud.e.querySelector('b').textContent = e.name; hud.e.querySelector('small').textContent = r.boss ? 'BOSS' : WEAPONS[e.gear].name;
     place(p, colX(p, p.col)); place(e, colX(e, e.col));
     drawHud(); refreshActions(); log('');
-    drop(p); await wait(420); drop(e); await wait(1000);
+    drop(p); await wait(420); drop(e); await wait(1100);
     if (tok !== G.tok) return;
-    play('fight'); cheer(1800); await banner('FIGHT!');
+    play('fight'); cheer(1800); await banner(r.boss ? 'BOSS FIGHT!' : `STAGE ${G.stage + 1}`, 1000);
+    if (tok !== G.tok) return;
+    await banner('FIGHT!', 800);
     if (tok !== G.tok) return;
     G.on = true; G.busy = false; G.turn = 'p'; refreshActions();
-    log('Your turn. Close the distance: you need to be next to your rival to hit.');
+    log(wOf(p).range > 1 ? `Your ${WEAPONS[p.gear].name.toLowerCase()} can hit from a distance.` : 'Close the distance: you need to be next to your rival to hit.');
   }
-  function stopGame(){ G.tok++; G.on = false; G.busy = false; resultEl.hidden = true; }
+  function stopGame(){ G.tok++; G.on = false; G.busy = false; resultEl.hidden = true; chooserEl.hidden = true; }
 
   function setMode(mode){
     const play = mode === 'play';
     arenaEl.classList.toggle('play', play);
     document.getElementById('modePlay').setAttribute('aria-selected', play);
     document.getElementById('modeWatch').setAttribute('aria-selected', !play);
-    if (play){ picks = []; updateRoster(); startGame(); }
-    else { stopGame(); fighters.forEach(f => f.wrap.remove()); fighters = []; arenaBots = []; picks = ['Tux']; updateRoster(); setupRing(); }
+    if (play){ picks = []; updateRoster(); startTournament(); }
+    else { stopGame(); clearRing(); picks = ['Tux']; updateRoster(); setupRing(); }
   }
   document.getElementById('modePlay').addEventListener('click', () => { if (!arenaEl.classList.contains('play')) setMode('play'); });
   document.getElementById('modeWatch').addEventListener('click', () => { if (arenaEl.classList.contains('play')) setMode('watch'); });
-  document.getElementById('resAgain').addEventListener('click', startGame);
   document.addEventListener('keydown', e => {
     if (arenaEl.hidden || !arenaEl.classList.contains('play') || e.metaKey || e.ctrlKey || e.altKey) return;
     const k = Object.keys(MOVES).find(x => MOVES[x].key === e.key);
     if (k) playerMove(k);
   });
-  buildActions();
+  buildActions(); buildChooser();
 
   function route(){
     const on = location.hash === '#arena';
