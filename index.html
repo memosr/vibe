@@ -246,7 +246,7 @@
   @keyframes nodepulse{50%{scale:1.1}}
   .link{width:22px;height:4px;background:var(--line);opacity:.45}
   .link.done{background:#3fae4a;opacity:1}
-  .chooser{position:absolute;left:50%;top:54%;translate:-50% -50%;z-index:9;width:min(620px,94%);background:var(--paper);border:4px solid var(--line);box-shadow:6px 6px 0 var(--line);padding:14px 16px;text-align:center}
+  .chooser{position:absolute;left:50%;top:54%;translate:-50% -50%;z-index:9;width:min(620px,94%);max-height:94%;overflow-y:auto;background:var(--paper);border:4px solid var(--line);box-shadow:6px 6px 0 var(--line);padding:14px 16px;text-align:center}
   .chooser h3{margin:0;font-family:"Pixelify Sans", monospace;font-size:26px}
   .chooser p{margin:4px 0 12px;color:var(--ink-soft);font-size:14px}
   .wgrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
@@ -285,6 +285,28 @@
   .act.sp b{color:#7c5cff}
   .act.sp:not(:disabled){background:#efe6ff;animation:hypefull .6s ease-in-out infinite alternate}
   @media (max-width:640px){ .fgrid{grid-template-columns:repeat(3,minmax(0,1fr))} .fpick .mini{--mu:1.5px} }
+  /* ---- Borsa katmanı ---- */
+  .tape{position:relative;overflow:hidden;background:#211b1e;border:3px solid var(--line);box-shadow:4px 4px 0 var(--line);height:34px}
+  .tape::before{content:"ARENA MARKET (sim)";position:absolute;left:0;top:0;bottom:0;z-index:2;display:grid;place-items:center;padding:0 10px;background:#e0643a;color:#fff8f0;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:13px;border-right:3px solid var(--line)}
+  .tape-in{position:absolute;top:0;bottom:0;left:0;display:flex;align-items:center;gap:28px;white-space:nowrap;padding-left:170px;animation:tape 26s linear infinite;font-family:"Pixelify Sans", monospace;font-size:15px;color:#f3ece2}
+  .tape-in .tk{display:inline-flex;gap:8px;align-items:center}
+  .tape-in .tk b{color:var(--c)} .tape-in .up{color:#7ee07a} .tape-in .dn{color:#ff8a7a}
+  .tape-in .hot{animation:tkflash 1.2s ease-out}
+  @keyframes tape{to{translate:-50% 0}}
+  @keyframes tkflash{0%{background:#ffd772;color:#231c1f}100%{background:transparent}}
+  .mkt-toast{position:absolute;left:50%;top:calc(var(--u)*25);translate:-50% 0;z-index:8;display:flex;align-items:center;gap:10px;background:#211b1e;color:#f3ece2;border:3px solid var(--line);box-shadow:4px 4px 0 rgba(35,28,31,.6);padding:7px 12px;font-family:"Pixelify Sans", monospace;font-size:15px;white-space:nowrap;max-width:94%}
+  .mkt-toast b{color:var(--c)} .mkt-toast .up{color:#7ee07a} .mkt-toast .dn{color:#ff8a7a}
+  .logo{display:grid;place-items:center;width:44px;height:44px;background:var(--c);border:3px solid var(--line);color:#fff;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:13px;text-shadow:1px 1px 0 var(--line)}
+  .sgrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .port{display:grid;gap:6px}
+  .port .row{display:grid;grid-template-columns:52px 1fr auto auto auto;gap:10px;align-items:center;border:2px solid var(--line);background:#fff;padding:5px 8px;font-family:"Pixelify Sans", monospace}
+  .port .row .logo{width:44px;height:26px;font-size:12px;border-width:2px}
+  .port .row small{font-family:inherit;color:var(--ink-soft)}
+  .port .up{color:#2f9a4a} .port .dn{color:#b8402f}
+  .port button{font:inherit;font-size:13px;padding:3px 8px;border:2px solid var(--line);background:#ffe3a3;cursor:pointer}
+  .port button:disabled{opacity:.4;cursor:not-allowed}
+  .port .empty{color:var(--ink-soft);font-size:13px;margin:0}
+  @media (max-width:640px){ .tape::before{content:"SIM"} .tape-in{padding-left:60px;font-size:13px} .mkt-toast{font-size:12px;white-space:normal;text-align:center} .port .row{grid-template-columns:44px 1fr auto;} .port .row .pv{display:none} .sgrid{grid-template-columns:repeat(3,minmax(0,1fr))} .sgrid .logo{width:34px;height:34px;font-size:10px} .sgrid .wpn{padding:6px 2px} }
   /* ---- Kamp ve dükkân ---- */
   .coin{display:inline-block;width:16px;height:16px;background:radial-gradient(circle at 40% 35%,#fff3b0 0 18%,#f5c542 20% 62%,#c7901f 64%);border:2px solid var(--line);border-radius:50%;vertical-align:-3px}
   .purse{display:flex;align-items:center;gap:8px;margin-left:auto;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:16px}
@@ -441,6 +463,8 @@
       <div class="lvl-row"><b id="campLvl">Level 1</b><div class="bar xp"><i id="campXp"></i><span id="campXpT"></span></div><small id="campPts"></small></div>
       <h4>Skills</h4>
       <div class="stats" id="campStats"></div>
+      <h4>Portfolio</h4>
+      <div class="port" id="campPort"></div>
       <h4>Shop</h4>
       <div class="shop" id="campShop"></div>
       <div class="camp-foot"><small>Progress is saved in this browser.</small><button class="btn" type="button" id="campReset">Reset progress</button></div>
@@ -466,6 +490,7 @@
     </div>
     <div class="roster watch-only" id="roster"></div>
     <div class="vs watch-only" id="vs" aria-live="polite"></div>
+    <div class="tape play-only" id="tape" aria-label="Arena market, simulated prices"><div class="tape-in" id="tapeIn"></div></div>
     <div class="stages play-only" id="stages" aria-label="Tournament progress"></div>
     <div class="ring" id="ring">
       <div class="stands" id="stands" aria-hidden="true"></div>
@@ -486,11 +511,13 @@
         <div class="turn-tag" id="turnTag">YOUR TURN</div>
         <div class="card-hp r" id="hudE"><div class="hp-name"><b>?</b><small></small></div><div class="bar hp"><i></i><span></span></div><div class="bar st"><i></i><span></span></div></div>
       </div>
+      <div class="mkt-toast play-only" id="mktToast" hidden aria-live="polite"></div>
       <div class="chooser play-only" id="chooser" hidden>
         <h3 id="chooserTitle">Choose your fighter</h3>
         <p id="chooserSub">Win fights to unlock more of the folk.</p>
         <div class="fgrid" id="fgrid"></div>
         <div class="wgrid" id="wgrid" hidden></div>
+        <div class="wgrid sgrid" id="sgrid" hidden></div>
         <button class="btn" type="button" id="chooserBackF" hidden style="margin-top:12px;margin-right:8px">&larr; Change fighter</button>
         <button class="btn" type="button" id="chooserCamp" style="margin-top:12px">Visit camp first</button>
       </div>
@@ -2221,11 +2248,11 @@
   // silahların gizli özellikleri; oyuncu sadece kısa bir tarif görür
   const W16 = r => svgPx('0 0 16 16', r);
   const WEAPONS = {
-    sword:  {name:'Sword',  trait:'Balanced',       range:1, dmg:1,   acc:0,   icon:W16([[7,0,2,10,'#dfe4ea'],[8,0,1,10,'#fff'],[4,10,8,2,'#e9c64a'],[7,12,2,3,'#6b4a2c'],[6,15,4,1,'#e9c64a']])},
-    spear:  {name:'Spear',  trait:'Long reach',     range:2, dmg:.95, acc:0,   icon:W16([[7,4,2,12,'#8a5a3a'],[6,1,4,3,'#dfe4ea'],[7,0,2,1,'#dfe4ea'],[6,4,4,1,'#d8432d']])},
-    dagger: {name:'Dagger', trait:'Quick and sure', range:1, dmg:.9,  acc:.05, cheap:3, quickBonus:2, icon:W16([[7,2,2,7,'#dfe4ea'],[7,1,1,1,'#dfe4ea'],[5,9,6,1,'#9aa3ad'],[7,10,2,4,'#6b4a2c'],[6,14,4,1,'#9aa3ad']])},
-    shield: {name:'Shield', trait:'Soaks up hits',  range:1, dmg:.85, acc:0,   guard:.22, icon:W16([[3,1,10,11,'#8c2f22'],[4,2,8,9,'#d9573f'],[5,12,6,2,'#8c2f22'],[6,14,4,1,'#8c2f22'],[7,5,2,2,'#e9c64a']])},
-    bow:    {name:'Bow',    trait:'Hits from afar', range:3, dmg:.8,  acc:0,   close:.15, icon:W16([[4,1,2,2,'#8a5a3a'],[5,3,2,3,'#8a5a3a'],[6,6,2,4,'#8a5a3a'],[5,10,2,3,'#8a5a3a'],[4,13,2,2,'#8a5a3a'],[4,2,1,12,'#f3ece2'],[1,7,11,1,'#8a5a3a'],[12,6,2,3,'#9aa3ad'],[0,6,2,1,'#e0643a'],[0,8,2,1,'#e0643a']])}
+    sword:  {name:'TSLA Sword',  tk:'TSLA', trait:'Volatile: big crits', range:1, dmg:1,   acc:-.03, crit:.07, icon:W16([[7,0,2,10,'#dfe4ea'],[8,0,1,10,'#fff'],[4,10,8,2,'#e9c64a'],[7,12,2,3,'#6b4a2c'],[6,15,4,1,'#e9c64a']])},
+    spear:  {name:'NVDA Spear',  tk:'NVDA', trait:'Long reach',     range:2, dmg:.95, acc:0,   icon:W16([[7,4,2,12,'#8a5a3a'],[6,1,4,3,'#dfe4ea'],[7,0,2,1,'#dfe4ea'],[6,4,4,1,'#d8432d']])},
+    dagger: {name:'MSFT Dagger', tk:'MSFT', trait:'Quick and sure', range:1, dmg:.9,  acc:.05, cheap:3, quickBonus:2, icon:W16([[7,2,2,7,'#dfe4ea'],[7,1,1,1,'#dfe4ea'],[5,9,6,1,'#9aa3ad'],[7,10,2,4,'#6b4a2c'],[6,14,4,1,'#9aa3ad']])},
+    shield: {name:'AAPL Shield', tk:'AAPL', trait:'Soaks up hits',  range:1, dmg:.85, acc:0,   guard:.22, icon:W16([[3,1,10,11,'#8c2f22'],[4,2,8,9,'#d9573f'],[5,12,6,2,'#8c2f22'],[6,14,4,1,'#8c2f22'],[7,5,2,2,'#e9c64a']])},
+    bow:    {name:'AMZN Bow',    tk:'AMZN', trait:'Hits from afar', range:3, dmg:.8,  acc:0,   close:.15, icon:W16([[4,1,2,2,'#8a5a3a'],[5,3,2,3,'#8a5a3a'],[6,6,2,4,'#8a5a3a'],[5,10,2,3,'#8a5a3a'],[4,13,2,2,'#8a5a3a'],[4,2,1,12,'#f3ece2'],[1,7,11,1,'#8a5a3a'],[12,6,2,3,'#9aa3ad'],[0,6,2,1,'#e0643a'],[0,8,2,1,'#e0643a']])}
   };
   // turnuva: 4 rakip + boss, her birinin kendi huyu var
   const RIVALS = [
@@ -2256,14 +2283,27 @@
     {name:'Armor',   req:'Win 2 tournaments',    ok:() => S.wins >= 2}
   ];
   const PLAYER = {hp:100};
-  const G = {on:false, busy:false, turn:'p', p:null, e:null, tok:0, stage:0, weapon:null, round:0};
+  const G = {on:false, busy:false, turn:'p', p:null, e:null, tok:0, stage:0, weapon:null, round:0, sponsor:null, mom:{}};
 
   // --- kalıcı ilerleme (tarayıcıda saklanır)
   const SAVE_KEY = 'vibefolk-save-v1';
-  const freshSave = () => ({coins:0, xp:0, level:1, points:0, stats:{pow:0, spd:0, grd:0, vit:0}, kits:{hp:1, en:1}, up:{sword:0, spear:0, dagger:0, shield:0, bow:0}, armor:0, best:0, wins:0, unlocked:['Tux'], char:'Tux'});
+  const freshSave = () => ({coins:0, xp:0, level:1, points:0, stats:{pow:0, spd:0, grd:0, vit:0}, kits:{hp:1, en:1}, up:{sword:0, spear:0, dagger:0, shield:0, bow:0}, armor:0, best:0, wins:0, unlocked:['Tux'], char:'Tux', mkt:null, shares:{}});
   let S = freshSave();
   try { const raw = localStorage.getItem(SAVE_KEY); if (raw) S = Object.assign(freshSave(), JSON.parse(raw)); } catch(e){}
   const save = () => { try { localStorage.setItem(SAVE_KEY, JSON.stringify(S)); } catch(e){} };
+  // --- arena borsası (simülasyon): fiyatlar coin cinsinden, olaylarla oynar
+  const MKT = {
+    TSLA:{color:'#e0482a', base:40, weapon:'sword'},  NVDA:{color:'#5fae1a', base:55, weapon:'spear'},
+    AAPL:{color:'#8a939c', base:35, weapon:'shield'}, MSFT:{color:'#2a74bd', base:45, weapon:'dagger'},
+    AMZN:{color:'#e08a1a', base:38, weapon:'bow'},    HOOD:{color:'#2f9a6a', base:20}
+  };
+  const SPONSORS = {
+    TSLA:{perk:'More critical hits'}, NVDA:{perk:'Hit harder'}, AAPL:{perk:'Take less damage'},
+    MSFT:{perk:'Hit more often'},     AMZN:{perk:'+25% coins from wins'}, HOOD:{perk:'Start each fight hyped'}
+  };
+  if (!S.mkt) S.mkt = Object.fromEntries(Object.entries(MKT).map(([t, m]) => [t, {p:m.base, ch:0}]));
+  Object.keys(MKT).forEach(t => { if (!S.mkt[t]) S.mkt[t] = {p:MKT[t].base, ch:0}; });
+  const spon = t => G.sponsor === t;
   const xpNeed = lv => 60 + (lv - 1)*40;
   const ARMORS = [{name:'No armor', cut:0}, {name:'Leather', cut:.05, price:120}, {name:'Chainmail', cut:.10, price:260}, {name:'Plate', cut:.15, price:450}];
   const UP_PRICE = [80, 160, 280];
@@ -2271,10 +2311,10 @@
   // oyuncu için çarpanlar (rakipte hepsi nötr)
   const mine = f => f === G.p;
   const cmod = () => (CHARS[S.char] || CHARS.Tux).mod;
-  const dmgMult = f => mine(f) ? (1 + S.stats.pow*.04 + (cmod().pow || 0)) * (1 + (S.up[f.gear] || 0)*.08) : 1;
-  const takenMult = f => mine(f) ? (1 - Math.min(.5, S.stats.grd*.03 + ARMORS[S.armor].cut + (cmod().guard || 0))) : 1;
-  const accBonus = f => mine(f) ? S.stats.spd*.015 + (cmod().acc || 0) : 0;
-  const critBonus = f => mine(f) ? S.stats.spd*.01 + (cmod().crit || 0) : 0;
+  const dmgMult = f => mine(f) ? (1 + S.stats.pow*.04 + (cmod().pow || 0) + (spon('NVDA') ? .06 : 0)) * (1 + (S.up[f.gear] || 0)*.08) : 1;
+  const takenMult = f => mine(f) ? (1 - Math.min(.5, S.stats.grd*.03 + ARMORS[S.armor].cut + (cmod().guard || 0) + (spon('AAPL') ? .06 : 0))) : 1;
+  const accBonus = f => mine(f) ? S.stats.spd*.015 + (cmod().acc || 0) + (spon('MSFT') ? .05 : 0) : 0;
+  const critBonus = f => mine(f) ? S.stats.spd*.01 + (cmod().crit || 0) + (spon('TSLA') ? .05 : 0) : 0;
   const playerMax = () => 100 + S.stats.vit*8 + (cmod().hp || 0);
   function checkUnlocks(){
     const fresh = UNLOCKS.filter(x => !S.unlocked.includes(x.name) && x.ok()).map(x => x.name);
@@ -2386,7 +2426,7 @@
     }
     play('whoosh');
     let acc = m.acc + (wa.acc || 0) + accBonus(att) - (att.shaken ? .2 : 0) - (att.gear === 'bow' && d <= 1 ? wa.close : 0);
-    const crit = Math.random() < (att.pumped ? .3 : .08) + critBonus(att);
+    const crit = Math.random() < (att.pumped ? .3 : .08) + critBonus(att) + (wa.crit || 0);
     att.shaken = att.pumped = false;
     const pt = headPt(def);
     if (Math.random() > Math.min(1, acc)){
@@ -2398,7 +2438,7 @@
       await wait(450); return;
     }
     let dmg = rnd(m.dmg[0], m.dmg[1]) + (k === 'quick' ? (wa.quickBonus || 0) : 0);
-    dmg = dmg * (wa.dmg || 1) * dmgMult(att) * (1 - (wd.guard || 0)) * takenMult(def);
+    dmg = dmg * (wa.dmg || 1) * dmgMult(att) * (1 - (wd.guard || 0)) * takenMult(def) * (1 + (G.mom[wa.tk] || 0)*1.5);
     if (crit) dmg *= 1.6;
     dmg = Math.max(1, Math.round(dmg));
     def.hp -= dmg;
@@ -2424,6 +2464,8 @@
   async function crashMove(att, def){ // Bear Market'in özel hamlesi
     ultName('MARKET CRASH'); speak(att.b, 'EVERYTHING. IS. RED.', 1300);
     const dim = overlay('dim'); dim.style.background = 'rgba(120,10,10,.35)';
+    Object.keys(MKT).forEach(t => moveStock(t, -rnd(3, 6))); drawTape();
+    toast('<span class="dn">Everything is red. The whole market drops.</span>');
     await wait(700);
     await attackMove(att, def, 'power', {label:'a Market Crash', dmg:[22,28], acc:.85, sta:20});
     fadeOut(dim);
@@ -2448,6 +2490,70 @@
     log(`${f.name} catches a breath.`);
     drawHud(); await wait(250);
   }
+  // --- hisse bandı ve piyasa olayları
+  const tapeIn = document.getElementById('tapeIn'), toastEl = document.getElementById('mktToast');
+  const fmtCh = ch => `${ch >= 0 ? '&#9650;' : '&#9660;'}${Math.abs(ch).toFixed(1)}%`;
+  function drawTape(flash){
+    const one = Object.keys(MKT).map(t => `<span class="tk${t === flash ? ' hot' : ''}" style="--c:${MKT[t].color}"><b>${t}</b>${S.mkt[t].p.toFixed(1)}<span class="${S.mkt[t].ch >= 0 ? 'up' : 'dn'}">${fmtCh(S.mkt[t].ch)}</span></span>`).join('');
+    tapeIn.innerHTML = one + one; // iki kopya: kesintisiz kayar
+  }
+  let toastT;
+  function toast(html){
+    toastEl.innerHTML = html; toastEl.hidden = false;
+    toastEl.animate([{opacity:0, translate:'-50% -10px'},{opacity:1, translate:'-50% 0'}],{duration:250});
+    clearTimeout(toastT); toastT = setTimeout(() => { toastEl.hidden = true; }, 2600);
+  }
+  function moveStock(t, pct){
+    const m = S.mkt[t]; m.p = Math.max(1, Math.round(m.p*(1 + pct/100)*10)/10); m.ch = pct; save();
+    if (MKT[t].weapon) G.mom[t] = pct/100;
+  }
+  function marketEvent(){
+    const ts = Object.keys(MKT), t = pick(ts);
+    let pct = rnd(3, 12) * (Math.random() < .5 ? -1 : 1);
+    moveStock(t, pct); drawTape(t);
+    const w = MKT[t].weapon, up = pct > 0, c = `style="--c:${MKT[t].color}"`;
+    let msg;
+    if (w) msg = `<span ${c}><b>${t}</b></span> <span class="${up ? 'up' : 'dn'}">${up ? '+' : ''}${pct}%</span> ${WEAPONS[w].name.split(' ')[1]}s ${up ? 'hit harder!' : 'hit softer.'}`;
+    else { msg = `<span ${c}><b>${t}</b></span> <span class="${up ? 'up' : 'dn'}">${up ? '+' : ''}${pct}%</span> ${up ? 'The crowd goes wild! +Hype' : 'The crowd boos.'}`; if (up) addHype(15); else cheer(0); }
+    if (spon(t) && up){ grant(5, 0); msg += ' Sponsor bonus +5'; }
+    toast(msg); play(up ? 'clap' : 'bonk');
+  }
+  function decayMomentum(){ Object.keys(G.mom).forEach(t => { G.mom[t] *= .5; if (Math.abs(G.mom[t]) < .01) G.mom[t] = 0; }); }
+  function showSponsorPick(){
+    document.getElementById('chooserTitle').textContent = 'Pick a sponsor';
+    document.getElementById('chooserSub').textContent = 'They back you for the whole run. Win fights to earn their shares.';
+    ['fgrid','wgrid'].forEach(id => document.getElementById(id).hidden = true);
+    const g = document.getElementById('sgrid'); g.hidden = false; g.innerHTML = '';
+    const offer = Object.keys(SPONSORS).sort(() => Math.random() - .5).slice(0, 3);
+    offer.forEach(t => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'wpn';
+      b.innerHTML = `<span class="logo" style="--c:${MKT[t].color}">${t}</span><b>${t}</b><small>${SPONSORS[t].perk}</small><small>${S.mkt[t].p.toFixed(1)} <span class="coin"></span></small>`;
+      b.addEventListener('click', () => { G.sponsor = t; chooserEl.hidden = true; g.hidden = true; startStage(); });
+      g.appendChild(b);
+    });
+    turnTag.textContent = 'PICK A SPONSOR';
+    setTimeout(() => { const f = g.querySelector('.wpn'); if (f) f.focus(); }, 50);
+  }
+  function drawPortfolio(){
+    const el = document.getElementById('campPort'); el.innerHTML = '';
+    const owned = Object.keys(MKT).filter(t => (S.shares[t] || 0) > 0);
+    if (!owned.length){ el.innerHTML = '<p class="empty">No shares yet. Pick a sponsor and win fights to earn their shares. Sell when the price is up.</p>'; return; }
+    owned.forEach(t => {
+      const n = S.shares[t], pr = S.mkt[t].p, val = Math.floor(n*pr);
+      const r = document.createElement('div'); r.className = 'row';
+      r.innerHTML = `<span class="logo" style="--c:${MKT[t].color}">${t}</span><span>${n} share${n > 1 ? 's' : ''} <small>@ ${pr.toFixed(1)}</small> <span class="${S.mkt[t].ch >= 0 ? 'up' : 'dn'}">${fmtCh(S.mkt[t].ch)}</span></span><span class="pv">${val} <span class="coin"></span></span><button type="button">Sell 1</button><button type="button">Sell all</button>`;
+      const [b1, bAll] = r.querySelectorAll('button');
+      b1.addEventListener('click', () => sell(t, 1));
+      bAll.addEventListener('click', () => sell(t, S.shares[t]));
+      el.appendChild(r);
+    });
+  }
+  function sell(t, n){
+    n = Math.min(n, S.shares[t] || 0); if (!n) return;
+    const got = Math.floor(n*S.mkt[t].p);
+    S.shares[t] -= n; S.coins += got; save(); drawCamp(); drawPurse(); play('clap');
+  }
+
   function addHype(n){
     if (!G.p) return;
     const was = G.p.hype || 0;
@@ -2549,6 +2655,8 @@
     if (await checkEnd()) return;
     G.round++;
     G.p.sta = Math.min(100, G.p.sta + 6);
+    decayMomentum();
+    if (G.round > 0 && Math.random() < .4){ marketEvent(); await wait(500); if (tok !== G.tok) return; }
     G.turn = 'p'; G.busy = false; drawHud(); refreshActions();
   }
 
@@ -2573,13 +2681,15 @@
     speak(winner.b, win ? pick(['Victory, darling.','Well fought. By me.','Tidy.']) : pick(['Too easy.','Next!','Stay down.']), 1800);
     const last = G.stage === RIVALS.length - 1;
     // ödül: zaferde tam, yenilgide teselli
-    const coins = win ? 30 + G.stage*20 + (last ? 150 : 0) : 10 + G.stage*5;
+    const coins = Math.round((win ? 30 + G.stage*20 + (last ? 150 : 0) : 10 + G.stage*5) * (spon('AMZN') ? 1.25 : 1));
     const xp = win ? 25 + G.stage*15 + (last ? 60 : 0) : 10 + G.stage*5;
     if (win){ S.best = Math.max(S.best, G.stage + 1); if (last) S.wins++; }
     else S.kits.hp = Math.max(S.kits.hp, 1); // yeni tura en az bir can kitiyle başla
     const ups = grant(coins, xp);
     const fresh = checkUnlocks();
-    const reward = `+${coins} ${COIN} &nbsp; +${xp} XP${ups ? ` &nbsp; LEVEL UP! +${ups*3} skill points` : ''}${fresh.length ? `<br>NEW FIGHTER UNLOCKED: ${fresh.join(', ')}!` : ''}`;
+    const shareGain = win && G.sponsor ? (last ? 3 : 1) : 0;
+    if (shareGain){ S.shares[G.sponsor] = (S.shares[G.sponsor] || 0) + shareGain; save(); }
+    const reward = `+${coins} ${COIN} &nbsp; +${xp} XP${shareGain ? ` &nbsp; +${shareGain} ${G.sponsor} share${shareGain > 1 ? 's' : ''}` : ''}${ups ? ` &nbsp; LEVEL UP! +${ups*3} skill points` : ''}${fresh.length ? `<br>NEW FIGHTER UNLOCKED: ${fresh.join(', ')}!` : ''}`;
     if (fresh.length) setTimeout(() => banner('NEW FIGHTER!', 1400), 200);
     await banner(win ? (last ? 'CHAMPION!' : 'VICTORY!') : 'K.O.', 1200);
     if (!win){
@@ -2619,7 +2729,8 @@
 
   // --- turnuva akışı
   function startTournament(){
-    G.tok++; matchTok++; G.on = false; G.busy = true; G.stage = 0; G.weapon = null; G.p = null;
+    G.tok++; matchTok++; G.on = false; G.busy = true; G.stage = 0; G.weapon = null; G.p = null; G.sponsor = null;
+    drawTape();
     if (!S.unlocked.includes(S.char)) S.char = 'Tux';
     resultEl.hidden = true; clearRing(); log('');
     drawStages();
@@ -2643,7 +2754,7 @@
   function showFighterPick(){
     document.getElementById('chooserTitle').textContent = 'Choose your fighter';
     document.getElementById('chooserSub').textContent = 'Win fights to unlock more of the folk.';
-    document.getElementById('fgrid').hidden = false; document.getElementById('wgrid').hidden = true; document.getElementById('chooserBackF').hidden = true;
+    document.getElementById('fgrid').hidden = false; document.getElementById('wgrid').hidden = true; document.getElementById('sgrid').hidden = true; document.getElementById('chooserBackF').hidden = true;
     buildFighterGrid();
     chooserEl.hidden = false; refreshActions(); turnTag.textContent = 'PICK A FIGHTER';
     hudPlayerIdle();
@@ -2652,7 +2763,7 @@
   function showWeaponPick(){
     document.getElementById('chooserTitle').textContent = 'Choose your weapon';
     document.getElementById('chooserSub').textContent = 'You keep it for the whole tournament. Lose, and you can pick again.';
-    document.getElementById('fgrid').hidden = true; document.getElementById('wgrid').hidden = false; document.getElementById('chooserBackF').hidden = false;
+    document.getElementById('fgrid').hidden = true; document.getElementById('wgrid').hidden = false; document.getElementById('sgrid').hidden = true; document.getElementById('chooserBackF').hidden = false;
     turnTag.textContent = 'PICK A WEAPON'; hudPlayerIdle();
     const first = chooserEl.querySelector('.wpn'); if (first) setTimeout(() => first.focus(), 50);
   }
@@ -2674,7 +2785,7 @@
     Object.entries(WEAPONS).forEach(([k, w]) => {
       const b = document.createElement('button'); b.type = 'button'; b.className = 'wpn';
       b.innerHTML = `<span class="wi" aria-hidden="true">${w.icon}</span><b>${w.name}</b><small>${w.trait}</small>`;
-      b.addEventListener('click', () => { G.weapon = k; chooserEl.hidden = true; startStage(); });
+      b.addEventListener('click', () => { G.weapon = k; showSponsorPick(); });
       g.appendChild(b);
     });
   }
@@ -2688,12 +2799,13 @@
     if (tok !== G.tok) return;
     const r = RIVALS[G.stage];
     const p = makeFighter(S.char, G.weapon, -1);
-    Object.assign(p, {name:S.char, st:STYLE[S.char], ko:CHARS[S.char].ko, hp:playerMax(), max:playerMax(), sta:100, hype:0, game:true, ai:null});
+    Object.assign(p, {name:S.char, st:STYLE[S.char], ko:CHARS[S.char].ko, hp:playerMax(), max:playerMax(), sta:100, hype:spon('HOOD') ? 35 : 0, game:true, ai:null});
+    G.mom = {};
     const e = makeRival(r);
     { const W = ring.clientWidth, w = bwOf(p), pad = W*.035; COLS = Math.max(4, Math.min(8, Math.floor((W - 2*pad - w)/(w*.9)) + 1)); }
     p.col = 0; e.col = COLS - 1;
     fighters = [p, e]; arenaBots = [p.b, e.b]; G.p = p; G.e = e;
-    hud.p.querySelector('b').textContent = p.name; hud.p.querySelector('small').textContent = WEAPONS[p.gear].name;
+    hud.p.querySelector('b').textContent = p.name; hud.p.querySelector('small').textContent = WEAPONS[p.gear].name + (G.sponsor ? ` · ${G.sponsor}` : '');
     refreshActions();
     hud.e.querySelector('b').textContent = e.name; hud.e.querySelector('small').textContent = r.boss ? 'BOSS' : WEAPONS[e.gear].name;
     place(p, colX(p, p.col)); place(e, colX(e, e.col));
@@ -2705,7 +2817,7 @@
     await banner('FIGHT!', 800);
     if (tok !== G.tok) return;
     G.on = true; G.busy = false; G.turn = 'p'; refreshActions();
-    log(wOf(p).range > 1 ? `Your ${WEAPONS[p.gear].name.toLowerCase()} can hit from a distance.` : 'Close the distance: you need to be next to your rival to hit.');
+    log(wOf(p).range > 1 ? `Your ${WEAPONS[p.gear].name} can hit from a distance.` : 'Close the distance: you need to be next to your rival to hit.');
   }
   // --- kamp: özellik puanları ve dükkân
   const campEl = document.getElementById('camp');
@@ -2715,6 +2827,7 @@
   ];
   const ARMOR_ICON = W16([[3,1,10,3,'#8a8f96'],[2,3,12,9,'#6b737b'],[4,4,8,7,'#9aa3ad'],[7,4,2,7,'#6b737b'],[4,12,8,3,'#6b737b']]);
   function drawCamp(){
+    drawPortfolio();
     document.getElementById('campCoins').textContent = S.coins;
     document.getElementById('campLvl').textContent = `Level ${S.level}`;
     document.getElementById('campXp').style.width = (S.xp / xpNeed(S.level) * 100) + '%';
@@ -2782,7 +2895,7 @@
     const k = Object.keys(MOVES).find(x => MOVES[x].key === e.key);
     if (k) playerMove(k);
   });
-  buildActions(); buildChooser();
+  buildActions(); buildChooser(); drawTape();
 
   function route(){
     const on = location.hash === '#arena';
