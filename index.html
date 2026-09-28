@@ -236,7 +236,46 @@
   .result h3{margin:0;font-family:"Pixelify Sans", monospace;font-size:34px}
   .result p{margin:0;color:var(--ink-soft)}
   .result.lose h3{color:#b8402f}
-  .result.win h3{color:#2f9a4a}
+  .result.win h3{color:#3fbf5a}
+  .result h3{text-shadow:3px 3px 0 var(--line);letter-spacing:.04em;line-height:1}
+  .result.champ h3{color:#ffc53d}
+  .result h3 span{display:inline-block;animation:letterPop .55s cubic-bezier(.3,1.8,.5,1) both;animation-delay:calc(.15s + var(--i)*55ms)}
+  @keyframes letterPop{from{scale:0;translate:0 -30px;rotate:-25deg}to{scale:1;translate:0 0;rotate:0deg}}
+  .result:not([hidden]){animation:resIn .45s cubic-bezier(.3,1.5,.5,1)}
+  @keyframes resIn{from{scale:.4;opacity:0}to{scale:1;opacity:1}}
+  .result{overflow:visible;padding-top:14px}
+  .res-art{position:relative;width:130px;height:120px;display:grid;place-items:center}
+  .res-art .rays{position:absolute;inset:-24px;border-radius:50%;background:repeating-conic-gradient(rgba(255,197,61,.6) 0 11deg,transparent 11deg 30deg);-webkit-mask:radial-gradient(circle,#000 30%,transparent 70%);mask:radial-gradient(circle,#000 30%,transparent 70%);animation:spin 9s linear infinite}
+  .result.champ .res-art .rays{background:repeating-conic-gradient(rgba(255,197,61,.8) 0 9deg,rgba(255,92,134,.35) 9deg 15deg,transparent 15deg 30deg);animation-duration:5s}
+  .result.lose .res-art .rays{background:repeating-conic-gradient(rgba(90,80,85,.25) 0 11deg,transparent 11deg 30deg);animation-duration:24s}
+  @keyframes spin{to{rotate:360deg}}
+  .res-art .mini{--mu:2.2px;position:relative}
+  .res-art .me{animation:winHop .5s ease-in-out infinite alternate}
+  @keyframes winHop{from{translate:0 0}to{translate:0 -8px}}
+  .result.lose .res-art .me{animation:none;rotate:-14deg;translate:0 8px;filter:saturate(.35) brightness(.9)}
+  .res-art .crown{position:absolute;top:-6px;left:50%;width:40px;margin-left:-20px;animation:crownDrop .7s cubic-bezier(.3,1.7,.5,1) .35s both,crownBob .5s ease-in-out 1.05s infinite alternate;filter:drop-shadow(0 0 6px #ffd23f)}
+  .res-art .crown svg,.res-art .trophy svg{width:100%;height:auto;display:block}
+  @keyframes crownDrop{from{translate:0 -80px;rotate:-30deg;opacity:0}to{translate:0 0;rotate:0deg;opacity:1}}
+  @keyframes crownBob{from{translate:0 0}to{translate:0 -8px}}
+  .res-art .trophy{position:absolute;right:-26px;bottom:6px;width:44px;animation:crownDrop .7s cubic-bezier(.3,1.7,.5,1) .6s both;filter:drop-shadow(0 0 8px #ffd23f)}
+  .res-art .dizzy{position:absolute;top:6px;left:50%;width:60px;height:18px;margin-left:-30px;animation:spin 1.2s linear infinite}
+  .res-art .dizzy i{position:absolute;width:9px;height:9px;background:#ffd23f;border:2px solid var(--line);rotate:45deg}
+  .res-art .dizzy i:nth-child(1){left:0;top:4px} .res-art .dizzy i:nth-child(2){right:0;top:4px} .res-art .dizzy i:nth-child(3){left:24px;top:-4px}
+  .result .reward{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;color:var(--ink) !important}
+  .rchip{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;background:#fff;border:3px solid var(--line);box-shadow:2px 2px 0 var(--line);font-family:"Nunito", sans-serif;font-size:16px;font-weight:800;font-variant-numeric:tabular-nums;animation:chipIn .45s cubic-bezier(.3,1.7,.5,1) both;animation-delay:calc(.5s + var(--i)*.12s)}
+  .rchip em{font-style:normal;font-family:"Pixelify Sans", monospace;font-size:12px;padding:1px 5px;background:var(--line);color:#fff}
+  .rchip.gold{background:#fff3c4} .rchip.gold .coin{width:18px;height:18px}
+  .rchip.xp{background:#efe6ff} .rchip.xp em{background:#7c5cff}
+  .rchip.share em{background:var(--cc)}
+  .rchip.lvl{background:#ffd23f} .rchip.new{background:#bfe6ff} .rchip.new em{background:#2a74bd}
+  @keyframes chipIn{from{scale:0;translate:0 12px}to{scale:1;translate:0 0}}
+  .nextup{display:inline-flex;align-items:center;gap:8px;padding:4px 12px 4px 8px;background:#2a1f22;border:3px solid var(--line);color:#fff3e6}
+  .nextup small{font-family:"Pixelify Sans", monospace;font-size:11px;color:#ff8a7a;letter-spacing:.1em}
+  .nextup b{font-family:"Pixelify Sans", monospace;font-size:15px}
+  .nextup .mini{--mu:1.1px;scale:-1 1}
+  @media (max-width:640px){ .result{padding:10px 12px;gap:7px} .res-art{width:100px;height:84px} .res-art .mini{--mu:1.5px} .res-art .crown{width:30px;margin-left:-15px;top:-8px} .res-art .trophy{width:32px;right:-14px} .result h3{font-size:28px} .rchip{font-size:14px;padding:3px 8px} .nextup .mini{--mu:.8px} }
+  .confetti{border-radius:1px}
+  @media (prefers-reduced-motion: reduce){ .result h3 span,.result:not([hidden]),.res-art *,.rchip{animation:none !important} }
   .act .ico{width:30px;height:30px;display:block}
   .act .ico svg{display:block;width:100%;height:100%;filter:drop-shadow(1px 1px 0 rgba(35,28,31,.35))}
   .pips{display:flex;gap:3px;min-height:7px}
@@ -461,7 +500,7 @@
   .purse{display:flex;align-items:center;gap:8px;margin-left:auto;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:16px}
   .purse .lv{background:#3a2a2c;color:#ffd772;padding:3px 7px;border:2px solid var(--line)}
   .res-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-  .reward{margin:0;font-family:"Pixelify Sans", monospace;font-weight:700;color:#8a5a1a !important}
+  .reward{margin:0;font-family:"Pixelify Sans", monospace;font-weight:700}
   .reward:empty{display:none}
   .camp{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:16px;background:rgba(35,28,31,.6);overflow-y:auto}
   .camp-card{width:min(760px,100%);background:var(--paper);border:4px solid var(--line);box-shadow:8px 8px 0 var(--line);padding:18px;display:flex;flex-direction:column;gap:12px;max-height:calc(100vh - 32px);overflow-y:auto}
@@ -669,9 +708,10 @@
         <button class="btn" type="button" id="chooserCamp" style="margin-top:12px">Visit camp first</button>
       </div>
       <div class="result play-only" id="result" hidden>
+        <div class="res-art" id="resArt" aria-hidden="true"></div>
         <h3 id="resTitle">VICTORY!</h3>
         <p id="resText"></p>
-        <p class="reward" id="resReward"></p>
+        <div class="reward" id="resReward"></div>
         <div class="res-btns"><button class="btn primary" type="button" id="resAgain">Fight again</button><button class="btn" type="button" id="resCamp">Camp &amp; shop</button></div>
       </div>
     </div>
@@ -3025,13 +3065,61 @@
     G.turn = 'p'; G.busy = false; drawHud(); refreshActions();
   }
 
-  function showResult(kind, title, text, btn, fn, reward){
-    document.getElementById('resReward').innerHTML = reward || '';
-    resultEl.className = 'result play-only ' + kind;
-    document.getElementById('resTitle').textContent = title;
-    document.getElementById('resText').textContent = text;
+  // --- sonuç kartı: portre, taç, konfeti, ödül rozetleri
+  const CROWN = svgPx('0 0 14 10', [[0,2,2,8,INK],[12,2,2,8,INK],[0,8,14,2,INK],[1,3,12,6,'#ffc53d'],[1,7,12,2,'#e0a020'],[3,1,2,3,INK],[9,1,2,3,INK],[6,0,2,3,INK],[4,2,1,2,'#ffc53d'],[9,2,1,2,'#ffc53d'],[6,1,2,2,'#ffe27a'],[3,5,2,2,'#d8432d'],[6,4,2,2,'#5fb0ff'],[9,5,2,2,'#2fb58f'],[2,3,1,2,'#fff3b0']]);
+  const TROPHY = svgPx('0 0 14 14', [[2,0,10,1,INK],[1,1,12,6,INK],[2,1,10,5,'#ffc53d'],[3,1,2,4,'#fff3b0'],[0,2,2,3,INK],[12,2,2,3,INK],[3,7,8,1,INK],[4,7,6,1,'#e0a020'],[6,8,2,2,INK],[4,10,6,1,INK],[3,11,8,3,INK],[4,11,6,2,'#8a5a3a']]);
+  function miniOf(name, extra, recolor){
+    const def = bots.find(x => x.name === name), tmp = document.createElement('div');
+    build({name, act:'poke', parts:recolorParts(def.parts, recolor || {}).concat(extra || [])}, 0, tmp);
+    const m = document.createElement('div'); m.className = 'mini'; m.appendChild(tmp.querySelector('.bob'));
+    return m;
+  }
+  function confetti(n, champ){
+    const W = ring.clientWidth, H = ring.clientHeight, cols = ['#ff5c86','#ffd23f','#5fb0ff','#2fb58f','#b98bff','#ff8a3a','#fff'];
+    for (let i = 0; i < n; i++){
+      const s = 6 + Math.random()*6, d = fxDiv('confetti', {x:Math.random()*W, y:-20}, s, s*(Math.random() < .5 ? 1 : 1.8));
+      d.style.background = cols[i % cols.length]; d.style.zIndex = 8;
+      const dx = (Math.random() - .5)*160, rot = (Math.random() - .5)*900;
+      d.animate([{translate:'0 0', rotate:'0deg', opacity:1},{translate:`${dx}px ${H + 40}px`, rotate:`${rot}deg`, opacity:.9}],
+        {duration:1600 + Math.random()*1400, delay:Math.random()*(champ ? 1200 : 500), easing:'cubic-bezier(.3,.1,.6,1)', fill:'backwards'}).finished.then(() => d.remove());
+    }
+    if (champ) for (let i = 0; i < 5; i++) setTimeout(() => burst({x:W*(.15 + Math.random()*.7), y:H*(.15 + Math.random()*.35)}, ['#ffd23f','#ff5c86','#5fb0ff','#fff'], 16, 16, 700), 300 + i*380);
+  }
+  function showResult(kind, title, text, btn, fn, chips, opt = {}){
+    const champ = !!opt.champ, lose = kind === 'lose';
+    // portre
+    const art = document.getElementById('resArt'); art.innerHTML = '<div class="rays"></div>';
+    const me = miniOf(S.char); me.classList.add('me'); art.appendChild(me);
+    if (!lose){ const c = document.createElement('span'); c.className = 'crown'; c.innerHTML = CROWN; art.appendChild(c); }
+    if (champ){ const tr = document.createElement('span'); tr.className = 'trophy'; tr.innerHTML = TROPHY; art.appendChild(tr); }
+    if (lose){ const dz = document.createElement('span'); dz.className = 'dizzy'; dz.innerHTML = '<i></i><i></i><i></i>'; art.appendChild(dz); }
+    // başlık: harf harf zıplar
+    const h = document.getElementById('resTitle'); h.setAttribute('aria-label', title);
+    h.innerHTML = [...title].map((ch, i) => `<span style="--i:${i}" aria-hidden="true">${ch === ' ' ? '&nbsp;' : ch}</span>`).join('');
+    // metin ya da sıradaki rakip
+    const tx = document.getElementById('resText'); tx.innerHTML = '';
+    if (opt.next){
+      const r = opt.next, row = document.createElement('span'); row.className = 'nextup';
+      row.innerHTML = `<small>NEXT</small>`;
+      const m = miniOf(r.base, hornParts(r.base), r.recolor); row.appendChild(m);
+      const nm = document.createElement('b'); nm.textContent = r.name + (r.boss ? ' (BOSS)' : ''); row.appendChild(nm);
+      tx.appendChild(row);
+    } else tx.textContent = text;
+    // ödül rozetleri
+    const rw = document.getElementById('resReward'); rw.innerHTML = '';
+    (chips || []).forEach((c, i) => {
+      const s = document.createElement('span'); s.className = 'rchip ' + (c.cls || ''); s.style.setProperty('--i', i);
+      if (c.color) s.style.setProperty('--cc', c.color);
+      s.innerHTML = c.html; rw.appendChild(s);
+      const num = s.querySelector('[data-count]');
+      if (num){ const to = +num.dataset.count, t0 = performance.now() + 500 + i*120; num.textContent = '+0';
+        const step = now => { const k = Math.max(0, Math.min(1, (now - t0)/600)); num.textContent = '+' + Math.round(to*k); if (k < 1) requestAnimationFrame(step); };
+        requestAnimationFrame(step); }
+    });
+    resultEl.className = 'result play-only ' + kind + (champ ? ' champ' : '');
     const b = document.getElementById('resAgain'); b.textContent = btn; b.onclick = fn;
     resultEl.hidden = false; b.focus({preventScroll:true});
+    if (!lose){ confetti(champ ? 90 : 40, champ); play(champ ? 'done' : 'heart'); } else play('turn');
   }
   async function checkEnd(){
     const loser = G.e.hp <= 0 ? G.e : G.p.hp <= 0 ? G.p : null;
@@ -3054,19 +3142,25 @@
     const fresh = checkUnlocks();
     const shareGain = win && G.sponsor ? (last ? 3 : 1) : 0;
     if (shareGain){ S.shares[G.sponsor] = (S.shares[G.sponsor] || 0) + shareGain; save(); }
-    const reward = `+${coins} ${COIN} &nbsp; +${xp} XP${shareGain ? ` &nbsp; +${shareGain} ${G.sponsor} share${shareGain > 1 ? 's' : ''}` : ''}${ups ? ` &nbsp; LEVEL UP! +${ups*3} stat points` : ''}${fresh.length ? `<br>NEW FIGHTER UNLOCKED: ${fresh.join(', ')}!` : ''}`;
+    const reward = [
+      {cls:'gold', html:`${COIN}<b data-count="${coins}">+${coins}</b>`},
+      {cls:'xp', html:`<em>XP</em><b data-count="${xp}">+${xp}</b>`},
+      ...(shareGain ? [{cls:'share', color:MKT[G.sponsor].color, html:`<em>${G.sponsor}</em><b>+${shareGain}</b>`}] : []),
+      ...(ups ? [{cls:'lvl', html:`<em>LV ${S.level}</em><b>+${ups*3} pts</b>`}] : []),
+      ...fresh.map(n => ({cls:'new', html:`<em>NEW</em><b>${n}</b>`}))
+    ];
     if (fresh.length) setTimeout(() => banner('NEW FIGHTER!', 1400), 200);
     await banner(win ? (last ? 'CHAMPION!' : 'VICTORY!') : 'K.O.', 1200);
     if (!win){
-      showResult('lose', 'DEFEATED', `${G.e.name} knocked you out at ${RIVALS[G.stage].boss ? 'the boss fight' : 'stage ' + (G.stage + 1)}. Start a new run. Maybe try a different weapon?`, 'New run', startTournament, reward);
+      showResult('lose', 'DEFEATED', `${G.e.name} knocked you out at ${RIVALS[G.stage].boss ? 'the boss fight' : 'stage ' + (G.stage + 1)}.`, 'New run', startTournament, reward);
       log('You were knocked out.');
     } else if (last){
       drawStagesDone();
-      showResult('win', 'CHAMPION!', `You beat The Bear Market with the ${WEAPONS[G.weapon].name}. The crowd goes wild. Try another weapon?`, 'New run', startTournament, reward);
+      showResult('win', 'CHAMPION!', `You beat The Bear Market with the ${WEAPONS[G.weapon].name}!`, 'New run', startTournament, reward, {champ:true});
       log('Tournament complete!');
     } else {
       const next = RIVALS[G.stage + 1];
-      showResult('win', 'VICTORY!', `Next up: ${next.name}${next.boss ? ' (BOSS)' : ''}.`, 'Next fight', () => { G.stage++; startStage(); }, reward);
+      showResult('win', 'VICTORY!', `Next up: ${next.name}${next.boss ? ' (BOSS)' : ''}.`, 'Next fight', () => { G.stage++; startStage(); }, reward, {next});
       log('You won the duel!');
     }
     return true;
