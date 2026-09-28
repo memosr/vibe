@@ -2355,12 +2355,12 @@
   };
 
   // --- ringe iniş ve ringin kurulumu
-  function makeFighter(name, gearKey, side, lvl){
+  function makeFighter(name, gearKey, side, lvl, extra){
     const def = bots.find(x => x.name === name);
     const wrap = document.createElement('div'); wrap.className = 'fighter';
     const flip = document.createElement('div'); if (side > 0) flip.className = 'flip';
     wrap.appendChild(flip); ring.appendChild(wrap);
-    const b = build({name, act:'poke', parts:def.parts.concat(lvl == null ? GEAR[gearKey].parts : wtParts(gearKey, lvl)), sparks:def.sparks}, side > 0 ? 3 : 0, flip);
+    const b = build({name, act:'poke', parts:def.parts.concat(extra || [], lvl == null ? GEAR[gearKey].parts : wtParts(gearKey, lvl)), sparks:def.sparks}, side > 0 ? 3 : 0, flip);
     if (lvl >= MAXLV && b.g.wpn){ b.g.wpn.classList.add('mythic'); b.g.wpn.style.setProperty('--aura', PERK[gearKey].color); }
     else if (lvl >= 3 && b.g.wpn) b.g.wpn.classList.add('legend');
     b.el.setAttribute('aria-label', `Poke ${name}`);
@@ -2490,15 +2490,15 @@
   };
   // turnuva: 4 rakip + boss, her birinin kendi huyu var
   const RIVALS = [
-    {name:'Paper Hands', base:'Mist', gear:'dagger', hp:90, ai:{flee:.35, power:.25},
+    {name:'Paper Hands', base:'Mist', gear:'dagger', hp:80, pow:.9, ai:{flee:.35, power:.25},
      st:{walk:'scamper', speed:1.3, enter:'Uh... is it safe here?', taunt:['I\'m selling!','Too risky for me!','Diamond hands? Never heard of it.'], hurt:['SELL SELL SELL!','My portfolio!','I knew I should\'ve sold!']}, ko:'I... I panic sold my HP.'},
-    {name:'The Shorter', base:'Mr. Hat', gear:'spear', hp:105, ai:{kite:true, power:.2},
+    {name:'The Shorter', base:'Mr. Hat', gear:'spear', hp:95, pow:.85, ai:{kite:.2, power:.2},
      st:{walk:'fence', speed:1, enter:'Everything goes down eventually.', taunt:['Down only.','I\'m betting against you.','Short everything!'], hurt:['Margin call!','Squeezed!','Not the squeeze!']}, ko:'I got... short squeezed.'},
-    {name:'Gas Goblin', base:'Goggles', gear:'bow', hp:115, ai:{kite:true, drain:12, power:.2},
+    {name:'Gas Goblin', base:'Goggles', gear:'bow', hp:130, pow:1.2, ai:{kite:.35, drain:12, power:.2},
      st:{walk:'glide', speed:1.1, enter:'Every move costs gas, friend.', taunt:['That\'ll be 20 gwei.','Pay the fee!','Priority fee, please.'], hurt:['Tx reverted!','Out of gas!','Nonce too low!']}, ko:'Transaction... failed.'},
-    {name:'The Whale', base:'Lavender', gear:'axe', wlv:2, hp:150, ai:{slow:true, power:.45, regen:10},
+    {name:'The Whale', base:'Lavender', gear:'axe', wlv:2, hp:170, pow:1.2, ai:{slow:true, power:.45, regen:10},
      st:{walk:'stomp', speed:.7, enter:'Blub. I am very large.', taunt:['I move markets.','Splash!','You are liquidity.'], hurt:['A ripple!','My bags!','Blub!']}, ko:'Beached... again.'},
-    {name:'The Bear Market', base:'Honey', gear:'sword', wlv:3, hp:200, boss:true, scale:1.25, ai:{power:.35, crash:4},
+    {name:'The Bear Market', base:'Honey', gear:'sword', wlv:3, hp:280, pow:1.45, boss:true, scale:1.25, ai:{power:.35, crash:4},
      recolor:{'#f0d44d':'#6b4a2c','#2b1e22':'#2a1414','#141112':'#140a0a','#3fd7ea':'#d8432d','#f3efe6':'#ffd2c2'},
      st:{walk:'stomp', speed:.9, enter:'ROAR. The market is closed.', taunt:['Everything is red.','Winter is here.','Capitulate!'], hurt:['A relief rally?!','Green candle?!','GRR!']}, ko:'Fine... bull run... it is.'}
   ];
@@ -2573,7 +2573,7 @@
   // oyuncu için çarpanlar (rakipte hepsi nötr)
   const mine = f => f === G.p;
   const cmod = () => (CHARS[S.char] || CHARS.Tux).mod;
-  const dmgMult = f => mine(f) ? (1 + S.stats.pow*.04 + (cmod().pow || 0) + (spon('NVDA') ? .06 : 0)) * (1 + (S.up[f.gear] || 0)*.08) : 1;
+  const dmgMult = f => mine(f) ? (1 + S.stats.pow*.04 + (cmod().pow || 0) + (spon('NVDA') ? .06 : 0)) * (1 + (S.up[f.gear] || 0)*.08) : (f.pow || 1);
   const takenMult = f => mine(f) ? (1 - Math.min(.5, S.stats.grd*.03 + ARMORS[S.armor].cut + (cmod().guard || 0) + (spon('AAPL') ? .06 : 0))) : 1;
   const accBonus = f => mine(f) ? S.stats.spd*.015 + (cmod().acc || 0) + (spon('MSFT') ? .05 : 0) : 0;
   const critBonus = f => mine(f) ? S.stats.spd*.01 + (cmod().crit || 0) + (spon('TSLA') ? .05 : 0) : 0;
@@ -2979,7 +2979,7 @@
     const e = G.e, ai = e.ai, d = dist(), r = Math.random(), hpPct = e.hp / e.max, wr = wOf(e).range;
     if (ai.crash && G.round > 0 && G.round % ai.crash === 0 && d <= wr && e.sta >= 20) return 'crash';
     if (ai.flee && hpPct < ai.flee && r < .35 && canDo(e, 'back')){ speak(e.b, pick(['I\'m out!','Selling my position!','Nope nope nope!']), 900); return 'back'; }
-    if (ai.kite && d < wr && r < .55 && canDo(e, 'back')) return 'back';
+    if (ai.kite && d < wr && r < (ai.kite === true ? .55 : ai.kite) && canDo(e, 'back')) return 'back';
     if (d > wr){
       if (e.sta < 12) return 'rest';
       if (ai.slow && r < .35) return e.sta < 100 ? 'rest' : 'taunt';
@@ -3075,8 +3075,17 @@
 
   function clearRing(){ fighters.forEach(f => f.wrap.remove()); fighters = []; arenaBots = []; }
   function recolorParts(parts, map){ return parts.map(p => map[p[5]] ? [...p.slice(0,5), map[p[5]], p[6]] : p); }
+  // düşmanlara şeytan boynuzu: [sol boynuz x, sağ boynuz x, kafa üstü y]
+  const HORN_AT = {Mist:[8, 19, 11], 'Mr. Hat':[5.5, 21.5, 7], Goggles:[6.5, 20.5, 9], Lavender:[10.5, 16.5, 14], Honey:[9.5, 17.5, 14]};
+  function hornParts(base){
+    const [xl, xr, y] = HORN_AT[base] || [7, 20, 10], D = '#7a1420', M = '#c42a30', T = '#ff6a5a';
+    return [
+      ['head', xl, y - 2, 3, 2, D, ''], ['head', xl - .6, y - 3.8, 2.2, 1.9, M, ''], ['head', xl - 1.1, y - 5.4, 1.3, 1.7, T, ''],
+      ['head', xr, y - 2, 3, 2, D, ''], ['head', xr + 1.4, y - 3.8, 2.2, 1.9, M, ''], ['head', xr + 2.8, y - 5.4, 1.3, 1.7, T, '']
+    ];
+  }
   function makeRival(r){
-    const e = makeFighter(r.base, r.gear, 1, r.wlv == null ? 1 : r.wlv);
+    const e = makeFighter(r.base, r.gear, 1, r.wlv == null ? 1 : r.wlv, hornParts(r.base));
     if (r.recolor || r.scale){
       e.wrap.remove();
       const def = bots.find(x => x.name === r.base);
@@ -3084,12 +3093,12 @@
       const flip = document.createElement('div'); flip.className = 'flip';
       if (r.scale){ flip.style.scale = `-${r.scale} ${r.scale}`; flip.style.transformOrigin = '50% 100%'; }
       wrap.appendChild(flip); ring.appendChild(wrap);
-      const b = build({name:r.name, act:'poke', parts:recolorParts(def.parts, r.recolor || {}).concat(wtParts(r.gear, r.wlv == null ? 1 : r.wlv))}, 3, flip);
+      const b = build({name:r.name, act:'poke', parts:recolorParts(def.parts, r.recolor || {}).concat(hornParts(r.base), wtParts(r.gear, r.wlv == null ? 1 : r.wlv))}, 3, flip);
       if ((r.wlv || 0) >= 3 && b.g.wpn) b.g.wpn.classList.add('legend');
       Object.assign(e, {b, wrap}); b.fighter = e;
     }
     e.b.el.setAttribute('aria-label', `Poke ${r.name}`);
-    Object.assign(e, {name:r.name, st:r.st, ko:r.ko, hp:r.hp, max:r.hp, sta:100, ai:r.ai, game:true});
+    Object.assign(e, {name:r.name, st:r.st, ko:r.ko, hp:r.hp, max:r.hp, sta:100, ai:r.ai, pow:r.pow || 1, game:true});
     return e;
   }
 
