@@ -3526,7 +3526,19 @@
   }
   // --- cüzdan (EIP-1193, window.ethereum). Sadece okuma: bağlan, ağı değiştir, bakiye oku.
   const w3El = document.getElementById('w3'), tierEl = document.getElementById('tierbar');
-  const eth = () => window.ethereum || null;
+  // Sadece MetaMask: EIP-6963 ile MetaMask'ı adıyla (io.metamask) buluruz; Rabby, Coinbase, Phantom vb. yok sayılır
+  let MM = null, mmHooked = null, w3Ready = false;
+  window.addEventListener('eip6963:announceProvider', e => {
+    const d = e.detail; if (d && d.info && d.info.rdns === 'io.metamask' && d.provider && !MM){ MM = d.provider; if (w3Ready) w3Hook(); }
+  });
+  window.dispatchEvent(new Event('eip6963:requestProvider'));
+  const isPureMM = p => p && p.isMetaMask && !p.isRabby && !p.isCoinbaseWallet && !p.isPhantom && !p.isBraveWallet && !p.isOkxWallet && !p.isTrust;
+  function legacyMM(){
+    const e = window.ethereum; if (!e) return null;
+    if (Array.isArray(e.providers)){ const m = e.providers.find(isPureMM); if (m) return m; }
+    return isPureMM(e) ? e : null;
+  }
+  const eth = () => MM || legacyMM();
   const W3_OFF = 'vibefolk-w3-off';
   function tierOf(n){ let t = 0; TIERS.forEach((x, i) => { if (n >= x.min) t = i; }); return t; }
   async function w3Chain(){
@@ -3585,15 +3597,15 @@
   function folkAction(){ if (!W3.addr || !W3.chainOk) w3Connect(); else window.open(FOLK.buy, '_blank', 'noopener'); }
   function drawW3(){
     const short = W3.addr ? W3.addr.slice(0, 6) + '...' + W3.addr.slice(-4) : '';
-    if (!eth()) w3El.innerHTML = `<a class="btn w3btn" href="https://metamask.io/download/" target="_blank" rel="noopener">Get a wallet</a>`;
+    if (!eth()) w3El.innerHTML = `<a class="btn w3btn" href="https://metamask.io/download/" target="_blank" rel="noopener">Get MetaMask</a>`;
     else if (W3.busy) w3El.innerHTML = `<button class="btn w3btn" type="button" disabled>Connecting...</button>`;
-    else if (!W3.addr) w3El.innerHTML = `<button class="btn w3btn" type="button" data-a="connect">Connect wallet</button>`;
+    else if (!W3.addr) w3El.innerHTML = `<button class="btn w3btn" type="button" data-a="connect">Connect MetaMask</button>`;
     else if (!W3.chainOk) w3El.innerHTML = `<button class="btn w3btn warn" type="button" data-a="switch">Switch to Robinhood Chain</button>`;
     else w3El.innerHTML = `<span class="w3chip" title="${W3.addr}">${W3.tier ? `<span class="mdl">${MEDAL(W3.tier)}</span>` : ''}<b>${fmtFolk(W3.bal)}</b><small>FOLK</small><em>${short}</em></span><a class="btn w3buy" href="${FOLK.buy}" target="_blank" rel="noopener">Buy FOLK</a><button class="w3x" type="button" data-a="off" aria-label="Disconnect wallet" title="Disconnect">&times;</button>`;
     // kamp: seviye çubuğu
     const nxt = TIERS[W3.tier + 1];
     tierEl.innerHTML = `<div class="tb-row">${TIERS.slice(1).map((x, i) => `<span class="tb${W3.tier >= i + 1 ? ' on' : ''}${W3.tier === i + 1 ? ' now' : ''}" title="${x.name}: hold ${fmtFolk(x.min)} FOLK, +${Math.round(x.bonus*100)}% gold"><span class="mdl">${MEDAL(i + 1)}</span><b>${fmtFolk(x.min)}</b><small>+${Math.round(x.bonus*100)}%</small></span>`).join('<i></i>')}</div>`
-      + `<div class="tb-act">${!W3.addr || !W3.chainOk ? `<button class="pill" type="button" data-a="${!W3.addr ? 'connect' : 'switch'}">${!W3.addr ? 'Connect wallet' : 'Switch network'}</button>`
+      + `<div class="tb-act">${!W3.addr || !W3.chainOk ? `<button class="pill" type="button" data-a="${!W3.addr ? 'connect' : 'switch'}">${!W3.addr ? 'Connect MetaMask' : 'Switch network'}</button>`
         : `<span class="tb-bal"><b>${fmtFolk(W3.bal)}</b> FOLK</span>${nxt ? `<a class="pill" href="${FOLK.buy}" target="_blank" rel="noopener">Buy FOLK</a>` : ''}`}</div>`;
   }
   function w3Click(e){
@@ -3604,15 +3616,21 @@
     else if (act === 'off') w3Disconnect();
   }
   w3El.addEventListener('click', w3Click); tierEl.addEventListener('click', w3Click);
-  function w3Init(){
-    drawW3();
-    const p = eth(); if (!p) return;
+  // MetaMask olaylarını bir kez bağla ve daha önce izin verildiyse sessizce yeniden bağlan
+  function w3Hook(){
+    const p = eth(); if (!p || mmHooked === p) return;
+    mmHooked = p;
     if (p.on){
       p.on('accountsChanged', acc => { W3.addr = acc && acc[0] ? acc[0] : null; w3Refresh(); });
       p.on('chainChanged', () => w3Refresh());
     }
     let off = false; try { off = localStorage.getItem(W3_OFF) === '1'; } catch(e){}
     if (!off) p.request({method:'eth_accounts'}).then(acc => { if (acc && acc[0]){ W3.addr = acc[0]; w3Refresh(); } }).catch(() => {});
+    if (typeof drawW3 === 'function' && w3El) drawW3();
+  }
+  function w3Init(){
+    w3Ready = true; drawW3(); w3Hook();
+    setTimeout(() => { w3Hook(); drawW3(); }, 400); // MetaMask duyurusu geç gelebilir
     setInterval(() => { if (W3.addr && !document.hidden) w3Refresh(); }, 60000);
   }
   let campReturn = null, resetArm = false;
