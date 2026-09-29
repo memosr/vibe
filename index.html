@@ -3656,6 +3656,13 @@
     ['legL',13.9,45.4,1.4,1,CH_L,''], ['legL',15.1,45.2,0.9,1.4,CH_D,''],
     ['legL',14.6,46.6,1.6,1.1,'#8a8f96',''], ['legL',13.6,47.4,3.6,3,'#e9c64a',''], ['legL',15.1,48.3,0.7,1.1,'#231c1f','nol']
   ];
+  function chainUp(b){
+    return CHAIN_PARTS.map(([g, x, y, w, h, c, cls]) => {
+      const d = document.createElement('div'); d.className = 'px chainpx ' + cls;
+      d.style.cssText = `left:calc(${x} * var(--u));top:calc(${y} * var(--u));width:calc(${w} * var(--u));height:calc(${h} * var(--u));--c:${c}`;
+      b.g[g].appendChild(d); return d;
+    });
+  }
   function applyFolkLocks(){
     bots.forEach(b => {
       if (!b.el || !row.contains(b.el)) return;
@@ -3663,11 +3670,7 @@
       b.folkLocked = lk; b.folkNeed = need;
       b.el.classList.toggle('chained', lk);
       if (lk && !b.chains){
-        b.chains = CHAIN_PARTS.map(([g, x, y, w, h, c, cls]) => {
-          const d = document.createElement('div'); d.className = 'px chainpx ' + cls;
-          d.style.cssText = `left:calc(${x} * var(--u));top:calc(${y} * var(--u));width:calc(${w} * var(--u));height:calc(${h} * var(--u));--c:${c}`;
-          b.g[g].appendChild(d); return d;
-        });
+        b.chains = chainUp(b);
         const tg = document.createElement('span'); tg.className = 'flock'; tg.setAttribute('aria-hidden', 'true');
         tg.innerHTML = `${LOCK}<em>${b.name}</em><b>${fmtFolk(need)}</b>`; b.el.appendChild(tg); b.flock = tg;
       } else if (!lk && b.chains){
@@ -3687,6 +3690,7 @@
   }
   function w3Init(){
     w3Ready = true; drawW3(); w3Hook(); applyFolkLocks();
+    { const sp = sideBots.find(x => x.name === 'Pip'); if (sp && !sp.chains){ sp.chains = chainUp(sp); sp.el.classList.add('chained'); } } // sağdaki Pip: yakında, zincirde
     setTimeout(() => { w3Hook(); drawW3(); }, 400); // MetaMask duyurusu geç gelebilir
     setInterval(() => { if (W3.addr && !document.hidden) w3Refresh(); }, 60000);
   }
