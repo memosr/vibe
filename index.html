@@ -494,6 +494,42 @@
   .wpn .wreq .coin{width:12px;height:12px}
   .orb .lk{position:absolute;inset:0;display:grid;place-items:center}
   .orb .lk svg,.orb.locked .lk svg{width:30px;height:30px;rotate:0deg;scale:1;filter:drop-shadow(1px 1px 0 #000);animation:none}
+  .w3{display:flex;align-items:center;gap:6px}
+  .w3btn{background:#231c1f;color:#fff3e6}
+  .w3btn.warn{background:#b8402f}
+  .w3chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;background:#fff;border:3px solid var(--line);box-shadow:3px 3px 0 var(--line);font-family:"Nunito", sans-serif}
+  .w3chip b{font-weight:800;font-size:15px;font-variant-numeric:tabular-nums}
+  .w3chip small{font-family:"Pixelify Sans", monospace;font-size:12px;color:var(--ink-soft)}
+  .w3chip em{font-style:normal;font-size:11px;color:var(--ink-soft);margin-left:4px}
+  .w3buy{background:#e0643a;color:#fff;text-decoration:none}
+  .w3btn{text-decoration:none}
+  .w3x{width:30px;height:30px;border:3px solid var(--line);background:#fff;font:700 18px/1 sans-serif;cursor:pointer;color:var(--ink)}
+  .w3x:hover{background:#ffe2d8}
+  .mdl{display:inline-block;width:14px;height:17px;vertical-align:middle}
+  .mdl svg{width:100%;height:100%;display:block}
+  .tierbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:8px 10px;background:#231c1f;border:3px solid var(--line);color:#fff3e6}
+  .tb-row{display:flex;align-items:center;gap:6px}
+  .tb-row > i{width:14px;height:3px;background:#5a4a4c}
+  .tb{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border:2px solid #5a4a4c;opacity:.55;font-family:"Pixelify Sans", monospace}
+  .tb b{font-size:14px} .tb small{font-size:11px;color:#7ee07a}
+  .tb.on{opacity:1;border-color:#8a7a5c}
+  .tb.now{border-color:#ffc53d;box-shadow:0 0 10px rgba(255,197,61,.5)}
+  .tb .mdl{width:16px;height:19px}
+  .tb-act{display:flex;align-items:center;gap:8px}
+  .tb-bal{font-family:"Nunito", sans-serif;font-size:14px} .tb-bal b{font-weight:800}
+  .tierbar .pill{text-decoration:none;color:var(--ink)}
+  .pill.fchip{background:linear-gradient(180deg,#e8dcff,#c9b6ff);gap:4px;min-width:0;padding:4px 9px}
+  .pill.fchip.ok{background:#e6f6e6;color:#23702c;box-shadow:none;cursor:default}
+  .pill.fchip:disabled{opacity:1}
+  .pill .mdl{width:12px;height:15px}
+  .tile.dormant .orb{filter:grayscale(.6) brightness(.85)}
+  .tile.dormant{background:#f3eee9}
+  .wpn .wreq.folk{color:#7c5cff}
+  .wpn .wreq .mdl{width:11px;height:14px}
+  .act.needfolk .lockov em{background:#7c5cff;color:#fff;border-color:#231c1f}
+  .act .lockov em .mdl{width:11px;height:14px;margin-right:2px}
+  .rchip.holder{background:#fff3c4}
+  @media (max-width:640px){ .w3chip em{display:none} .tierbar{padding:6px} .tb small{display:none} }
   .orb .pk{position:absolute;left:-6px;bottom:-4px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#231c1f;border:2px solid var(--pc)}
   .orb .pk svg{width:15px;height:15px;rotate:0deg;scale:1;animation:none;filter:none}
   .orb .pk.off{border-color:#6b6064}
@@ -655,6 +691,7 @@
         <button class="btn" type="button" id="campClose">Back to the arena</button>
       </div>
       <div class="lvl-row"><b id="campLvl">Level 1</b><div class="bar xp"><i id="campXp"></i><span id="campXpT"></span></div><small id="campPts"></small></div>
+      <div class="tierbar" id="tierbar" aria-label="FOLK holder tiers"></div>
       <div class="ctabs" role="tablist" aria-label="Camp sections" id="ctabs"></div>
       <div class="cpanel" id="cpanel" role="tabpanel"></div>
       <div class="camp-foot"><small>Progress is saved in this browser.</small><button class="btn" type="button" id="campReset">Reset progress</button></div>
@@ -671,6 +708,7 @@
           <button class="btn mode" type="button" role="tab" id="modePlay" aria-selected="true">Play</button>
           <button class="btn mode" type="button" role="tab" id="modeWatch" aria-selected="false">Watch brawl</button>
         </div>
+        <div class="w3 play-only" id="w3" aria-live="polite"></div>
         <button class="btn play-only" type="button" id="campBtn">Camp &amp; shop</button>
         <button class="btn watch-only" type="button" id="arenaGear">Shuffle gear</button>
         <button class="btn watch-only" type="button" id="arenaClear">Clear ring</button>
@@ -2611,7 +2649,30 @@
   if (S.up.shield != null){ S.up.axe = Math.max(S.up.axe || 0, S.up.shield); delete S.up.shield; save(); }
   if (S.up.axe == null) S.up.axe = 0;
   if (!Array.isArray(S.owned) || (S.owned.length === 1 && WORDER.some(k => k !== 'dagger' && (S.up[k] || 0) > 0))) S.owned = ['dagger', ...WORDER.filter(k => k !== 'dagger' && (S.up[k] || 0) > 0)];
-  const moveLocked = k => MOVE_PRICE[k] != null && !S.moves[k];
+  // ================= $FOLK HOLDER SİSTEMİ =================
+  // Cüzdandaki $FOLK bakiyesi okunur (transfer yok). Tutulan miktar seviyeyi belirler.
+  const FOLK = {
+    addr:'0xA9126368Be052e619c7E43C8Ff3BeCf7ECAfb8d9', chainId:46630, chainHex:'0xb626',
+    chain:{chainId:'0xb626', chainName:'Robinhood Chain Testnet', nativeCurrency:{name:'Ether', symbol:'ETH', decimals:18},
+      rpcUrls:['https://rpc.testnet.chain.robinhood.com/rpc'], blockExplorerUrls:['https://explorer.testnet.chain.robinhood.com']},
+    buy:'https://testnet.vibevibe.fun/token/0xA9126368Be052e619c7E43C8Ff3BeCf7ECAfb8d9'
+  };
+  const TIERS = [
+    {name:'None',   min:0,        bonus:0},
+    {name:'Bronze', min:1000000,  bonus:.10, c:'#d08a4a', hi:'#f3c08a', dk:'#8a4a1a'},
+    {name:'Silver', min:5000000,  bonus:.25, c:'#c9d3dc', hi:'#ffffff', dk:'#7a8894'},
+    {name:'Gold',   min:20000000, bonus:.50, c:'#ffc53d', hi:'#fff3b0', dk:'#c7901f'}
+  ];
+  const WTIER = {sword:1, spear:2, axe:3};                 // silahı kullanmak için
+  const MOVE_TIER = {strike:1, power:2, special:3};         // skili kullanmak için
+  const LV_TIER = L => L <= 0 ? 0 : L <= 2 ? 1 : L === 3 ? 2 : 3; // silah seviyesi için
+  const W3 = {addr:null, raw:0n, bal:0, dec:18, tier:0, chainOk:false, busy:false};
+  const tier = () => W3.tier;
+  const fmtFolk = n => n >= 1e6 ? (n/1e6).toFixed(n < 1e7 && n % 1e6 ? 1 : 0).replace(/\.0$/, '') + 'M' : n >= 1e3 ? Math.floor(n/1e3) + 'K' : String(Math.floor(n));
+  const MEDAL = t => { const T = TIERS[t]; return svgPx('0 0 10 12', [[2,0,2,4,'#d8432d'],[6,0,2,4,'#2a74bd'],[4,1,2,3,'#e9c64a'],[2,4,6,1,'#231c1f'],[1,5,8,6,'#231c1f'],[2,11,6,1,'#231c1f'],[2,5,6,6,T.c],[3,6,2,2,T.hi],[5,9,2,1,T.dk],[6,8,1,1,T.dk]]); };
+  const weaponUsable = k => ownsW(k) && tier() >= (WTIER[k] || 0);
+  const effLv = k => Math.min(S.up[k] || 0, [0, 2, 3, 4][tier()]);
+  const moveLocked = k => MOVE_PRICE[k] != null && (!S.moves[k] || tier() < (MOVE_TIER[k] || 0));
   const xpNeed = lv => 60 + (lv - 1)*40;
   const ARMORS = [{name:'No armor', cut:0}, {name:'Leather', cut:.05, price:120}, {name:'Chainmail', cut:.10, price:260}, {name:'Plate', cut:.15, price:450}];
   const UP_PRICE = [80, 160, 280, 500];
@@ -2619,7 +2680,7 @@
   // oyuncu için çarpanlar (rakipte hepsi nötr)
   const mine = f => f === G.p;
   const cmod = () => (CHARS[S.char] || CHARS.Tux).mod;
-  const dmgMult = f => mine(f) ? (1 + S.stats.pow*.04 + (cmod().pow || 0) + (spon('NVDA') ? .06 : 0)) * (1 + (S.up[f.gear] || 0)*.08) : (f.pow || 1);
+  const dmgMult = f => mine(f) ? (1 + S.stats.pow*.04 + (cmod().pow || 0) + (spon('NVDA') ? .06 : 0)) * (1 + effLv(f.gear)*.08) : (f.pow || 1);
   const takenMult = f => mine(f) ? (1 - Math.min(.5, S.stats.grd*.03 + ARMORS[S.armor].cut + (cmod().guard || 0) + (spon('AAPL') ? .06 : 0))) : 1;
   const accBonus = f => mine(f) ? S.stats.spd*.015 + (cmod().acc || 0) + (spon('MSFT') ? .05 : 0) : 0;
   const critBonus = f => mine(f) ? S.stats.spd*.01 + (cmod().crit || 0) + (spon('TSLA') ? .05 : 0) : 0;
@@ -2745,7 +2806,11 @@
       const lk = moveLocked(b.dataset.k), m0 = MOVES[b.dataset.k];
       b.classList.toggle('locked', lk);
       b.disabled = lk ? false : (!myTurn || !canDo(G.p, b.dataset.k));
-      b.setAttribute('aria-label', lk ? `${m0.special ? 'Ultimate' : m0.label}, locked. Unlock for ${MOVE_PRICE[b.dataset.k]} coins in the camp` : (m0.special ? 'Ultimate' : m0.label));
+      const needFolk = lk && S.moves[b.dataset.k], mt = MOVE_TIER[b.dataset.k];
+      const em = b.querySelector('.lockov em');
+      if (em) em.innerHTML = needFolk ? `<span class="mdl">${MEDAL(mt)}</span>${fmtFolk(TIERS[mt].min)}` : `${MOVE_PRICE[b.dataset.k] || ''} <span class="coin"></span>`;
+      b.classList.toggle('needfolk', !!needFolk);
+      b.setAttribute('aria-label', !lk ? (m0.special ? 'Ultimate' : m0.label) : needFolk ? `${m0.special ? 'Ultimate' : m0.label}, locked. Hold ${fmtFolk(TIERS[mt].min)} FOLK to use it` : `${m0.special ? 'Ultimate' : m0.label}, locked. Unlock for ${MOVE_PRICE[b.dataset.k]} coins in the camp`);
       const m = MOVES[b.dataset.k]; if (m.kit) b.querySelector('.badge').textContent = S.kits[m.kit];
       if (m.special) b.querySelector('b').textContent = moveLocked('special') ? 'Ultimate' : (CHARS[S.char] || CHARS.Tux).short;
     });
@@ -3161,7 +3226,8 @@
     speak(winner.b, win ? pick(['Victory, darling.','Well fought. By me.','Tidy.']) : pick(['Too easy.','Next!','Stay down.']), 1800);
     const last = G.stage === RIVALS.length - 1;
     // ödül: zaferde tam, yenilgide teselli
-    const coins = Math.round((win ? 30 + G.stage*20 + (last ? 150 : 0) : 10 + G.stage*5) * (spon('AMZN') ? 1.25 : 1));
+    const hb = TIERS[tier()].bonus;
+    const coins = Math.round((win ? 30 + G.stage*20 + (last ? 150 : 0) : 10 + G.stage*5) * (spon('AMZN') ? 1.25 : 1) * (1 + hb));
     const xp = win ? 25 + G.stage*15 + (last ? 60 : 0) : 10 + G.stage*5;
     if (win){ S.best = Math.max(S.best, G.stage + 1); if (last) S.wins++; }
     else S.kits.hp = Math.max(S.kits.hp, 1); // yeni tura en az bir can kitiyle başla
@@ -3172,6 +3238,7 @@
     const reward = [
       {cls:'gold', html:`${COIN}<b data-count="${coins}">+${coins}</b>`},
       {cls:'xp', html:`<em>XP</em><b data-count="${xp}">+${xp}</b>`},
+      ...(hb ? [{cls:'holder', html:`${MEDAL(tier())}<b>+${Math.round(hb*100)}%</b>`}] : []),
       ...(shareGain ? [{cls:'share', color:MKT[G.sponsor].color, html:`<em>${G.sponsor}</em><b>+${shareGain}</b>`}] : []),
       ...(ups ? [{cls:'lvl', html:`<em>LV ${S.level}</em><b>+${ups*3} pts</b>`}] : []),
       ...fresh.map(n => ({cls:'new', html:`<em>NEW</em><b>${n}</b>`}))
@@ -3279,16 +3346,19 @@
   function buildChooser(){
     const g = document.getElementById('wgrid'); g.innerHTML = '';
     WORDER.forEach(k => {
-      const w = WEAPONS[k], own = ownsW(k), un = WUNLOCK[k];
-      const b = document.createElement('button'); b.type = 'button'; b.className = 'wpn' + (own ? '' : ' wlock'); b.disabled = !own;
-      const lv = S.up[k] || 0;
-      b.innerHTML = `${wIconHtml(k, own ? lv : 0, 'wi')}<b>${w.name}</b>` + (own ? `<small class="stars">${'&#9733;'.repeat(lv)}${'&#9734;'.repeat(MAXLV - lv)}</small>${lv >= MAXLV ? `<span class="wperk" style="--pc:${PERK[k].color}">${PERK[k].icon}${PERK[k].tag}</span>` : ''}` : `<small class="wreq">&#128274; ${un.wins ? 'Win 1 tournament' : `${un.price} ${COIN}`}</small>`);
-      b.setAttribute('aria-label', own ? `${w.name}, level ${lv}` : `${w.name} is locked. ${un.wins ? 'Win 1 tournament' : `Unlock for ${un.price} coins in the camp`}.`);
-      if (own) b.addEventListener('click', () => { G.weapon = k; G.sponsor = w.tk; chooserEl.hidden = true; startStage(); });
+      const w = WEAPONS[k], own = ownsW(k), un = WUNLOCK[k], wt = WTIER[k] || 0, use = weaponUsable(k);
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'wpn' + (use ? '' : ' wlock'); b.disabled = !use;
+      const lv = effLv(k);
+      const req = !own ? `<small class="wreq">&#128274; ${un.wins ? 'Win 1 tournament' : `${un.price} ${COIN}`}</small>` : '';
+      const freq = wt && tier() < wt ? `<small class="wreq folk"><span class="mdl">${MEDAL(wt)}</span>Hold ${fmtFolk(TIERS[wt].min)}</small>` : '';
+      b.innerHTML = `${wIconHtml(k, use ? lv : 0, 'wi')}<b>${w.name}</b>` + (use ? `<small class="stars">${'&#9733;'.repeat(lv)}${'&#9734;'.repeat(MAXLV - lv)}</small>${lv >= MAXLV ? `<span class="wperk" style="--pc:${PERK[k].color}">${PERK[k].icon}${PERK[k].tag}</span>` : ''}` : req + freq);
+      b.setAttribute('aria-label', use ? `${w.name}, level ${lv}` : `${w.name} is locked.${!own ? (un.wins ? ' Win 1 tournament.' : ` Unlock for ${un.price} coins in the camp.`) : ''}${freq ? ` Hold ${fmtFolk(TIERS[wt].min)} FOLK.` : ''}`);
+      if (use) b.addEventListener('click', () => { G.weapon = k; G.sponsor = w.tk; chooserEl.hidden = true; startStage(); });
       g.appendChild(b);
     });
   }
   async function startStage(){
+    if (!weaponUsable(G.weapon)){ chooserEl.hidden = false; showWeaponPick(); return; } // FOLK azaldıysa silah kilitlenir
     const tok = ++G.tok; matchTok++; ring.scrollLeft = 0; ring.scrollTop = 0;
     resultEl.hidden = true; chooserEl.hidden = true; G.on = false; G.busy = true; G.round = 0;
     const old = fighters; fighters = []; arenaBots = [];
@@ -3297,7 +3367,7 @@
     if (old.length) await wait(380);
     if (tok !== G.tok) return;
     const r = RIVALS[G.stage];
-    const p = makeFighter(S.char, G.weapon, -1, S.up[G.weapon] || 0);
+    const p = makeFighter(S.char, G.weapon, -1, effLv(G.weapon));
     Object.assign(p, {name:S.char, st:STYLE[S.char], ko:CHARS[S.char].ko, hp:playerMax(), max:playerMax(), sta:100, hype:spon('HOOD') ? 35 : 0, game:true, ai:null});
     G.mom = {};
     const e = makeRival(r);
@@ -3338,35 +3408,61 @@
       const bt = document.createElement('button'); bt.type = 'button';
       bt.className = 'pill' + (p.cls ? ' ' + p.cls : '');
       bt.innerHTML = p.html; if (p.aria) bt.setAttribute('aria-label', p.aria);
-      if (!p.on) bt.disabled = !p.cls; else bt.addEventListener('click', p.on);
+      if (!p.on) bt.disabled = !p.cls || p.cls === 'fchip ok'; else bt.addEventListener('click', p.on);
+      if (p.cls === 'fchip ok') bt.tabIndex = -1;
       if (p.cls === 'own' || p.cls === 'max') bt.tabIndex = -1;
       pw.appendChild(bt);
     });
     return d;
   }
   const buy = (price, fn, snd) => () => { if (S.coins < price) return; S.coins -= price; fn(); save(); drawCamp(); drawPurse(); play(snd || 'clap'); };
+  // FOLK şartı olan satın alma: önce bakiyeyi zincirden tazeler, sonra tekrar kontrol eder
+  const gatedBuy = (price, t, fn, snd) => async () => {
+    if (t && W3.addr){ await w3Refresh(); if (tier() < t){ drawCamp(); return; } }
+    if (tier() < t) return;
+    buy(price, fn, snd)();
+  };
+  // FOLK rozeti: şart sağlanıyorsa yeşil tik, yoksa tıklayınca cüzdan bağlar ya da token sayfasını açar
+  const folkPill = t => tier() >= t
+    ? {cls:'fchip ok', html:`<span class="mdl">${MEDAL(t)}</span>&#10003;`, aria:`${TIERS[t].name} holder requirement met`}
+    : {cls:'fchip', html:`<span class="mdl">${MEDAL(t)}</span>${fmtFolk(TIERS[t].min)}`, on:folkAction, aria:`Hold ${fmtFolk(TIERS[t].min)} FOLK (${TIERS[t].name})`};
   const CAMP_TABS = {
     moves(el){
       [['quick','Quick'],['strike','Strike'],['power','Power'],['special','Ultimate']].forEach(([k, name]) => {
-        const price = MOVE_PRICE[k], owned = !price || S.moves[k];
-        const pill = owned ? {cls:'own', html:'&#10003;'} : {html:priceTxt(price), on:S.coins >= price ? buy(price, () => { S.moves[k] = true; }, 'fight') : null, aria:`Unlock ${name} for ${price} coins`};
-        el.appendChild(tile(orb(ICON[k], MED[k], null, owned ? '' : 'locked'), name, [pill]));
+        const price = MOVE_PRICE[k], owned = !price || S.moves[k], mt = MOVE_TIER[k] || 0, held = tier() >= mt;
+        const pills = [];
+        if (owned) pills.push(held ? {cls:'own', html:'&#10003;'} : folkPill(mt));
+        else { pills.push({html:priceTxt(price), on:S.coins >= price && held ? gatedBuy(price, mt, () => { S.moves[k] = true; }, 'fight') : null, aria:`Unlock ${name} for ${price} coins`}); if (mt) pills.push(folkPill(mt)); }
+        const d = tile(orb(ICON[k], MED[k], null, owned && held ? '' : 'locked'), name, pills);
+        if (owned && !held) d.classList.add('dormant');
+        el.appendChild(d);
       });
     },
     weapons(el){
       WORDER.forEach(k => {
         const w = WEAPONS[k];
+        const wt = WTIER[k] || 0;
         if (!ownsW(k)){
           const un = WUNLOCK[k], ic0 = wIcon(k, 0), isNext = nextW() === k;
-          const pill = un.wins ? {html:'&#127942; 1'} : {html:priceTxt(un.price), on:isNext && S.coins >= un.price ? buy(un.price, () => { S.owned.push(k); }, 'fight') : null, aria:`Unlock ${w.name} for ${un.price} coins`};
-          el.appendChild(tile(orb(ic0.svg + `<span class="lk">${LOCK}</span>`, {ring:'#6b6064', in1:'#3a3238', in2:'#141013'}, null, 'locked' + (ic0.diag ? ' diag' : '')), w.name, [pill], `${w.name}, locked`));
+          const pills = [un.wins ? {html:'&#127942; 1'} : {html:priceTxt(un.price), on:isNext && S.coins >= un.price && tier() >= wt ? gatedBuy(un.price, wt, () => { S.owned.push(k); }, 'fight') : null, aria:`Unlock ${w.name} for ${un.price} coins`}];
+          if (wt) pills.push(folkPill(wt));
+          el.appendChild(tile(orb(ic0.svg + `<span class="lk">${LOCK}</span>`, {ring:'#6b6064', in1:'#3a3238', in2:'#141013'}, null, 'locked' + (ic0.diag ? ' diag' : '')), w.name, pills, `${w.name}, locked`));
+          return;
+        }
+        if (tier() < wt){ // sahip ama yeterli FOLK yok: uyuyor
+          const ic0 = wIcon(k, S.up[k]);
+          const d = tile(orb(ic0.svg, {ring:'#6b6064', in1:'#3a3238', in2:'#141013'}, null, 'locked' + (ic0.diag ? ' diag' : '')), w.name, [folkPill(wt)], `${w.name}, needs ${fmtFolk(TIERS[wt].min)} FOLK`);
+          d.classList.add('dormant'); el.appendChild(d);
           return;
         }
         const lv = S.up[k], price = UP_PRICE[lv], ic = wIcon(k, lv), col = MKT[w.tk] ? MKT[w.tk].color : '#e9c64a', pk = PERK[k];
         const stars = '&#9733;'.repeat(lv) + '&#9734;'.repeat(MAXLV - lv);
-        const pill = lv >= MAXLV ? {cls:'max', html:'MAX'} : {html:priceTxt(price), on:S.coins >= price ? buy(price, () => { S.up[k]++; }, lv === MAXLV - 1 ? 'charge' : 'clap') : null, aria:`Upgrade ${w.name} for ${price} coins`};
+        const nt = LV_TIER(lv + 1), capped = effLv(k) < lv;
+        const pills = capped ? [folkPill(LV_TIER(lv))] : lv >= MAXLV ? [{cls:'max', html:'MAX'}]
+          : [{html:priceTxt(price), on:S.coins >= price && tier() >= nt ? gatedBuy(price, nt, () => { S.up[k]++; }, lv === MAXLV - 1 ? 'charge' : 'clap') : null, aria:`Upgrade ${w.name} for ${price} coins`}, ...(nt ? [folkPill(nt)] : [])];
         const badge = `<span class="pk${lv >= MAXLV ? '' : ' off'}" style="--pc:${pk.color}" title="${pk.tag}">${pk.icon}</span>`;
-        const d = tile(orb(ic.svg + badge, {ring:lv >= MAXLV ? pk.color : col, in1:'#3a3238', in2:'#141013'}, null, (ic.diag ? 'diag' : '') + (lv >= 3 ? ' lv3' : '') + (lv >= MAXLV ? ' lv4' : '')), `${w.name} <span class="stars">${stars}</span>`, [pill], `${w.name}, level ${lv} of ${MAXLV}. Level ${MAXLV} perk: ${pk.tag.toLowerCase()}`);
+        const d = tile(orb(ic.svg + badge, {ring:lv >= MAXLV ? pk.color : col, in1:'#3a3238', in2:'#141013'}, null, (ic.diag ? 'diag' : '') + (lv >= 3 ? ' lv3' : '') + (lv >= MAXLV ? ' lv4' : '')), `${w.name} <span class="stars">${stars}</span>`, pills, `${w.name}, level ${lv} of ${MAXLV}. Level ${MAXLV} perk: ${pk.tag.toLowerCase()}`);
+        if (capped) d.classList.add('dormant');
         d.querySelector('.orb').style.setProperty('--aura', pk.color);
         el.appendChild(d);
       });
@@ -3428,6 +3524,97 @@
     CAMP_TABS[campTab](panel);
     if (hadFocus){ const f = document.getElementById('ctab-' + campTab); if (f) f.focus({preventScroll:true}); }
   }
+  // --- cüzdan (EIP-1193, window.ethereum). Sadece okuma: bağlan, ağı değiştir, bakiye oku.
+  const w3El = document.getElementById('w3'), tierEl = document.getElementById('tierbar');
+  const eth = () => window.ethereum || null;
+  const W3_OFF = 'vibefolk-w3-off';
+  function tierOf(n){ let t = 0; TIERS.forEach((x, i) => { if (n >= x.min) t = i; }); return t; }
+  async function w3Chain(){
+    const p = eth(); if (!p) return false;
+    const id = String(await p.request({method:'eth_chainId'})).toLowerCase();
+    W3.chainOk = id === FOLK.chainHex;
+    return W3.chainOk;
+  }
+  async function w3Switch(){
+    const p = eth(); if (!p) return;
+    try { await p.request({method:'wallet_switchEthereumChain', params:[{chainId:FOLK.chainHex}]}); }
+    catch (e){
+      if (e && (e.code === 4902 || /unrecognized|not been added|unknown chain/i.test(e.message || ''))) await p.request({method:'wallet_addEthereumChain', params:[FOLK.chain]});
+      else throw e;
+    }
+  }
+  async function w3Refresh(){
+    const p = eth(); if (!p || !W3.addr) return w3Apply(0);
+    try {
+      if (!(await w3Chain())) return w3Apply(0);
+      if (!W3.decRead){
+        const d = await p.request({method:'eth_call', params:[{to:FOLK.addr, data:'0x313ce567'}, 'latest']});
+        const n = parseInt(d, 16); if (n > 0 && n < 40) W3.dec = n; W3.decRead = true;
+      }
+      const data = '0x70a08231' + W3.addr.slice(2).toLowerCase().padStart(64, '0');
+      const r = await p.request({method:'eth_call', params:[{to:FOLK.addr, data}, 'latest']});
+      W3.raw = BigInt(r && r !== '0x' ? r : '0x0');
+      W3.bal = Number(W3.raw / 10n ** BigInt(W3.dec));
+      w3Apply(tierOf(W3.bal));
+    } catch (e){ console.warn('FOLK balance read failed', e); w3Apply(W3.tier); }
+  }
+  function w3Apply(t){
+    const was = W3.tier; W3.tier = t;
+    drawW3();
+    if (!campEl.hidden) drawCamp();
+    refreshActions();
+    if (!chooserEl.hidden && !document.getElementById('wgrid').hidden) buildChooser();
+    if (t > was && W3.addr) toast(`<span style="--c:${TIERS[t].c}"><b>${TIERS[t].name} holder</b></span> unlocked. +${Math.round(TIERS[t].bonus*100)}% gold`);
+  }
+  async function w3Connect(){
+    const p = eth(); if (!p){ window.open('https://metamask.io/download/', '_blank', 'noopener'); return; }
+    W3.busy = true; drawW3();
+    try {
+      const acc = await p.request({method:'eth_requestAccounts'});
+      W3.addr = acc && acc[0] ? acc[0] : null;
+      try { localStorage.removeItem(W3_OFF); } catch(e){}
+      if (W3.addr && !(await w3Chain())){ await w3Switch(); await w3Chain(); }
+    } catch (e){ console.warn('wallet connect', e); }
+    W3.busy = false; await w3Refresh();
+  }
+  function w3Disconnect(){
+    W3.addr = null; W3.bal = 0; W3.raw = 0n;
+    try { localStorage.setItem(W3_OFF, '1'); } catch(e){}
+    w3Apply(0);
+  }
+  function folkAction(){ if (!W3.addr || !W3.chainOk) w3Connect(); else window.open(FOLK.buy, '_blank', 'noopener'); }
+  function drawW3(){
+    const short = W3.addr ? W3.addr.slice(0, 6) + '...' + W3.addr.slice(-4) : '';
+    if (!eth()) w3El.innerHTML = `<a class="btn w3btn" href="https://metamask.io/download/" target="_blank" rel="noopener">Get a wallet</a>`;
+    else if (W3.busy) w3El.innerHTML = `<button class="btn w3btn" type="button" disabled>Connecting...</button>`;
+    else if (!W3.addr) w3El.innerHTML = `<button class="btn w3btn" type="button" data-a="connect">Connect wallet</button>`;
+    else if (!W3.chainOk) w3El.innerHTML = `<button class="btn w3btn warn" type="button" data-a="switch">Switch to Robinhood Chain</button>`;
+    else w3El.innerHTML = `<span class="w3chip" title="${W3.addr}">${W3.tier ? `<span class="mdl">${MEDAL(W3.tier)}</span>` : ''}<b>${fmtFolk(W3.bal)}</b><small>FOLK</small><em>${short}</em></span><a class="btn w3buy" href="${FOLK.buy}" target="_blank" rel="noopener">Buy FOLK</a><button class="w3x" type="button" data-a="off" aria-label="Disconnect wallet" title="Disconnect">&times;</button>`;
+    // kamp: seviye çubuğu
+    const nxt = TIERS[W3.tier + 1];
+    tierEl.innerHTML = `<div class="tb-row">${TIERS.slice(1).map((x, i) => `<span class="tb${W3.tier >= i + 1 ? ' on' : ''}${W3.tier === i + 1 ? ' now' : ''}" title="${x.name}: hold ${fmtFolk(x.min)} FOLK, +${Math.round(x.bonus*100)}% gold"><span class="mdl">${MEDAL(i + 1)}</span><b>${fmtFolk(x.min)}</b><small>+${Math.round(x.bonus*100)}%</small></span>`).join('<i></i>')}</div>`
+      + `<div class="tb-act">${!W3.addr || !W3.chainOk ? `<button class="pill" type="button" data-a="${!W3.addr ? 'connect' : 'switch'}">${!W3.addr ? 'Connect wallet' : 'Switch network'}</button>`
+        : `<span class="tb-bal"><b>${fmtFolk(W3.bal)}</b> FOLK</span>${nxt ? `<a class="pill" href="${FOLK.buy}" target="_blank" rel="noopener">Buy FOLK</a>` : ''}`}</div>`;
+  }
+  function w3Click(e){
+    const a = e.target.closest('[data-a]'); if (!a) return;
+    const act = a.dataset.a;
+    if (act === 'connect') w3Connect();
+    else if (act === 'switch') w3Switch().then(w3Refresh).catch(err => console.warn(err));
+    else if (act === 'off') w3Disconnect();
+  }
+  w3El.addEventListener('click', w3Click); tierEl.addEventListener('click', w3Click);
+  function w3Init(){
+    drawW3();
+    const p = eth(); if (!p) return;
+    if (p.on){
+      p.on('accountsChanged', acc => { W3.addr = acc && acc[0] ? acc[0] : null; w3Refresh(); });
+      p.on('chainChanged', () => w3Refresh());
+    }
+    let off = false; try { off = localStorage.getItem(W3_OFF) === '1'; } catch(e){}
+    if (!off) p.request({method:'eth_accounts'}).then(acc => { if (acc && acc[0]){ W3.addr = acc[0]; w3Refresh(); } }).catch(() => {});
+    setInterval(() => { if (W3.addr && !document.hidden) w3Refresh(); }, 60000);
+  }
   let campReturn = null, resetArm = false;
   function openCamp(){ campReturn = document.activeElement; drawCamp(); campEl.hidden = false; resetArm = false; document.getElementById('campReset').textContent = 'Reset progress'; document.getElementById('campClose').focus({preventScroll:true}); }
   function closeCamp(){
@@ -3468,7 +3655,7 @@
     if (k && e.key.startsWith('Arrow')) e.preventDefault();
     if (k) playerMove(k);
   });
-  buildActions(); buildPotions(); buildPad(); buildChooser(); drawTape();
+  buildActions(); buildPotions(); buildPad(); w3Init(); buildChooser(); drawTape();
 
   function route(){
     const on = location.hash === '#arena';
