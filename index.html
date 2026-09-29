@@ -208,6 +208,7 @@
     text-shadow:3px 3px 0 var(--line),-2px -2px 0 var(--line),2px -2px 0 var(--line),-2px 2px 0 var(--line);white-space:nowrap;pointer-events:none}
   /* ---- Oyun modu ---- */
   .arena.play .watch-only, .arena:not(.play) .play-only{display:none !important}
+  .arena .modes{display:none !important}
   .modes{display:flex;gap:0}
   .modes .mode{box-shadow:none;margin-right:-2px}
   .modes .mode[aria-selected="true"]{background:#e0643a;color:#fff8f0}
@@ -530,6 +531,16 @@
   .act .lockov em .mdl{width:11px;height:14px;margin-right:2px}
   .rchip.holder{background:#fff3c4}
   @media (max-width:640px){ .w3chip em{display:none} .tierbar{padding:6px} .tb small{display:none} }
+  .bot.chained .bob{animation-duration:4.5s}
+  .bot.chained .rig{filter:saturate(.75) brightness(.92)}
+  .px.chainpx{--c:#6b737b}
+  .bot.chained .tag{visibility:hidden}
+  .flock em{font-style:normal;font-family:"Pixelify Sans", monospace;color:#fff3e6;margin-right:2px}
+  .flock{position:absolute;left:50%;bottom:calc(var(--u)*-6.6);translate:-50% 0;display:inline-flex;align-items:center;gap:3px;padding:1px 6px 1px 3px;background:#231c1f;color:#ffd23f;border:2px solid #231c1f;box-shadow:2px 2px 0 rgba(0,0,0,.25);white-space:nowrap;font-family:"Nunito", sans-serif;font-size:11px;pointer-events:none}
+  .flock svg{width:12px;height:12px;display:block}
+  .flock b{font-weight:800} .flock small{font-family:"Pixelify Sans", monospace;font-size:10px;color:#c9b6ff}
+  .w3main{display:inline-flex}
+  @media (max-width:640px){ .flock{font-size:10px;padding:1px 5px 1px 3px} .flock svg{width:11px;height:11px} }
   .orb .pk{position:absolute;left:-6px;bottom:-4px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#231c1f;border:2px solid var(--pc)}
   .orb .pk svg{width:15px;height:15px;rotate:0deg;scale:1;animation:none;filter:none}
   .orb .pk.off{border-color:#6b6064}
@@ -775,6 +786,7 @@
     <div class="found" id="found">
       <div class="found-row">
         <span class="found-label" aria-live="polite" id="foundLabel">Personalities found <span id="count">0</span>/9</span>
+        <div class="w3 w3main" id="w3main" aria-live="polite"></div>
         <button class="btn" id="gifBtn" type="button">Make GIF</button>
         <button class="btn" id="sound" type="button" aria-pressed="true">Sound: on</button>
       </div>
@@ -978,7 +990,7 @@
       sp.style.animationDelay = (s*0.65)+'s'; rig.appendChild(sp);
     }
     b.el = btn; b.rig = rig; b.g = groups; b.say = btn.querySelector('.say'); b.bob = btn.querySelector('.bob'); b.shadow = btn.querySelector('.shadow'); b.busy = false;
-    btn.addEventListener('click', () => { if (gifMode === 'picking') record(b); else react(b); });
+    btn.addEventListener('click', () => { if (b.folkLocked){ struggle(b); return; } if (gifMode === 'picking') record(b); else react(b); });
     parent.appendChild(btn);
     return b;
   }
@@ -3572,7 +3584,7 @@
   }
   function w3Apply(t){
     const was = W3.tier; W3.tier = t;
-    drawW3();
+    drawW3(); applyFolkLocks();
     if (!campEl.hidden) drawCamp();
     refreshActions();
     if (!chooserEl.hidden && !document.getElementById('wgrid').hidden) buildChooser();
@@ -3602,12 +3614,14 @@
     else if (!W3.addr) w3El.innerHTML = `<button class="btn w3btn" type="button" data-a="connect">Connect MetaMask</button>`;
     else if (!W3.chainOk) w3El.innerHTML = `<button class="btn w3btn warn" type="button" data-a="switch">Switch to Robinhood Chain</button>`;
     else w3El.innerHTML = `<span class="w3chip" title="${W3.addr}">${W3.tier ? `<span class="mdl">${MEDAL(W3.tier)}</span>` : ''}<b>${fmtFolk(W3.bal)}</b><small>FOLK</small><em>${short}</em></span><a class="btn w3buy" href="${FOLK.buy}" target="_blank" rel="noopener">Buy FOLK</a><button class="w3x" type="button" data-a="off" aria-label="Disconnect wallet" title="Disconnect">&times;</button>`;
+    drawW3Main();
     // kamp: seviye çubuğu
     const nxt = TIERS[W3.tier + 1];
     tierEl.innerHTML = `<div class="tb-row">${TIERS.slice(1).map((x, i) => `<span class="tb${W3.tier >= i + 1 ? ' on' : ''}${W3.tier === i + 1 ? ' now' : ''}" title="${x.name}: hold ${fmtFolk(x.min)} FOLK, +${Math.round(x.bonus*100)}% gold"><span class="mdl">${MEDAL(i + 1)}</span><b>${fmtFolk(x.min)}</b><small>+${Math.round(x.bonus*100)}%</small></span>`).join('<i></i>')}</div>`
       + `<div class="tb-act">${!W3.addr || !W3.chainOk ? `<button class="pill" type="button" data-a="${!W3.addr ? 'connect' : 'switch'}">${!W3.addr ? 'Connect MetaMask' : 'Switch network'}</button>`
         : `<span class="tb-bal"><b>${fmtFolk(W3.bal)}</b> FOLK</span>${nxt ? `<a class="pill" href="${FOLK.buy}" target="_blank" rel="noopener">Buy FOLK</a>` : ''}`}</div>`;
   }
+  function drawW3Main(){ const m = document.getElementById('w3main'); if (m) m.innerHTML = w3El.innerHTML; }
   function w3Click(e){
     const a = e.target.closest('[data-a]'); if (!a) return;
     const act = a.dataset.a;
@@ -3616,6 +3630,7 @@
     else if (act === 'off') w3Disconnect();
   }
   w3El.addEventListener('click', w3Click); tierEl.addEventListener('click', w3Click);
+  { const m = document.getElementById('w3main'); if (m) m.addEventListener('click', w3Click); }
   // MetaMask olaylarını bir kez bağla ve daha önce izin verildiyse sessizce yeniden bağlan
   function w3Hook(){
     const p = eth(); if (!p || mmHooked === p) return;
@@ -3628,8 +3643,50 @@
     if (!off) p.request({method:'eth_accounts'}).then(acc => { if (acc && acc[0]){ W3.addr = acc[0]; w3Refresh(); } }).catch(() => {});
     if (typeof drawW3 === 'function' && w3El) drawW3();
   }
+  // --- ana sayfa: 9 karakter FOLK tutarak zincirden kurtulur
+  const FOLK_CHAR = {Armor:0, Pip:0, Honey:1e6, Goggles:1e7, Captain:2e7, Lavender:3e7, Tux:4e7, 'Mr. Hat':5e7, Mist:1e8};
+  const CH_C = '#5a6068', CH_L = '#aab3bd', CH_D = '#6b737b';
+  const CHAIN_PARTS = [
+    ['armL',1,36.2,6,2.6,CH_C,''], ['armL',1.6,36.6,4.8,0.7,CH_L,'nol'],
+    ...[0,1,2,3,4].map(i => i % 2 ? ['armL',-0.3,39.2 + i*2,1.2,2.2,CH_D,''] : ['armL',-0.8,39.6 + i*2,2.2,1.4,CH_L,'']),
+    ['armR',23,36.2,6,2.6,CH_C,''], ['armR',23.6,36.6,4.8,0.7,CH_L,'nol'],
+    ...[0,1,2,3,4].map(i => i % 2 ? ['armR',29.1,39.2 + i*2,1.2,2.2,CH_D,''] : ['armR',28.6,39.6 + i*2,2.2,1.4,CH_L,'']),
+    ['legL',8,44.8,6,2.4,CH_C,''], ['legL',8.6,45.2,4.8,0.6,CH_L,'nol'],
+    ['legR',16,44.8,6,2.4,CH_C,''], ['legR',16.6,45.2,4.8,0.6,CH_L,'nol'],
+    ['legL',13.9,45.4,1.4,1,CH_L,''], ['legL',15.1,45.2,0.9,1.4,CH_D,''],
+    ['legL',14.6,46.6,1.6,1.1,'#8a8f96',''], ['legL',13.6,47.4,3.6,3,'#e9c64a',''], ['legL',15.1,48.3,0.7,1.1,'#231c1f','nol']
+  ];
+  function applyFolkLocks(){
+    bots.forEach(b => {
+      if (!b.el || !row.contains(b.el)) return;
+      const need = FOLK_CHAR[b.name] || 0, lk = need > W3.bal;
+      b.folkLocked = lk; b.folkNeed = need;
+      b.el.classList.toggle('chained', lk);
+      if (lk && !b.chains){
+        b.chains = CHAIN_PARTS.map(([g, x, y, w, h, c, cls]) => {
+          const d = document.createElement('div'); d.className = 'px chainpx ' + cls;
+          d.style.cssText = `left:calc(${x} * var(--u));top:calc(${y} * var(--u));width:calc(${w} * var(--u));height:calc(${h} * var(--u));--c:${c}`;
+          b.g[g].appendChild(d); return d;
+        });
+        const tg = document.createElement('span'); tg.className = 'flock'; tg.setAttribute('aria-hidden', 'true');
+        tg.innerHTML = `${LOCK}<em>${b.name}</em><b>${fmtFolk(need)}</b>`; b.el.appendChild(tg); b.flock = tg;
+      } else if (!lk && b.chains){
+        b.chains.forEach(d => d.remove()); b.chains = null; b.flock.remove(); b.flock = null;
+      }
+      b.el.setAttribute('aria-label', lk ? `${b.name} is chained. Hold ${fmtFolk(need)} FOLK to free them` : 'Click ' + b.name);
+    });
+  }
+  // zincirli karaktere tıklayınca: çırpınır ve ne gerektiğini söyler
+  function struggle(b){
+    if (b.busy) return;
+    b.busy = true; play('bonk');
+    speak(b, pick([`Hold ${fmtFolk(b.folkNeed)} FOLK to free me!`, 'These chains...', `${fmtFolk(b.folkNeed)} FOLK and I\'m free!`]), 1600);
+    b.rig.animate([{transform:'translateX(0)'},{transform:'translateX(-4px) rotate(-3deg)'},{transform:'translateX(4px) rotate(3deg)'},{transform:'translateX(-3px)'},{transform:'translateX(0)'}],{duration:420})
+      .finished.then(() => { b.busy = false; });
+    if (!W3.addr) setTimeout(() => { const m = document.getElementById('w3main'); if (m) m.animate([{scale:1},{scale:1.12},{scale:1}],{duration:400}); }, 300);
+  }
   function w3Init(){
-    w3Ready = true; drawW3(); w3Hook();
+    w3Ready = true; drawW3(); w3Hook(); applyFolkLocks();
     setTimeout(() => { w3Hook(); drawW3(); }, 400); // MetaMask duyurusu geç gelebilir
     setInterval(() => { if (W3.addr && !document.hidden) w3Refresh(); }, 60000);
   }
