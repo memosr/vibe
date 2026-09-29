@@ -2671,9 +2671,9 @@
   };
   const TIERS = [
     {name:'None',   min:0,        bonus:0},
-    {name:'Bronze', min:1000000,  bonus:.10, c:'#d08a4a', hi:'#f3c08a', dk:'#8a4a1a'},
-    {name:'Silver', min:5000000,  bonus:.25, c:'#c9d3dc', hi:'#ffffff', dk:'#7a8894'},
-    {name:'Gold',   min:20000000, bonus:.50, c:'#ffc53d', hi:'#fff3b0', dk:'#c7901f'}
+    {name:'Bronze', min:100000,   bonus:.10, c:'#d08a4a', hi:'#f3c08a', dk:'#8a4a1a'},
+    {name:'Silver', min:500000,   bonus:.25, c:'#c9d3dc', hi:'#ffffff', dk:'#7a8894'},
+    {name:'Gold',   min:1000000,  bonus:.50, c:'#ffc53d', hi:'#fff3b0', dk:'#c7901f'}
   ];
   const WTIER = {sword:1, spear:2, axe:3};                 // silahı kullanmak için
   const MOVE_TIER = {strike:1, power:2, special:3};         // skili kullanmak için
@@ -3644,7 +3644,7 @@
     if (typeof drawW3 === 'function' && w3El) drawW3();
   }
   // --- ana sayfa: 9 karakter FOLK tutarak zincirden kurtulur
-  const FOLK_CHAR = {Armor:0, Pip:0, Honey:1e6, Goggles:1e7, Captain:2e7, Lavender:3e7, Tux:4e7, 'Mr. Hat':5e7, Mist:1e8};
+  const FOLK_CHAR = {Armor:0, Pip:0, Honey:2e3, Goggles:1e4, Captain:2.5e4, Lavender:5e4, Tux:1e5, 'Mr. Hat':2.5e5, Mist:5e5};
   const CH_C = '#5a6068', CH_L = '#aab3bd', CH_D = '#6b737b';
   const CHAIN_PARTS = [
     ['armL',1,36.2,6,2.6,CH_C,''], ['armL',1.6,36.6,4.8,0.7,CH_L,'nol'],
