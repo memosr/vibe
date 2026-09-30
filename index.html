@@ -541,6 +541,40 @@
   .flock b{font-weight:800} .flock small{font-family:"Pixelify Sans", monospace;font-size:10px;color:#c9b6ff}
   .w3main{display:inline-flex}
   @media (max-width:640px){ .flock{font-size:10px;padding:1px 5px 1px 3px} .flock svg{width:11px;height:11px} }
+  /* ---- zindan çerçevesi, kolonlar, ateşli ulti ---- */
+  .tape{display:none !important}
+  .ring{height:calc(var(--u)*132) !important;border:0 !important;box-shadow:6px 6px 0 var(--line),0 0 0 3px #1c1a1e}
+  .pillar{top:0 !important;bottom:0 !important;width:calc(var(--u)*9) !important;z-index:6 !important;
+    background:linear-gradient(90deg,#6b5440,#b89a78 22%,#dcc4a2 45%,#c9ae8a 60%,#8e7358 85%,#5a4634) !important;
+    box-shadow:inset 0 0 0 2px rgba(40,30,22,.55),0 0 calc(var(--u)*3) rgba(0,0,0,.45) !important}
+  .pillar.l{left:0 !important} .pillar.r{right:0 !important}
+  .pillar::before,.pillar::after{left:calc(var(--u)*-1) !important;right:calc(var(--u)*-1) !important;height:calc(var(--u)*5) !important;
+    background:linear-gradient(180deg,#e2cca8,#a3866a 60%,#6b5440) !important;border:3px solid #3a2c20 !important}
+  .pillar::before{top:calc(var(--u)*8) !important} .pillar::after{bottom:calc(var(--u)*4) !important}
+  .pillar i{position:absolute;inset:calc(var(--u)*14) calc(var(--u)*2.2) calc(var(--u)*10);background:repeating-linear-gradient(90deg,rgba(60,44,30,.35) 0 2px,transparent 2px calc(var(--u)*1.6))}
+  .irontop{position:absolute;left:0;right:0;top:0;height:calc(var(--u)*9);z-index:5;pointer-events:none}
+  .irontop::before{content:"";position:absolute;left:0;right:0;top:0;height:calc(var(--u)*2.8);
+    background:radial-gradient(circle at 50% 50%,#9aa3ad 0 22%,#3a3f46 26%,transparent 30%) 0 0/calc(var(--u)*6) 100% repeat-x,linear-gradient(180deg,#5a6068,#2a2d33 55%,#1a1c20);border-bottom:2px solid #111}
+  .irontop::after{content:"";position:absolute;left:0;right:0;top:calc(var(--u)*2.8);height:calc(var(--u)*6);
+    background:repeating-linear-gradient(90deg,transparent 0 calc(var(--u)*2),#2a2d33 calc(var(--u)*2) calc(var(--u)*2.4),#6b737b calc(var(--u)*2.4) calc(var(--u)*3),#2a2d33 calc(var(--u)*3) calc(var(--u)*3.4),transparent calc(var(--u)*3.4) calc(var(--u)*6));
+    -webkit-mask:linear-gradient(180deg,#000 70%,transparent);mask:linear-gradient(180deg,#000 70%,transparent)}
+  .ironbot{position:absolute;left:0;right:0;bottom:0;height:calc(var(--u)*3);z-index:5;pointer-events:none;
+    background:radial-gradient(circle at 50% 50%,#9aa3ad 0 22%,#3a3f46 26%,transparent 30%) 0 0/calc(var(--u)*6) 100% repeat-x,linear-gradient(180deg,#5a6068,#2a2d33 55%,#1a1c20);border-top:2px solid #111}
+  .cornice{top:calc(var(--u)*2.8) !important}
+  .potions{left:calc(var(--u)*11) !important} .dpad{left:calc(var(--u)*11) !important}
+  .hud{padding:0 calc(var(--u)*10) !important}
+  .act.sp .med::before,.act.sp .med::after{content:"";position:absolute;border-radius:50%;z-index:-1;pointer-events:none}
+  .act.sp .med::before{inset:-14px;background:repeating-conic-gradient(from 0deg,#ff3a1a 0 9deg,#ff8a1a 9deg 15deg,#ffd23f 15deg 19deg,transparent 19deg 30deg);
+    -webkit-mask:radial-gradient(circle,transparent 50%,#000 53%,#000 62%,transparent 71%);mask:radial-gradient(circle,transparent 50%,#000 53%,#000 62%,transparent 71%);
+    filter:drop-shadow(0 0 6px #ff6a1a);animation:ultfire .45s steps(2) infinite}
+  .act.sp .med::after{inset:-20px;background:repeating-conic-gradient(from 15deg,#ff5a1a 0 6deg,#ffb13a 6deg 10deg,transparent 10deg 30deg);
+    -webkit-mask:radial-gradient(circle,transparent 55%,#000 58%,#000 63%,transparent 71%);mask:radial-gradient(circle,transparent 55%,#000 58%,#000 63%,transparent 71%);
+    opacity:.75;animation:ultfire .6s steps(2) infinite reverse}
+  @keyframes ultfire{0%{rotate:0deg;scale:1}50%{rotate:8deg;scale:1.07}100%{rotate:-3deg;scale:.97}}
+  .act.sp.locked .med::before,.act.sp.locked .med::after{opacity:.4;filter:grayscale(.4)}
+  .act.sp:not(:disabled) .med::before{filter:drop-shadow(0 0 12px #ff6a1a) brightness(1.2)}
+  @media (max-width:640px){ .act.sp .med::before{inset:-9px} .act.sp .med::after{inset:-13px} }
+  @media (prefers-reduced-motion: reduce){ .act.sp .med::before,.act.sp .med::after{animation:none} }
   .orb .pk{position:absolute;left:-6px;bottom:-4px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#231c1f;border:2px solid var(--pc)}
   .orb .pk svg{width:15px;height:15px;rotate:0deg;scale:1;animation:none;filter:none}
   .orb .pk.off{border-color:#6b6064}
@@ -734,8 +768,9 @@
       <div class="cornice" aria-hidden="true"></div>
       <div class="sand" aria-hidden="true"></div>
       <div class="gate" aria-hidden="true"><i></i></div>
-      <div class="pillar l" aria-hidden="true"></div>
-      <div class="pillar r" aria-hidden="true"></div>
+      <div class="pillar l" aria-hidden="true"><i></i></div>
+      <div class="pillar r" aria-hidden="true"><i></i></div>
+      <div class="irontop" aria-hidden="true"></div><div class="ironbot" aria-hidden="true"></div>
       <div class="deco crest" aria-hidden="true" style="left:50%;translate:-50% 0;bottom:calc(var(--u)*57);width:calc(var(--u)*22);height:calc(var(--u)*20)"><svg viewBox="0 0 40 36"><g transform="rotate(38 20 17)"><rect x="18.6" y="-1" width="2.8" height="27" fill="#231c1f"/><rect x="19.2" y="0" width="1.6" height="25" fill="#e8edf2"/><rect x="14" y="24" width="12" height="2.6" fill="#231c1f"/><rect x="14.6" y="24.5" width="10.8" height="1.6" fill="#e9c64a"/><rect x="18.8" y="26.6" width="2.4" height="6" fill="#6b4a2c"/><rect x="18.3" y="32.4" width="3.4" height="2.4" fill="#e9c64a"/></g><g transform="rotate(-38 20 17)"><rect x="18.6" y="-1" width="2.8" height="27" fill="#231c1f"/><rect x="19.2" y="0" width="1.6" height="25" fill="#e8edf2"/><rect x="14" y="24" width="12" height="2.6" fill="#231c1f"/><rect x="14.6" y="24.5" width="10.8" height="1.6" fill="#e9c64a"/><rect x="18.8" y="26.6" width="2.4" height="6" fill="#6b4a2c"/><rect x="18.3" y="32.4" width="3.4" height="2.4" fill="#e9c64a"/></g><polygon points="9,7 31,7 31,21 20,31 9,21" fill="#231c1f"/><polygon points="11,9 29,9 29,20 20,28.2 11,20" fill="#b8402f"/><polygon points="11,9 20,9 20,28.2 11,20" fill="#c9533d"/><polyline points="15,12 20,23 25,12" fill="none" stroke="#e9c64a" stroke-width="2.6"/></svg></div>
       <div class="deco" aria-hidden="true" style="left:11%;bottom:calc(var(--u)*21);width:calc(var(--u)*17);height:calc(var(--u)*29)"><svg viewBox="0 0 26 44"><rect x="6" y="4" width="1.6" height="40" fill="#231c1f"/><rect x="6.3" y="4.5" width="1" height="39" fill="#9a6a45"/><polygon points="4.8,5.5 6.8,0 8.8,5.5" fill="#231c1f"/><polygon points="5.6,5 6.8,1.5 8,5" fill="#dfe4ea"/><rect x="12.2" y="4" width="1.6" height="40" fill="#231c1f"/><rect x="12.5" y="4.5" width="1" height="39" fill="#9a6a45"/><polygon points="11.0,5.5 13.0,0 15.0,5.5" fill="#231c1f"/><polygon points="11.799999999999999,5 13.0,1.5 14.2,5" fill="#dfe4ea"/><rect x="18.4" y="4" width="1.6" height="40" fill="#231c1f"/><rect x="18.7" y="4.5" width="1" height="39" fill="#9a6a45"/><polygon points="17.2,5.5 19.2,0 21.2,5.5" fill="#231c1f"/><polygon points="18.0,5 19.2,1.5 20.4,5" fill="#dfe4ea"/><rect x="1" y="9" width="24" height="3" fill="#231c1f"/><rect x="1.6" y="9.6" width="22.8" height="1.8" fill="#8a5a3a"/><rect x="1" y="34" width="24" height="3" fill="#231c1f"/><rect x="1.6" y="34.6" width="22.8" height="1.8" fill="#8a5a3a"/><rect x="0" y="6" width="2.6" height="38" fill="#231c1f"/><rect x=".5" y="6.5" width="1.6" height="37" fill="#6f4a31"/><rect x="23.4" y="6" width="2.6" height="38" fill="#231c1f"/><rect x="23.9" y="6.5" width="1.6" height="37" fill="#6f4a31"/></svg></div>
       <div class="deco" aria-hidden="true" style="right:11%;bottom:calc(var(--u)*21);width:calc(var(--u)*14);height:calc(var(--u)*24)"><svg viewBox="0 0 24 40"><path d="M6 2 Q17 20 6 38" fill="none" stroke="#231c1f" stroke-width="3.8"/><path d="M6 2 Q17 20 6 38" fill="none" stroke="#9a6a45" stroke-width="2"/><line x1="6" y1="2.5" x2="6" y2="37.5" stroke="#f3ece2" stroke-width=".8"/><rect x="16.6" y="5" width="1" height="11" fill="#9a6a45"/><rect x="19.2" y="3" width="1" height="13" fill="#9a6a45"/><rect x="16" y="5" width="2.2" height="3" fill="#e0643a"/><rect x="18.6" y="3" width="2.2" height="3" fill="#2fb58f"/><rect x="15" y="14" width="7" height="23" fill="#231c1f"/><rect x="16" y="15" width="5" height="21" fill="#8a4a2c"/><rect x="16" y="19" width="5" height="1.6" fill="#e9c64a"/><rect x="16" y="31" width="5" height="1.6" fill="#e9c64a"/></svg></div>
@@ -2726,7 +2761,7 @@
   const rnd = (a, b) => a + Math.floor(Math.random()*(b - a + 1));
   const wOf = f => WEAPONS[f.gear];
 
-  function colX(f, c){ const W = ring.clientWidth, w = bwOf(f), pad = W*.035; return pad + c*(W - 2*pad - w)/(COLS - 1); }
+  function colX(f, c){ const W = ring.clientWidth, w = bwOf(f), pad = W*.07; return pad + c*(W - 2*pad - w)/(COLS - 1); }
   const dist = () => Math.abs(G.p.col - G.e.col);
   function log(t){ logEl.textContent = t; }
   function drawHud(){
@@ -2803,8 +2838,7 @@
   window.addEventListener('resize', placePotions);
   function buildActions(){
     actionsEl.innerHTML = '';
-    Object.entries(MOVES).forEach(([k, m]) => {
-      if (m.kit || m.move) return; // iksirler ve hareket okları ringin içinde
+    ['quick','strike','power','special','taunt','rest'].forEach(k => { const m = MOVES[k]; // ulti, güç vuruşlarının yanında
       const b = document.createElement('button'); b.type = 'button'; b.className = 'act' + (m.atk ? ' atk' : '') + (m.special ? ' sp' : ''); b.dataset.k = k;
       const c = MED[k];
       b.innerHTML = `<span class="med" aria-hidden="true" style="--ring:${c.ring};--in1:${c.in1};--in2:${c.in2}">${m.icon}<span class="lockov">${LOCK}<em>${MOVE_PRICE[k] || ''} <span class="coin"></span></em></span></span><b>${m.label}</b><span class="pips" aria-hidden="true">${'<i></i>'.repeat(m.pips)}</span><kbd>${m.key}</kbd>`;
@@ -3383,7 +3417,7 @@
     Object.assign(p, {name:S.char, st:STYLE[S.char], ko:CHARS[S.char].ko, hp:playerMax(), max:playerMax(), sta:100, hype:spon('HOOD') ? 35 : 0, game:true, ai:null});
     G.mom = {};
     const e = makeRival(r);
-    { const W = ring.clientWidth, w = bwOf(p), pad = W*.035; COLS = Math.max(4, Math.min(8, Math.floor((W - 2*pad - w)/(w*.9)) + 1)); }
+    { const W = ring.clientWidth, w = bwOf(p), pad = W*.07; COLS = Math.max(4, Math.min(8, Math.floor((W - 2*pad - w)/(w*.9)) + 1)); }
     p.col = 0; e.col = COLS - 1;
     fighters = [p, e]; arenaBots = [p.b, e.b]; G.p = p; G.e = e;
     hud.p.querySelector('b').textContent = p.name; hud.p.querySelector('small').textContent = WEAPONS[p.gear].name;
