@@ -2695,9 +2695,9 @@
     dagger: {tag:'DEADLY',    color:'#ffd23f', icon:PICON.star,  crit:true},
     axe:    {tag:'LIFESTEAL', color:'#ff5c86', icon:PICON.heart, steal:.4}
   };
-  // silahlar sırayla açılır: hançer açık, yay 1 turnuva, sonra altınla
+  // silahlar sırayla açılır: hançer açık, sonra altınla (yay 100, kılıç 200, mızrak 300, balta 350)
   const WORDER = ['dagger', 'bow', 'sword', 'spear', 'axe'];
-  const WUNLOCK = {dagger:{}, bow:{wins:1}, sword:{price:500}, spear:{price:600}, axe:{price:1000}};
+  const WUNLOCK = {dagger:{}, bow:{price:100}, sword:{price:200}, spear:{price:300}, axe:{price:350}};
   const ownsW = k => S.owned.includes(k);
   const nextW = () => WORDER.find(k => !ownsW(k));
   const PLAYER = {hp:100};
@@ -2736,9 +2736,9 @@
   };
   const TIERS = [
     {name:'None',   min:0,        bonus:0},
-    {name:'Bronze', min:100000,   bonus:.10, c:'#d08a4a', hi:'#f3c08a', dk:'#8a4a1a'},
-    {name:'Silver', min:500000,   bonus:.25, c:'#c9d3dc', hi:'#ffffff', dk:'#7a8894'},
-    {name:'Gold',   min:1000000,  bonus:.50, c:'#ffc53d', hi:'#fff3b0', dk:'#c7901f'}
+    {name:'Bronze', min:10000,    bonus:.10, c:'#d08a4a', hi:'#f3c08a', dk:'#8a4a1a'},
+    {name:'Silver', min:50000,    bonus:.25, c:'#c9d3dc', hi:'#ffffff', dk:'#7a8894'},
+    {name:'Gold',   min:150000,  bonus:.50, c:'#ffc53d', hi:'#fff3b0', dk:'#c7901f'}
   ];
   const WTIER = {sword:1, spear:2, axe:3};                 // silahı kullanmak için
   const MOVE_TIER = {strike:1, power:2, special:3};         // skili kullanmak için
@@ -2767,7 +2767,6 @@
     const fresh = should.filter(n => !S.unlocked.includes(n));
     S.unlocked = should; // eski kurala göre fazladan açılanlar yeniden kilitlenir
     if (!S.unlocked.includes(S.char)) S.char = 'Tux';
-    if (S.wins >= 1 && !ownsW('bow')) S.owned.push('bow');
     save();
     return fresh;
   }
