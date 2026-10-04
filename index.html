@@ -802,6 +802,60 @@
   .ring.rg-school .pillar i{background:repeating-linear-gradient(180deg,rgba(60,36,20,.35) 0 2px,transparent 2px calc(var(--u)*3)) !important}
   .ring.rg-school .dock{background:linear-gradient(180deg,#6b4a2c,#3a2a1c) !important;border-top-color:#ffd23f !important}
   @media (prefers-reduced-motion: reduce){ .mdeco.lamp u{animation:none} }
+
+  /* ---- Aşama 8b: sinematik skill efektleri ---- */
+  .vx{position:absolute;pointer-events:none;z-index:7}
+  .vx svg{display:block;width:100%;height:100%;overflow:visible}
+  .vx.lbox{background:#07040a;box-shadow:0 0 0 1px #000}
+  .vx.cutin{display:flex;align-items:center;justify-content:center;gap:calc(var(--u)*4);rotate:-5deg;overflow:hidden;
+    background:linear-gradient(90deg,rgba(8,4,12,.92) 0,rgba(8,4,12,.6) 20%,color-mix(in srgb,var(--c) 70%,#000) 50%,rgba(8,4,12,.6) 80%,rgba(8,4,12,.92) 100%);
+    border-top:calc(var(--u)*.8) solid var(--c);border-bottom:calc(var(--u)*.8) solid var(--c);box-shadow:0 0 30px var(--c),inset 0 0 40px rgba(0,0,0,.6)}
+  .cutin .lines{position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.22) 0 2px,transparent 2px calc(var(--u)*9)),repeating-linear-gradient(90deg,transparent 0 calc(var(--u)*5),rgba(255,255,255,.08) calc(var(--u)*5) calc(var(--u)*5.4));animation:ciLines .25s linear infinite;mix-blend-mode:screen}
+  @keyframes ciLines{from{background-position:0 0}to{background-position:calc(var(--u)*-18) 0}}
+  .cutin .ci-ic{position:relative;width:calc(var(--u)*24);height:calc(var(--u)*24);filter:drop-shadow(0 0 10px var(--c)) drop-shadow(3px 3px 0 #000);animation:ciIc .5s ease-in-out infinite alternate}
+  .cutin .ci-ic svg{width:100%;height:100%}
+  @keyframes ciIc{from{scale:1;rotate:-6deg}to{scale:1.08;rotate:4deg}}
+  .cutin .ci-tx{position:relative;display:flex;flex-direction:column;line-height:1}
+  .cutin .ci-tx small{font-family:"Pixelify Sans", monospace;font-size:clamp(10px,calc(var(--u)*3),16px);letter-spacing:.3em;color:#fff;opacity:.85;text-transform:uppercase}
+  .cutin .ci-tx b{font-family:"Pixelify Sans", monospace;font-weight:700;font-size:clamp(22px,calc(var(--u)*10),58px);color:#fff;letter-spacing:.04em;
+    text-shadow:3px 3px 0 #000,-1px -1px 0 #000,0 0 18px var(--c),0 0 4px var(--c)}
+  .vx.vflash{mix-blend-mode:screen}
+  .vx.vign{background:radial-gradient(ellipse at 50% 55%,transparent 30%,var(--c) 100%)}
+  .vx.vring{border-radius:50%;border:var(--bw) solid var(--c);box-shadow:0 0 14px var(--c),inset 0 0 10px var(--c)}
+  .vx.vring.flat{border-radius:50%}
+  .vx.vorb{border-radius:50%;background:radial-gradient(circle,#fff 0 22%,var(--c) 45%,color-mix(in srgb,var(--c) 40%,transparent) 65%,transparent 72%);filter:drop-shadow(0 0 12px var(--c))}
+  .vx.vbit{background:var(--c);left:0;top:0;margin:0}
+  .vx.vbit{transform-origin:center}
+  .vx.vbit.glow{box-shadow:0 0 6px var(--c),0 0 2px #fff}
+  .vx.vstreak{background:linear-gradient(90deg,transparent,var(--c) 15%,#fff 50%,var(--c) 85%,transparent);border-radius:99px;box-shadow:0 0 10px var(--c);transform-origin:50% 50%}
+  .vx.vsvg{z-index:8}
+  .vx.vsvg svg{filter:drop-shadow(0 0 6px var(--c,#fff))}
+  .vdraw{animation:vdraw .45s ease-out forwards}
+  @keyframes vdraw{to{stroke-dashoffset:0}}
+  .vghost{z-index:2;filter:brightness(0) invert(1) drop-shadow(0 0 3px var(--c)) drop-shadow(0 0 10px var(--c));opacity:.6}
+  .vx.vstage{background:radial-gradient(ellipse at 50% 62%,color-mix(in srgb,var(--c) 30%,rgba(8,4,14,.45)) 0,rgba(8,4,14,.72) 50%,rgba(4,2,8,.9) 100%)}
+  .vx.vstage i{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px)}
+  .vx.vfocus{z-index:9;mix-blend-mode:screen}
+  .vghost *{animation:none !important}
+  .vx.vsmoke{border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--c) 85%,transparent),transparent 70%)}
+  .vx.vrune{z-index:2}
+  .vx.vrune svg{filter:drop-shadow(0 0 6px var(--c));animation:vspin 2.4s linear infinite}
+  @keyframes vspin{to{rotate:360deg}}
+  .vx.vflame{z-index:7;transform-origin:50% 100%;background:radial-gradient(ellipse at 50% 85%,#fff3b0 0 18%,#ffd23f 32%,#ff7a1a 55%,rgba(255,58,26,0) 72%);filter:blur(.3px) drop-shadow(0 0 6px #ff7a1a)}
+  .vx.vnight{background:radial-gradient(ellipse at 50% 30%,rgba(30,10,60,.45),rgba(6,2,16,.82))}
+  .vx.vmoon svg{filter:drop-shadow(0 0 30px #fff3d6) drop-shadow(0 0 8px #ffd0d6)}
+  .vx.vcres svg{filter:drop-shadow(0 0 12px #ff3048) drop-shadow(0 0 3px #fff)}
+  .vx.vdragon svg{filter:drop-shadow(0 0 10px #7dff5a) drop-shadow(0 0 3px #fff)}
+  .vx.vseg{border-radius:30%;background:radial-gradient(circle at 40% 35%,#d8ffc8,var(--c) 55%,#0b3a14);box-shadow:0 0 10px var(--c)}
+  .vx.vspike{transform-origin:50% 100%;background:linear-gradient(180deg,#c8884a,#5a3a22);clip-path:polygon(50% 0,100% 100%,0 100%);filter:drop-shadow(0 0 4px #ff5c86)}
+  .vx.vgrid{background:repeating-linear-gradient(0deg,color-mix(in srgb,var(--c) 30%,transparent) 0 1px,transparent 1px calc(var(--u)*6)),repeating-linear-gradient(90deg,color-mix(in srgb,var(--c) 30%,transparent) 0 1px,transparent 1px calc(var(--u)*6)),radial-gradient(ellipse at 50% 55%,rgba(0,30,50,.2),rgba(0,10,20,.7))}
+  .ring.vmono > :is(.wall,.sand,.deco,.mdeco,.gate,.torch,.banners,.cornice,.pillar){filter:grayscale(1) brightness(.55) contrast(1.2)}
+  .vx.vsat svg{filter:drop-shadow(0 0 8px #ff2fd0)}
+  .vx.vret svg{filter:drop-shadow(0 0 6px #ff2fd0)}
+  .vx.vbeam{transform-origin:50% 50%;background:linear-gradient(90deg,transparent,var(--c) 20%,#fff 42%,#fff 58%,var(--c) 80%,transparent);box-shadow:0 0 30px var(--c)}
+  .vx.vbeam.glow{background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--c) 55%,transparent) 30%,color-mix(in srgb,var(--c) 75%,transparent) 50%,color-mix(in srgb,var(--c) 55%,transparent) 70%,transparent);filter:blur(4px)}
+  .vx.vscorch{border-radius:50%;background:radial-gradient(ellipse,rgba(20,0,20,.75),rgba(255,47,208,.35) 55%,transparent 72%)}
+  @media (prefers-reduced-motion: reduce){ .cutin .lines,.cutin .ci-ic,.vx.vrune svg{animation:none} }
   /* ---- 5 harita çubuğu ---- */
   .maps{flex-basis:100%;display:flex;align-items:center;gap:0;margin-bottom:2px}
   .maps .mlink{flex:0 0 18px;height:4px;background:#8a6a5a}
@@ -3709,69 +3763,282 @@
     await d.animate([{transform:`translate(${x - w/2}px,${y0}px) rotate(${rot}deg)`},{transform:`translate(${x - w/2}px,${y1 - h/2}px) rotate(${rot}deg)`}],{duration:dur, easing:'ease-in'}).finished;
     d.remove();
   }
+  // ===== Aşama 8b: SİNEMATİK SKİLL EFEKTLERİ (VFX kiti) =====
+  // Hepsi ring koordinatında çalışır; her öğe animasyon bitince kendini siler.
+  const VX = {
+    k: () => fighters[0] ? u(fighters[0].b) : 4,
+    el(cls, x, y, w, h, html = '', z){ const d = document.createElement('div'); d.className = 'vx ' + cls;
+      d.style.cssText = `left:${x - w/2}px;top:${y - h/2}px;width:${w}px;height:${h}px` + (z ? `;z-index:${z}` : ''); d.innerHTML = html; ring.appendChild(d); return d; },
+    run(d, kf, opt){ return d.animate(kf, opt).finished.then(() => d.remove()); },
+    feet: o => ringPt(o.b.el, .5, .97),
+    mid: o => ringPt(o.b.el, .5, .55),
+    // sinematik giriş: siyah bantlar + eğik şerit + dev silah ikonu + skill adı
+    async cutIn(name, color, icon, sub){
+      const W = ring.clientWidth, H = ring.clientHeight;
+      const top = VX.el('lbox', W/2, H*.06, W, H*.12, '', 9), bot = VX.el('lbox', W/2, H*.94, W, H*.12, '', 9);
+      [top, bot].forEach((b, i) => b.animate([{translate:`0 ${i ? '' : '-'}100%`},{translate:'0 0'}],{duration:220, fill:'forwards', easing:'ease-out'}));
+      const band = VX.el('cutin', W/2, H*.4, W*1.2, H*.3, `<i class="lines"></i><span class="ci-ic">${icon}</span><span class="ci-tx"><small>${sub}</small><b>${name}</b></span>`, 10);
+      band.style.setProperty('--c', color);
+      play('charge');
+      const a = band.animate([{translate:'-110% 0', opacity:1},{translate:'2% 0', offset:.18},{translate:'0 0', offset:.8},{translate:'110% 0', opacity:1}],{duration:1150, easing:'cubic-bezier(.2,.8,.3,1)'});
+      VX.flash(color, 160, .35);
+      await a.finished; band.remove();
+      return () => [top, bot].forEach((b, i) => VX.run(b, [{translate:'0 0'},{translate:`0 ${i ? '' : '-'}100%`}], {duration:260}));
+    },
+    flash(color = '#fff', dur = 180, op = .85){ const d = VX.el('vflash', ring.clientWidth/2, ring.clientHeight/2, ring.clientWidth, ring.clientHeight, '', 11); d.style.background = color;
+      return VX.run(d, [{opacity:op},{opacity:0}], {duration:dur, easing:'ease-out'}); },
+    vignette(color, dur = 1600){ const d = VX.el('vign', ring.clientWidth/2, ring.clientHeight/2, ring.clientWidth, ring.clientHeight, '', 5); d.style.setProperty('--c', color);
+      return VX.run(d, [{opacity:0},{opacity:1, offset:.15},{opacity:1, offset:.8},{opacity:0}], {duration:dur}); },
+    pulse(pt, color, size, dur = 600, width = 1, delay = 0){ const k = VX.k(), s = size*k, d = VX.el('vring', pt.x, pt.y, s, s); d.style.setProperty('--c', color); d.style.setProperty('--bw', (width*k) + 'px');
+      return VX.run(d, [{scale:.1, opacity:1},{scale:1, opacity:0}], {duration:dur, delay, easing:'cubic-bezier(.1,.7,.3,1)', fill:'backwards'}); },
+    groundRing(pt, color, size, dur = 700){ const k = VX.k(), s = size*k, d = VX.el('vring flat', pt.x, pt.y, s, s*.32); d.style.setProperty('--c', color); d.style.setProperty('--bw', (1.2*k) + 'px');
+      return VX.run(d, [{scale:.1, opacity:1},{scale:1, opacity:0}], {duration:dur, easing:'ease-out'}); },
+    orb(pt, color, size, kf, opt){ const k = VX.k(), s = size*k, d = VX.el('vorb', pt.x, pt.y, s, s); d.style.setProperty('--c', color); return VX.run(d, kf, opt); },
+    // yerçekimli parçacıklar (taş, kıvılcım, kor)
+    debris(pt, colors, n, {spd = 22, up = 1, g = 40, dur = 900, size = 1.6, glow = false} = {}){
+      const k = VX.k();
+      for (let i = 0; i < n; i++){
+        const s = size*k*(.5 + Math.random()), d = VX.el('vbit' + (glow ? ' glow' : ''), pt.x, pt.y, s, s); d.style.setProperty('--c', colors[i % colors.length]);
+        const a = -Math.PI/2 + (Math.random() - .5)*Math.PI*(up ? 1.1 : 2), v = spd*k*(.4 + Math.random()*.8), vx = Math.cos(a)*v, vy = Math.sin(a)*v;
+        const kf = []; for (let t = 0; t <= 1.001; t += .2) kf.push({transform:`translate(${vx*t}px,${vy*t + g*k*t*t}px) rotate(${t*540*(Math.random() - .5)}deg)`, opacity:t > .7 ? (1 - t)/.3 : 1});
+        VX.run(d, kf, {duration:dur*(.7 + Math.random()*.5), easing:'linear'});
+      }
+    },
+    // içe çekilen enerji
+    gather(pt, color, n = 14, r = 18, dur = 500){ const k = VX.k();
+      for (let i = 0; i < n; i++){ const a = Math.random()*Math.PI*2, R = r*k*(.6 + Math.random()*.6), s = k*(.6 + Math.random()), d = VX.el('vbit glow', pt.x + Math.cos(a)*R, pt.y + Math.sin(a)*R, s, s*3);
+        d.style.setProperty('--c', color); d.style.rotate = (a*180/Math.PI + 90) + 'deg';
+        VX.run(d, [{translate:'0 0', opacity:0},{opacity:1, offset:.3},{translate:`${-Math.cos(a)*R}px ${-Math.sin(a)*R}px`, opacity:.2}], {duration:dur, delay:i*18, easing:'ease-in'}); } },
+    // parlak çizgi (ışın, kesik, iz)
+    streak(a, b, color, width = 1.2, dur = 300, delay = 0){ const k = VX.k(), len = Math.hypot(b.x - a.x, b.y - a.y), ang = Math.atan2(b.y - a.y, b.x - a.x)*180/Math.PI;
+      const d = VX.el('vstreak', (a.x + b.x)/2, (a.y + b.y)/2, len, width*k); d.style.setProperty('--c', color); d.style.rotate = ang + 'deg';
+      return VX.run(d, [{scale:'0 1', opacity:1},{scale:'1 1', opacity:1, offset:.35},{scale:'1 .1', opacity:0}], {duration:dur, delay, fill:'backwards'}); },
+    // şimşek: zikzak SVG
+    bolt(a, b, color, segs = 7, jit = 6, dur = 260, w = .9){ const k = VX.k(), pts = [];
+      for (let i = 0; i <= segs; i++){ const t = i/segs, nx = -(b.y - a.y), ny = b.x - a.x, nl = Math.hypot(nx, ny) || 1, j = (i && i < segs) ? (Math.random() - .5)*jit*k : 0;
+        pts.push(`${a.x + (b.x - a.x)*t + nx/nl*j},${a.y + (b.y - a.y)*t + ny/nl*j}`); }
+      const W = ring.clientWidth, H = ring.clientHeight, d = VX.el('vsvg', W/2, H/2, W, H, `<svg viewBox="0 0 ${W} ${H}"><polyline points="${pts.join(' ')}" fill="none" stroke="${color}" stroke-width="${w*k*2.2}" opacity=".35" stroke-linejoin="bevel"/><polyline points="${pts.join(' ')}" fill="none" stroke="#fff" stroke-width="${w*k}" stroke-linejoin="bevel"/></svg>`);
+      d.style.setProperty('--c', color);
+      return VX.run(d, [{opacity:1},{opacity:.3, offset:.3},{opacity:1, offset:.5},{opacity:0}], {duration:dur}); },
+    // yer çatlağı
+    cracks(pt, color, n = 7, len = 30, dur = 1200){ const k = VX.k(), W = ring.clientWidth, H = ring.clientHeight; let p = '';
+      for (let i = 0; i < n; i++){ let x = pt.x, y = pt.y, a = (i/n)*Math.PI + (Math.random() - .5)*.4; const sign = Math.random() < .5 ? -1 : 1; p += `M${x} ${y}`;
+        for (let s = 0; s < 5; s++){ a += (Math.random() - .5)*.8; x += Math.cos(a)*len*k/5*sign; y += Math.abs(Math.sin(a))*len*k/5*.18; p += ` L${x} ${y}`; } }
+      const d = VX.el('vsvg', W/2, H/2, W, H, `<svg viewBox="0 0 ${W} ${H}"><path d="${p}" fill="none" stroke="#1a0f0a" stroke-width="${k*1.6}" stroke-linecap="square"/><path d="${p}" fill="none" stroke="${color}" stroke-width="${k*.6}" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" class="vdraw"/></svg>`, 2);
+      return VX.run(d, [{opacity:1},{opacity:1, offset:.75},{opacity:0}], {duration:dur}); },
+    // hayalet kopya (afterimage)
+    ghost(f, x, color, dur = 450, delay = 0){ const c = f.wrap.cloneNode(true); c.classList.add('vghost'); c.style.setProperty('--c', color); c.removeAttribute('id');
+      c.querySelectorAll('[id]').forEach(e => e.removeAttribute('id')); c.style.transform = `translateX(${x}px)`; c.style.pointerEvents = 'none'; c.style.filter = `brightness(0) invert(1) drop-shadow(0 0 3px ${color}) drop-shadow(0 0 10px ${color})`; ring.insertBefore(c, f.wrap);
+      return VX.run(c, [{opacity:0},{opacity:.75, offset:.15},{opacity:0}], {duration:dur, delay, fill:'backwards'}); },
+    smoke(pt, color, n = 6, size = 12, dur = 900){ const k = VX.k();
+      for (let i = 0; i < n; i++){ const s = size*k*(.6 + Math.random()*.6), d = VX.el('vsmoke', pt.x + (Math.random() - .5)*size*k, pt.y + (Math.random() - .5)*size*k*.5, s, s); d.style.setProperty('--c', color);
+        VX.run(d, [{scale:.3, opacity:.8},{scale:1.4, opacity:0, translate:`${(Math.random() - .5)*k*10}px ${-k*6}px`}], {duration:dur, delay:i*40, easing:'ease-out', fill:'backwards'}); } },
+    svg(cls, x, y, w, h, inner, vb, z){ return VX.el(cls, x, y, w, h, `<svg viewBox="${vb}" shape-rendering="crispEdges">${inner}</svg>`, z); },
+    shake(p, n = 4){ for (let i = 0; i < n; i++) setTimeout(() => shakeRing(p*(1 - i/n)), i*90); },
+    // skill sahnesi: arka plan kararır, ortası skill renginde parlar (dövüşçüler üstte kalır)
+    stage(color){ const W = ring.clientWidth, H = ring.clientHeight, d = VX.el('vstage', W/2, H/2, W, H, '<i></i>', 1); d.style.setProperty('--c', color);
+      d.animate([{opacity:0},{opacity:1}],{duration:260, fill:'forwards'}); return () => VX.run(d, [{opacity:1},{opacity:0}], {duration:420}); },
+    // ışınlanır gibi hızlı atılma: arkada parlayan hayaletler bırakır
+    async dash(f, o, reach, color, dur = 170){ const x0 = f.x, tx = clampX(f, o.x - f.face*bwOf(f)*reach), a = VX.mid(f);
+      for (let i = 0; i < 4; i++) VX.ghost(f, x0 + (tx - x0)*i/4, color, 420, i*35);
+      play('whoosh'); await moveTo(f, tx, dur, 'cubic-bezier(.6,0,.2,1)', 'none'); VX.streak(a, VX.mid(f), color, 3, 300); VX.smoke(VX.feet(f), '#ffffff', 4, 8, 500); },
+    // anime "impact frame": bir anlık negatif kare
+    impact(ms = 90){ ring.animate([{filter:'invert(1) contrast(1.8) saturate(0)'},{filter:'invert(1) contrast(1.8) saturate(0)', offset:.6},{filter:'none'}],{duration:ms}); },
+    // odak çizgileri: hedefe doğru keskin ışınlar
+    focus(pt, color = '#fff', dur = 420){ const W = ring.clientWidth, H = ring.clientHeight, R = Math.hypot(W, H); let s = '';
+      for (let i = 0; i < 46; i++){ const a = (i/46)*Math.PI*2 + Math.random()*.08, r0 = R*(.16 + Math.random()*.14), sp = .012 + Math.random()*.02;
+        s += `<polygon points="${pt.x + Math.cos(a - sp)*R},${pt.y + Math.sin(a - sp)*R} ${pt.x + Math.cos(a + sp)*R},${pt.y + Math.sin(a + sp)*R} ${pt.x + Math.cos(a)*r0},${pt.y + Math.sin(a)*r0}" fill="${i % 3 ? '#fff' : color}"/>`; }
+      const d = VX.el('vfocus', W/2, H/2, W, H, `<svg viewBox="0 0 ${W} ${H}">${s}</svg>`, 9);
+      return VX.run(d, [{opacity:0, scale:1.15},{opacity:.9, scale:1, offset:.2},{opacity:0, scale:.96}], {duration:dur, easing:'ease-out'}); }
+  };
+  const FIRE_ARROW = svgPx('0 0 16 4', [[0,1,4,2,'#ff3a1a'],[1,0,3,1,'#ffd23f'],[1,3,3,1,'#ffd23f'],[4,1.5,9,1,'#8a5a3a'],[12,.5,2,3,'#e8edf2'],[14,1.5,2,1,'#fff']]);
+  const SAT = '<rect x="7" y="6" width="10" height="8" fill="#231c1f"/><rect x="8" y="7" width="8" height="6" fill="#aab3bd"/><rect x="10" y="8" width="4" height="4" fill="#ff2fd0"/><rect x="0" y="8" width="7" height="4" fill="#231c1f"/><rect x="1" y="9" width="5" height="2" fill="#3a74d8"/><rect x="17" y="8" width="7" height="4" fill="#231c1f"/><rect x="18" y="9" width="5" height="2" fill="#3a74d8"/><rect x="11" y="14" width="2" height="4" fill="#231c1f"/><rect x="10" y="17" width="4" height="2" fill="#ff8ae8"/>';
+  const DRAGON = '<rect x="2" y="6" width="22" height="10" fill="#0b3a14"/><rect x="3" y="7" width="20" height="8" fill="#3fbf4a"/><rect x="18" y="4" width="10" height="9" fill="#0b3a14"/><rect x="19" y="5" width="8" height="7" fill="#58e04a"/><rect x="27" y="7" width="4" height="5" fill="#0b3a14"/><rect x="27" y="8" width="3" height="3" fill="#58e04a"/><rect x="22" y="6" width="2" height="2" fill="#fff36b"/><rect x="19" y="1" width="2" height="4" fill="#d8ffc8"/><rect x="23" y="2" width="2" height="3" fill="#d8ffc8"/><rect x="27" y="12" width="3" height="1" fill="#fff"/><rect x="24" y="13" width="6" height="2" fill="#0b3a14"/><rect x="5" y="15" width="3" height="3" fill="#0b3a14"/><rect x="11" y="15" width="3" height="3" fill="#0b3a14"/><rect x="4" y="9" width="14" height="2" fill="#a8ff8a"/>';
+  const MOON = '<defs><mask id="vMoonM"><rect width="100" height="100" fill="#fff"/><circle cx="68" cy="38" r="42" fill="#000"/></mask></defs><g mask="url(#vMoonM)"><circle cx="50" cy="50" r="48" fill="#fff3d6"/><circle cx="26" cy="62" r="6" fill="#e8d8b0"/><circle cx="18" cy="40" r="4" fill="#e8d8b0"/><circle cx="34" cy="82" r="3" fill="#e8d8b0"/></g>';
+  const RUNE = c => `<circle cx="50" cy="50" r="46" fill="none" stroke="${c}" stroke-width="3"/><circle cx="50" cy="50" r="36" fill="none" stroke="${c}" stroke-width="1.5" stroke-dasharray="6 4"/><polygon points="50,8 86,72 14,72" fill="none" stroke="${c}" stroke-width="2"/><polygon points="50,92 14,28 86,28" fill="none" stroke="${c}" stroke-width="2"/><circle cx="50" cy="50" r="8" fill="${c}"/>`;
+  const RETICLE = c => `<circle cx="50" cy="50" r="44" fill="none" stroke="${c}" stroke-width="3" stroke-dasharray="20 10"/><circle cx="50" cy="50" r="28" fill="none" stroke="${c}" stroke-width="2"/><rect x="48" y="0" width="4" height="22" fill="${c}"/><rect x="48" y="78" width="4" height="22" fill="${c}"/><rect x="0" y="48" width="22" height="4" fill="${c}"/><rect x="78" y="48" width="22" height="4" fill="${c}"/><circle cx="50" cy="50" r="4" fill="#fff"/>`;
   const WSKILL = {
     dagger:{name:'Shadow Flurry', short:'Flurry', desc:'5 lightning stabs', color:'#b98bff',
-      async fx(f, o){ const k = u(f.b); await approach(f, o, .7);
-        for (let i = 0; i < 5; i++){ arm(f, [0, -95, 0], 170); aim(f, [0, 170, 0], 170); const pt = headPt(o); slashArc({x:pt.x, y:pt.y + (i - 2)*k*3}, -40 + i*20, 12, '#b98bff'); burst(pt, ['#b98bff','#fff'], 5, 8, 220); play('bonk'); hitFlash(o); await wait(170); }
-        await moveTo(f, colX(f, f.col), 380); },
+      async fx(f, o){ const k = VX.k(), C = '#b98bff', x0 = f.x;
+        VX.smoke(VX.feet(f), '#6b3fd0', 8, 14); VX.gather(VX.mid(f), C, 12, 16, 360); await wait(360);
+        await VX.dash(f, o, .7, C);
+        const c = VX.mid(o);
+        for (let i = 0; i < 5; i++){
+          const a = (i % 2 ? -1 : 1)*(30 + i*9)*Math.PI/180, r = k*16;
+          const p1 = {x:c.x - Math.cos(a)*r, y:c.y - Math.sin(a)*r}, p2 = {x:c.x + Math.cos(a)*r, y:c.y + Math.sin(a)*r};
+          arm(f, [0, -100, 10, 0], 160); aim(f, [0, 170, 30, 0], 160);
+          VX.streak(p1, p2, C, 2.2, 300); VX.streak(p1, p2, '#fff', .7, 240);
+          VX.ghost(f, f.x + (Math.random() - .5)*k*10, C, 300);
+          hitFlash(o); play('bonk'); VX.debris(c, ['#b98bff','#fff','#6b3fd0'], 4, {spd:14, g:10, dur:400, size:1, glow:true}); await wait(150);
+        }
+        // final: dev X
+        await wait(120); const r = k*30;
+        VX.streak({x:c.x - r, y:c.y - r}, {x:c.x + r, y:c.y + r}, C, 4.2, 560); VX.streak({x:c.x - r, y:c.y + r}, {x:c.x + r, y:c.y - r}, C, 4.2, 560, 90);
+        VX.streak({x:c.x - r, y:c.y - r}, {x:c.x + r, y:c.y + r}, '#fff', 1.4, 460); VX.streak({x:c.x - r, y:c.y + r}, {x:c.x + r, y:c.y - r}, '#fff', 1.4, 460, 90);
+        await wait(90); VX.impact(); VX.focus(c, C); VX.flash('#e6dcff', 140, .6); VX.pulse(c, C, 48, 600, 1.8); VX.smoke(c, '#6b3fd0', 6, 12); VX.shake(7); play('clang');
+        await wait(350); await moveTo(f, colX(f, f.col), 360); },
       hit(f, o, R){ let d = 0; for (let i = 0; i < 5; i++) d += R(4, 6); return d; }},
     bow:{name:'Arrow Rain', short:'Rain', desc:'Volley from the sky + burn', color:'#ff7a1a',
-      async fx(f, o){ const k = u(f.b), tg = headPt(o);
-        arm(f, [0, -150, -150, 0], 700); aim(f, [0, 60, 60, 0], 700); await wait(350);
-        for (let i = 0; i < 3; i++){ const a = await throwAt(ARROW, ringPt(f.b.g.wpn || f.b.g.armR, .5, .3), {x:ringPt(f.b.g.wpn || f.b.g.armR, .5, .3).x + f.face*k*6, y:-k*10}, {w:k*9, h:k*2.2, dur:180, flip:f.face < 0}); a.remove(); }
-        const drops = []; for (let i = 0; i < 6; i++) drops.push(wait(i*110).then(() => dropFx(ARROW, tg.x + (Math.random() - .5)*k*18, -k*12, tg.y + k*8, k*9, k*2.2, 360)));
-        await Promise.all(drops); burst(tg, ['#ff7a1a','#ffd23f'], 14, 14, 500); play('boom'); },
+      async fx(f, o){ const k = VX.k(), C = '#ff7a1a', g = VX.feet(o), W = ring.clientWidth;
+        VX.vignette('rgba(90,30,0,.6)', 3000);
+        const rune = VX.svg('vrune', g.x, g.y - k, k*56, k*18, RUNE(C), '0 0 100 100', 3); rune.style.setProperty('--c', C);
+        const rr = rune.animate([{opacity:0, scale:'.2 .2'},{opacity:1, scale:'1 1', offset:.15},{opacity:1, scale:'1 1', offset:.85},{opacity:0, scale:'1.2 1.2'}],{duration:2600});
+        arm(f, [0, -160, -160, -160, 0], 900); aim(f, [0, 70, 70, 70, 0], 900);
+        const src = ringPt(f.b.g.wpn || f.b.g.armR, .5, .3);
+        for (let i = 0; i < 3; i++){ VX.streak(src, {x:src.x + f.face*k*8, y:-k*4}, '#ffd23f', .7, 260, i*90); }
+        play('whoosh'); await wait(500);
+        const drops = [];
+        for (let i = 0; i < 26; i++){ const x = g.x + (Math.random() - .5)*k*60, y0 = -k*10; VX.streak({x:x - k*6, y:y0}, {x, y:g.y}, i % 3 ? 'rgba(255,150,40,.55)' : '#ffd23f', .35 + Math.random()*.4, 380, 300 + i*40); }
+        for (let i = 0; i < 12; i++){ const x = g.x + (Math.random() - .5)*k*34, y1 = g.y - k*(1 + Math.random()*20);
+          drops.push(wait(i*70).then(async () => {
+            VX.streak({x:x - k*3, y:-k*6}, {x, y:y1}, '#ff8a1a', 1.2, 300);
+            await dropFx(FIRE_ARROW, x, -k*12, y1, k*15, k*4, 260, 100);
+            VX.debris({x, y:Math.max(y1, g.y - k*2)}, ['#ffd23f','#ff7a1a','#ff3a1a'], 5, {spd:12, g:20, dur:500, size:1, glow:true});
+            const fl = VX.el('vflame', x, g.y - k*6, k*7, k*15); VX.run(fl, [{scale:'1 0', opacity:1},{scale:'1 1.2', opacity:1, offset:.3},{scale:'.6 .4', opacity:0}], {duration:700});
+          }));
+        }
+        await wait(400); hitFlash(o); await Promise.all(drops);
+        VX.flash('#ffb070', 160, .5); VX.groundRing(g, C, 60); VX.pulse(VX.mid(o), '#ffd23f', 34, 600); VX.shake(6); play('boom');
+        VX.debris(g, ['#ffd23f','#ff7a1a','#ff3a1a','#fff3b0'], 20, {spd:26, g:-6, dur:1400, size:.9, glow:true});
+        await rr.finished; rune.remove(); },
       hit(f, o, R){ let d = 0; for (let i = 0; i < 4; i++) d += Math.random() < .9 ? R(6, 8) : 0; setDot(o, 'BURN', 2, 4, '#ff7a1a'); return d; }},
     sword:{name:'Moon Slash', short:'Moon', desc:'Giant crescent slash + bleed', color:'#ff3048',
-      async fx(f, o){ const k = u(f.b); await approach(f, o, .85);
-        f.b.rig.animate([{transform:T()},{transform:T(0,-k*6)},{transform:T()}],{duration:500});
-        arm(f, [0, -190, 40, 0], 620); aim(f, [0, 160, 80, 0], 620); await wait(320);
-        const pt = headPt(o); slashArc(pt, -30, 34, '#fff'); slashArc(pt, 150, 28, '#ff3048'); shockwave(pt, 30, '#ff8aa8'); play('clang'); shakeRing(8);
-        await wait(300); await moveTo(f, colX(f, f.col), 400); },
+      async fx(f, o){ const k = VX.k(), C = '#ff3048', W = ring.clientWidth, H = ring.clientHeight;
+        const night = VX.el('vnight', W/2, H/2, W, H, '', 1); night.animate([{opacity:0},{opacity:1}],{duration:400, fill:'forwards'});
+        const moon = VX.svg('vmoon', W*.5, H*.34, k*46, k*46, MOON, '0 0 100 100', 1);
+        moon.animate([{opacity:0, translate:`0 ${k*10}px`},{opacity:1, translate:'0 0'}],{duration:700, fill:'forwards', easing:'ease-out'});
+        await wait(250); await VX.dash(f, o, .9, C, 200);
+        f.b.rig.animate([{transform:T()},{transform:T(0,-k*10)},{transform:T(0,-k*10)},{transform:T()}],{duration:700});
+        VX.gather(ringPt(f.b.g.wpn || f.b.g.armR, .5, .3), '#ffd0d6', 16, 18, 450); await wait(450);
+        arm(f, [0, -200, 50, 0], 520); aim(f, [0, 170, 90, 0], 520); await wait(200);
+        const c = VX.mid(o), s = k*70;
+        const cres = VX.svg('vcres', c.x, c.y, s, s, `<path d="M10 70 Q50 -10 92 34 Q52 14 14 74 Z" fill="#fff"/><path d="M14 74 Q52 14 92 34 Q56 24 22 76 Z" fill="${C}"/>`, '0 0 100 100', 8);
+        cres.animate([{rotate:'-70deg', scale:.4, opacity:0},{rotate:'0deg', scale:1, opacity:1, offset:.25},{rotate:'12deg', scale:1.08, opacity:1, offset:.6},{rotate:'24deg', scale:1.2, opacity:0}],{duration:800, easing:'ease-out'}).finished.then(() => cres.remove());
+        play('clang'); await wait(220);
+        VX.impact(110); VX.focus(c, C, 500); await wait(60); VX.flash(C, 260, .35);
+        VX.pulse(c, C, 46, 700, 1.6); VX.pulse(c, '#fff', 30, 500, .8, 80); VX.shake(9);
+        VX.debris(c, ['#ff3048','#ff8aa8','#fff'], 22, {spd:30, g:30, dur:900, size:1.1, glow:true});
+        for (let i = 0; i < 8; i++){ const a = Math.random()*Math.PI*2; VX.streak(c, {x:c.x + Math.cos(a)*k*28, y:c.y + Math.sin(a)*k*28}, '#ffd0d6', .5, 300, i*30); }
+        await wait(600); VX.run(moon, [{opacity:1},{opacity:0}], {duration:400}); VX.run(night, [{opacity:1},{opacity:0}], {duration:450});
+        await moveTo(f, colX(f, f.col), 380); },
       hit(f, o, R){ setDot(o, 'BLEED', 3, 4, '#ff3048'); return R(26, 32); }},
     spear:{name:'Dragon Lunge', short:'Lunge', desc:'Pierce, push back 2 + stagger', color:'#7dff5a',
-      async fx(f, o){ const k = u(f.b), from = headPt(f);
-        f.b.rig.animate([{transform:T()},{transform:T(-f.face*k*3,0)},{transform:T()}],{duration:300}); await wait(260);
-        trail(from, headPt(o), 260); await approach(f, o, .6); play('whoosh');
-        burst(headPt(o), ['#7dff5a','#d8ffc8','#fff'], 16, 16, 500); shockwave(headPt(o), 24, '#7dff5a');
-        await hit(o, 2.2, 'Ack!'); await moveTo(f, colX(f, f.col), 380); },
+      async fx(f, o){ const k = VX.k(), C = '#7dff5a';
+        VX.vignette('rgba(10,70,20,.55)', 2600);
+        VX.gather(VX.mid(f), C, 18, 20, 500); f.b.rig.animate([{transform:T()},{transform:T(-f.face*k*4, k)},{transform:T(-f.face*k*4, k)}],{duration:500, fill:'forwards'});
+        await wait(520);
+        const a = VX.mid(f), b = VX.mid(o), dw = k*40, dh = k*26;
+        const dr = VX.svg('vdragon', a.x, a.y, dw, dh, DRAGON, '0 0 32 20', 8); if (f.face < 0) dr.style.scale = '-1 1';
+        play('whoosh'); play('charge');
+        const pts = []; for (let i = 0; i <= 10; i++){ const t = i/10; pts.push({x:a.x + (b.x - a.x)*t, y:a.y + Math.sin(t*Math.PI*2)*k*6}); }
+        const kfs = pts.map(p => ({translate:`${p.x - a.x}px ${p.y - a.y}px`}));
+        for (let i = 1; i <= 7; i++){ const s = k*(7 - i*.6), seg = VX.el('vseg', a.x - f.face*k*8, a.y + k*2, s, s, '', 7); seg.style.setProperty('--c', i % 2 ? '#3fbf4a' : '#7dff5a');
+          VX.run(seg, kfs.map((q, j) => ({...q, opacity:j === kfs.length - 1 ? 0 : 1})), {duration:520, delay:i*45, easing:'ease-in', fill:'backwards'}); }
+        const ani = dr.animate(kfs, {duration:520, easing:'ease-in', fill:'forwards'});
+        pts.forEach((p, i) => { setTimeout(() => { const s = k*(5 - i*.25), d = VX.el('vbit glow', p.x, p.y, s, s); d.style.setProperty('--c', i % 2 ? C : '#d8ffc8'); VX.run(d, [{scale:1, opacity:.9},{scale:.2, opacity:0}], {duration:500}); }, i*52); });
+        moveTo(f, clampX(f, o.x - f.face*bwOf(f)*.55), 480, 'ease-in', 'none');
+        await ani.finished; dr.remove();
+        VX.impact(); VX.focus(b, C); VX.flash('#d8ffc8', 140, .5); VX.pulse(b, C, 56, 650, 1.8); VX.pulse(b, '#fff', 26, 450, .8);
+        for (let i = 0; i < 6; i++) VX.streak({x:b.x, y:b.y + (i - 2.5)*k*3}, {x:b.x + f.face*k*40, y:b.y + (i - 2.5)*k*4}, i % 2 ? C : '#fff', .5, 380, i*30);
+        VX.debris(b, ['#7dff5a','#d8ffc8','#2f9a3a'], 18, {spd:28, g:24, dur:800, size:1, glow:true}); VX.shake(9); play('boom');
+        await hit(o, 3, 'Ack!'); await moveTo(f, colX(f, f.col), 380); },
       hit(f, o, R){ const nc = Math.max(0, Math.min(COLS - 1, o.col + f.face*2)); if (Math.abs(nc - f.col) >= 1) o.col = nc; o.skip = 1; o.skipTag = 'STAGGERED'; return R(22, 28); }},
     axe:{name:'Earthquake', short:'Quake', desc:'Ground slam + stun', color:'#ff5c86',
-      async fx(f, o){ const k = u(f.b);
-        await f.b.rig.animate([{transform:T()},{transform:T(0,-k*14)},{transform:T(0,-k*14)},{transform:T()}],{duration:650, easing:'ease-in'}).finished;
-        play('boom'); shakeRing(16); const g = {x:headPt(o).x, y:headPt(o).y + k*14}; shockwave(g, 40, '#c8884a'); burst(g, ['#8a5a3a','#c8884a','#5a3a22'], 22, 22, 700);
-        o.b.rig.animate([{transform:T()},{transform:T(0,-k*8,-10)},{transform:T()}],{duration:500}); await wait(500); },
+      async fx(f, o){ const k = VX.k(), C = '#ff5c86';
+        VX.vignette('rgba(80,30,10,.5)', 2600);
+        VX.gather(ringPt(f.b.g.wpn || f.b.g.armR, .5, .3), C, 14, 16, 400);
+        await f.b.rig.animate([{transform:T()},{transform:T(0, k*2)},{transform:T(0,-k*22)},{transform:T(0,-k*22)}],{duration:600, easing:'ease-out'}).finished;
+        arm(f, [0, -200, 40, 0], 300);
+        await f.b.rig.animate([{transform:T(0,-k*22)},{transform:T(0, k)},{transform:T()}],{duration:200, easing:'ease-in'}).finished;
+        const gf = VX.feet(f), go = VX.feet(o);
+        play('boom'); VX.impact(100); VX.flash('#ffd0b0', 160, .5); VX.shake(16, 7);
+        VX.cracks(gf, '#ff8a3a', 9, 40, 1600); VX.groundRing(gf, '#c8884a', 80, 800); VX.smoke(gf, '#8a6a4a', 10, 20, 1100);
+        VX.debris(gf, ['#8a5a3a','#c8884a','#5a3a22','#a0724a'], 22, {spd:34, g:60, dur:1000, size:2.2});
+        for (let i = 1; i <= 5; i++){ const x = gf.x + (go.x - gf.x)*i/5;
+          setTimeout(() => { VX.debris({x, y:gf.y}, ['#8a5a3a','#c8884a','#5a3a22'], 6, {spd:30, g:60, dur:900, size:2});
+            const sp = VX.el('vspike', x, gf.y - k*5, k*7, k*12, '', 3); VX.run(sp, [{scale:'1 0', opacity:1},{scale:'1 1.2', opacity:1, offset:.25},{scale:'1 1', opacity:1, offset:.7},{scale:'1 0', opacity:0}], {duration:900}); }, i*90); }
+        await wait(480);
+        VX.cracks(go, '#ff5c86', 7, 30, 1200); VX.pulse(VX.mid(o), C, 40, 600, 1.4); VX.flash('#fff', 100, .5);
+        o.b.rig.animate([{transform:T()},{transform:T(0,-k*16,-20)},{transform:T(0,0,8)},{transform:T()}],{duration:700});
+        await wait(700); },
       hit(f, o, R){ o.skip = 1; o.skipTag = 'STUNNED'; return R(30, 36); }},
     laser:{name:'Photon Storm', short:'Photon', desc:'3 light-speed dashes + sear', color:'#3fe9ff',
-      async fx(f, o){ const k = u(f.b), dim = overlay('dim'); dim.style.background = 'rgba(10,40,60,.45)';
-        for (let i = 0; i < 3; i++){ const a = headPt(f), b = headPt(o), len = Math.hypot(b.x - a.x, b.y - a.y) + k*20;
-          const bm = fxDiv('railbeam', {x:(a.x + b.x)/2, y:(a.y + b.y)/2 + (i - 1)*k*4}, len, k*1.2); bm.style.filter = 'hue-rotate(-120deg)';
-          bm.animate([{scale:'0 1', opacity:1},{scale:'1 1', opacity:1, offset:.4},{scale:'1 .1', opacity:0}],{duration:260}).finished.then(() => bm.remove());
-          play('laser'); hitFlash(o); burst(b, ['#3fe9ff','#fff'], 8, 10, 260); await wait(240); }
-        fadeOut(dim); await wait(200); },
+      async fx(f, o){ const k = VX.k(), C = '#3fe9ff', W = ring.clientWidth, H = ring.clientHeight;
+        const grid = VX.el('vgrid', W/2, H/2, W, H, '', 1); grid.style.setProperty('--c', C);
+        grid.animate([{opacity:0},{opacity:1}],{duration:300, fill:'forwards'});
+        ring.classList.add('vmono');
+        VX.gather(ringPt(f.b.g.wpn || f.b.g.armR, .5, .3), C, 16, 16, 420); await wait(420);
+        const x0 = f.x, ox = o.x, c = VX.mid(o);
+        for (let i = 0; i < 3; i++){
+          const side = i % 2 ? -1 : 1, tx = clampX(f, ox + side*f.face*bwOf(f)*.9), a = VX.mid(f);
+          VX.ghost(f, f.x, C, 400);
+          await moveTo(f, tx, 110, 'linear', 'none');
+          const b = VX.mid(f); VX.streak(a, b, C, 4, 460); VX.streak(a, b, '#fff', 1.2, 400);
+          VX.bolt({x:c.x, y:c.y - k*14}, {x:c.x + (Math.random() - .5)*k*10, y:c.y + k*10}, C, 6, 8, 220);
+          hitFlash(o); play('laser'); VX.pulse(c, C, 26, 380, .9); VX.debris(c, [C,'#fff','#9ff3ff'], 6, {spd:18, g:10, dur:500, size:.9, glow:true}); await wait(140);
+        }
+        await wait(160); VX.impact(); VX.focus(c, C, 500); VX.flash('#e8fbff', 160, .6);
+        for (let i = 0; i < 10; i++){ const a = (i/10)*Math.PI*2; VX.streak(c, {x:c.x + Math.cos(a)*k*34, y:c.y + Math.sin(a)*k*34}, i % 2 ? C : '#fff', .6, 420); }
+        VX.pulse(c, C, 54, 700, 1.4); VX.shake(8); play('boom');
+        ring.classList.remove('vmono'); VX.run(grid, [{opacity:1},{opacity:0}], {duration:400});
+        await moveTo(f, colX(f, f.col), 260, 'ease-out', 'none'); await wait(200); },
       hit(f, o, R){ let d = 0; for (let i = 0; i < 3; i++) d += R(12, 15); setDot(o, 'SEAR', 3, 6, '#3fe9ff'); return d; }},
     plasma:{name:'Plasma Nova', short:'Nova', desc:'Mega blast + 2-turn shock', color:'#ffd23f',
-      async fx(f, o){ const k = u(f.b), src = ringPt(f.b.g.wpn || f.b.g.armR, .5, .5);
-        for (let i = 0; i < 3; i++){ burst(src, ['#ffd23f','#fff'], 10, 14, 300, true); tone(300 + i*200, 600 + i*300, 0, .25, 'square', .03); await wait(260); }
-        const a = await throwAt(PLASMA, src, headPt(o), {w:k*12, h:k*7, dur:380, flip:f.face < 0}); a.remove();
-        play('boom'); shakeRing(10); shockwave(headPt(o), 40, '#ffd23f'); burst(headPt(o), ['#ffd23f','#ff8a1a','#fff'], 24, 22, 600); await wait(300); },
+      async fx(f, o){ const k = VX.k(), C = '#ffd23f', src = ringPt(f.b.g.wpn || f.b.g.armR, .7, .5), tg = VX.mid(o);
+        VX.vignette('rgba(70,50,0,.55)', 3000);
+        const core = VX.el('vorb', src.x, src.y, k*6, k*6, '', 8); core.style.setProperty('--c', C);
+        const halo = VX.el('vring', src.x, src.y, k*22, k*22, '', 7); halo.style.setProperty('--c', C); halo.style.setProperty('--bw', k*.5 + 'px');
+        VX.run(halo, [{scale:1.6, opacity:0, rotate:'0deg'},{scale:.5, opacity:1, rotate:'90deg'},{scale:.2, opacity:0, rotate:'180deg'}], {duration:1100});
+        const grow = core.animate([{scale:.3},{scale:3.2}],{duration:1100, fill:'forwards', easing:'ease-in'});
+        for (let i = 0; i < 6; i++){ setTimeout(() => { const a = Math.random()*Math.PI*2; VX.bolt({x:src.x + Math.cos(a)*k*14, y:src.y + Math.sin(a)*k*14}, src, C, 4, 5, 160, .6); VX.gather(src, C, 4, 14, 260); tone(400 + i*120, 900 + i*160, 0, .14, 'square', .025); }, i*160); }
+        await grow.finished;
+        const s = k*13, dx = tg.x - src.x, dy = tg.y - src.y;
+        play('laser');
+        const fly = core.animate([{scale:3.2, translate:'0 0'},{scale:3.2, translate:`${dx}px ${dy}px`}],{duration:340, easing:'ease-in', fill:'forwards'});
+        for (let i = 1; i < 8; i++) setTimeout(() => { const p = {x:src.x + dx*i/8, y:src.y + dy*i/8}; const d = VX.el('vorb', p.x, p.y, s*.5, s*.5); d.style.setProperty('--c', C); VX.run(d, [{scale:1, opacity:.7},{scale:.1, opacity:0}], {duration:400}); }, i*40);
+        await fly.finished; core.remove();
+        VX.impact(120); VX.focus(tg, C, 520); VX.flash('#fff6c0', 220, .7); play('boom'); VX.shake(14, 6);
+        VX.orb(tg, C, 40, [{scale:.2, opacity:1},{scale:1.2, opacity:.9, offset:.4},{scale:1.5, opacity:0}], {duration:700, easing:'ease-out'});
+        VX.pulse(tg, C, 70, 800, 1.6); VX.pulse(tg, '#fff', 44, 600, 1, 100); VX.pulse(tg, '#ff8a1a', 90, 1000, 1.2, 180);
+        for (let i = 0; i < 8; i++){ const a = (i/8)*Math.PI*2 + Math.random()*.3; VX.bolt(tg, {x:tg.x + Math.cos(a)*k*36, y:tg.y + Math.sin(a)*k*26}, C, 6, 7, 320, .7); }
+        VX.debris(tg, ['#ffd23f','#ff8a1a','#fff'], 26, {spd:34, g:24, dur:1000, size:1, glow:true});
+        await wait(700); },
       hit(f, o, R){ o.skip = 2; o.skipTag = 'SHOCKED'; return R(34, 40); }},
     rail:{name:'Orbital Strike', short:'Orbital', desc:'Satellite beam from above', color:'#ff2fd0',
-      async fx(f, o){ const k = u(f.b), tg = headPt(o), dim = overlay('dim'); dim.style.background = 'rgba(60,10,60,.5)';
-        speak(f.b, 'Target locked.', 900); popText('◎', {x:tg.x, y:tg.y}, '#ff2fd0', 10); await wait(700);
-        const bm = fxDiv('railbeam', {x:tg.x, y:tg.y/2 + k*6}, tg.y + k*12, k*7); bm.style.rotate = '90deg';
-        bm.animate([{scale:'1 0', opacity:1},{scale:'1 1', opacity:1, offset:.2},{scale:'1 1.3', opacity:1, offset:.7},{scale:'1 0', opacity:0}],{duration:900}).finished.then(() => bm.remove());
-        play('laser'); await wait(250); play('boom'); shakeRing(16); burst(tg, ['#ff2fd0','#fff','#ff8ae8'], 26, 24, 700); shockwave(tg, 44, '#ff2fd0');
-        await wait(500); fadeOut(dim); },
+      async fx(f, o){ const k = VX.k(), C = '#ff2fd0', W = ring.clientWidth, H = ring.clientHeight, tg = VX.mid(o), g = VX.feet(o);
+        const night = VX.el('vnight', W/2, H/2, W, H, '', 1); night.style.background = 'radial-gradient(ellipse at 50% 20%,rgba(40,0,60,.4),rgba(10,0,20,.75))';
+        night.animate([{opacity:0},{opacity:1}],{duration:400, fill:'forwards'});
+        const sat = VX.svg('vsat', tg.x, -k*12, k*30, k*24, SAT, '0 0 24 20', 9);
+        sat.animate([{translate:`${-W*.4}px 0`},{translate:`0 ${k*18}px`}],{duration:700, fill:'forwards', easing:'ease-out'});
+        speak(f.b, 'Target locked.', 1000); await wait(600);
+        const ret = VX.svg('vret', g.x, g.y - k*4, k*34, k*34, RETICLE(C), '0 0 100 100', 8);
+        ret.animate([{scale:2.4, rotate:'0deg', opacity:0},{scale:1, rotate:'180deg', opacity:1, offset:.6},{scale:.85, rotate:'200deg', opacity:1}],{duration:700, fill:'forwards', easing:'ease-out'});
+        for (let i = 0; i < 4; i++) setTimeout(() => tone(1400, 1400, 0, .06, 'square', .03), i*150);
+        await wait(760);
+        const sy = k*12, bh = g.y - sy;
+        const glow = VX.el('vbeam glow', g.x, sy + bh/2, k*32, bh, '', 8), core = VX.el('vbeam', g.x, sy + bh/2, k*11, bh, '', 9);
+        [glow, core].forEach(d => d.style.setProperty('--c', C));
+        play('laser'); VX.flash('#fff', 140, 1);
+        const bk = [{scale:'0 1', opacity:1},{scale:'1.3 1', opacity:1, offset:.12},{scale:'1 1', opacity:1, offset:.3},{scale:'1.15 1', opacity:1, offset:.55},{scale:'1 1', opacity:1, offset:.8},{scale:'0 1', opacity:0}];
+        VX.run(glow, bk, {duration:1100}); VX.run(core, bk, {duration:1100});
+        await wait(130); VX.impact(140); VX.focus(g, C, 600); play('boom'); VX.shake(18, 8); ret.remove();
+        for (let i = 0; i < 5; i++) setTimeout(() => { VX.groundRing(g, i % 2 ? '#fff' : C, 50 + i*16, 700); VX.debris(g, [C,'#ff8ae8','#fff','#3a1a3a'], 8, {spd:36, g:40, dur:1000, size:1.4, glow:i % 2 === 0}); }, i*150);
+        VX.pulse(tg, C, 60, 800, 1.6); VX.smoke(g, '#3a1a3a', 10, 22, 1300);
+        const scorch = VX.el('vscorch', g.x, g.y, k*40, k*8, '', 2); VX.run(scorch, [{opacity:0},{opacity:1, offset:.2},{opacity:1, offset:.8},{opacity:0}], {duration:2200});
+        await wait(1000); VX.flash(C, 200, .3);
+        VX.run(sat, [{translate:`0 ${k*18}px`},{translate:`${W*.5}px ${-k*10}px`}], {duration:600, easing:'ease-in'}); VX.run(night, [{opacity:1},{opacity:0}], {duration:500});
+        await wait(400); },
       hit(f, o, R){ return R(48, 56); }}
   };
   const wSkill = k => WSKILL[k] || WSKILL.dagger;
   async function specialMove(f, o){
     const W = wSkill(G.weapon);
     f.hype = 0; drawHud();
-    ultName(W.name.toUpperCase());
+    const endStage = VX.stage(W.color);
+    const lv = effLv(G.weapon), endCut = await VX.cutIn(W.name.toUpperCase(), W.color, wIcon(G.weapon, lv).svg, `${WEAPONS[G.weapon].name} · Weapon skill`);
     const hpBefore = o.hp;
-    await W.fx(f, o);
+    try { await W.fx(f, o); } catch(e){ ring.classList.remove('vmono'); }
+    endCut(); endStage();
     const R = (a, b) => Math.round(rnd(a, b) * dmgMult(f));
     const dmg = W.hit(f, o, R);
     o.hp = hpBefore - dmg;
