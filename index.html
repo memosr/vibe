@@ -739,6 +739,22 @@
   .ring.cyber .irontop::after{background:repeating-linear-gradient(90deg,transparent 0 calc(var(--u)*2.4),#ff2fd0 calc(var(--u)*2.4) calc(var(--u)*3),transparent calc(var(--u)*3) calc(var(--u)*6)) !important;filter:drop-shadow(0 0 4px #ff2fd0)}
   .ring.cyber .dock{background:repeating-linear-gradient(90deg,rgba(63,233,255,.06) 0 2px,transparent 2px calc(var(--u)*10)),linear-gradient(180deg,#1a1030,#0a0618) !important;border-top-color:#3fe9ff !important;box-shadow:0 -3px 14px rgba(63,233,255,.4)}
   @media (prefers-reduced-motion: reduce){ .ring.cyber .gate i{animation:none} }
+  /* ---- 5 harita çubuğu ---- */
+  .maps{flex-basis:100%;display:flex;align-items:center;gap:0;margin-bottom:2px}
+  .maps .mlink{flex:0 0 18px;height:4px;background:#8a6a5a}
+  .map{display:flex;align-items:center;gap:8px;padding:5px 12px 5px 6px;background:#f6f1ea;border:3px solid var(--line);box-shadow:3px 3px 0 var(--line);font:inherit;color:var(--ink);cursor:pointer;text-align:left;min-width:0}
+  .map em{font-style:normal;display:grid;place-items:center;width:30px;height:30px;flex:none;background:var(--mc);color:#fff;border:2px solid var(--line);font-family:"Pixelify Sans", monospace;font-weight:700;font-size:16px}
+  .map span{display:flex;flex-direction:column;line-height:1.1;min-width:0}
+  .map b{font-family:"Pixelify Sans", monospace;font-size:14px;white-space:nowrap}
+  .map small{font-size:11px;color:var(--ink-soft);white-space:nowrap}
+  .map:not(:disabled):hover{translate:0 -2px;background:#fff}
+  .map.cur{background:#231c1f;color:#fff3e6;box-shadow:3px 3px 0 var(--line),0 0 0 3px #ffc53d}
+  .map.cur small{color:#ffc53d}
+  .map.m-neon em{background:linear-gradient(135deg,#ff2fd0,#3fe9ff);box-shadow:0 0 8px #ff2fd0}
+  .map.lock{background:#e4ddd6;opacity:.75;cursor:not-allowed}
+  .map.lock em{background:#6b6064}
+  .map:disabled{cursor:default}
+  @media (max-width:640px){ .map{padding:3px} .map span{display:none} .map em{width:28px;height:28px;font-size:14px} .maps .mlink{flex:1 1 6px} .map.cur{box-shadow:2px 2px 0 var(--line),0 0 0 2px #ffc53d} }
   .orb .pk{position:absolute;left:-6px;bottom:-4px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#231c1f;border:2px solid var(--pc)}
   .orb .pk svg{width:15px;height:15px;rotate:0deg;scale:1;animation:none;filter:none}
   .orb .pk.off{border-color:#6b6064}
@@ -2808,15 +2824,15 @@
   ];
   // ===== Aşama 6a: NEON ARENA (2. sezon, sci-fi rakipler) =====
   const RIVALS2 = [
-    {name:'MEV Bot', base:'Armor', gear:'dagger', wlv:2, hp:115, pow:1.05, neon:true, filter:'hue-rotate(170deg) saturate(1.3)', ai:{power:.3},
+    {name:'MEV Bot', base:'Armor', gear:'dagger', wlv:2, hp:130, pow:1.25, neon:true, filter:'hue-rotate(170deg) saturate(1.3)', ai:{power:.3},
      st:{walk:'glide', speed:1.4, enter:'Your transaction looks... tasty.', taunt:['Front-running you.','Sandwiched!','Gas war? Easy.'], hurt:['Bundle failed!','Reverted!','My profits!']}, ko:'Block... missed.'},
-    {name:'Liquidation Drone', base:'Goggles', gear:'bow', wlv:3, hp:135, pow:1.15, neon:true, filter:'hue-rotate(200deg) saturate(1.5) brightness(1.05)', ai:{kite:.4, power:.25, drain:14},
+    {name:'Liquidation Drone', base:'Goggles', gear:'bow', wlv:3, hp:155, pow:1.4, neon:true, filter:'hue-rotate(200deg) saturate(1.5) brightness(1.05)', ai:{kite:.4, power:.25, drain:14},
      st:{walk:'glide', speed:1.2, enter:'Health factor: dropping.', taunt:['Margin call incoming.','Collateral detected.','Beep. Liquidate.'], hurt:['Rotor damage!','Recalibrating!','Not my oracle!']}, ko:'Position... closed.'},
-    {name:'Rug Puller', base:'Mr. Hat', gear:'spear', wlv:3, hp:165, pow:1.3, neon:true, filter:'hue-rotate(250deg) saturate(1.4)', ai:{power:.3, crash:4, ult:{name:'RUG PULL', line:'Liquidity? Gone.', label:'a Rug Pull', dmg:[20,26]}},
+    {name:'Rug Puller', base:'Mr. Hat', gear:'spear', wlv:3, hp:190, pow:1.6, neon:true, filter:'hue-rotate(250deg) saturate(1.4)', ai:{power:.3, crash:4, ult:{name:'RUG PULL', line:'Liquidity? Gone.', label:'a Rug Pull', dmg:[20,26]}},
      st:{walk:'fence', speed:1, enter:'Trust me, it is fully audited.', taunt:['Locked liquidity. Pinky promise.','Devs are doxxed. Kind of.','Wen moon? Never.'], hurt:['My exit!','Not the treasury!','Rugged myself?!']}, ko:'The devs... have left.'},
-    {name:'Botnet Swarm', base:'Honey', gear:'axe', wlv:3, hp:210, pow:1.3, neon:true, filter:'hue-rotate(120deg) saturate(1.6) brightness(.95)', ai:{slow:true, power:.45, regen:12},
+    {name:'Botnet Swarm', base:'Honey', gear:'axe', wlv:3, hp:240, pow:1.75, neon:true, filter:'hue-rotate(120deg) saturate(1.6) brightness(.95)', ai:{slow:true, power:.45, regen:12},
      st:{walk:'stomp', speed:.8, enter:'We are many. We are bots.', taunt:['10,000 wallets, one brain.','Sybil says hi.','Airdrop? Ours.'], hurt:['Node down!','Reconnecting...','Packet loss!']}, ko:'All nodes... offline.'},
-    {name:'The Singularity', base:'Armor', gear:'sword', wlv:4, hp:340, pow:1.6, boss:true, scale:1.25, neon:true, filter:'hue-rotate(290deg) saturate(1.8) brightness(.9)', ai:{power:.35, crash:4, ult:{name:'SYSTEM OVERRIDE', line:'I. AM. THE. CHAIN.', label:'a System Override', dmg:[24,30]}},
+    {name:'The Singularity', base:'Armor', gear:'sword', wlv:4, hp:400, pow:2.1, boss:true, scale:1.25, neon:true, filter:'hue-rotate(290deg) saturate(1.8) brightness(.9)', ai:{power:.35, crash:4, ult:{name:'SYSTEM OVERRIDE', line:'I. AM. THE. CHAIN.', label:'a System Override', dmg:[24,30]}},
      st:{walk:'stomp', speed:.9, enter:'Humans. So inefficient.', taunt:['Optimizing you out.','I wrote the smart contract.','Resistance is gas.'], hurt:['Anomaly!','Error: emotion detected!','Recompiling!']}, ko:'Shutting... down... gg.'}
   ];
   const isNeon = () => G.arena === 'neon';
@@ -3003,6 +3019,27 @@
     hy.querySelector('i').style.width = Math.min(100, G.p.hype || 0) + '%';
     hy.classList.toggle('full', (G.p.hype || 0) >= 100);
   }
+  // 5 harita: Classic, Neon açık; diğer üçü yakında
+  const MAPS = [
+    {k:'classic', name:'Classic Arena', c:'#e0643a'},
+    {k:'neon',    name:'Neon Arena',    c:'#ff2fd0'},
+    {k:null, name:'???'}, {k:null, name:'???'}, {k:null, name:'???'}
+  ];
+  function drawMaps(){
+    const cleared = {classic:(S.wins || 0) >= 1, neon:(S.neonWins || 0) >= 1};
+    return '<span class="maps" role="group" aria-label="Maps">' + MAPS.map((m, i) => {
+      const open = m.k === 'classic' || (m.k === 'neon' && neonOpen());
+      const cur = m.k === (G.arena || 'classic');
+      const st = !m.k ? '&#128274; Soon' : !open ? '&#128274; Beat map 1' : cleared[m.k] ? '&#10003; Cleared' : cur ? '&#9654; Playing' : 'Open';
+      return `${i ? '<i class="mlink"></i>' : ''}<button type="button" class="map${cur ? ' cur' : ''}${open ? '' : ' lock'}${m.k ? ' m-' + m.k : ''}" data-map="${m.k || ''}" ${open && !cur ? '' : 'disabled'} style="--mc:${m.c || '#6b6064'}" aria-label="Map ${i + 1}: ${m.k ? m.name : 'coming soon'}"><em>${i + 1}</em><span><b>${m.name}</b><small>${st}</small></span></button>`;
+    }).join('') + '</span>';
+  }
+  stagesEl.addEventListener('click', e => {
+    const b = e.target.closest('.map[data-map]'); if (!b || b.disabled || !b.dataset.map) return;
+    if (G.on || (G.stage > 0 && resultEl.hidden)){ toast('Finish this run first, then switch maps.'); return; }
+    G.arena = b.dataset.map; S.arena = G.arena; save(); play(G.arena === 'neon' ? 'laser' : 'clap');
+    startTournament();
+  });
   function drawStages(){
     const s = G.stage, r = RV()[s];
     let nodes = '';
@@ -3010,7 +3047,7 @@
       if (i) nodes += `<span class="link${i <= s ? ' done' : ''}"></span>`;
       nodes += `<span class="node${x.boss ? ' boss' : ''}${i < s ? ' done' : i === s ? ' now' : ''}" title="${x.name}">${x.boss ? '&#9760;' : i + 1}</span>`;
     });
-    stagesEl.innerHTML = `<span class="stage-lbl">${r.boss ? 'BOSS' : 'STAGE ' + (s + 1)} / ${RV().length}<small>${r.name}</small></span><span class="nodes">${nodes}</span><span class="purse"></span>`;
+    stagesEl.innerHTML = drawMaps() + `<span class="stage-lbl">${r.boss ? 'BOSS' : 'STAGE ' + (s + 1)} / ${RV().length}<small>${r.name}</small></span><span class="nodes">${nodes}</span><span class="purse"></span>`;
     drawPurse();
   }
   const staCost = (f, k) => Math.max(0, MOVES[k].sta - (MOVES[k].atk ? (wOf(f).cheap || 0) : 0));
@@ -3656,7 +3693,7 @@
   function drawArenaPick(){
     const el = document.getElementById('arenaPick'); if (!el) return;
     if (!G.arena) G.arena = S.arena === 'neon' && neonOpen() ? 'neon' : 'classic';
-    el.innerHTML = '';
+    el.innerHTML = ''; el.hidden = true; ring.classList.toggle('cyber', isNeon()); return;
     [['classic','Classic Arena','Swords & sandals'],['neon','Neon Arena','Bots, drones & AI']].forEach(([k, name, sub]) => {
       const lock = k === 'neon' && !neonOpen();
       const b = document.createElement('button'); b.type = 'button'; b.className = 'apick a-' + k + (G.arena === k ? ' on' : ''); b.disabled = lock;
