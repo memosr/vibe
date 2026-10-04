@@ -704,6 +704,41 @@
   .dressstats b{font-family:"Pixelify Sans", monospace;font-size:20px}
   .dressstats em{font-style:normal;color:#2f9a4a;font-weight:800}
   @media (max-width:640px){ .potion.spell{width:40px;height:40px;padding:6px} .tile.dress{grid-column:1 / -1} .dressmini{--mu:2.4px !important} .dressfig{width:76px;height:126px} }
+  /* ---- Aşama 6a: Neon Arena ---- */
+  .arenapick{display:flex;gap:8px;justify-content:center;margin:-2px 0 8px}
+  .apick{display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 14px;border:3px solid var(--line);background:#fff;cursor:pointer;font:inherit;box-shadow:3px 3px 0 var(--line);min-width:150px}
+  .apick b{font-family:"Pixelify Sans", monospace;font-size:16px} .apick small{font-size:11px;color:var(--ink-soft)}
+  .apick.a-classic.on{background:#e0643a;color:#fff8f0} .apick.a-classic.on small{color:#ffe0cc}
+  .apick.a-neon{background:#120a24;color:#3fe9ff} .apick.a-neon small{color:#c9b6ff}
+  .apick.a-neon.on{box-shadow:3px 3px 0 var(--line),0 0 14px #ff2fd0,inset 0 0 0 2px #ff2fd0}
+  .apick:disabled{opacity:.55;cursor:not-allowed}
+  .px.glowv{box-shadow:0 0 6px var(--c),0 0 2px #fff}
+  .ring.cyber{background:#0a0618}
+  .ring.cyber .wall{background:
+    linear-gradient(180deg,rgba(10,6,24,.2),rgba(10,6,24,.75)),
+    repeating-linear-gradient(0deg,rgba(63,233,255,.16) 0 2px,transparent 2px calc(var(--u)*9)),
+    repeating-linear-gradient(90deg,rgba(255,47,208,.14) 0 2px,transparent 2px calc(var(--u)*18)),
+    linear-gradient(180deg,#1a0f3a,#2a1050 60%,#3a0f4a) !important}
+  .ring.cyber .sand{background:
+    repeating-linear-gradient(90deg,rgba(63,233,255,.45) 0 2px,transparent 2px calc(var(--u)*14)),
+    linear-gradient(180deg,#ff2fd0 0,#7a1a8a 3px,#1a0a2e 40%,#0a0618) !important;border-top:3px solid #ff2fd0 !important;box-shadow:0 -6px 18px rgba(255,47,208,.5)}
+  .ring.cyber .sand::before{border-color:rgba(63,233,255,.6) !important;box-shadow:0 0 12px rgba(63,233,255,.5)}
+  .ring.cyber .cornice{background:linear-gradient(180deg,#2a2d38,#4a5060 50%,#1a1c24) !important;border-bottom-color:#3fe9ff !important;box-shadow:0 2px 10px rgba(63,233,255,.5) !important}
+  .ring.cyber .cornice::after{background:repeating-linear-gradient(90deg,#3fe9ff 0 calc(var(--u)*1),transparent calc(var(--u)*1) calc(var(--u)*5)) !important;opacity:.6}
+  .ring.cyber .pillar{background:linear-gradient(90deg,#1a1c24,#4a5060 25%,#8a939c 45%,#4a5060 70%,#1a1c24) !important}
+  .ring.cyber .pillar i{background:repeating-linear-gradient(180deg,#3fe9ff 0 calc(var(--u)*1.2),transparent calc(var(--u)*1.2) calc(var(--u)*6)) !important;inset:calc(var(--u)*14) calc(var(--u)*3.8) calc(var(--u)*10) !important;opacity:.8;box-shadow:0 0 8px #3fe9ff}
+  .ring.cyber .pillar::before,.ring.cyber .pillar::after{background:linear-gradient(180deg,#8a939c,#3a3f4a) !important;border-color:#111 !important}
+  .ring.cyber .gate i{background:radial-gradient(ellipse at 50% 60%,#ff2fd0 0,#7a1aff 35%,#1a0a3a 70%) !important;box-shadow:0 0 30px #ff2fd0,inset 0 0 20px #3fe9ff;animation:portal 2s ease-in-out infinite alternate}
+  @keyframes portal{from{filter:hue-rotate(0deg) brightness(1)}to{filter:hue-rotate(40deg) brightness(1.25)}}
+  .ring.cyber .torch i{background:linear-gradient(180deg,#e0fbff,#3fe9ff 45%,#1a7aff) !important}
+  .ring.cyber .torch u{background:radial-gradient(closest-side,rgba(63,233,255,.45),rgba(63,233,255,0)) !important}
+  .ring.cyber .torch b{background:#4a5060 !important}
+  .ring.cyber .banners i{filter:saturate(1.6) brightness(1.2);box-shadow:0 0 10px var(--c)}
+  .ring.cyber .deco{filter:hue-rotate(180deg) saturate(1.5) brightness(.8)}
+  .ring.cyber .deco.crest{filter:hue-rotate(260deg) saturate(2) drop-shadow(0 0 8px #ff2fd0)}
+  .ring.cyber .irontop::after{background:repeating-linear-gradient(90deg,transparent 0 calc(var(--u)*2.4),#ff2fd0 calc(var(--u)*2.4) calc(var(--u)*3),transparent calc(var(--u)*3) calc(var(--u)*6)) !important;filter:drop-shadow(0 0 4px #ff2fd0)}
+  .ring.cyber .dock{background:repeating-linear-gradient(90deg,rgba(63,233,255,.06) 0 2px,transparent 2px calc(var(--u)*10)),linear-gradient(180deg,#1a1030,#0a0618) !important;border-top-color:#3fe9ff !important;box-shadow:0 -3px 14px rgba(63,233,255,.4)}
+  @media (prefers-reduced-motion: reduce){ .ring.cyber .gate i{animation:none} }
   .orb .pk{position:absolute;left:-6px;bottom:-4px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#231c1f;border:2px solid var(--pc)}
   .orb .pk svg{width:15px;height:15px;rotate:0deg;scale:1;animation:none;filter:none}
   .orb .pk.off{border-color:#6b6064}
@@ -919,6 +954,7 @@
       <div class="potions play-only" id="potions" role="group" aria-label="Potions"></div>
       <div class="dock play-only" id="dock"><div class="dpad" id="dpad" role="group" aria-label="Move"></div><div class="actions" id="actions" role="group" aria-label="Your moves"></div></div>
       <div class="chooser play-only" id="chooser" hidden>
+        <div class="arenapick" id="arenaPick"></div>
         <h3 id="chooserTitle">Choose your fighter</h3>
         <p id="chooserSub">Win fights to unlock more of the folk.</p>
         <div class="fgrid" id="fgrid"></div>
@@ -2770,6 +2806,32 @@
      recolor:{'#f0d44d':'#6b4a2c','#2b1e22':'#2a1414','#141112':'#140a0a','#3fd7ea':'#d8432d','#f3efe6':'#ffd2c2'},
      st:{walk:'stomp', speed:.9, enter:'ROAR. The market is closed.', taunt:['Everything is red.','Winter is here.','Capitulate!'], hurt:['A relief rally?!','Green candle?!','GRR!']}, ko:'Fine... bull run... it is.'}
   ];
+  // ===== Aşama 6a: NEON ARENA (2. sezon, sci-fi rakipler) =====
+  const RIVALS2 = [
+    {name:'MEV Bot', base:'Armor', gear:'dagger', wlv:2, hp:115, pow:1.05, neon:true, filter:'hue-rotate(170deg) saturate(1.3)', ai:{power:.3},
+     st:{walk:'glide', speed:1.4, enter:'Your transaction looks... tasty.', taunt:['Front-running you.','Sandwiched!','Gas war? Easy.'], hurt:['Bundle failed!','Reverted!','My profits!']}, ko:'Block... missed.'},
+    {name:'Liquidation Drone', base:'Goggles', gear:'bow', wlv:3, hp:135, pow:1.15, neon:true, filter:'hue-rotate(200deg) saturate(1.5) brightness(1.05)', ai:{kite:.4, power:.25, drain:14},
+     st:{walk:'glide', speed:1.2, enter:'Health factor: dropping.', taunt:['Margin call incoming.','Collateral detected.','Beep. Liquidate.'], hurt:['Rotor damage!','Recalibrating!','Not my oracle!']}, ko:'Position... closed.'},
+    {name:'Rug Puller', base:'Mr. Hat', gear:'spear', wlv:3, hp:165, pow:1.3, neon:true, filter:'hue-rotate(250deg) saturate(1.4)', ai:{power:.3, crash:4, ult:{name:'RUG PULL', line:'Liquidity? Gone.', label:'a Rug Pull', dmg:[20,26]}},
+     st:{walk:'fence', speed:1, enter:'Trust me, it is fully audited.', taunt:['Locked liquidity. Pinky promise.','Devs are doxxed. Kind of.','Wen moon? Never.'], hurt:['My exit!','Not the treasury!','Rugged myself?!']}, ko:'The devs... have left.'},
+    {name:'Botnet Swarm', base:'Honey', gear:'axe', wlv:3, hp:210, pow:1.3, neon:true, filter:'hue-rotate(120deg) saturate(1.6) brightness(.95)', ai:{slow:true, power:.45, regen:12},
+     st:{walk:'stomp', speed:.8, enter:'We are many. We are bots.', taunt:['10,000 wallets, one brain.','Sybil says hi.','Airdrop? Ours.'], hurt:['Node down!','Reconnecting...','Packet loss!']}, ko:'All nodes... offline.'},
+    {name:'The Singularity', base:'Armor', gear:'sword', wlv:4, hp:340, pow:1.6, boss:true, scale:1.25, neon:true, filter:'hue-rotate(290deg) saturate(1.8) brightness(.9)', ai:{power:.35, crash:4, ult:{name:'SYSTEM OVERRIDE', line:'I. AM. THE. CHAIN.', label:'a System Override', dmg:[24,30]}},
+     st:{walk:'stomp', speed:.9, enter:'Humans. So inefficient.', taunt:['Optimizing you out.','I wrote the smart contract.','Resistance is gas.'], hurt:['Anomaly!','Error: emotion detected!','Recompiling!']}, ko:'Shutting... down... gg.'}
+  ];
+  const isNeon = () => G.arena === 'neon';
+  const RV = () => isNeon() ? RIVALS2 : RIVALS;
+  const neonOpen = () => (S.wins || 0) >= 1;
+  // düşman işareti: klasikte şeytan boynuzu, neon'da robot anteni + vizör
+  function robotParts(){
+    return [
+      ['head',3.4,18,23.2,5,'#0a1420',''], ['head',4.2,19.4,21.6,1.8,'#3fe9ff','nol glowv'],
+      ['head',6.4,8,1.4,6.2,'#8a939c',''], ['head',5.6,6.2,3,2.6,'#ff2fd0','nol glowv'],
+      ['head',22.2,8,1.4,6.2,'#8a939c',''], ['head',21.4,6.2,3,2.6,'#ff2fd0','nol glowv'],
+      ['head',9,25.4,12,2.6,'#8a939c',''], ['head',10,26,1.2,1.2,'#e8edf2','nol'], ['head',18.8,26,1.2,1.2,'#e8edf2','nol']
+    ];
+  }
+  const enemyParts = r => r.neon ? robotParts() : hornParts(r.base);
   // oynanabilir karakterler: gizli küçük farklar + kendine özel yetenek
   const CHARS = {
     // tier: güç ve ulti seviyesi (1-5), açılma sırasıyla artar
@@ -2942,13 +3004,13 @@
     hy.classList.toggle('full', (G.p.hype || 0) >= 100);
   }
   function drawStages(){
-    const s = G.stage, r = RIVALS[s];
+    const s = G.stage, r = RV()[s];
     let nodes = '';
-    RIVALS.forEach((x, i) => {
+    RV().forEach((x, i) => {
       if (i) nodes += `<span class="link${i <= s ? ' done' : ''}"></span>`;
       nodes += `<span class="node${x.boss ? ' boss' : ''}${i < s ? ' done' : i === s ? ' now' : ''}" title="${x.name}">${x.boss ? '&#9760;' : i + 1}</span>`;
     });
-    stagesEl.innerHTML = `<span class="stage-lbl">${r.boss ? 'BOSS' : 'STAGE ' + (s + 1)} / ${RIVALS.length}<small>${r.name}</small></span><span class="nodes">${nodes}</span><span class="purse"></span>`;
+    stagesEl.innerHTML = `<span class="stage-lbl">${r.boss ? 'BOSS' : 'STAGE ' + (s + 1)} / ${RV().length}<small>${r.name}</small></span><span class="nodes">${nodes}</span><span class="purse"></span>`;
     drawPurse();
   }
   const staCost = (f, k) => Math.max(0, MOVES[k].sta - (MOVES[k].atk ? (wOf(f).cheap || 0) : 0));
@@ -3206,7 +3268,17 @@
     drawHud(); await wait(700);
     return f.hp <= 0 ? await checkEnd() : false;
   }
-  async function crashMove(att, def){ // Bear Market'in özel hamlesi
+  async function crashMove(att, def){ // boss özel hamlesi (Bear Market, Rug Puller, Singularity)
+    const U = att.ai.ult;
+    if (U){
+      ultName(U.name); speak(att.b, U.line, 1300);
+      const dim = overlay('dim'); dim.style.background = 'rgba(120,20,140,.35)';
+      if (U.name === 'RUG PULL'){ def.shield = false; def.b.el.classList.remove('shielded'); def.sta = Math.max(0, def.sta - 25); toast('<span class="dn">Rug pulled! You lose 25 energy.</span>'); }
+      else toast('<span class="dn">System override! Your controls glitch.</span>');
+      await wait(700);
+      await attackMove(att, def, 'power', {label:U.label, dmg:U.dmg, acc:.85, sta:20});
+      fadeOut(dim); return;
+    }
     ultName('MARKET CRASH'); speak(att.b, 'EVERYTHING. IS. RED.', 1300);
     const dim = overlay('dim'); dim.style.background = 'rgba(120,10,10,.35)';
     Object.keys(MKT).forEach(t => moveStock(t, -rnd(3, 6))); drawTape();
@@ -3456,7 +3528,7 @@
     if (opt.next){
       const r = opt.next, row = document.createElement('span'); row.className = 'nextup';
       row.innerHTML = `<small>NEXT</small>`;
-      const m = miniOf(r.base, hornParts(r.base), r.recolor); row.appendChild(m);
+      const m = miniOf(r.base, enemyParts(r), r.recolor); if (r.filter) m.style.filter = r.filter; row.appendChild(m);
       const nm = document.createElement('b'); nm.textContent = r.name + (r.boss ? ' (BOSS)' : ''); row.appendChild(nm);
       tx.appendChild(row);
     } else tx.textContent = text;
@@ -3487,12 +3559,13 @@
     puff(loser.b, -1); puff(loser.b, 1);
     winner.b.g.armR.animate([{transform:'rotate(0)'},{transform:'rotate(-170deg)'},{transform:'rotate(-170deg)'}],{duration:600,fill:'forwards'});
     speak(winner.b, win ? pick(['Victory, darling.','Well fought. By me.','Tidy.']) : pick(['Too easy.','Next!','Stay down.']), 1800);
-    const last = G.stage === RIVALS.length - 1;
+    const last = G.stage === RV().length - 1;
     // ödül: zaferde tam, yenilgide teselli
     const hb = TIERS[tier()].bonus;
-    const coins = Math.round((win ? 30 + G.stage*20 + (last ? 150 : 0) : 10 + G.stage*5) * (spon('AMZN') ? 1.25 : 1) * (1 + hb));
-    const xp = win ? 25 + G.stage*15 + (last ? 60 : 0) : 10 + G.stage*5;
-    if (win){ S.best = Math.max(S.best, G.stage + 1); if (last) S.wins++; }
+    const nm = isNeon() ? 1.6 : 1;
+    const coins = Math.round((win ? 30 + G.stage*20 + (last ? 150 : 0) : 10 + G.stage*5) * (spon('AMZN') ? 1.25 : 1) * (1 + hb) * nm);
+    const xp = Math.round((win ? 25 + G.stage*15 + (last ? 60 : 0) : 10 + G.stage*5) * nm);
+    if (win){ S.best = Math.max(S.best, G.stage + 1); if (last){ if (isNeon()) S.neonWins = (S.neonWins || 0) + 1; else S.wins++; } }
     else S.kits.hp = Math.max(S.kits.hp, 1); // yeni tura en az bir can kitiyle başla
     const ups = grant(coins, xp);
     const fresh = checkUnlocks();
@@ -3509,14 +3582,14 @@
     if (fresh.length) setTimeout(() => banner('NEW FIGHTER!', 1400), 200);
     await banner(win ? (last ? 'CHAMPION!' : 'VICTORY!') : 'K.O.', 1200);
     if (!win){
-      showResult('lose', 'DEFEATED', `${G.e.name} knocked you out at ${RIVALS[G.stage].boss ? 'the boss fight' : 'stage ' + (G.stage + 1)}.`, 'New run', startTournament, reward);
+      showResult('lose', 'DEFEATED', `${G.e.name} knocked you out at ${RV()[G.stage].boss ? 'the boss fight' : 'stage ' + (G.stage + 1)}.`, 'New run', startTournament, reward);
       log('You were knocked out.');
     } else if (last){
       drawStagesDone();
-      showResult('win', 'CHAMPION!', `You beat The Bear Market with the ${WEAPONS[G.weapon].name}!`, 'New run', startTournament, reward, {champ:true});
+      showResult('win', 'CHAMPION!', `You beat ${RV()[RV().length - 1].name} with the ${WEAPONS[G.weapon].name}!`, 'New run', startTournament, reward, {champ:true});
       log('Tournament complete!');
     } else {
-      const next = RIVALS[G.stage + 1];
+      const next = RV()[G.stage + 1];
       showResult('win', 'VICTORY!', `Next up: ${next.name}${next.boss ? ' (BOSS)' : ''}.`, 'Next fight', () => { G.stage++; startStage(); }, reward, {next});
       log('You won the duel!');
     }
@@ -3536,7 +3609,7 @@
     ];
   }
   function makeRival(r){
-    const e = makeFighter(r.base, r.gear, 1, r.wlv == null ? 1 : r.wlv, hornParts(r.base));
+    const e = makeFighter(r.base, r.gear, 1, r.wlv == null ? 1 : r.wlv, enemyParts(r));
     if (r.recolor || r.scale){
       e.wrap.remove();
       const def = bots.find(x => x.name === r.base);
@@ -3544,11 +3617,12 @@
       const flip = document.createElement('div'); flip.className = 'flip';
       if (r.scale){ flip.style.scale = `-${r.scale} ${r.scale}`; flip.style.transformOrigin = '50% 100%'; }
       wrap.appendChild(flip); ring.appendChild(wrap);
-      const b = build({name:r.name, act:'poke', parts:recolorParts(def.parts, r.recolor || {}).concat(hornParts(r.base), wtParts(r.gear, r.wlv == null ? 1 : r.wlv))}, 3, flip);
+      const b = build({name:r.name, act:'poke', parts:recolorParts(def.parts, r.recolor || {}).concat(enemyParts(r), wtParts(r.gear, r.wlv == null ? 1 : r.wlv))}, 3, flip);
       if ((r.wlv || 0) >= 3 && b.g.wpn) b.g.wpn.classList.add('legend');
       Object.assign(e, {b, wrap}); b.fighter = e;
     }
     e.b.el.setAttribute('aria-label', `Poke ${r.name}`);
+    if (r.filter){ e.b.rig.style.filter = r.filter; e.b.rig.querySelectorAll('.glowv').forEach(x => x.style.filter = 'hue-rotate(0deg)'); }
     Object.assign(e, {name:r.name, st:r.st, ko:r.ko, hp:r.hp, max:r.hp, sta:100, ai:r.ai, pow:r.pow || 1, game:true});
     return e;
   }
@@ -3556,11 +3630,13 @@
   // --- turnuva akışı
   function startTournament(){
     G.tok++; matchTok++; G.on = false; G.busy = true; G.stage = 0; G.weapon = null; G.p = null; G.sponsor = null;
+    if (!G.arena) G.arena = S.arena === 'neon' && neonOpen() ? 'neon' : 'classic';
+    ring.classList.toggle('cyber', isNeon());
     drawTape();
     if (!S.unlocked.includes(S.char)) S.char = 'Tux';
     resultEl.hidden = true; clearRing(); log('');
     drawStages();
-    hud.e.querySelector('b').textContent = RIVALS[0].name; hud.e.querySelector('small').textContent = '';
+    hud.e.querySelector('b').textContent = RV()[0].name; hud.e.querySelector('small').textContent = '';
     hud.e.querySelector('.hp i').style.width = '0%'; hud.e.querySelector('.hp span').textContent = '?'; hud.e.querySelector('.st i').style.width = '0%';
     showFighterPick();
   }
@@ -3577,7 +3653,23 @@
     fighters = [p]; arenaBots = [p.b];
     place(p, ring.clientWidth/2 - bwOf(p)/2); drop(p);
   }
+  function drawArenaPick(){
+    const el = document.getElementById('arenaPick'); if (!el) return;
+    if (!G.arena) G.arena = S.arena === 'neon' && neonOpen() ? 'neon' : 'classic';
+    el.innerHTML = '';
+    [['classic','Classic Arena','Swords & sandals'],['neon','Neon Arena','Bots, drones & AI']].forEach(([k, name, sub]) => {
+      const lock = k === 'neon' && !neonOpen();
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'apick a-' + k + (G.arena === k ? ' on' : ''); b.disabled = lock;
+      b.innerHTML = `<b>${name}</b><small>${lock ? '&#128274; Win 1 tournament' : sub}</small>`;
+      b.setAttribute('aria-pressed', G.arena === k);
+      if (!lock) b.addEventListener('click', () => { G.arena = k; S.arena = k; save(); ring.classList.toggle('cyber', k === 'neon'); drawArenaPick(); drawStages();
+        hud.e.querySelector('b').textContent = RV()[0].name; play(k === 'neon' ? 'laser' : 'clap'); });
+      el.appendChild(b);
+    });
+    ring.classList.toggle('cyber', isNeon());
+  }
   function showFighterPick(){
+    drawArenaPick();
     document.getElementById('chooserTitle').textContent = 'Choose your fighter';
     document.getElementById('chooserSub').textContent = 'Win fights to unlock more of the folk.';
     document.getElementById('fgrid').hidden = false; document.getElementById('wgrid').hidden = true; document.getElementById('chooserBackF').hidden = true;
@@ -3629,7 +3721,7 @@
     drawStages();
     if (old.length) await wait(380);
     if (tok !== G.tok) return;
-    const r = RIVALS[G.stage];
+    const r = RV()[G.stage];
     const p = makeFighter(S.char, G.weapon, -1, effLv(G.weapon), gearParts());
     Object.assign(p, {name:S.char, st:STYLE[S.char], ko:CHARS[S.char].ko, hp:playerMax(), max:playerMax(), sta:100, hype:spon('HOOD') ? 35 : 0, game:true, ai:null, used:{}, shield:false});
     G.mom = {};
