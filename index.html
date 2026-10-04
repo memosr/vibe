@@ -605,6 +605,52 @@
   .side-l .tag{color:#e9d9d2 !important;opacity:1 !important}
   .side-r .tag{color:#5a1a30 !important}
   .disclaim{margin-top:-10px;font-size:12px;opacity:.85} .disclaim a{color:inherit}
+  /* ---- Aşama 1: net giriş tabelası ---- */
+  a.side-sign.play-sign{flex-direction:column;align-items:center;gap:4px;padding:10px 22px 12px;background:#e0643a;color:#fff8f0;border-width:4px;box-shadow:6px 6px 0 var(--line)}
+  a.side-sign.play-sign:hover{background:#f07a4a;scale:1.05}
+  .play-sign b{font-size:34px;letter-spacing:.12em;line-height:1;text-shadow:3px 3px 0 #231c1f;display:flex;align-items:center;gap:10px}
+  .play-sign b i{display:inline-block;width:0;height:0;border-left:20px solid #ffd23f;border-top:13px solid transparent;border-bottom:13px solid transparent;filter:drop-shadow(2px 2px 0 #231c1f);animation:playnudge .8s ease-in-out infinite}
+  .play-sign small{font-size:15px;letter-spacing:.14em;color:#ffe9a8}
+  @keyframes playnudge{0%,100%{translate:0 0}50%{translate:5px 0}}
+  .play-sign::after{content:"";position:absolute;left:50%;bottom:-22px;margin-left:-11px;border-left:11px solid transparent;border-right:11px solid transparent;border-top:14px solid #231c1f;animation:arrowbob 1s ease-in-out infinite}
+  @keyframes arrowbob{0%,100%{translate:0 0}50%{translate:0 6px}}
+  .side-l .side-stage .bot{cursor:pointer}
+  .btn.playbtn{background:#e0643a;color:#fff8f0;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+  .btn.playbtn:hover{background:#f07a4a}
+  @media (min-width:1640px){ .btn.playbtn{display:none} }
+  /* ---- Aşama 1: hamleler ringin içinde (dock) ---- */
+  .arena{--u: clamp(3.2px, min(0.34vw + 0.6px, (100vh - 220px) / 142), 5px)}
+  .ring{--dock:calc(var(--u)*24);height:calc(var(--u)*118 + var(--dock)) !important}
+  .ring .wall{bottom:calc(var(--u)*22 + var(--dock))}
+  .ring .sand{bottom:var(--dock)}
+  .ring .gate{bottom:calc(var(--u)*21 + var(--dock))}
+  .ring .fighter{bottom:calc(var(--u)*6 + var(--dock))}
+  .ring .ironbot{bottom:var(--dock)}
+  .dock{position:absolute;left:0;right:0;bottom:0;height:var(--dock);z-index:8;display:flex;align-items:center;justify-content:center;
+    background:repeating-linear-gradient(90deg,rgba(255,255,255,.03) 0 2px,transparent 2px calc(var(--u)*10)),linear-gradient(180deg,#3a3036,#231c1f 60%,#17121a);border-top:4px solid #111;box-shadow:inset 0 3px 0 rgba(255,255,255,.08)}
+  .dock .dpad{position:static;display:flex;gap:8px;position:absolute;left:calc(var(--u)*11);top:50%;translate:0 -50%}
+  .dock .actions{display:flex !important;gap:calc(var(--u)*3.2);align-items:flex-start;justify-content:center;margin:0}
+  .dock .act{padding:0;gap:2px;width:auto}
+  .dock .act .med{width:calc(var(--u)*14);height:calc(var(--u)*14);border-width:3px}
+  .dock .act .med svg{width:62%;height:62%}
+  .dock .act b{font-size:12px;color:#f3ece2 !important;text-shadow:1px 1px 0 #000}
+  .dock .act .pips{min-height:5px;transform:scale(.8)}
+  .dock .act kbd{display:none}
+  .dock .act .lockov svg{width:20px;height:20px}
+  .dock .act .lockov em{font-size:11px;padding:1px 5px}
+  .dock .act.sp .med::before{inset:-10px} .dock .act.sp .med::after{inset:-14px}
+  .dock .act:disabled b{opacity:.55}
+  @media (max-width:640px){
+    .ring{--dock:calc(var(--u)*30)}
+    .dock .dpad{left:calc(var(--u)*11);top:auto;bottom:calc(100% + 8px);translate:none;gap:6px}
+    .dock .dbtn{width:38px;height:36px;padding:5px}
+    .dock .actions{gap:5px}
+    .dock .act .med{width:42px;height:42px}
+    .dock .act b{font-size:10px}
+    .dock .act .pips{display:none}
+  }
+  .ring .chooser{top:calc(50% - var(--dock) / 2 + 14px);max-height:calc(100% - var(--dock) - 16px)}
+  .ring .result{top:calc(50% - var(--dock) / 2 + 10px)}
   .orb .pk{position:absolute;left:-6px;bottom:-4px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#231c1f;border:2px solid var(--pc)}
   .orb .pk svg{width:15px;height:15px;rotate:0deg;scale:1;animation:none;filter:none}
   .orb .pk.off{border-color:#6b6064}
@@ -746,7 +792,7 @@
 
 <div class="bgfx" aria-hidden="true" id="bgfx"><i class="glowL"></i><i class="glowR"></i><i class="swords"></i><i class="hearts"></i></div>
 <aside class="side side-l" aria-label="Tux, enter the arena">
-  <a class="side-sign" href="#arena"><span class="side-dot"></span>ENTER THE ARENA &rarr;</a>
+  <a class="side-sign play-sign" href="#arena" aria-label="Play Vibe Arena"><b><i></i>PLAY</b><small>ENTER VIBE ARENA</small></a>
   <div class="side-stage" id="sideL"></div>
 </aside>
 <aside class="side side-r" aria-label="Pip, coming soon">
@@ -802,13 +848,13 @@
       <div class="pillar l" aria-hidden="true"><i></i></div>
       <div class="pillar r" aria-hidden="true"><i></i></div>
       <div class="irontop" aria-hidden="true"></div><div class="ironbot" aria-hidden="true"></div>
-      <div class="deco crest" aria-hidden="true" style="left:50%;translate:-50% 0;bottom:calc(var(--u)*57);width:calc(var(--u)*22);height:calc(var(--u)*20)"><svg viewBox="0 0 40 36"><g transform="rotate(38 20 17)"><rect x="18.6" y="-1" width="2.8" height="27" fill="#231c1f"/><rect x="19.2" y="0" width="1.6" height="25" fill="#e8edf2"/><rect x="14" y="24" width="12" height="2.6" fill="#231c1f"/><rect x="14.6" y="24.5" width="10.8" height="1.6" fill="#e9c64a"/><rect x="18.8" y="26.6" width="2.4" height="6" fill="#6b4a2c"/><rect x="18.3" y="32.4" width="3.4" height="2.4" fill="#e9c64a"/></g><g transform="rotate(-38 20 17)"><rect x="18.6" y="-1" width="2.8" height="27" fill="#231c1f"/><rect x="19.2" y="0" width="1.6" height="25" fill="#e8edf2"/><rect x="14" y="24" width="12" height="2.6" fill="#231c1f"/><rect x="14.6" y="24.5" width="10.8" height="1.6" fill="#e9c64a"/><rect x="18.8" y="26.6" width="2.4" height="6" fill="#6b4a2c"/><rect x="18.3" y="32.4" width="3.4" height="2.4" fill="#e9c64a"/></g><polygon points="9,7 31,7 31,21 20,31 9,21" fill="#231c1f"/><polygon points="11,9 29,9 29,20 20,28.2 11,20" fill="#b8402f"/><polygon points="11,9 20,9 20,28.2 11,20" fill="#c9533d"/><polyline points="15,12 20,23 25,12" fill="none" stroke="#e9c64a" stroke-width="2.6"/></svg></div>
-      <div class="deco" aria-hidden="true" style="left:11%;bottom:calc(var(--u)*21);width:calc(var(--u)*17);height:calc(var(--u)*29)"><svg viewBox="0 0 26 44"><rect x="6" y="4" width="1.6" height="40" fill="#231c1f"/><rect x="6.3" y="4.5" width="1" height="39" fill="#9a6a45"/><polygon points="4.8,5.5 6.8,0 8.8,5.5" fill="#231c1f"/><polygon points="5.6,5 6.8,1.5 8,5" fill="#dfe4ea"/><rect x="12.2" y="4" width="1.6" height="40" fill="#231c1f"/><rect x="12.5" y="4.5" width="1" height="39" fill="#9a6a45"/><polygon points="11.0,5.5 13.0,0 15.0,5.5" fill="#231c1f"/><polygon points="11.799999999999999,5 13.0,1.5 14.2,5" fill="#dfe4ea"/><rect x="18.4" y="4" width="1.6" height="40" fill="#231c1f"/><rect x="18.7" y="4.5" width="1" height="39" fill="#9a6a45"/><polygon points="17.2,5.5 19.2,0 21.2,5.5" fill="#231c1f"/><polygon points="18.0,5 19.2,1.5 20.4,5" fill="#dfe4ea"/><rect x="1" y="9" width="24" height="3" fill="#231c1f"/><rect x="1.6" y="9.6" width="22.8" height="1.8" fill="#8a5a3a"/><rect x="1" y="34" width="24" height="3" fill="#231c1f"/><rect x="1.6" y="34.6" width="22.8" height="1.8" fill="#8a5a3a"/><rect x="0" y="6" width="2.6" height="38" fill="#231c1f"/><rect x=".5" y="6.5" width="1.6" height="37" fill="#6f4a31"/><rect x="23.4" y="6" width="2.6" height="38" fill="#231c1f"/><rect x="23.9" y="6.5" width="1.6" height="37" fill="#6f4a31"/></svg></div>
-      <div class="deco" aria-hidden="true" style="right:11%;bottom:calc(var(--u)*21);width:calc(var(--u)*14);height:calc(var(--u)*24)"><svg viewBox="0 0 24 40"><path d="M6 2 Q17 20 6 38" fill="none" stroke="#231c1f" stroke-width="3.8"/><path d="M6 2 Q17 20 6 38" fill="none" stroke="#9a6a45" stroke-width="2"/><line x1="6" y1="2.5" x2="6" y2="37.5" stroke="#f3ece2" stroke-width=".8"/><rect x="16.6" y="5" width="1" height="11" fill="#9a6a45"/><rect x="19.2" y="3" width="1" height="13" fill="#9a6a45"/><rect x="16" y="5" width="2.2" height="3" fill="#e0643a"/><rect x="18.6" y="3" width="2.2" height="3" fill="#2fb58f"/><rect x="15" y="14" width="7" height="23" fill="#231c1f"/><rect x="16" y="15" width="5" height="21" fill="#8a4a2c"/><rect x="16" y="19" width="5" height="1.6" fill="#e9c64a"/><rect x="16" y="31" width="5" height="1.6" fill="#e9c64a"/></svg></div>
-      <div class="deco" aria-hidden="true" style="left:31%;bottom:calc(var(--u)*50);width:calc(var(--u)*11);height:calc(var(--u)*11)"><svg viewBox="0 0 18 18"><circle cx="9" cy="9" r="8.8" fill="#231c1f"/><circle cx="9" cy="9" r="7.6" fill="#2a74bd"/><path d="M9 1.4v15.2M1.4 9h15.2" stroke="rgba(0,0,0,.18)" stroke-width="1.6"/><circle cx="9" cy="9" r="5" fill="none" stroke="#e9c64a" stroke-width="1"/><circle cx="9" cy="9" r="2.3" fill="#231c1f"/><circle cx="9" cy="9" r="1.5" fill="#e9c64a"/></svg></div>
-      <div class="deco" aria-hidden="true" style="right:31%;bottom:calc(var(--u)*50);width:calc(var(--u)*11);height:calc(var(--u)*11)"><svg viewBox="0 0 18 18"><circle cx="9" cy="9" r="8.8" fill="#231c1f"/><circle cx="9" cy="9" r="7.6" fill="#2f9a6a"/><path d="M9 1.4v15.2M1.4 9h15.2" stroke="rgba(0,0,0,.18)" stroke-width="1.6"/><circle cx="9" cy="9" r="5" fill="none" stroke="#e9c64a" stroke-width="1"/><circle cx="9" cy="9" r="2.3" fill="#231c1f"/><circle cx="9" cy="9" r="1.5" fill="#e9c64a"/></svg></div>
-      <div class="torch" aria-hidden="true" style="left:39%;bottom:calc(var(--u)*44)"><u></u><b></b><i></i></div>
-      <div class="torch" aria-hidden="true" style="right:39%;bottom:calc(var(--u)*44)"><u></u><b></b><i></i></div>
+      <div class="deco crest" aria-hidden="true" style="left:50%;translate:-50% 0;bottom:calc(var(--u)*57 + var(--dock));width:calc(var(--u)*22);height:calc(var(--u)*20)"><svg viewBox="0 0 40 36"><g transform="rotate(38 20 17)"><rect x="18.6" y="-1" width="2.8" height="27" fill="#231c1f"/><rect x="19.2" y="0" width="1.6" height="25" fill="#e8edf2"/><rect x="14" y="24" width="12" height="2.6" fill="#231c1f"/><rect x="14.6" y="24.5" width="10.8" height="1.6" fill="#e9c64a"/><rect x="18.8" y="26.6" width="2.4" height="6" fill="#6b4a2c"/><rect x="18.3" y="32.4" width="3.4" height="2.4" fill="#e9c64a"/></g><g transform="rotate(-38 20 17)"><rect x="18.6" y="-1" width="2.8" height="27" fill="#231c1f"/><rect x="19.2" y="0" width="1.6" height="25" fill="#e8edf2"/><rect x="14" y="24" width="12" height="2.6" fill="#231c1f"/><rect x="14.6" y="24.5" width="10.8" height="1.6" fill="#e9c64a"/><rect x="18.8" y="26.6" width="2.4" height="6" fill="#6b4a2c"/><rect x="18.3" y="32.4" width="3.4" height="2.4" fill="#e9c64a"/></g><polygon points="9,7 31,7 31,21 20,31 9,21" fill="#231c1f"/><polygon points="11,9 29,9 29,20 20,28.2 11,20" fill="#b8402f"/><polygon points="11,9 20,9 20,28.2 11,20" fill="#c9533d"/><polyline points="15,12 20,23 25,12" fill="none" stroke="#e9c64a" stroke-width="2.6"/></svg></div>
+      <div class="deco" aria-hidden="true" style="left:11%;bottom:calc(var(--u)*21 + var(--dock));width:calc(var(--u)*17);height:calc(var(--u)*29)"><svg viewBox="0 0 26 44"><rect x="6" y="4" width="1.6" height="40" fill="#231c1f"/><rect x="6.3" y="4.5" width="1" height="39" fill="#9a6a45"/><polygon points="4.8,5.5 6.8,0 8.8,5.5" fill="#231c1f"/><polygon points="5.6,5 6.8,1.5 8,5" fill="#dfe4ea"/><rect x="12.2" y="4" width="1.6" height="40" fill="#231c1f"/><rect x="12.5" y="4.5" width="1" height="39" fill="#9a6a45"/><polygon points="11.0,5.5 13.0,0 15.0,5.5" fill="#231c1f"/><polygon points="11.799999999999999,5 13.0,1.5 14.2,5" fill="#dfe4ea"/><rect x="18.4" y="4" width="1.6" height="40" fill="#231c1f"/><rect x="18.7" y="4.5" width="1" height="39" fill="#9a6a45"/><polygon points="17.2,5.5 19.2,0 21.2,5.5" fill="#231c1f"/><polygon points="18.0,5 19.2,1.5 20.4,5" fill="#dfe4ea"/><rect x="1" y="9" width="24" height="3" fill="#231c1f"/><rect x="1.6" y="9.6" width="22.8" height="1.8" fill="#8a5a3a"/><rect x="1" y="34" width="24" height="3" fill="#231c1f"/><rect x="1.6" y="34.6" width="22.8" height="1.8" fill="#8a5a3a"/><rect x="0" y="6" width="2.6" height="38" fill="#231c1f"/><rect x=".5" y="6.5" width="1.6" height="37" fill="#6f4a31"/><rect x="23.4" y="6" width="2.6" height="38" fill="#231c1f"/><rect x="23.9" y="6.5" width="1.6" height="37" fill="#6f4a31"/></svg></div>
+      <div class="deco" aria-hidden="true" style="right:11%;bottom:calc(var(--u)*21 + var(--dock));width:calc(var(--u)*14);height:calc(var(--u)*24)"><svg viewBox="0 0 24 40"><path d="M6 2 Q17 20 6 38" fill="none" stroke="#231c1f" stroke-width="3.8"/><path d="M6 2 Q17 20 6 38" fill="none" stroke="#9a6a45" stroke-width="2"/><line x1="6" y1="2.5" x2="6" y2="37.5" stroke="#f3ece2" stroke-width=".8"/><rect x="16.6" y="5" width="1" height="11" fill="#9a6a45"/><rect x="19.2" y="3" width="1" height="13" fill="#9a6a45"/><rect x="16" y="5" width="2.2" height="3" fill="#e0643a"/><rect x="18.6" y="3" width="2.2" height="3" fill="#2fb58f"/><rect x="15" y="14" width="7" height="23" fill="#231c1f"/><rect x="16" y="15" width="5" height="21" fill="#8a4a2c"/><rect x="16" y="19" width="5" height="1.6" fill="#e9c64a"/><rect x="16" y="31" width="5" height="1.6" fill="#e9c64a"/></svg></div>
+      <div class="deco" aria-hidden="true" style="left:31%;bottom:calc(var(--u)*50 + var(--dock));width:calc(var(--u)*11);height:calc(var(--u)*11)"><svg viewBox="0 0 18 18"><circle cx="9" cy="9" r="8.8" fill="#231c1f"/><circle cx="9" cy="9" r="7.6" fill="#2a74bd"/><path d="M9 1.4v15.2M1.4 9h15.2" stroke="rgba(0,0,0,.18)" stroke-width="1.6"/><circle cx="9" cy="9" r="5" fill="none" stroke="#e9c64a" stroke-width="1"/><circle cx="9" cy="9" r="2.3" fill="#231c1f"/><circle cx="9" cy="9" r="1.5" fill="#e9c64a"/></svg></div>
+      <div class="deco" aria-hidden="true" style="right:31%;bottom:calc(var(--u)*50 + var(--dock));width:calc(var(--u)*11);height:calc(var(--u)*11)"><svg viewBox="0 0 18 18"><circle cx="9" cy="9" r="8.8" fill="#231c1f"/><circle cx="9" cy="9" r="7.6" fill="#2f9a6a"/><path d="M9 1.4v15.2M1.4 9h15.2" stroke="rgba(0,0,0,.18)" stroke-width="1.6"/><circle cx="9" cy="9" r="5" fill="none" stroke="#e9c64a" stroke-width="1"/><circle cx="9" cy="9" r="2.3" fill="#231c1f"/><circle cx="9" cy="9" r="1.5" fill="#e9c64a"/></svg></div>
+      <div class="torch" aria-hidden="true" style="left:39%;bottom:calc(var(--u)*44 + var(--dock))"><u></u><b></b><i></i></div>
+      <div class="torch" aria-hidden="true" style="right:39%;bottom:calc(var(--u)*44 + var(--dock))"><u></u><b></b><i></i></div>
       <div class="banners" aria-hidden="true"><i style="--c:#e0643a"></i><i style="--c:#2fb58f"></i><i style="--c:#7c5cff"></i><i style="--c:#f0d44d"></i><i style="--c:#2a74bd"></i><i style="--c:#ff5c86"></i></div>
       <div class="ring-hint watch-only" id="ringHint">Pick two fighters above</div>
       <div class="hud play-only" id="hud">
@@ -818,7 +864,7 @@
       </div>
       <div class="mkt-toast play-only" id="mktToast" hidden aria-live="polite"></div>
       <div class="potions play-only" id="potions" role="group" aria-label="Potions"></div>
-      <div class="dpad play-only" id="dpad" role="group" aria-label="Move"></div>
+      <div class="dock play-only" id="dock"><div class="dpad" id="dpad" role="group" aria-label="Move"></div><div class="actions" id="actions" role="group" aria-label="Your moves"></div></div>
       <div class="chooser play-only" id="chooser" hidden>
         <h3 id="chooserTitle">Choose your fighter</h3>
         <p id="chooserSub">Win fights to unlock more of the folk.</p>
@@ -836,7 +882,6 @@
         <div class="res-btns"><button class="btn primary" type="button" id="resAgain">Fight again</button><button class="btn" type="button" id="resCamp">Camp &amp; shop</button></div>
       </div>
     </div>
-    <div class="actions play-only" id="actions" role="group" aria-label="Your moves"></div>
     <p class="log play-only" id="log" aria-live="polite"></p>
     <p class="arena-foot play-only">Tip: hitting, getting hit and taunting fill your purple Hype bar. When it glows, unleash your special. Move with the arrow buttons or arrow keys.</p>
     <p class="arena-foot watch-only">Gear is random every match: spear, axe, bow, dagger or sword. Specials recharge in a few seconds. Tap too much and they get grumpy. Nobody wins. Everybody gets bonked.</p>
@@ -853,6 +898,7 @@
       <div class="found-row">
         <span class="found-label" aria-live="polite" id="foundLabel">Personalities found <span id="count">0</span>/9</span>
         <div class="w3 w3main" id="w3main" aria-live="polite"></div>
+        <a class="btn playbtn" href="#arena">&#9654; Play Vibe Arena</a>
         <button class="btn" id="gifBtn" type="button">Make GIF</button>
         <button class="btn" id="sound" type="button" aria-pressed="true">Sound: on</button>
       </div>
@@ -1548,6 +1594,8 @@
     const tux = build({name:'Tux', act:'slash', parts:tuxDef.parts.concat(SWORD)}, 2, document.getElementById('sideL'));
     const pip = build({name:'Pip', act:'love', parts:pipDef.parts}, 5, document.getElementById('sideR'));
     sideBots = [tux, pip];
+    tux.el.setAttribute('aria-label', 'Play Vibe Arena');
+    tux.el.addEventListener('click', () => { if (gifMode === 'idle') setTimeout(() => { location.hash = '#arena'; }, 500); });
     // kendi kendine hareket
     setInterval(() => {
       if (reduce || document.hidden || !tux.el.offsetWidth) return;
