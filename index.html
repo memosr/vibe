@@ -755,6 +755,15 @@
   .map.lock em{background:#6b6064}
   .map:disabled{cursor:default}
   @media (max-width:640px){ .map{padding:3px} .map span{display:none} .map em{width:28px;height:28px;font-size:14px} .maps .mlink{flex:1 1 6px} .map.cur{box-shadow:2px 2px 0 var(--line),0 0 0 2px #ffc53d} }
+  /* ---- 6b: biyonik silahlar ve vibe hamleleri ---- */
+  .railbeam{background:linear-gradient(180deg,transparent,#ff8ae8 25%,#fff 50%,#ff8ae8 75%,transparent);box-shadow:0 0 16px #ff2fd0,0 0 4px #fff;border-radius:4px;z-index:7}
+  .zap{border-radius:50%;border:3px dashed #ffd23f;box-shadow:0 0 14px #ffd23f}
+  .rugfx{background:repeating-linear-gradient(90deg,#d8432d 0 8px,#ffd23f 8px 12px);border:2px solid var(--line);z-index:3}
+  .bot.vuln .rig{filter:drop-shadow(0 0 6px #ff2fd0)}
+  .bot.diamond::after{content:"";position:absolute;left:calc(var(--u)*-4);right:calc(var(--u)*-4);top:calc(var(--u)*-2);bottom:calc(var(--u)*-3);
+    clip-path:polygon(50% 0,100% 30%,85% 100%,15% 100%,0 30%);background:linear-gradient(135deg,rgba(159,243,255,.15),rgba(63,233,255,.35));border:0;box-shadow:inset 0 0 20px #9ff3ff;animation:shieldp .8s ease-in-out infinite alternate;pointer-events:none}
+  .potions{flex-wrap:wrap;max-width:calc(100% - var(--u)*24)}
+  .wgrid{grid-template-columns:repeat(auto-fill,minmax(104px,1fr)) !important}
   .orb .pk{position:absolute;left:-6px;bottom:-4px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#231c1f;border:2px solid var(--pc)}
   .orb .pk svg{width:15px;height:15px;rotate:0deg;scale:1;animation:none;filter:none}
   .orb .pk.off{border-color:#6b6064}
@@ -2009,6 +2018,34 @@
     ]
   };
   const MAXLV = 4;
+  // --- Aşama 6b: biyonik silahlar (seviye 0-4)
+  (() => {
+    const LC = ['#7ab8d8','#3fe9ff','#5fff9a','#ff2fd0','#ff3048'];
+    WT.laser = [0,1,2,3,4].map(lv => {
+      const len = 13 + lv*2.2, c = LC[lv], top = 35.8 - len;
+      const P = [[27.5,37,2.2,4.8,'#2a2d33',''],[26.2,35.8,4.8,1.4,lv >= 3 ? '#e9c64a' : '#8a939c',''],[27.9,38.2,1.4,.8,c,'nol'],[27.9,40,1.4,.8,c,'nol'],
+        [27.6,top,2,len,c,lv ? 'glowb' : ''],[28.25,top + .6,.7,len - 1.2,'#ffffff','nol'],[27.9,top - .8,1.4,1,c,'']];
+      if (lv >= 4) P.push([25,top + 4,1,1,TW,'nol twinkle'],[31,top + 9,1,1,TW,'nol twinkle']);
+      return P;
+    });
+    const PC = ['#5fae1a','#ffd23f','#ffb13a','#3fe9ff','#ff2fd0'];
+    WT.plasma = [0,1,2,3,4].map(lv => {
+      const c = PC[lv], P = [[25.4,35.6,8 + lv*.4,3.4,'#3a3f4a',''],[26,36.1,7,.9,'#6b737b','nol'],[33.2 + lv*.4,36.3,3.6,2,'#8a939c',''],[36.6 + lv*.4,36.1,1,2.4,'#2a2d33',''],
+        [26.4,38.8,2,4,'#2a2d33',''],[28.4,34.4,3.2,1.4,c,lv ? 'glowb' : ''],[29.4,38.9,1,1.6,'#2a2d33','']];
+      if (lv >= 2) P.push([31.6,34.6,1.2,1,c,'nol']);
+      if (lv >= 3) P.push([37.7 + lv*.4,36.6,1,1.4,c,'glowb']);
+      if (lv >= 4) P.push([30,32.6,1,1,TW,'nol twinkle'],[35,40,1,1,TW,'nol twinkle']);
+      return P;
+    });
+    const RC = ['#9aa3ad','#3fe9ff','#7c5cff','#ff2fd0','#ffd23f'];
+    WT.rail = [0,1,2,3,4].map(lv => {
+      const c = RC[lv], L = 10 + lv, P = [[23.6,35.4,7,3.6,'#2a2d33',''],[24.2,35.9,6,1,'#4a5060','nol'],[30.6,35.5,L,.9,'#8a939c',''],[30.6,37.6,L,.9,'#8a939c',''],
+        [24.6,38.8,2,4.2,'#1a1c20',''],[22.4,36,1.4,2.6,'#4a5060','']];
+      for (let i = 0; i < 2 + lv; i++) P.push([31.4 + i*2.2,36.5,1.2,1,c,lv ? 'glowb' : 'nol']);
+      if (lv >= 4) P.push([33,33.6,1,1,TW,'nol twinkle'],[38,40,1,1,TW,'nol twinkle']);
+      return P;
+    });
+  })();
   const wtParts = (gear, lv) => WT[gear][Math.max(0, Math.min(MAXLV, lv))].map(p => ['wpn', ...p]);
   // silah parçalarından ikon üretir (dükkân ve seçim ekranı için)
   function wIcon(gear, lv){
@@ -2046,6 +2083,7 @@
 
   // --- piksel çizimler
   const svgPx = (vb, rects) => `<svg viewBox="${vb}" shape-rendering="crispEdges">${rects.map(([x,y,w,h,c]) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${c}"/>`).join('')}</svg>`;
+  const PLASMA = svgPx('0 0 10 6', [[2,1,6,4,'#ffd23f'],[1,2,8,2,'#ffd23f'],[3,2,4,2,'#ffffff'],[0,2,1,2,'#ff8a1a']]);
   const ARROW = svgPx('0 0 12 3', [[2,1,8,1,'#8a5a3a'],[10,0,1,3,'#9aa3ad'],[11,1,1,1,'#9aa3ad'],[0,0,2,1,'#e0643a'],[0,2,2,1,'#e0643a']]);
   const POT   = svgPx('0 0 8 8', [[0,2,8,6,'#231c1f'],[1,3,6,4,'#e0a030'],[2,4,4,2,'#fff3c4'],[2,1,4,1,'#8a5a3a'],[5,0,1,3,'#f5c542']]);
   const ANVIL = svgPx('0 0 12 8', [[0,0,12,3,'#3d4247'],[1,0,10,1,'#6b737b'],[3,3,6,2,'#3d4247'],[1,5,10,3,'#3d4247']]);
@@ -2796,17 +2834,23 @@
     hpkit:  {key:'8', label:'Health', pips:0, sta:0, kit:'hp', icon:I([[1,2,10,9,INK],[2,3,8,7,'#f6f1ea'],[5,4,2,5,'#d8432d'],[3,5,6,2,'#d8432d'],[4,1,4,1,INK]])},
     shield: {key:'q', label:'Shield', pips:0, sta:15, spell:true, icon:svgPx('0 0 16 16', [[3,1,10,1,INK],[2,2,12,8,INK],[3,10,10,2,INK],[5,12,6,2,INK],[7,14,2,1,INK],[3,2,10,8,'#6fd3ff'],[4,10,8,2,'#6fd3ff'],[6,12,4,2,'#3aa3d8'],[4,3,3,4,'#e0f6ff'],[8,4,1,6,'#3aa3d8']])},
     bolt:   {key:'w', label:'Bolt', pips:0, sta:20, spell:true, icon:svgPx('0 0 16 16', [[8,0,5,1,INK],[7,1,5,3,INK],[5,4,8,2,INK],[4,6,5,2,INK],[7,6,6,2,INK],[6,8,4,3,INK],[5,11,3,3,INK],[4,14,2,2,INK],[8,1,3,3,'#ffd23f'],[6,4,6,2,'#ffd23f'],[8,6,4,2,'#ffd23f'],[7,8,2,3,'#ffd23f'],[6,11,1,3,'#fff3b0'],[9,1,1,2,'#fff8d0']])},
+    rug:    {key:'r', label:'Rug Pull', pips:0, sta:20, spell:true, icon:svgPx('0 0 16 16', [[1,5,14,7,INK],[2,6,12,5,'#d8432d'],[2,7,12,1,'#ffd23f'],[2,9,12,1,'#ffd23f'],[0,6,1,1,INK],[0,8,1,1,INK],[0,10,1,1,INK],[15,6,1,1,INK],[15,8,1,1,INK],[15,10,1,1,INK],[11,1,3,4,INK],[12,2,1,3,'#fff']])},
+    diamond:{key:'t', label:'Diamond Hands', pips:0, sta:25, spell:true, icon:svgPx('0 0 16 16', [[4,2,8,2,INK],[2,4,12,3,INK],[3,7,10,2,INK],[5,9,6,2,INK],[7,11,2,2,INK],[5,3,6,1,'#e0fbff'],[3,4,10,3,'#9ff3ff'],[4,7,8,2,'#3fe9ff'],[6,9,4,2,'#1aa3d8'],[7,4,2,3,'#ffffff']])},
+    moon:   {key:'y', label:'To the Moon', pips:0, sta:30, spell:true, icon:svgPx('0 0 16 16', [[7,0,2,2,INK],[6,2,4,8,INK],[4,8,2,4,INK],[10,8,2,4,INK],[7,10,2,4,'#ff8a1a'],[7,2,2,7,'#e8edf2'],[7,4,2,2,'#3fe9ff'],[5,9,1,2,'#d8432d'],[10,9,1,2,'#d8432d'],[7,13,2,3,'#ffd23f']])},
     heal:   {key:'e', label:'Heal', pips:0, sta:25, spell:true, icon:svgPx('0 0 16 16', [[5,1,6,14,INK],[1,5,14,6,INK],[6,2,4,12,'#7ee07a'],[2,6,12,4,'#7ee07a'],[7,3,2,10,'#c8ffc0'],[3,7,10,2,'#c8ffc0']])},
     enkit:  {key:'9', label:'Energy', pips:0, sta:0, kit:'en', icon:I([[3,0,6,2,INK],[2,2,8,10,INK],[3,3,6,8,'#ffe27a'],[6,4,2,2,'#e9b43a'],[5,6,2,2,'#e9b43a'],[4,8,2,2,'#e9b43a']])}
   };
   // silahların gizli özellikleri; oyuncu sadece kısa bir tarif görür
   const W16 = r => svgPx('0 0 16 16', r);
   const WEAPONS = {
+    laser:  {name:'HOOD Laser Sword', tk:'HOOD', trait:'Burns through armor', range:1, dmg:1.35, acc:.02, crit:.08, bionic:true, icon:''},
+    plasma: {name:'COIN Plasma Blaster', tk:'COIN', trait:'Energy shots from afar', range:3, dmg:1.15, acc:.04, ranged:true, proj:'plasma', bionic:true, icon:''},
+    rail:   {name:'PLTR Railgun', tk:'PLTR', trait:'Hits from anywhere', range:6, dmg:1.3, acc:-.04, ranged:true, proj:'rail', bionic:true, icon:''},
     sword:  {name:'TSLA Sword',  tk:'TSLA', trait:'Volatile: big crits', range:1, dmg:1,   acc:0,   crit:.07, icon:W16([[7,0,2,10,'#dfe4ea'],[8,0,1,10,'#fff'],[4,10,8,2,'#e9c64a'],[7,12,2,3,'#6b4a2c'],[6,15,4,1,'#e9c64a']])},
     spear:  {name:'NVDA Spear',  tk:'NVDA', trait:'Long reach',     range:2, dmg:1.08, acc:0,   icon:W16([[7,4,2,12,'#8a5a3a'],[6,1,4,3,'#dfe4ea'],[7,0,2,1,'#dfe4ea'],[6,4,4,1,'#d8432d']])},
     dagger: {name:'MSFT Dagger', tk:'MSFT', trait:'Quick and sure', range:1, dmg:.85, acc:.05, cheap:3, quickBonus:2, icon:W16([[7,2,2,7,'#dfe4ea'],[7,1,1,1,'#dfe4ea'],[5,9,6,1,'#9aa3ad'],[7,10,2,4,'#6b4a2c'],[6,14,4,1,'#9aa3ad']])},
     axe:    {name:'AAPL Axe',    tk:'AAPL', trait:'Heavy hitter',   range:1, dmg:1.25, acc:-.06, icon:''},
-    bow:    {name:'AMZN Bow',    tk:'AMZN', trait:'Hits from afar', range:3, dmg:.85, acc:0,   close:.15, icon:W16([[4,1,2,2,'#8a5a3a'],[5,3,2,3,'#8a5a3a'],[6,6,2,4,'#8a5a3a'],[5,10,2,3,'#8a5a3a'],[4,13,2,2,'#8a5a3a'],[4,2,1,12,'#f3ece2'],[1,7,11,1,'#8a5a3a'],[12,6,2,3,'#9aa3ad'],[0,6,2,1,'#e0643a'],[0,8,2,1,'#e0643a']])}
+    bow:    {name:'AMZN Bow',    tk:'AMZN', trait:'Hits from afar', range:3, dmg:.85, acc:0, ranged:true,   close:.15, icon:W16([[4,1,2,2,'#8a5a3a'],[5,3,2,3,'#8a5a3a'],[6,6,2,4,'#8a5a3a'],[5,10,2,3,'#8a5a3a'],[4,13,2,2,'#8a5a3a'],[4,2,1,12,'#f3ece2'],[1,7,11,1,'#8a5a3a'],[12,6,2,3,'#9aa3ad'],[0,6,2,1,'#e0643a'],[0,8,2,1,'#e0643a']])}
   };
   // turnuva: 4 rakip + boss, her birinin kendi huyu var
   const RIVALS = [
@@ -2874,6 +2918,9 @@
     bubble: svgPx('0 0 4 4', [[1,0,2,4,'#7dff5a'],[0,1,4,2,'#7dff5a'],[1,1,1,1,'#e8ffe0']])
   };
   const PERK = {
+    laser:  {tag:'SEAR',       color:'#3fe9ff', icon:svgPx('0 0 8 8', [[3,0,2,8,'#3fe9ff'],[2,1,4,6,'#9ff3ff'],[3,2,2,4,'#ffffff']]), dot:{n:3, dmg:6}},
+    plasma: {tag:'SHOCK',      color:'#ffd23f', icon:svgPx('0 0 8 8', [[4,0,3,1,'#ffd23f'],[3,1,3,2,'#ffd23f'],[1,3,6,1,'#ffd23f'],[3,4,3,1,'#ffd23f'],[2,5,2,2,'#ffd23f'],[1,7,1,1,'#fff3b0']]), stun:1},
+    rail:   {tag:'OVERCHARGE', color:'#ff2fd0', icon:svgPx('0 0 8 8', [[0,3,8,2,'#ff2fd0'],[1,2,6,4,'#ff8ae8'],[3,0,2,8,'#ff2fd0'],[3,3,2,2,'#ffffff']]), crit:true, critMult:2.5},
     bow:    {tag:'BURN',      color:'#ff7a1a', icon:PICON.flame, dot:{n:3, dmg:5}},
     sword:  {tag:'BLEED',     color:'#ff3048', icon:PICON.drop,  dot:{n:3, dmg:4}},
     spear:  {tag:'POISON',    color:'#7dff5a', icon:PICON.skull, dot:{n:4, dmg:3}},
@@ -2881,8 +2928,8 @@
     axe:    {tag:'LIFESTEAL', color:'#ff5c86', icon:PICON.heart, steal:.4}
   };
   // silahlar sırayla açılır: hançer açık, sonra altınla (yay 100, kılıç 200, mızrak 300, balta 350)
-  const WORDER = ['dagger', 'bow', 'sword', 'spear', 'axe'];
-  const WUNLOCK = {dagger:{}, bow:{price:100}, sword:{price:200}, spear:{price:300}, axe:{price:350}};
+  const WORDER = ['dagger', 'bow', 'sword', 'spear', 'axe', 'laser', 'plasma', 'rail'];
+  const WUNLOCK = {dagger:{}, bow:{price:100}, sword:{price:200}, spear:{price:300}, axe:{price:350}, laser:{price:500, bionic:true}, plasma:{price:700, bionic:true}, rail:{price:900, bionic:true}};
   const ownsW = k => S.owned.includes(k);
   const nextW = () => WORDER.find(k => !ownsW(k));
   const PLAYER = {hp:100};
@@ -2898,7 +2945,8 @@
   const MKT = {
     TSLA:{color:'#e0482a', base:40, weapon:'sword'},  NVDA:{color:'#5fae1a', base:55, weapon:'spear'},
     AAPL:{color:'#8a939c', base:35, weapon:'axe'}, MSFT:{color:'#2a74bd', base:45, weapon:'dagger'},
-    AMZN:{color:'#e08a1a', base:38, weapon:'bow'},    HOOD:{color:'#2f9a6a', base:20}
+    AMZN:{color:'#e08a1a', base:38, weapon:'bow'},    HOOD:{color:'#2f9a6a', base:20, weapon:'laser'},
+    COIN:{color:'#2a5bd8', base:48, weapon:'plasma'}, PLTR:{color:'#9a9aa8', base:30, weapon:'rail'}
   };
   const SPONSORS = {
     TSLA:{perk:'More critical hits'}, NVDA:{perk:'Hit harder'}, AAPL:{perk:'Take less damage'},
@@ -2911,6 +2959,7 @@
   if (S.up.shield != null){ S.up.axe = Math.max(S.up.axe || 0, S.up.shield); delete S.up.shield; save(); }
   if (S.up.axe == null) S.up.axe = 0;
   if (!S.gear) S.gear = {helm:0, glove:0, boot:0};
+  ['sword','spear','dagger','axe','bow','laser','plasma','rail'].forEach(k => { if (S.up[k] == null) S.up[k] = 0; });
   if (!S.spells) S.spells = {};
   // --- Aşama 3: ekipman (kask, eldiven, bot) ve büyüler
   const EQUIP = {
@@ -2933,7 +2982,10 @@
   const SPELLS = {
     shield: {label:'Shield', price:150, sta:15, key:'q', ring:'#6fd3ff', in1:'#123a5a', in2:'#071a2a'},
     bolt:   {label:'Bolt',   price:250, sta:20, key:'w', ring:'#ffd23f', in1:'#4a3a10', in2:'#1a1406', dmg:[10,14]},
-    heal:   {label:'Heal',   price:300, sta:25, key:'e', ring:'#7ee07a', in1:'#16401a', in2:'#08180a', heal:25}
+    heal:   {label:'Heal',   price:300, sta:25, key:'e', ring:'#7ee07a', in1:'#16401a', in2:'#08180a', heal:25},
+    rug:     {label:'Rug Pull',      price:400, sta:20, key:'r', vibe:true, ring:'#ff2fd0', in1:'#4a0a3a', in2:'#1a0414'},
+    diamond: {label:'Diamond Hands', price:450, sta:25, key:'t', vibe:true, ring:'#9ff3ff', in1:'#0a3a4a', in2:'#04161c'},
+    moon:    {label:'To the Moon',   price:600, sta:30, key:'y', vibe:true, ring:'#ffd23f', in1:'#3a2a6a', in2:'#140a2a', dmg:[18,24]}
   };
   if (!Array.isArray(S.owned) || (S.owned.length === 1 && WORDER.some(k => k !== 'dagger' && (S.up[k] || 0) > 0))) S.owned = ['dagger', ...WORDER.filter(k => k !== 'dagger' && (S.up[k] || 0) > 0)];
   // ================= $FOLK HOLDER SİSTEMİ =================
@@ -2950,7 +3002,7 @@
     {name:'Silver', min:50000,    bonus:.25, c:'#c9d3dc', hi:'#ffffff', dk:'#7a8894'},
     {name:'Gold',   min:150000,  bonus:.50, c:'#ffc53d', hi:'#fff3b0', dk:'#c7901f'}
   ];
-  const WTIER = {sword:1, spear:2, axe:3};                 // silahı kullanmak için
+  const WTIER = {sword:1, spear:2, axe:3, laser:1, plasma:2, rail:3};                 // silahı kullanmak için
   const MOVE_TIER = {strike:1, power:2, special:3};         // skili kullanmak için
   const LV_TIER = L => L <= 0 ? 0 : L <= 2 ? 1 : L === 3 ? 2 : 3; // silah seviyesi için
   const W3 = {addr:null, raw:0n, bal:0, dec:18, tier:0, chainOk:false, busy:false};
@@ -3157,7 +3209,7 @@
   async function attackMove(att, def, k, over){
     const m = {...MOVES[k], ...(over || {})}, k2 = u(att.b), wa = wOf(att), wd = wOf(def), d = dist();
     att.sta -= over ? (over.sta || 0) : staCost(att, k);
-    const ranged = att.gear === 'bow' && d > 1;
+    const ranged = !!wa.ranged && d > 1;
     // animasyon
     if (ranged){
       arm(att, [0, -90, -90, -90, 0], 900); aim(att, [0, 90, 90, 90, 0], 900);
@@ -3166,7 +3218,15 @@
       await wait(430);
       const from = ringPt(att.b.g.wpn || att.b.g.armR, .5, .5), to = headPt(def);
       trail(from, to, 360);
-      const a = await throwAt(ARROW, from, to, {w:9, h:2.2, dur:360, flip:att.face < 0}); a.remove();
+      if (wa.proj === 'rail'){
+        const len = Math.hypot(to.x - from.x, to.y - from.y), ang = Math.atan2(to.y - from.y, to.x - from.x)*180/Math.PI;
+        const bm = fxDiv('railbeam', {x:(from.x + to.x)/2, y:(from.y + to.y)/2}, len, k2*1.6); bm.style.rotate = ang + 'deg';
+        bm.animate([{scale:'0 1', opacity:1},{scale:'1 1', opacity:1, offset:.25},{scale:'1 .2', opacity:0}],{duration:420}).finished.then(() => bm.remove());
+        play('laser'); shakeRing(5); await wait(120);
+      } else if (wa.proj === 'plasma'){
+        play('laser');
+        const a = await throwAt(PLASMA, from, to, {w:5, h:3, dur:300, flip:att.face < 0}); a.remove();
+      } else { const a = await throwAt(ARROW, from, to, {w:9, h:2.2, dur:360, flip:att.face < 0}); a.remove(); }
     } else if (k === 'quick'){ arm(att, [0, -85, 0], 320); aim(att, [0, 180, 0], 320); att.b.rig.animate([{transform:T()},{transform:T(k2*3,0)},{transform:T()}],{duration:320}); await wait(170); }
     else if (k === 'strike'){ arm(att, [0, -160, 25, 0], 620); aim(att, [0, 150, 60, 0], 620); await wait(360); }
     else {
@@ -3191,15 +3251,18 @@
     }
     let dmg = rnd(m.dmg[0], m.dmg[1]) + (k === 'quick' ? (wa.quickBonus || 0) : 0);
     dmg = dmg * (wa.dmg || 1) * dmgMult(att) * (1 - (wd.guard || 0)) * takenMult(def) * (1 + (G.mom[wa.tk] || 0)*1.5);
-    if (crit) dmg *= perk && perk.crit ? 2 : 1.6;
+    if (crit) dmg *= perk && perk.crit ? (perk.critMult || 2) : 1.6;
+    if (def.vuln > 0) dmg *= 1.5;
     dmg = Math.max(1, Math.round(dmg));
-    if (def.shield){ dmg = Math.max(1, Math.round(dmg*.35)); def.shield = false; def.b.el.classList.remove('shielded'); setTimeout(() => popText('BLOCKED', {x:pt.x, y:pt.y - k2*20}, '#6fd3ff', 6), 120); play('clang'); }
+    if (def.diamond) dmg = 0;
+    if (def.diamond){ setTimeout(() => popText('IMMUNE', {x:pt.x, y:pt.y - k2*20}, '#9ff3ff', 6.5), 100); play('clang'); burst(pt, ['#9ff3ff','#fff'], 12, 12, 500); }
+    if (def.shield && dmg > 0){ dmg = Math.max(1, Math.round(dmg*.35)); def.shield = false; def.b.el.classList.remove('shielded'); setTimeout(() => popText('BLOCKED', {x:pt.x, y:pt.y - k2*20}, '#6fd3ff', 6), 120); play('clang'); }
     def.hp -= dmg;
     if (mine(att)) addHype(k === 'power' ? 20 : 14); else if (mine(def)) addHype(10);
     play('bonk'); hitFlash(def); cheer(k === 'power' || crit ? 1400 : 700);
     hitFx(k, pt, att, def);
     if (wd.guard){ const sp = ringPt(def.b.g.armR, .5, .6); burst(sp, ['#ffd772'], 5, 6, 300); }
-    if (crit && perk && perk.crit) perkProc(perk, def, pt);
+    if (crit && perk && perk.crit) perkProc(perk.critMult ? {...perk} : perk, def, pt);
     else if (crit) popText('CRIT!', {x:pt.x, y:pt.y - k2*14}, '#ffd772', 6);
     popText(`-${dmg}`, {x:pt.x, y:pt.y - k2*6}, '#ff8a7a', crit || k === 'power' ? 8 : 6);
     stars(def, k === 'power' ? 4 : 2);
@@ -3211,7 +3274,7 @@
       setTimeout(() => popText('GAS FEE', {x:pt.x, y:pt.y + k2*4}, '#bfe6ff', 4), 250);
     }
     if (perk && !perk.crit) applyPerk(perk, att, def, dmg, pt);
-    log(`${att.name} lands ${over ? over.label : 'a ' + m.label.toLowerCase()} for ${dmg}${crit ? ' (critical!)' : ''}${perk && !perk.crit ? ' ' + perk.tag.toLowerCase() + '!' : ''}.`);
+    if (def.diamond) log(`Diamond Hands! ${def.name} takes no damage.`); else log(`${att.name} lands ${over ? over.label : 'a ' + m.label.toLowerCase()} for ${dmg}${crit ? ' (critical!)' : ''}${perk && !perk.crit ? ' ' + perk.tag.toLowerCase() + '!' : ''}.`);
     drawHud(); await wait(520);
   }
   // --- 3 vuruşun kendi efekti
@@ -3256,7 +3319,7 @@
   }
   function dotFx(f, kind){
     const pt = headPt(f);
-    if (kind === 'BURN') floaty(f.b, PICON.flame, {n:4, size:3.2, dur:900, rise:14, y:8, spread:16, stagger:90});
+    if (kind === 'BURN' || kind === 'SEAR') floaty(f.b, kind === 'SEAR' ? PERK.laser.icon : PICON.flame, {n:4, size:3.2, dur:900, rise:14, y:8, spread:16, stagger:90});
     else if (kind === 'BLEED') dripFx({x:pt.x, y:pt.y + u(f.b)*4}, '#ff3048', 6);
     else floaty(f.b, PICON.bubble, {n:5, size:2.2, dur:1000, rise:16, y:6, spread:18, stagger:80});
   }
@@ -3273,6 +3336,11 @@
     play('charge');
   }
   function applyPerk(pk, att, def, dmg, pt){
+    if (pk.stun){
+      def.skip = Math.max(def.skip || 0, pk.stun); def.skipTag = 'SHOCKED';
+      setTimeout(() => { perkProc(pk, def, pt); const z = fxDiv('zap', pt, u(def.b)*16, u(def.b)*16); z.animate([{opacity:1, rotate:'0deg'},{opacity:0, rotate:'90deg'}],{duration:500}).finished.then(() => z.remove()); }, 200);
+      return;
+    }
     if (pk.dot){
       const re = def.dot && def.dot.tag === pk.tag;
       def.dot = {tag:pk.tag, n:pk.dot.n, dmg:pk.dot.dmg, color:pk.color};
@@ -3436,6 +3504,41 @@
       if (mine(f)) addHype(10);
       log(`${f.name} calls down a lightning bolt for ${dmg}.`);
       await wait(600);
+    } else if (k === 'rug'){
+      const to = headPt(o), feet = ringPt(o.b.el, .5, 1);
+      speak(f.b, pick(['Liquidity? Gone.','Surprise, devs out!','Rug pulled!']), 900);
+      const rug = fxDiv('rugfx', {x:feet.x, y:feet.y - kk*1.5}, kk*26, kk*3);
+      await rug.animate([{translate:'0 0', opacity:1},{translate:`${f.face*kk*60}px 0`, opacity:0}],{duration:520, easing:'ease-in'}).finished; rug.remove();
+      o.b.rig.animate([{transform:T()},{transform:T(0,-kk*6,-25)},{transform:T(0,0,-12)},{transform:T()}],{duration:600});
+      o.vuln = 2; o.b.el.classList.add('vuln'); o.sta = Math.max(0, o.sta - 30);
+      play('bonk'); shakeRing(4);
+      popText('RUGGED! +50% DMG', {x:to.x, y:to.y - u(o.b)*12}, '#ff2fd0', 5.5);
+      log(`${f.name} pulls the rug. ${o.name} takes 50% more damage for 2 turns and loses energy.`);
+      await wait(600);
+    } else if (k === 'diamond'){
+      f.diamond = true; f.b.el.classList.add('diamond');
+      for (let i = 0; i < 8; i++) setTimeout(() => burst(ringPt(f.b.g.armR, .5, .9), ['#9ff3ff','#fff','#3fe9ff'], 4, 8, 400), i*70);
+      play('charge'); speak(f.b, pick(['Not selling.','HODL!','Diamond hands!']), 900);
+      popText('DIAMOND HANDS', {x:pt.x, y:pt.y - kk*12}, '#9ff3ff', 5.5);
+      log(`${f.name} holds with diamond hands. Immune to damage until next turn.`);
+      await wait(700);
+    } else if (k === 'moon'){
+      const sp2 = SPELLS.moon, to = headPt(o), H = ring.clientHeight;
+      speak(f.b, pick(['To the moon!','WAGMI!','Number go up!']), 900);
+      const rk = fxDiv('proj', {x:to.x, y:to.y + kk*20}, kk*8, kk*8); rk.innerHTML = MOVES.moon.icon;
+      rk.animate([{translate:'0 0'},{translate:`0 ${-H}px`}],{duration:700, easing:'ease-in'}).finished.then(() => rk.remove());
+      play('charge');
+      await o.wrap.animate([{translate:'0 0'},{translate:`0 ${-H*.9}px`}],{duration:560, easing:'ease-in', fill:'forwards'}).finished;
+      popText('TO THE MOON', {x:ring.clientWidth/2, y:H*.25}, '#ffd23f', 7);
+      await wait(380);
+      await o.wrap.animate([{translate:`0 ${-H*.9}px`},{translate:'0 0'}],{duration:340, easing:'ease-in', fill:'forwards'}).finished;
+      o.wrap.getAnimations().forEach(a => a.cancel());
+      play('boom'); shakeRing(12); puff(o.b, -1); puff(o.b, 1);
+      const dmg = Math.max(1, Math.round(rnd(sp2.dmg[0], sp2.dmg[1]) * dmgMult(f) * (o.vuln > 0 ? 1.5 : 1)));
+      o.hp -= dmg; hitFlash(o); cheer(1600);
+      popText(`-${dmg}`, {x:to.x, y:to.y - u(o.b)*6}, '#ffd23f', 8);
+      log(`${f.name} sends ${o.name} to the moon for ${dmg}.`);
+      await wait(400);
     } else {
       const before = f.hp; f.hp = Math.min(f.max, f.hp + sp.heal);
       burst(pt, ['#7ee07a','#fff','#c8ffc0'], 18, 16, 700, true); play('heart');
@@ -3509,11 +3612,12 @@
     if (G.e.skip > 0){ // panik ya da donma: rakip sırasını kaçırır
       G.e.skip--;
       popText(G.e.skipTag, {x:headPt(G.e).x, y:headPt(G.e).y - u(G.e.b)*10}, '#bfe6ff', 5);
-      speak(G.e.b, G.e.skipTag === 'FROZEN' ? '...' : pick(['AAAH BEES!','Get them off!']), 900);
+      speak(G.e.b, G.e.skipTag === 'FROZEN' ? '...' : G.e.skipTag === 'SHOCKED' ? pick(['Bzzzt!','Short circuit!','My circuits!']) : pick(['AAAH BEES!','Get them off!']), 900);
       log(`${G.e.name} loses the turn.`);
       await wait(800); if (tok !== G.tok) return;
       G.round++; G.p.sta = Math.min(100, G.p.sta + 6);
       if (await tickDot(G.p)) return; if (tok !== G.tok) return;
+      roundEnd();
       G.turn = 'p'; G.busy = false; drawHud(); refreshActions();
       return;
     }
@@ -3526,7 +3630,12 @@
     decayMomentum();
     if (G.round > 0 && Math.random() < .4){ marketEvent(); await wait(500); if (tok !== G.tok) return; }
     if (await tickDot(G.p)) return; if (tok !== G.tok) return;
+    roundEnd();
     G.turn = 'p'; G.busy = false; drawHud(); refreshActions();
+  }
+  function roundEnd(){ // tur sonu: Diamond Hands biter, Rug Pull zayıflığı azalır
+    if (G.p && G.p.diamond){ G.p.diamond = false; G.p.b.el.classList.remove('diamond'); }
+    if (G.e && G.e.vuln > 0){ G.e.vuln--; if (!G.e.vuln) G.e.b.el.classList.remove('vuln'); }
   }
 
   // --- sonuç kartı: portre, taç, konfeti, ödül rozetleri
@@ -3741,7 +3850,7 @@
       const w = WEAPONS[k], own = ownsW(k), un = WUNLOCK[k], wt = WTIER[k] || 0, use = weaponUsable(k);
       const b = document.createElement('button'); b.type = 'button'; b.className = 'wpn' + (use ? '' : ' wlock'); b.disabled = !use;
       const lv = effLv(k);
-      const req = !own ? `<small class="wreq">&#128274; ${un.wins ? 'Win 1 tournament' : `${un.price} ${COIN}`}</small>` : '';
+      const req = !own ? `<small class="wreq">&#128274; ${un.bionic && !neonOpen() ? 'Map 2' : un.wins ? 'Win 1 tournament' : `${un.price} ${COIN}`}</small>` : '';
       const freq = wt && tier() < wt ? `<small class="wreq folk"><span class="mdl">${MEDAL(wt)}</span>Hold ${fmtFolk(TIERS[wt].min)}</small>` : '';
       b.innerHTML = `${wIconHtml(k, use ? lv : 0, 'wi')}<b>${w.name}</b>` + (use ? `<small class="stars">${'&#9733;'.repeat(lv)}${'&#9734;'.repeat(MAXLV - lv)}</small>${lv >= MAXLV ? `<span class="wperk" style="--pc:${PERK[k].color}">${PERK[k].icon}${PERK[k].tag}</span>` : ''}` : req + freq);
       b.setAttribute('aria-label', use ? `${w.name}, level ${lv}` : `${w.name} is locked.${!own ? (un.wins ? ' Win 1 tournament.' : ` Unlock for ${un.price} coins in the camp.`) : ''}${freq ? ` Hold ${fmtFolk(TIERS[wt].min)} FOLK.` : ''}`);
@@ -3839,8 +3948,9 @@
       CAMP_TABS.moves(el);
       csec(el, 'Spells · once per fight');
       Object.entries(SPELLS).forEach(([k, sp]) => {
-        const own = !!S.spells[k];
-        const pill = own ? {cls:'own', html:'&#10003;'} : {html:priceTxt(sp.price), on:S.coins >= sp.price ? buy(sp.price, () => { S.spells[k] = true; buildPotions(); }, 'charge') : null, aria:`Learn ${sp.label} for ${sp.price} coins`};
+        if (sp.vibe && k === 'rug') csec(el, 'Vibe moves · Neon Arena');
+        const own = !!S.spells[k], lockV = sp.vibe && !neonOpen();
+        const pill = own ? {cls:'own', html:'&#10003;'} : lockV ? {html:'&#128274; Map 2'} : {html:priceTxt(sp.price), on:S.coins >= sp.price ? buy(sp.price, () => { S.spells[k] = true; buildPotions(); }, 'charge') : null, aria:`Learn ${sp.label} for ${sp.price} coins`};
         el.appendChild(tile(orb(MOVES[k].icon, {ring:sp.ring, in1:sp.in1, in2:sp.in2}, sp.key.toUpperCase(), own ? '' : 'locked'), sp.label, [pill], `${sp.label} spell, ${sp.sta} energy`));
       });
       csec(el, 'Potions');
@@ -3858,12 +3968,14 @@
       });
     },
     weapons(el){
+      csec(el, 'Classic');
       WORDER.forEach(k => {
         const w = WEAPONS[k];
+        if (k === 'laser') csec(el, 'Bionic · Neon Arena');
         const wt = WTIER[k] || 0;
         if (!ownsW(k)){
           const un = WUNLOCK[k], ic0 = wIcon(k, 0), isNext = nextW() === k;
-          const pills = [un.wins ? {html:'&#127942; 1'} : {html:priceTxt(un.price), on:isNext && S.coins >= un.price && tier() >= wt ? gatedBuy(un.price, wt, () => { S.owned.push(k); }, 'fight') : null, aria:`Unlock ${w.name} for ${un.price} coins`}];
+          const pills = [un.bionic && !neonOpen() ? {html:'&#128274; Map 2'} : un.wins ? {html:'&#127942; 1'} : {html:priceTxt(un.price), on:isNext && S.coins >= un.price && tier() >= wt ? gatedBuy(un.price, wt, () => { S.owned.push(k); }, 'fight') : null, aria:`Unlock ${w.name} for ${un.price} coins`}];
           if (wt) pills.push(folkPill(wt));
           el.appendChild(tile(orb(ic0.svg + `<span class="lk">${LOCK}</span>`, {ring:'#6b6064', in1:'#3a3238', in2:'#141013'}, null, 'locked' + (ic0.diag ? ' diag' : '')), w.name, pills, `${w.name}, locked`));
           return;
