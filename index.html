@@ -686,6 +686,24 @@
     .shop .front{height:76px} .shop .win{width:12px;height:12px;top:6px;left:4px;border-width:2px} .shop .win.r{right:4px}
     .shop .keep .mini{--mu:1.15px} .shop .keep{bottom:12px} .shop .counter{height:20px}
   }
+  /* ---- Aşama 3: büyüler, kalkan, soyunma odası ---- */
+  .potion.spell{border-radius:50%;width:52px;height:52px;padding:8px;display:grid;place-items:center;
+    background:radial-gradient(circle at 34% 28%,rgba(255,255,255,.35) 0 12%,transparent 34%),radial-gradient(circle,var(--in1),var(--in2) 72%) !important;box-shadow:inset 0 0 0 4px var(--ring),3px 3px 0 var(--line)}
+  .potion.spell svg{width:100%;height:100%}
+  .potion.spell .cnt{background:#231c1f !important;color:#fff3c4}
+  .potion.spell.used{filter:grayscale(1) brightness(.6)}
+  .potion.spell:not(:disabled):hover{box-shadow:inset 0 0 0 4px var(--ring),3px 3px 0 var(--line),0 0 14px var(--ring)}
+  .bot.shielded::after{content:"";position:absolute;left:calc(var(--u)*-5);right:calc(var(--u)*-5);top:calc(var(--u)*-2);bottom:calc(var(--u)*-3);border-radius:50%;
+    border:3px solid rgba(111,211,255,.9);background:radial-gradient(circle,rgba(111,211,255,.05) 40%,rgba(111,211,255,.28));box-shadow:0 0 16px #6fd3ff;animation:shieldp 1s ease-in-out infinite alternate;pointer-events:none}
+  @keyframes shieldp{from{opacity:.7;scale:.98}to{opacity:1;scale:1.03}}
+  .boltfx svg{width:100%;height:100%;filter:drop-shadow(0 0 8px #ffd23f) drop-shadow(0 0 3px #fff)}
+  .tile.dress{grid-column:span 2;flex-direction:row;align-items:center;gap:16px;padding:12px 16px;background:linear-gradient(180deg,#fff8ec,#f3e6d4)}
+  .dressfig{width:96px;height:150px;display:grid;place-items:end center;background:radial-gradient(ellipse at 50% 92%,rgba(0,0,0,.18),transparent 40%)}
+  .dressmini{--mu:3px !important}
+  .dressstats{display:flex;flex-direction:column;gap:3px;text-align:left;font-family:"Nunito", sans-serif;font-weight:700;font-size:13px}
+  .dressstats b{font-family:"Pixelify Sans", monospace;font-size:20px}
+  .dressstats em{font-style:normal;color:#2f9a4a;font-weight:800}
+  @media (max-width:640px){ .potion.spell{width:40px;height:40px;padding:6px} .tile.dress{grid-column:1 / -1} .dressmini{--mu:2.4px !important} .dressfig{width:76px;height:126px} }
   .orb .pk{position:absolute;left:-6px;bottom:-4px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#231c1f;border:2px solid var(--pc)}
   .orb .pk svg{width:15px;height:15px;rotate:0deg;scale:1;animation:none;filter:none}
   .orb .pk.off{border-color:#6b6064}
@@ -2724,6 +2742,9 @@
     rest:   {key:'7', label:'Rest',    pips:0, sta:0, icon:ICON.rest},
     special:{key:'0', label:'Special', pips:0, sta:0, special:true, icon:ICON.special},
     hpkit:  {key:'8', label:'Health', pips:0, sta:0, kit:'hp', icon:I([[1,2,10,9,INK],[2,3,8,7,'#f6f1ea'],[5,4,2,5,'#d8432d'],[3,5,6,2,'#d8432d'],[4,1,4,1,INK]])},
+    shield: {key:'q', label:'Shield', pips:0, sta:15, spell:true, icon:svgPx('0 0 16 16', [[3,1,10,1,INK],[2,2,12,8,INK],[3,10,10,2,INK],[5,12,6,2,INK],[7,14,2,1,INK],[3,2,10,8,'#6fd3ff'],[4,10,8,2,'#6fd3ff'],[6,12,4,2,'#3aa3d8'],[4,3,3,4,'#e0f6ff'],[8,4,1,6,'#3aa3d8']])},
+    bolt:   {key:'w', label:'Bolt', pips:0, sta:20, spell:true, icon:svgPx('0 0 16 16', [[8,0,5,1,INK],[7,1,5,3,INK],[5,4,8,2,INK],[4,6,5,2,INK],[7,6,6,2,INK],[6,8,4,3,INK],[5,11,3,3,INK],[4,14,2,2,INK],[8,1,3,3,'#ffd23f'],[6,4,6,2,'#ffd23f'],[8,6,4,2,'#ffd23f'],[7,8,2,3,'#ffd23f'],[6,11,1,3,'#fff3b0'],[9,1,1,2,'#fff8d0']])},
+    heal:   {key:'e', label:'Heal', pips:0, sta:25, spell:true, icon:svgPx('0 0 16 16', [[5,1,6,14,INK],[1,5,14,6,INK],[6,2,4,12,'#7ee07a'],[2,6,12,4,'#7ee07a'],[7,3,2,10,'#c8ffc0'],[3,7,10,2,'#c8ffc0']])},
     enkit:  {key:'9', label:'Energy', pips:0, sta:0, kit:'en', icon:I([[3,0,6,2,INK],[2,2,8,10,INK],[3,3,6,8,'#ffe27a'],[6,4,2,2,'#e9b43a'],[5,6,2,2,'#e9b43a'],[4,8,2,2,'#e9b43a']])}
   };
   // silahların gizli özellikleri; oyuncu sadece kısa bir tarif görür
@@ -2791,7 +2812,7 @@
 
   // --- kalıcı ilerleme (tarayıcıda saklanır)
   const SAVE_KEY = 'vibefolk-save-v1';
-  const freshSave = () => ({coins:0, xp:0, level:1, points:0, stats:{pow:0, spd:0, grd:0, vit:0}, kits:{hp:1, en:1}, up:{sword:0, spear:0, dagger:0, axe:0, bow:0}, armor:0, best:0, wins:0, unlocked:['Tux'], char:'Tux', mkt:null, shares:{}, moves:{strike:false, power:false, special:false}, owned:['dagger']});
+  const freshSave = () => ({coins:0, xp:0, level:1, points:0, stats:{pow:0, spd:0, grd:0, vit:0}, kits:{hp:1, en:1}, up:{sword:0, spear:0, dagger:0, axe:0, bow:0}, armor:0, best:0, wins:0, unlocked:['Tux'], char:'Tux', mkt:null, shares:{}, moves:{strike:false, power:false, special:false}, owned:['dagger'], gear:{helm:0, glove:0, boot:0}, spells:{}});
   let S = freshSave();
   try { const raw = localStorage.getItem(SAVE_KEY); if (raw) S = Object.assign(freshSave(), JSON.parse(raw)); } catch(e){}
   const save = () => { try { localStorage.setItem(SAVE_KEY, JSON.stringify(S)); } catch(e){} };
@@ -2811,6 +2832,31 @@
   if (!S.moves) S.moves = {strike:false, power:false, special:false};
   if (S.up.shield != null){ S.up.axe = Math.max(S.up.axe || 0, S.up.shield); delete S.up.shield; save(); }
   if (S.up.axe == null) S.up.axe = 0;
+  if (!S.gear) S.gear = {helm:0, glove:0, boot:0};
+  if (!S.spells) S.spells = {};
+  // --- Aşama 3: ekipman (kask, eldiven, bot) ve büyüler
+  const EQUIP = {
+    helm:  {label:'Helmet', names:['Leather Cap','Iron Helm','Golden Helm'],          eff:[.03,.06,.09], stat:'damage taken'},
+    glove: {label:'Gloves', names:['Leather Gloves','Iron Gauntlets','Golden Fists'], eff:[.04,.08,.12], stat:'damage'},
+    boot:  {label:'Boots',  names:['Leather Boots','Iron Greaves','Golden Boots'],    eff:[.03,.06,.09], stat:'dodge'}
+  };
+  const EQ_PRICE = [90, 200, 380];
+  const eqv = k => S.gear[k] ? EQUIP[k].eff[S.gear[k] - 1] : 0;
+  const EQ_C = [null, {c:'#8a5a3a', hi:'#c08a5a'}, {c:'#8a939c', hi:'#e8edf2'}, {c:'#e0b030', hi:'#fff3b0'}];
+  // karakterin üzerinde görünen ekipman parçaları
+  function gearParts(g = S.gear, armor = S.armor){
+    const P = [];
+    if (armor){ const {c, hi} = EQ_C[armor]; P.push(['body',8,31,14,8.6,c,''],['body',8,31,14,1.1,hi,'nol'],['body',14.4,31.6,1.2,7.8,hi,'nol']); }
+    if (g.helm){ const {c, hi} = EQ_C[g.helm]; P.push(['head',2.2,12.2,25.6,3.6,c,''],['head',2.2,12.2,25.6,1,hi,'nol'],['head',13.4,9.4,3.2,3.2,g.helm === 3 ? '#d8432d' : c,'']); if (g.helm === 3) P.push(['head',13.8,6.6,2.4,3,'#ff6a4a','']); }
+    if (g.glove){ const {c, hi} = EQ_C[g.glove]; P.push(['armL',1.4,38,5.2,3.4,c,''],['armL',1.4,38,5.2,1,hi,'nol'],['armR',23.4,38,5.2,3.4,c,''],['armR',23.4,38,5.2,1,hi,'nol']); }
+    if (g.boot){ const {c, hi} = EQ_C[g.boot]; P.push(['legL',7.4,46.4,7.2,4,c,''],['legL',7.4,46.4,7.2,1,hi,'nol'],['legR',15.4,46.4,7.2,4,c,''],['legR',15.4,46.4,7.2,1,hi,'nol']); }
+    return P;
+  }
+  const SPELLS = {
+    shield: {label:'Shield', price:150, sta:15, key:'q', ring:'#6fd3ff', in1:'#123a5a', in2:'#071a2a'},
+    bolt:   {label:'Bolt',   price:250, sta:20, key:'w', ring:'#ffd23f', in1:'#4a3a10', in2:'#1a1406', dmg:[10,14]},
+    heal:   {label:'Heal',   price:300, sta:25, key:'e', ring:'#7ee07a', in1:'#16401a', in2:'#08180a', heal:25}
+  };
   if (!Array.isArray(S.owned) || (S.owned.length === 1 && WORDER.some(k => k !== 'dagger' && (S.up[k] || 0) > 0))) S.owned = ['dagger', ...WORDER.filter(k => k !== 'dagger' && (S.up[k] || 0) > 0)];
   // ================= $FOLK HOLDER SİSTEMİ =================
   // Cüzdandaki $FOLK bakiyesi okunur (transfer yok). Tutulan miktar seviyeyi belirler.
@@ -2843,8 +2889,8 @@
   // oyuncu için çarpanlar (rakipte hepsi nötr)
   const mine = f => f === G.p;
   const cmod = () => (CHARS[S.char] || CHARS.Tux).mod;
-  const dmgMult = f => mine(f) ? (1 + S.stats.pow*.04 + (cmod().pow || 0) + (spon('NVDA') ? .06 : 0)) * (1 + effLv(f.gear)*.08) : (f.pow || 1);
-  const takenMult = f => mine(f) ? (1 - Math.min(.5, S.stats.grd*.03 + ARMORS[S.armor].cut + (cmod().guard || 0) + (spon('AAPL') ? .06 : 0))) : 1;
+  const dmgMult = f => mine(f) ? (1 + S.stats.pow*.04 + (cmod().pow || 0) + (spon('NVDA') ? .06 : 0) + eqv('glove')) * (1 + effLv(f.gear)*.08) : (f.pow || 1);
+  const takenMult = f => mine(f) ? (1 - Math.min(.5, S.stats.grd*.03 + ARMORS[S.armor].cut + eqv('helm') + (cmod().guard || 0) + (spon('AAPL') ? .06 : 0))) : 1;
   const accBonus = f => mine(f) ? S.stats.spd*.015 + (cmod().acc || 0) + (spon('MSFT') ? .05 : 0) : 0;
   const critBonus = f => mine(f) ? S.stats.spd*.01 + (cmod().crit || 0) + (spon('TSLA') ? .05 : 0) : 0;
   const playerMax = () => 100 + S.stats.vit*8 + (cmod().hp || 0);
@@ -2908,6 +2954,7 @@
   const staCost = (f, k) => Math.max(0, MOVES[k].sta - (MOVES[k].atk ? (wOf(f).cheap || 0) : 0));
   function canDo(f, k){
     const m = MOVES[k];
+    if (m.spell) return mine(f) && !!S.spells[k] && !(f.used && f.used[k]) && f.sta >= m.sta;
     if (mine(f) && moveLocked(k)) return false;
     if (f.sta < staCost(f, k)) return false;
     if (m.atk) return dist() <= wOf(f).range;
@@ -2931,6 +2978,15 @@
       const b = document.createElement('button'); b.type = 'button'; b.className = 'potion ' + kind; b.dataset.k = k;
       b.title = `${name} (key ${MOVES[k].key})`;
       b.innerHTML = `${BOTTLE[kind]}<span class="cnt"></span>`;
+      b.addEventListener('click', () => playerMove(k));
+      potionsEl.appendChild(b);
+    });
+    Object.keys(SPELLS).forEach(k => {
+      if (!S.spells[k]) return;
+      const sp = SPELLS[k], b = document.createElement('button'); b.type = 'button'; b.className = 'potion spell'; b.dataset.k = k;
+      b.style.setProperty('--ring', sp.ring); b.style.setProperty('--in1', sp.in1); b.style.setProperty('--in2', sp.in2);
+      b.title = `${sp.label} spell, ${sp.sta} energy, once per fight (key ${sp.key.toUpperCase()})`;
+      b.innerHTML = `${MOVES[k].icon}<span class="cnt">${sp.key.toUpperCase()}</span>`;
       b.addEventListener('click', () => playerMove(k));
       potionsEl.appendChild(b);
     });
@@ -2976,7 +3032,13 @@
       if (m.special) b.querySelector('b').textContent = moveLocked('special') ? 'Ultimate' : (CHARS[S.char] || CHARS.Tux).short;
     });
     dpadEl.querySelectorAll('.dbtn').forEach(b => { b.disabled = !myTurn || !canDo(G.p, b.dataset.k); });
-    potionsEl.querySelectorAll('.potion').forEach(b => {
+    potionsEl.querySelectorAll('.potion.spell').forEach(b => {
+      const used = G.p && G.p.used && G.p.used[b.dataset.k];
+      b.disabled = !myTurn || !G.p || !canDo(G.p, b.dataset.k);
+      b.classList.toggle('used', !!used); b.classList.toggle('wait', !myTurn);
+      b.setAttribute('aria-label', `${SPELLS[b.dataset.k].label} spell${used ? ', used this fight' : ''}`);
+    });
+    potionsEl.querySelectorAll('.potion:not(.spell)').forEach(b => {
       const m = MOVES[b.dataset.k], n = S.kits[m.kit];
       b.disabled = !myTurn || !canDo(G.p, b.dataset.k);
       b.querySelector('.cnt').textContent = n;
@@ -3015,7 +3077,7 @@
       await wait(620); speedLines(att);
     }
     play('whoosh');
-    let acc = m.acc + (wa.acc || 0) + accBonus(att) - (att.shaken ? .2 : 0) - (att.gear === 'bow' && d <= 1 ? wa.close : 0);
+    let acc = m.acc + (wa.acc || 0) + accBonus(att) - (att.shaken ? .2 : 0) - (att.gear === 'bow' && d <= 1 ? wa.close : 0) - (mine(def) ? eqv('boot') : 0);
     const perk = att.lv >= MAXLV && PERK[att.gear] && Math.random() < .5 ? PERK[att.gear] : null;
     const crit = (perk && perk.crit) || Math.random() < (att.pumped ? .3 : .08) + critBonus(att) + (wa.crit || 0);
     att.shaken = att.pumped = false;
@@ -3032,6 +3094,7 @@
     dmg = dmg * (wa.dmg || 1) * dmgMult(att) * (1 - (wd.guard || 0)) * takenMult(def) * (1 + (G.mom[wa.tk] || 0)*1.5);
     if (crit) dmg *= perk && perk.crit ? 2 : 1.6;
     dmg = Math.max(1, Math.round(dmg));
+    if (def.shield){ dmg = Math.max(1, Math.round(dmg*.35)); def.shield = false; def.b.el.classList.remove('shielded'); setTimeout(() => popText('BLOCKED', {x:pt.x, y:pt.y - k2*20}, '#6fd3ff', 6), 120); play('clang'); }
     def.hp -= dmg;
     if (mine(att)) addHype(k === 'power' ? 20 : 14); else if (mine(def)) addHype(10);
     play('bonk'); hitFlash(def); cheer(k === 'power' || crit ? 1400 : 700);
@@ -3236,6 +3299,44 @@
     await Promise.all([moveTo(f, colX(f, f.col), 350), moveTo(o, colX(o, o.col), 350)]);
     drawHud(); await wait(300);
   }
+  async function spellMove(f, o, k){
+    const sp = SPELLS[k], kk = u(f.b), pt = headPt(f);
+    f.sta -= sp.sta; f.used[k] = true;
+    ultName(sp.label.toUpperCase() + '!');
+    if (k === 'shield'){
+      f.shield = true; f.b.el.classList.add('shielded');
+      burst(pt, ['#6fd3ff','#fff'], 14, 14, 600, true); play('charge');
+      popText('SHIELD UP', {x:pt.x, y:pt.y - kk*10}, '#6fd3ff', 5.5);
+      log(`${f.name} raises a magic shield. The next hit is mostly blocked.`);
+      await wait(700);
+    } else if (k === 'bolt'){
+      const to = headPt(o), W = ring.clientWidth;
+      speak(f.b, pick(['By the blockchain!','Lightning!','Zap!']), 800);
+      await wait(250);
+      const d = fxDiv('boltfx', {x:to.x, y:to.y / 2}, kk*14, to.y);
+      d.innerHTML = '<svg viewBox="0 0 14 100" preserveAspectRatio="none"><polyline points="7,0 3,22 10,38 2,58 9,74 5,100" fill="none" stroke="#fff8c0" stroke-width="3"/><polyline points="7,0 3,22 10,38 2,58 9,74 5,100" fill="none" stroke="#ffd23f" stroke-width="1.4"/></svg>';
+      d.animate([{opacity:0},{opacity:1, offset:.1},{opacity:.3, offset:.3},{opacity:1, offset:.45},{opacity:0}],{duration:520}).finished.then(() => d.remove());
+      const fl = fxDiv('whiteflash', {x:W/2, y:ring.clientHeight/2}, W, ring.clientHeight);
+      fl.animate([{opacity:.7},{opacity:0}],{duration:260}).finished.then(() => fl.remove());
+      play('laser'); shakeRing(8);
+      const dmg = Math.max(1, Math.round(rnd(sp.dmg[0], sp.dmg[1]) * dmgMult(f) * (o.shield ? .35 : 1)));
+      if (o.shield){ o.shield = false; o.b.el.classList.remove('shielded'); }
+      o.hp -= dmg; hitFlash(o);
+      burst(to, ['#ffd23f','#fff','#fff3b0'], 16, 14, 500);
+      popText(`-${dmg}`, {x:to.x, y:to.y - u(o.b)*6}, '#ffd23f', 7);
+      if (mine(f)) addHype(10);
+      log(`${f.name} calls down a lightning bolt for ${dmg}.`);
+      await wait(600);
+    } else {
+      const before = f.hp; f.hp = Math.min(f.max, f.hp + sp.heal);
+      burst(pt, ['#7ee07a','#fff','#c8ffc0'], 18, 16, 700, true); play('heart');
+      floaty(f.b, HEART, {n:5, size:4, dur:1200, y:10, spread:18});
+      popText(`+${f.hp - before} HP`, {x:pt.x, y:pt.y - kk*8}, '#7ee07a', 6);
+      log(`${f.name} casts a healing spell.`);
+      await f.b.rig.animate([{transform:T()},{transform:T(0,-kk*6,0,1.06)},{transform:T()}],{duration:600}).finished;
+    }
+    drawHud();
+  }
   async function kitMove(f, kind){
     const k = u(f.b), pt = headPt(f);
     S.kits[kind]--; save();
@@ -3264,6 +3365,7 @@
     else if (k === 'rest') await restMove(f);
     else if (MOVES[k].kit) await kitMove(f, MOVES[k].kit);
     else if (MOVES[k].special) await specialMove(f, o);
+    else if (MOVES[k].spell) await spellMove(f, o, k);
     drawHud();
   }
 
@@ -3528,8 +3630,8 @@
     if (old.length) await wait(380);
     if (tok !== G.tok) return;
     const r = RIVALS[G.stage];
-    const p = makeFighter(S.char, G.weapon, -1, effLv(G.weapon));
-    Object.assign(p, {name:S.char, st:STYLE[S.char], ko:CHARS[S.char].ko, hp:playerMax(), max:playerMax(), sta:100, hype:spon('HOOD') ? 35 : 0, game:true, ai:null});
+    const p = makeFighter(S.char, G.weapon, -1, effLv(G.weapon), gearParts());
+    Object.assign(p, {name:S.char, st:STYLE[S.char], ko:CHARS[S.char].ko, hp:playerMax(), max:playerMax(), sta:100, hype:spon('HOOD') ? 35 : 0, game:true, ai:null, used:{}, shield:false});
     G.mom = {};
     const e = makeRival(r);
     { const W = ring.clientWidth, w = bwOf(p), pad = W*.07; COLS = Math.max(4, Math.min(8, Math.floor((W - 2*pad - w)/(w*.9)) + 1)); }
@@ -3556,6 +3658,12 @@
     ['grd','Guard','Take less damage'], ['vit','Vitality','More health']
   ];
   const ARMOR_ICON = W16([[3,1,10,3,'#8a8f96'],[2,3,12,9,'#6b737b'],[4,4,8,7,'#9aa3ad'],[7,4,2,7,'#6b737b'],[4,12,8,3,'#6b737b']]);
+  const EQ_ICON = {
+    helm:  lv => { const {c, hi} = EQ_C[lv]; return W16([[3,5,10,8,INK],[2,10,12,3,INK],[4,6,8,6,c],[3,11,10,1,c],[4,6,8,1,hi],[7,2,2,4,INK],[7,3,2,3,lv === 3 ? '#d8432d' : c],[6,9,4,1,INK]]); },
+    glove: lv => { const {c, hi} = EQ_C[lv]; return W16([[3,3,10,11,INK],[4,4,8,9,c],[4,4,2,4,hi],[6,4,1,4,INK],[8,4,1,4,INK],[10,4,1,4,INK],[3,11,10,1,INK],[4,12,8,1,hi]]); },
+    boot:  lv => { const {c, hi} = EQ_C[lv]; return W16([[4,2,6,10,INK],[4,10,10,4,INK],[5,3,4,8,c],[5,11,8,2,c],[5,3,4,1,hi],[5,12,8,1,hi]]); }
+  };
+  const takenMultPreview = () => 1 - Math.min(.5, S.stats.grd*.03 + ARMORS[S.armor].cut + eqv('helm') + (cmod().guard || 0));
   // Vibe Market: yan yana dükkanlar, her birinin önünde bir satıcı
   let campTab = 'weapons';
   const SHOPS = [
@@ -3600,6 +3708,12 @@
     mage(el){
       csec(el, 'Skills');
       CAMP_TABS.moves(el);
+      csec(el, 'Spells · once per fight');
+      Object.entries(SPELLS).forEach(([k, sp]) => {
+        const own = !!S.spells[k];
+        const pill = own ? {cls:'own', html:'&#10003;'} : {html:priceTxt(sp.price), on:S.coins >= sp.price ? buy(sp.price, () => { S.spells[k] = true; buildPotions(); }, 'charge') : null, aria:`Learn ${sp.label} for ${sp.price} coins`};
+        el.appendChild(tile(orb(MOVES[k].icon, {ring:sp.ring, in1:sp.in1, in2:sp.in2}, sp.key.toUpperCase(), own ? '' : 'locked'), sp.label, [pill], `${sp.label} spell, ${sp.sta} energy`));
+      });
       csec(el, 'Potions');
       CAMP_TABS.potions(el);
     },
@@ -3651,12 +3765,35 @@
       });
     },
     armor(el){
+      // soyunma odası: karakter, giydiği her şeyle
+      const room = document.createElement('div'); room.className = 'tile dress';
+      const m = miniOf(S.char, gearParts()); m.classList.add('dressmini');
+      const pct = v => Math.round(v*100);
+      const taken = 1 - takenMultPreview();
+      room.innerHTML = `<div class="dressfig"></div><div class="dressstats"><b>${S.char}</b>
+        <span>&#9876; Damage <em>+${pct(S.stats.pow*.04 + (cmod().pow || 0) + eqv('glove'))}%</em></span>
+        <span>&#128737; Damage taken <em>-${pct(taken)}%</em></span>
+        <span>&#127919; Accuracy <em>+${pct(S.stats.spd*.015 + (cmod().acc || 0))}%</em></span>
+        <span>&#128168; Dodge <em>+${pct(eqv('boot'))}%</em></span>
+        <span>&#10084; Max HP <em>${playerMax()}</em></span></div>`;
+      room.querySelector('.dressfig').appendChild(m);
+      el.appendChild(room);
+      csec(el, 'Body armor');
       const RC = [null, '#b07a4a', '#b8c2cc', '#ffc53d'];
       ARMORS.slice(1).forEach((a, i) => {
         const lv = i + 1, own = S.armor >= lv, next = S.armor + 1 === lv;
         const pill = own ? {cls:'own', html:'&#10003;'} : {html:priceTxt(a.price), on:next && S.coins >= a.price ? buy(a.price, () => { S.armor = lv; }) : null, aria:`Buy ${a.name} armor for ${a.price} coins`};
         const d = tile(orb(ARMOR_ICON, {ring:RC[lv], in1:'#3e4650', in2:'#15191e'}, `-${Math.round(a.cut*100)}%`, own || next ? '' : 'locked'), a.name, [pill], `${a.name} armor, takes ${Math.round(a.cut*100)}% less damage`);
         el.appendChild(d);
+      });
+      Object.entries(EQUIP).forEach(([k, q]) => {
+        csec(el, q.label);
+        q.names.forEach((nm, i) => {
+          const lv = i + 1, own = S.gear[k] >= lv, next = S.gear[k] + 1 === lv, price = EQ_PRICE[i];
+          const pill = own ? {cls:'own', html:'&#10003;'} : {html:priceTxt(price), on:next && S.coins >= price ? buy(price, () => { S.gear[k] = lv; }) : null, aria:`Buy ${nm} for ${price} coins`};
+          const sign = k === 'helm' ? '-' : '+';
+          el.appendChild(tile(orb(EQ_ICON[k](lv), {ring:RC[lv], in1:'#3e4650', in2:'#15191e'}, `${sign}${Math.round(q.eff[i]*100)}%`, own || next ? '' : 'locked'), nm, [pill], `${nm}: ${sign}${Math.round(q.eff[i]*100)}% ${q.stat}`));
+        });
       });
     },
     stats(el){
@@ -3871,7 +4008,7 @@
   let campReturn = null, resetArm = false;
   function openCamp(){ campReturn = document.activeElement; drawCamp(); campEl.hidden = false; resetArm = false; document.getElementById('campReset').textContent = 'Reset progress'; document.getElementById('campClose').focus({preventScroll:true}); }
   function closeCamp(){
-    campEl.hidden = true; refreshActions();
+    campEl.hidden = true; buildPotions(); refreshActions();
     if (!chooserEl.hidden && !document.getElementById('wgrid').hidden) buildChooser();
     // kamptayken can özelliği arttıysa ringde bekleyen oyuncuya yansısın
     if (G.p && !G.on && fighters.includes(G.p)){ G.p.max = playerMax(); G.p.hp = G.p.max; }
@@ -3904,7 +4041,7 @@
   document.getElementById('modeWatch').addEventListener('click', () => { if (arenaEl.classList.contains('play')) setMode('watch'); });
   document.addEventListener('keydown', e => {
     if (arenaEl.hidden || !campEl.hidden || !arenaEl.classList.contains('play') || e.metaKey || e.ctrlKey || e.altKey) return;
-    const k = e.key === 'ArrowRight' ? 'fwd' : e.key === 'ArrowLeft' ? 'back' : Object.keys(MOVES).find(x => MOVES[x].key === e.key);
+    const k = e.key === 'ArrowRight' ? 'fwd' : e.key === 'ArrowLeft' ? 'back' : Object.keys(MOVES).find(x => MOVES[x].key === e.key.toLowerCase());
     if (k && e.key.startsWith('Arrow')) e.preventDefault();
     if (k) playerMove(k);
   });
