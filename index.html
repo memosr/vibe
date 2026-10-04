@@ -832,6 +832,8 @@
   .orb .pk.off{border-color:#6b6064}
   .orb .pk.off svg{filter:grayscale(1) brightness(.8);opacity:.5}
   .orb.locked svg{filter:grayscale(.75) brightness(.75)}
+  .wsk{display:block;font-family:"Pixelify Sans", monospace;font-size:11px;font-weight:700;color:var(--sc,#7c5cff);filter:brightness(.8);letter-spacing:.02em;margin-top:1px}
+  .wpn .wsk{filter:none;font-size:10.5px}
   .tile .refl{display:block;margin-top:-2px;font-family:"Pixelify Sans", monospace;font-size:11px;color:#c0389a;letter-spacing:.02em}
   .tile b .stars{display:block;color:#e9a91a;font-size:12px;letter-spacing:1px}
   @media (max-width:640px){ .cpanel{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px} .orb{width:66px;height:66px} .orb svg{width:38px;height:38px} .ctab{font-size:13px;padding:6px 9px} }
@@ -3412,9 +3414,9 @@
       const em = b.querySelector('.lockov em');
       if (em) em.innerHTML = needFolk ? `<span class="mdl">${MEDAL(mt)}</span>${fmtFolk(TIERS[mt].min)}` : `${MOVE_PRICE[b.dataset.k] || ''} <span class="coin"></span>`;
       b.classList.toggle('needfolk', !!needFolk);
-      b.setAttribute('aria-label', !lk ? (m0.special ? 'Ultimate' : m0.label) : needFolk ? `${m0.special ? 'Ultimate' : m0.label}, locked. Hold ${fmtFolk(TIERS[mt].min)} FOLK to use it` : `${m0.special ? 'Ultimate' : m0.label}, locked. Unlock for ${MOVE_PRICE[b.dataset.k]} coins in the camp`);
+      b.setAttribute('aria-label', !lk ? (m0.special ? `Weapon skill: ${wSkill(G.weapon).name}` : m0.label) : needFolk ? `${m0.special ? 'Weapon skill' : m0.label}, locked. Hold ${fmtFolk(TIERS[mt].min)} FOLK to use it` : `${m0.special ? 'Ultimate' : m0.label}, locked. Unlock for ${MOVE_PRICE[b.dataset.k]} coins in the camp`.replace('Ultimate', 'Weapon skill'));
       const m = MOVES[b.dataset.k]; if (m.kit) b.querySelector('.badge').textContent = S.kits[m.kit];
-      if (m.special) b.querySelector('b').textContent = moveLocked('special') ? 'Ultimate' : (CHARS[S.char] || CHARS.Tux).short;
+      if (m.special) b.querySelector('b').textContent = moveLocked('special') ? 'Skill' : wSkill(G.weapon).short;
     });
     dpadEl.querySelectorAll('.dbtn').forEach(b => { b.disabled = !myTurn || !canDo(G.p, b.dataset.k); });
     potionsEl.querySelectorAll('.potion.spell').forEach(b => {
@@ -3698,25 +3700,86 @@
     G.p.hype = Math.min(100, was + n);
     if (was < 100 && G.p.hype >= 100){ popText('HYPE!', {x:headPt(G.p).x, y:headPt(G.p).y - u(G.p.b)*14}, '#d6c2ff', 5.5); cheer(1200); }
   }
+  // ===== Aşama 8: SİLAH SKİLLERİ (karakter ultisi yerine, her silahın sabit aktif yeteneği) =====
+  // Hype barı dolunca kullanılır. Hasar silah seviyesi ve statlarla ölçeklenir; pasif perkler aynen kalır.
+  const setDot = (o, tag, n, dmg, color) => { o.dot = {tag, n, dmg, color}; o.wrap.dataset.dot = tag; o.wrap.style.setProperty('--dc', color); };
+  async function dropFx(svg, x, y0, y1, w, h, dur, rot = 90){
+    const d = document.createElement('div'); d.className = 'fx proj'; d.innerHTML = svg; d.style.width = w + 'px'; d.style.height = h + 'px';
+    ring.appendChild(d);
+    await d.animate([{transform:`translate(${x - w/2}px,${y0}px) rotate(${rot}deg)`},{transform:`translate(${x - w/2}px,${y1 - h/2}px) rotate(${rot}deg)`}],{duration:dur, easing:'ease-in'}).finished;
+    d.remove();
+  }
+  const WSKILL = {
+    dagger:{name:'Shadow Flurry', short:'Flurry', desc:'5 lightning stabs', color:'#b98bff',
+      async fx(f, o){ const k = u(f.b); await approach(f, o, .7);
+        for (let i = 0; i < 5; i++){ arm(f, [0, -95, 0], 170); aim(f, [0, 170, 0], 170); const pt = headPt(o); slashArc({x:pt.x, y:pt.y + (i - 2)*k*3}, -40 + i*20, 12, '#b98bff'); burst(pt, ['#b98bff','#fff'], 5, 8, 220); play('bonk'); hitFlash(o); await wait(170); }
+        await moveTo(f, colX(f, f.col), 380); },
+      hit(f, o, R){ let d = 0; for (let i = 0; i < 5; i++) d += R(4, 6); return d; }},
+    bow:{name:'Arrow Rain', short:'Rain', desc:'Volley from the sky + burn', color:'#ff7a1a',
+      async fx(f, o){ const k = u(f.b), tg = headPt(o);
+        arm(f, [0, -150, -150, 0], 700); aim(f, [0, 60, 60, 0], 700); await wait(350);
+        for (let i = 0; i < 3; i++){ const a = await throwAt(ARROW, ringPt(f.b.g.wpn || f.b.g.armR, .5, .3), {x:ringPt(f.b.g.wpn || f.b.g.armR, .5, .3).x + f.face*k*6, y:-k*10}, {w:k*9, h:k*2.2, dur:180, flip:f.face < 0}); a.remove(); }
+        const drops = []; for (let i = 0; i < 6; i++) drops.push(wait(i*110).then(() => dropFx(ARROW, tg.x + (Math.random() - .5)*k*18, -k*12, tg.y + k*8, k*9, k*2.2, 360)));
+        await Promise.all(drops); burst(tg, ['#ff7a1a','#ffd23f'], 14, 14, 500); play('boom'); },
+      hit(f, o, R){ let d = 0; for (let i = 0; i < 4; i++) d += Math.random() < .9 ? R(6, 8) : 0; setDot(o, 'BURN', 2, 4, '#ff7a1a'); return d; }},
+    sword:{name:'Moon Slash', short:'Moon', desc:'Giant crescent slash + bleed', color:'#ff3048',
+      async fx(f, o){ const k = u(f.b); await approach(f, o, .85);
+        f.b.rig.animate([{transform:T()},{transform:T(0,-k*6)},{transform:T()}],{duration:500});
+        arm(f, [0, -190, 40, 0], 620); aim(f, [0, 160, 80, 0], 620); await wait(320);
+        const pt = headPt(o); slashArc(pt, -30, 34, '#fff'); slashArc(pt, 150, 28, '#ff3048'); shockwave(pt, 30, '#ff8aa8'); play('clang'); shakeRing(8);
+        await wait(300); await moveTo(f, colX(f, f.col), 400); },
+      hit(f, o, R){ setDot(o, 'BLEED', 3, 4, '#ff3048'); return R(26, 32); }},
+    spear:{name:'Dragon Lunge', short:'Lunge', desc:'Pierce, push back 2 + stagger', color:'#7dff5a',
+      async fx(f, o){ const k = u(f.b), from = headPt(f);
+        f.b.rig.animate([{transform:T()},{transform:T(-f.face*k*3,0)},{transform:T()}],{duration:300}); await wait(260);
+        trail(from, headPt(o), 260); await approach(f, o, .6); play('whoosh');
+        burst(headPt(o), ['#7dff5a','#d8ffc8','#fff'], 16, 16, 500); shockwave(headPt(o), 24, '#7dff5a');
+        await hit(o, 2.2, 'Ack!'); await moveTo(f, colX(f, f.col), 380); },
+      hit(f, o, R){ const nc = Math.max(0, Math.min(COLS - 1, o.col + f.face*2)); if (Math.abs(nc - f.col) >= 1) o.col = nc; o.skip = 1; o.skipTag = 'STAGGERED'; return R(22, 28); }},
+    axe:{name:'Earthquake', short:'Quake', desc:'Ground slam + stun', color:'#ff5c86',
+      async fx(f, o){ const k = u(f.b);
+        await f.b.rig.animate([{transform:T()},{transform:T(0,-k*14)},{transform:T(0,-k*14)},{transform:T()}],{duration:650, easing:'ease-in'}).finished;
+        play('boom'); shakeRing(16); const g = {x:headPt(o).x, y:headPt(o).y + k*14}; shockwave(g, 40, '#c8884a'); burst(g, ['#8a5a3a','#c8884a','#5a3a22'], 22, 22, 700);
+        o.b.rig.animate([{transform:T()},{transform:T(0,-k*8,-10)},{transform:T()}],{duration:500}); await wait(500); },
+      hit(f, o, R){ o.skip = 1; o.skipTag = 'STUNNED'; return R(30, 36); }},
+    laser:{name:'Photon Storm', short:'Photon', desc:'3 light-speed dashes + sear', color:'#3fe9ff',
+      async fx(f, o){ const k = u(f.b), dim = overlay('dim'); dim.style.background = 'rgba(10,40,60,.45)';
+        for (let i = 0; i < 3; i++){ const a = headPt(f), b = headPt(o), len = Math.hypot(b.x - a.x, b.y - a.y) + k*20;
+          const bm = fxDiv('railbeam', {x:(a.x + b.x)/2, y:(a.y + b.y)/2 + (i - 1)*k*4}, len, k*1.2); bm.style.filter = 'hue-rotate(-120deg)';
+          bm.animate([{scale:'0 1', opacity:1},{scale:'1 1', opacity:1, offset:.4},{scale:'1 .1', opacity:0}],{duration:260}).finished.then(() => bm.remove());
+          play('laser'); hitFlash(o); burst(b, ['#3fe9ff','#fff'], 8, 10, 260); await wait(240); }
+        fadeOut(dim); await wait(200); },
+      hit(f, o, R){ let d = 0; for (let i = 0; i < 3; i++) d += R(12, 15); setDot(o, 'SEAR', 3, 6, '#3fe9ff'); return d; }},
+    plasma:{name:'Plasma Nova', short:'Nova', desc:'Mega blast + 2-turn shock', color:'#ffd23f',
+      async fx(f, o){ const k = u(f.b), src = ringPt(f.b.g.wpn || f.b.g.armR, .5, .5);
+        for (let i = 0; i < 3; i++){ burst(src, ['#ffd23f','#fff'], 10, 14, 300, true); tone(300 + i*200, 600 + i*300, 0, .25, 'square', .03); await wait(260); }
+        const a = await throwAt(PLASMA, src, headPt(o), {w:k*12, h:k*7, dur:380, flip:f.face < 0}); a.remove();
+        play('boom'); shakeRing(10); shockwave(headPt(o), 40, '#ffd23f'); burst(headPt(o), ['#ffd23f','#ff8a1a','#fff'], 24, 22, 600); await wait(300); },
+      hit(f, o, R){ o.skip = 2; o.skipTag = 'SHOCKED'; return R(34, 40); }},
+    rail:{name:'Orbital Strike', short:'Orbital', desc:'Satellite beam from above', color:'#ff2fd0',
+      async fx(f, o){ const k = u(f.b), tg = headPt(o), dim = overlay('dim'); dim.style.background = 'rgba(60,10,60,.5)';
+        speak(f.b, 'Target locked.', 900); popText('◎', {x:tg.x, y:tg.y}, '#ff2fd0', 10); await wait(700);
+        const bm = fxDiv('railbeam', {x:tg.x, y:tg.y/2 + k*6}, tg.y + k*12, k*7); bm.style.rotate = '90deg';
+        bm.animate([{scale:'1 0', opacity:1},{scale:'1 1', opacity:1, offset:.2},{scale:'1 1.3', opacity:1, offset:.7},{scale:'1 0', opacity:0}],{duration:900}).finished.then(() => bm.remove());
+        play('laser'); await wait(250); play('boom'); shakeRing(16); burst(tg, ['#ff2fd0','#fff','#ff8ae8'], 26, 24, 700); shockwave(tg, 44, '#ff2fd0');
+        await wait(500); fadeOut(dim); },
+      hit(f, o, R){ return R(48, 56); }}
+  };
+  const wSkill = k => WSKILL[k] || WSKILL.dagger;
   async function specialMove(f, o){
-    const C = CHARS[S.char] || CHARS.Tux;
+    const W = wSkill(G.weapon);
     f.hype = 0; drawHud();
+    ultName(W.name.toUpperCase());
     const hpBefore = o.hp;
-    await ULT[S.char](f, o);
+    await W.fx(f, o);
     const R = (a, b) => Math.round(rnd(a, b) * dmgMult(f));
-    let dmg = 0;
-    // ulti gücü açılma sırasıyla artar: Tux < Honey < Goggles < Captain < Armor
-    if (S.char === 'Tux') for (let i = 0; i < 5; i++) dmg += R(4, 6);
-    else if (S.char === 'Honey'){ dmg = R(20, 26); o.skip = 1; o.skipTag = 'PANIC!'; }
-    else if (S.char === 'Goggles'){ dmg = R(14, 18); o.skip = 2; o.skipTag = 'FROZEN'; }
-    else if (S.char === 'Captain') for (let i = 0; i < 3; i++) dmg += Math.random() < .9 ? R(13, 17) : 0;
-    else { dmg = R(45, 55); o.dot = {tag:'BURN', n:2, dmg:6, color:'#ff7a1a'}; o.wrap.dataset.dot = 'BURN'; o.wrap.style.setProperty('--dc', '#ff7a1a'); }
+    const dmg = W.hit(f, o, R);
     o.hp = hpBefore - dmg;
     const pt = headPt(o);
     popText(`-${dmg}`, {x:pt.x, y:pt.y - u(o.b)*4}, '#e6dcff', 9);
     if (o.skip) setTimeout(() => popText(o.skipTag, {x:pt.x, y:pt.y - u(o.b)*16}, '#bfe6ff', 5), 350);
-    log(`${f.name} unleashes ${C.special} for ${dmg}!${o.skip ? ` ${o.name} will lose ${o.skip > 1 ? 'two turns' : 'a turn'}.` : ''}`);
-    // özel hareketler dövüşçüleri kaydırabilir: sütunlarına geri dönsünler
+    else if (o.dot) setTimeout(() => popText(o.dot.tag, {x:pt.x, y:pt.y - u(o.b)*16}, o.dot.color, 5), 350);
+    log(`${f.name} unleashes ${W.name} for ${dmg}!${o.skip ? ` ${o.name} will lose ${o.skip > 1 ? 'two turns' : 'a turn'}.` : o.dot ? ` ${o.dot.tag}!` : ''}`);
     await Promise.all([moveTo(f, colX(f, f.col), 350), moveTo(o, colX(o, o.col), 350)]);
     drawHud(); await wait(300);
   }
@@ -3856,7 +3919,7 @@
     if (G.e.skip > 0){ // panik ya da donma: rakip sırasını kaçırır
       G.e.skip--;
       popText(G.e.skipTag, {x:headPt(G.e).x, y:headPt(G.e).y - u(G.e.b)*10}, '#bfe6ff', 5);
-      speak(G.e.b, G.e.skipTag === 'FROZEN' ? '...' : G.e.skipTag === 'SHOCKED' ? pick(['Bzzzt!','Short circuit!','My circuits!']) : pick(['AAAH BEES!','Get them off!']), 900);
+      speak(G.e.b, G.e.skipTag === 'FROZEN' ? '...' : G.e.skipTag === 'SHOCKED' ? pick(['Bzzzt!','Short circuit!','My circuits!']) : G.e.skipTag === 'PANIC!' ? pick(['AAAH BEES!','Get them off!']) : pick(['Ugh... my head.','Seeing stars...','Wobbly...']), 900);
       log(`${G.e.name} loses the turn.`);
       await wait(800); if (tok !== G.tok) return;
       G.round++; G.p.sta = Math.min(100, G.p.sta + 6);
@@ -4081,8 +4144,8 @@
       const open = S.unlocked.includes(name), lock = UNLOCKS.find(x => x.name === name);
       const b = document.createElement('button'); b.type = 'button'; b.className = 'fpick'; b.disabled = !open;
       const tmp = document.createElement('div'); build({name, act:'poke', parts:bots.find(x => x.name === name).parts}, 0, tmp);
-      b.innerHTML = `<div class="mini">${tmp.querySelector('.bob').outerHTML}</div><b>${name}</b><span class="tiers" aria-hidden="true"><span class="tr pw">${'<i></i>'.repeat(5).replace(/<i><\/i>/g, (m, o2) => o2/7 < c.tier[0] ? '<i class="on"></i>' : m)}</span><span class="tr ul">${'<i></i>'.repeat(5).replace(/<i><\/i>/g, (m, o2) => o2/7 < c.tier[1] ? '<i class="on"></i>' : m)}</span></span><span class="sp">${c.special}</span>${open ? '' : `<span class="lock">&#128274; ${lock.req}</span>`}`;
-      b.setAttribute('aria-label', open ? `${name}, power ${c.tier[0]} of 5, ultimate ${c.tier[1]} of 5: ${c.special}` : `${name} is locked. ${lock.req} to unlock.`);
+      b.innerHTML = `<div class="mini">${tmp.querySelector('.bob').outerHTML}</div><b>${name}</b><span class="tiers" aria-hidden="true"><span class="tr pw">${'<i></i>'.repeat(5).replace(/<i><\/i>/g, (m, o2) => o2/7 < c.tier[0] ? '<i class="on"></i>' : m)}</span></span><span class="sp">${c.blurb}</span>${open ? '' : `<span class="lock">&#128274; ${lock.req}</span>`}`;
+      b.setAttribute('aria-label', open ? `${name}, power ${c.tier[0]} of 5: ${c.blurb}` : `${name} is locked. ${lock.req} to unlock.`);
       if (open) b.addEventListener('click', () => { S.char = name; save(); dropIdle(name); showWeaponPick(); });
       g.appendChild(b);
     });
@@ -4096,7 +4159,7 @@
       const lv = effLv(k);
       const req = !own ? `<small class="wreq">&#128274; ${un.bionic && !neonOpen() ? 'Map 2' : un.wins ? 'Win 1 tournament' : `${un.price} ${COIN}`}</small>` : '';
       const freq = wt && tier() < wt ? `<small class="wreq folk"><span class="mdl">${MEDAL(wt)}</span>Hold ${fmtFolk(TIERS[wt].min)}</small>` : '';
-      b.innerHTML = `${wIconHtml(k, use ? lv : 0, 'wi')}<b>${w.name}</b>` + (use ? `<small class="stars">${'&#9733;'.repeat(lv)}${'&#9734;'.repeat(MAXLV - lv)}</small>${lv >= MAXLV ? `<span class="wperk" style="--pc:${PERK[k].color}">${PERK[k].icon}${PERK[k].tag}</span>` : ''}` : req + freq);
+      b.innerHTML = `${wIconHtml(k, use ? lv : 0, 'wi')}<b>${w.name}</b>` + (use ? `<small class="stars">${'&#9733;'.repeat(lv)}${'&#9734;'.repeat(MAXLV - lv)}</small>${lv >= MAXLV ? `<span class="wperk" style="--pc:${PERK[k].color}">${PERK[k].icon}${PERK[k].tag}</span>` : ''}<small class="wsk" style="--sc:${wSkill(k).color}">&#10022; ${wSkill(k).name}</small>` : req + freq);
       b.setAttribute('aria-label', use ? `${w.name}, level ${lv}` : `${w.name} is locked.${!own ? (un.wins ? ' Win 1 tournament.' : ` Unlock for ${un.price} coins in the camp.`) : ''}${freq ? ` Hold ${fmtFolk(TIERS[wt].min)} FOLK.` : ''}`);
       if (use) b.addEventListener('click', () => { G.weapon = k; G.sponsor = w.tk; chooserEl.hidden = true; startStage(); });
       g.appendChild(b);
@@ -4209,7 +4272,7 @@
       CAMP_TABS.potions(el);
     },
     moves(el){
-      [['quick','Quick'],['strike','Strike'],['power','Power'],['special','Ultimate']].forEach(([k, name]) => {
+      [['quick','Quick'],['strike','Strike'],['power','Power'],['special','Weapon Skill']].forEach(([k, name]) => {
         const price = MOVE_PRICE[k], owned = !price || S.moves[k], mt = MOVE_TIER[k] || 0, held = tier() >= mt;
         const pills = [];
         if (owned) pills.push(held ? {cls:'own', html:'&#10003;'} : folkPill(mt));
@@ -4247,6 +4310,7 @@
         const d = tile(orb(ic.svg + badge, {ring:lv >= MAXLV ? pk.color : col, in1:'#3a3238', in2:'#141013'}, null, (ic.diag ? 'diag' : '') + (lv >= 3 ? ' lv3' : '') + (lv >= MAXLV ? ' lv4' : '')), `${w.name} <span class="stars">${stars}</span>`, pills, `${w.name}, level ${lv} of ${MAXLV}. Level ${MAXLV} perk: ${pk.tag.toLowerCase()}`);
         if (capped) d.classList.add('dormant');
         d.querySelector('.orb').style.setProperty('--aura', pk.color);
+        { const s = document.createElement('small'); s.className = 'wsk'; s.style.setProperty('--sc', wSkill(k).color); s.innerHTML = `&#10022; ${wSkill(k).name}`; s.title = wSkill(k).desc; d.querySelector('b').after(s); }
         el.appendChild(d);
       });
     },
