@@ -745,6 +745,63 @@
   .ring.cyber .irontop::after{background:repeating-linear-gradient(90deg,transparent 0 calc(var(--u)*2.4),#ff2fd0 calc(var(--u)*2.4) calc(var(--u)*3),transparent calc(var(--u)*3) calc(var(--u)*6)) !important;filter:drop-shadow(0 0 4px #ff2fd0)}
   .ring.cyber .dock{background:repeating-linear-gradient(90deg,rgba(63,233,255,.06) 0 2px,transparent 2px calc(var(--u)*10)),linear-gradient(180deg,#1a1030,#0a0618) !important;border-top-color:#3fe9ff !important;box-shadow:0 -3px 14px rgba(63,233,255,.4)}
   @media (prefers-reduced-motion: reduce){ .ring.cyber .gate i{animation:none} }
+
+  /* ---- Aşama 7: Sokak, Basketbol, Okul arenaları ---- */
+  .mdeco{position:absolute;z-index:1;pointer-events:none;display:none;filter:drop-shadow(3px 4px 0 rgba(20,10,10,.35))}
+  .mdeco svg{display:block;width:100%;height:100%}
+  .mdeco.flipx{scale:-1 1}
+  .mdeco.mfloor{z-index:0}
+  .ring.rg-street .md-street,.ring.rg-court .md-court,.ring.rg-school .md-school{display:block}
+  .ring:is(.rg-street,.rg-court,.rg-school) :is(.deco,.torch,.gate){display:none}
+  .ring:is(.rg-street,.rg-school) .banners{display:none}
+  .mdeco.lamp u{position:absolute;left:50%;top:calc(var(--u)*2);width:calc(var(--u)*30);height:calc(var(--u)*30);translate:-50% -30%;border-radius:50%;background:radial-gradient(closest-side,rgba(255,230,140,.5),rgba(255,210,90,0));animation:glow 1.8s ease-in-out infinite alternate}
+  .ring.rg-street{background:#1a1418}
+  .ring.rg-street .wall{background:
+    linear-gradient(180deg,rgba(20,14,30,.65),rgba(20,14,30,.1) 45%),
+    repeating-linear-gradient(0deg,#2a1e22 0 2px,transparent 2px calc(var(--u)*6)),
+    repeating-linear-gradient(90deg,#2a1e22 0 2px,transparent 2px calc(var(--u)*12)),
+    linear-gradient(180deg,#5a3a3a,#7a4a40 60%,#5a3632) !important}
+  .ring.rg-street .sand{background:
+    repeating-linear-gradient(90deg,#ffd23f 0 calc(var(--u)*6),transparent calc(var(--u)*6) calc(var(--u)*12)) 0 55%/100% calc(var(--u)*.9) no-repeat,
+    radial-gradient(circle at 20% 40%,rgba(255,255,255,.05) 0 2px,transparent 3px) 0 0/calc(var(--u)*5) calc(var(--u)*5),
+    linear-gradient(180deg,#3a3d44,#2a2d33 40%,#202228) !important;border-top:3px solid #8a939c !important}
+  .ring.rg-street .sand::before{border-color:rgba(255,210,63,.35) !important}
+  .ring.rg-street .cornice{background:linear-gradient(180deg,#2a2d33,#4a5060 50%,#1a1c20) !important;border-bottom-color:#14161c !important}
+  .ring.rg-street .cornice::after{background:repeating-linear-gradient(90deg,#4a5060 0 calc(var(--u)*1),transparent calc(var(--u)*1) calc(var(--u)*4)) !important}
+  .ring.rg-street .pillar{background:linear-gradient(90deg,#3a3d44,#7a7f88 30%,#9aa0a8 45%,#6a6f78 70%,#3a3d44) !important}
+  .ring.rg-street .pillar i{background:linear-gradient(180deg,transparent 0 20%,#ff2fd0 20% 34%,transparent 34% 52%,#ffd23f 52% 66%,transparent 66%) !important;opacity:.75}
+  .ring.rg-street .dock{background:linear-gradient(180deg,#2a2d33,#14161c) !important;border-top-color:#ffd23f !important}
+  .ring.rg-court{background:#0d1530}
+  .ring.rg-court .wall{background:
+    radial-gradient(circle at 50% 40%,#e0643a 0 1.6px,transparent 2px) 0 0/calc(var(--u)*4) calc(var(--u)*4.4),
+    radial-gradient(circle at 50% 40%,#f0d44d 0 1.6px,transparent 2px) calc(var(--u)*2) calc(var(--u)*2.2)/calc(var(--u)*4) calc(var(--u)*4.4),
+    repeating-linear-gradient(0deg,#1a2550 0 calc(var(--u)*1),#121a3a calc(var(--u)*1) calc(var(--u)*4.4)),
+    linear-gradient(180deg,#0d1530,#1a2a5a) !important}
+  .ring.rg-court .wall::after{content:"";position:absolute;left:0;right:0;bottom:0;height:calc(var(--u)*6);background:linear-gradient(180deg,#2a74bd,#1a4a8a);border-top:2px solid #f3ece2}
+  .ring.rg-court .sand{background:
+    repeating-linear-gradient(90deg,rgba(90,50,20,.18) 0 2px,transparent 2px calc(var(--u)*8)),
+    repeating-linear-gradient(90deg,#e0a868 0 calc(var(--u)*16),#d89a5a calc(var(--u)*16) calc(var(--u)*32)),
+    linear-gradient(180deg,#e8b070,#d8985a) !important;border-top:3px solid #f3ece2 !important}
+  .ring.rg-court .sand::before{border-color:rgba(255,255,255,.75) !important}
+  .ring.rg-court .cornice{background:linear-gradient(180deg,#1a1c24,#3a3f4a 50%,#14161c) !important;border-bottom-color:#ffd23f !important}
+  .ring.rg-court .cornice::after{background:repeating-linear-gradient(90deg,#fff3b0 0 calc(var(--u)*1.4),transparent calc(var(--u)*1.4) calc(var(--u)*8)) !important;filter:drop-shadow(0 0 4px #fff3b0)}
+  .ring.rg-court .pillar{background:linear-gradient(90deg,#1a2a5a,#2a74bd 35%,#5aa0e0 50%,#2a74bd 65%,#1a2a5a) !important}
+  .ring.rg-court .pillar i{background:repeating-linear-gradient(180deg,#f3ece2 0 calc(var(--u)*1),transparent calc(var(--u)*1) calc(var(--u)*5)) !important;opacity:.5}
+  .ring.rg-court .dock{background:linear-gradient(180deg,#1a2550,#0d1530) !important;border-top-color:#ff7a1a !important}
+  .ring.rg-school{background:#e8dcc0}
+  .ring.rg-school .wall{background:
+    linear-gradient(180deg,transparent 0 62%,#5a3a22 62% calc(62% + 3px),transparent calc(62% + 3px)),
+    linear-gradient(180deg,#efe4c8 0 62%,#9ac4a8 62%),
+    repeating-linear-gradient(90deg,rgba(0,0,0,.04) 0 2px,transparent 2px calc(var(--u)*10)) !important}
+  .ring.rg-school .sand{background:
+    conic-gradient(#f3ece2 25%,#3a5a8a 0 50%,#f3ece2 0 75%,#3a5a8a 0) 0 0/calc(var(--u)*8) calc(var(--u)*8),
+    #f3ece2 !important;border-top:3px solid #5a3a22 !important}
+  .ring.rg-school .sand::before{display:none}
+  .ring.rg-school .cornice{background:linear-gradient(180deg,#a0724a,#c8946a 50%,#8a5a3a) !important;border-bottom-color:#5a3a22 !important}
+  .ring.rg-school .pillar{background:linear-gradient(90deg,#6b4a2c,#a0724a 30%,#c8946a 45%,#a0724a 70%,#6b4a2c) !important}
+  .ring.rg-school .pillar i{background:repeating-linear-gradient(180deg,rgba(60,36,20,.35) 0 2px,transparent 2px calc(var(--u)*3)) !important}
+  .ring.rg-school .dock{background:linear-gradient(180deg,#6b4a2c,#3a2a1c) !important;border-top-color:#ffd23f !important}
+  @media (prefers-reduced-motion: reduce){ .mdeco.lamp u{animation:none} }
   /* ---- 5 harita çubuğu ---- */
   .maps{flex-basis:100%;display:flex;align-items:center;gap:0;margin-bottom:2px}
   .maps .mlink{flex:0 0 18px;height:4px;background:#8a6a5a}
@@ -976,6 +1033,23 @@
       <div class="torch" aria-hidden="true" style="left:39%;bottom:calc(var(--u)*44 + var(--dock))"><u></u><b></b><i></i></div>
       <div class="torch" aria-hidden="true" style="right:39%;bottom:calc(var(--u)*44 + var(--dock))"><u></u><b></b><i></i></div>
       <div class="banners" aria-hidden="true"><i style="--c:#e0643a"></i><i style="--c:#2fb58f"></i><i style="--c:#7c5cff"></i><i style="--c:#f0d44d"></i><i style="--c:#2a74bd"></i><i style="--c:#ff5c86"></i></div>
+      <div class="mdeco md-street" aria-hidden="true" style="left:50%;translate:-50% 0;bottom:calc(var(--u)*21 + var(--dock));width:calc(var(--u)*46);height:calc(var(--u)*31)"><svg viewBox="0 0 88 60"><rect width="88" height="60" fill="#231c1f"/><rect x="2" y="2" width="84" height="58" fill="#6b7078"/><rect x="2" y="6" width="84" height="1.2" fill="#4a5058"/><rect x="2" y="11" width="84" height="1.2" fill="#4a5058"/><rect x="2" y="16" width="84" height="1.2" fill="#4a5058"/><rect x="2" y="21" width="84" height="1.2" fill="#4a5058"/><rect x="2" y="26" width="84" height="1.2" fill="#4a5058"/><rect x="2" y="31" width="84" height="1.2" fill="#4a5058"/><rect x="2" y="36" width="84" height="1.2" fill="#4a5058"/><rect x="2" y="41" width="84" height="1.2" fill="#4a5058"/><rect x="2" y="46" width="84" height="1.2" fill="#4a5058"/><rect x="2" y="51" width="84" height="1.2" fill="#4a5058"/><rect x="2" y="56" width="84" height="1.2" fill="#4a5058"/><rect x="0" y="0" width="88" height="5" fill="#3a3f48"/><rect x="38" y="52" width="12" height="3" fill="#2a2d33"/><text x="44" y="34" text-anchor="middle" font-family="Pixelify Sans, monospace" font-weight="700" font-size="25" fill="#ff2fd0" stroke="#231c1f" stroke-width="2.4" paint-order="stroke" transform="rotate(-4 44 30)">VIBE</text><text x="47" y="46" text-anchor="middle" font-family="Pixelify Sans, monospace" font-weight="700" font-size="10" fill="#ffd23f" stroke="#231c1f" stroke-width="1.6" paint-order="stroke" transform="rotate(-4 44 40)">STREET</text><rect x="22" y="35" width="1.4" height="7" fill="#ff2fd0"/><rect x="31" y="36" width="1.4" height="5" fill="#ff2fd0"/><rect x="58" y="33" width="1.4" height="8" fill="#ff2fd0"/><text x="14" y="16" font-family="Pixelify Sans, monospace" font-size="7" fill="#3fe9ff" transform="rotate(-10 14 16)">wagmi</text><text x="64" y="14" font-family="Pixelify Sans, monospace" font-size="7" fill="#7dff5a" transform="rotate(8 64 14)">HODL</text></svg></div>
+      <div class="mdeco md-street" aria-hidden="true" style="left:7%;bottom:calc(var(--u)*21 + var(--dock));width:calc(var(--u)*20);height:calc(var(--u)*23)"><svg viewBox="0 0 40 46"><defs><pattern id="mdChain" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0L4 4M4 0L0 4" stroke="#9aa3ad" stroke-width=".6"/></pattern></defs><rect x="2" y="4" width="36" height="40" fill="url(#mdChain)"/><rect x="0" y="2" width="3" height="44" fill="#231c1f"/><rect x=".6" y="2.6" width="1.8" height="43" fill="#8a939c"/><rect x="37" y="2" width="3" height="44" fill="#231c1f"/><rect x="37.6" y="2.6" width="1.8" height="43" fill="#8a939c"/><rect x="0" y="2" width="40" height="2.4" fill="#231c1f"/><rect x="0" y="2.5" width="40" height="1.4" fill="#aab3bd"/><rect x="10" y="14" width="18" height="12" fill="#231c1f"/><rect x="11" y="15" width="16" height="10" fill="#ffd23f"/><text x="19" y="22.6" text-anchor="middle" font-family="Pixelify Sans, monospace" font-size="5.4" font-weight="700" fill="#231c1f">NO RUGS</text></svg></div>
+      <div class="mdeco md-street" aria-hidden="true" style="right:9%;bottom:calc(var(--u)*21 + var(--dock));width:calc(var(--u)*11);height:calc(var(--u)*14)"><svg viewBox="0 0 24 30"><rect x="2" y="6" width="20" height="24" fill="#231c1f"/><rect x="3" y="7" width="18" height="22" fill="#5a6870"/><rect x="7" y="8" width="1.2" height="20" fill="#3a4650"/><rect x="12" y="8" width="1.2" height="20" fill="#3a4650"/><rect x="17" y="8" width="1.2" height="20" fill="#3a4650"/><rect x="0" y="3" width="24" height="4" fill="#231c1f"/><rect x="1" y="3.8" width="22" height="2.4" fill="#7a8890"/><rect x="9" y="0" width="6" height="3.4" fill="#231c1f"/><rect x="10" y=".8" width="4" height="2" fill="#7a8890"/><rect x="18" y="-1" width="5" height="4" fill="#2fb58f" transform="rotate(20 20 1)"/><rect x="3" y="20" width="6" height="2" fill="#ff2fd0"/></svg></div>
+      <div class="mdeco md-street" aria-hidden="true" style="right:23%;bottom:calc(var(--u)*21 + var(--dock));width:calc(var(--u)*6);height:calc(var(--u)*7.5)"><svg viewBox="0 0 16 20"><rect x="3" y="4" width="10" height="15" fill="#231c1f"/><rect x="4" y="5" width="8" height="13" fill="#d8432d"/><rect x="2" y="3" width="12" height="3" fill="#231c1f"/><rect x="3" y="3.6" width="10" height="1.8" fill="#e0643a"/><rect x="6" y="0" width="4" height="3.4" fill="#231c1f"/><rect x="0" y="9" width="16" height="4" fill="#231c1f"/><rect x="1" y="9.8" width="14" height="2.4" fill="#e0643a"/><rect x="1" y="18" width="14" height="2" fill="#231c1f"/><rect x="5" y="6" width="1.2" height="10" fill="#ff8a6a"/></svg></div>
+      <div class="mdeco md-street lamp" aria-hidden="true" style="left:25%;bottom:calc(var(--u)*21 + var(--dock));width:calc(var(--u)*7);height:calc(var(--u)*42)"><svg viewBox="0 0 16 92"><rect x="6" y="8" width="3.4" height="84" fill="#231c1f"/><rect x="6.8" y="8" width="1.8" height="84" fill="#4a5060"/><rect x="2" y="2" width="14" height="7" fill="#231c1f"/><rect x="3" y="3" width="12" height="4" fill="#3a3f48"/><rect x="4" y="7" width="10" height="3" fill="#fff3b0"/><rect x="4" y="88" width="8" height="4" fill="#231c1f"/></svg><u></u></div>
+      <div class="mdeco md-street lamp" aria-hidden="true" style="right:30%;bottom:calc(var(--u)*21 + var(--dock));width:calc(var(--u)*7);height:calc(var(--u)*42)"><svg viewBox="0 0 16 92"><rect x="6" y="8" width="3.4" height="84" fill="#231c1f"/><rect x="6.8" y="8" width="1.8" height="84" fill="#4a5060"/><rect x="2" y="2" width="14" height="7" fill="#231c1f"/><rect x="3" y="3" width="12" height="4" fill="#3a3f48"/><rect x="4" y="7" width="10" height="3" fill="#fff3b0"/><rect x="4" y="88" width="8" height="4" fill="#231c1f"/></svg><u></u></div>
+      <div class="mdeco md-court" aria-hidden="true" style="left:50%;translate:-50% 0;bottom:calc(var(--u)*36 + var(--dock));width:calc(var(--u)*42);height:calc(var(--u)*20)"><svg viewBox="0 0 84 40"><rect width="84" height="40" fill="#231c1f"/><rect x="2" y="2" width="80" height="36" fill="#0d0f14"/><rect x="2" y="2" width="80" height="6" fill="#2a2d38"/><text x="42" y="7" text-anchor="middle" font-family="Pixelify Sans, monospace" font-size="4.6" fill="#e8edf2">VIBE COURT</text><text x="20" y="17" text-anchor="middle" font-family="Pixelify Sans, monospace" font-size="5" fill="#9aa3ad">HOME</text><text x="64" y="17" text-anchor="middle" font-family="Pixelify Sans, monospace" font-size="5" fill="#9aa3ad">BOTS</text><text x="20" y="31" text-anchor="middle" font-family="Pixelify Sans, monospace" font-weight="700" font-size="13" fill="#ff3048">88</text><text x="64" y="31" text-anchor="middle" font-family="Pixelify Sans, monospace" font-weight="700" font-size="13" fill="#ff3048">86</text><text x="42" y="24" text-anchor="middle" font-family="Pixelify Sans, monospace" font-size="5" fill="#ffd23f">Q4</text><text x="42" y="33" text-anchor="middle" font-family="Pixelify Sans, monospace" font-weight="700" font-size="7" fill="#ffd23f">0:24</text><rect x="36" y="-6" width="2" height="8" fill="#231c1f"/><rect x="46" y="-6" width="2" height="8" fill="#231c1f"/></svg></div>
+      <div class="mdeco md-court" aria-hidden="true" style="left:6%;bottom:calc(var(--u)*21 + var(--dock));width:calc(var(--u)*16);height:calc(var(--u)*40)"><svg viewBox="0 0 36 90"><rect x="2" y="20" width="4" height="70" fill="#231c1f"/><rect x="2.8" y="20" width="2.4" height="70" fill="#4a5060"/><rect x="0" y="84" width="10" height="6" fill="#231c1f"/><rect x="4" y="22" width="12" height="3" fill="#231c1f"/><rect x="14" y="4" width="4" height="34" fill="#231c1f"/><rect x="14.8" y="5" width="2.4" height="32" fill="#e8edf2"/><rect x="16" y="26" width="10" height="2.4" fill="#231c1f"/><rect x="17" y="26.4" width="9" height="1.6" fill="#ff5a1a"/><rect x="18" y="28.4" width=".8" height="9" fill="#f3ece2" transform="skewX(8)"/><rect x="20.4" y="28.4" width=".8" height="9" fill="#f3ece2" transform="skewX(4)"/><rect x="22.6" y="28.4" width=".8" height="9" fill="#f3ece2" transform="skewX(-2)"/><rect x="24.8" y="28.4" width=".8" height="9" fill="#f3ece2" transform="skewX(-7)"/><rect x="17.6" y="32" width="8" height=".7" fill="#f3ece2"/><rect x="18.4" y="36" width="6.4" height=".7" fill="#f3ece2"/><rect x="14.8" y="14" width="2.4" height="8" fill="#d8432d"/></svg></div>
+      <div class="mdeco md-court flipx" aria-hidden="true" style="right:6%;bottom:calc(var(--u)*21 + var(--dock));width:calc(var(--u)*16);height:calc(var(--u)*40)"><svg viewBox="0 0 36 90"><rect x="2" y="20" width="4" height="70" fill="#231c1f"/><rect x="2.8" y="20" width="2.4" height="70" fill="#4a5060"/><rect x="0" y="84" width="10" height="6" fill="#231c1f"/><rect x="4" y="22" width="12" height="3" fill="#231c1f"/><rect x="14" y="4" width="4" height="34" fill="#231c1f"/><rect x="14.8" y="5" width="2.4" height="32" fill="#e8edf2"/><rect x="16" y="26" width="10" height="2.4" fill="#231c1f"/><rect x="17" y="26.4" width="9" height="1.6" fill="#ff5a1a"/><rect x="18" y="28.4" width=".8" height="9" fill="#f3ece2" transform="skewX(8)"/><rect x="20.4" y="28.4" width=".8" height="9" fill="#f3ece2" transform="skewX(4)"/><rect x="22.6" y="28.4" width=".8" height="9" fill="#f3ece2" transform="skewX(-2)"/><rect x="24.8" y="28.4" width=".8" height="9" fill="#f3ece2" transform="skewX(-7)"/><rect x="17.6" y="32" width="8" height=".7" fill="#f3ece2"/><rect x="18.4" y="36" width="6.4" height=".7" fill="#f3ece2"/><rect x="14.8" y="14" width="2.4" height="8" fill="#d8432d"/></svg></div>
+      <div class="mdeco md-court mfloor" aria-hidden="true" style="left:0;right:0;bottom:var(--dock);height:calc(var(--u)*22);filter:none"><svg viewBox="0 0 100 22" preserveAspectRatio="none"><rect x="0" y="2" width="16" height="20" fill="rgba(42,116,189,.55)"/><rect x="84" y="2" width="16" height="20" fill="rgba(216,67,45,.55)"/><rect x="16" y="2" width=".5" height="20" fill="#fff"/><rect x="83.5" y="2" width=".5" height="20" fill="#fff"/><rect x="49.8" y="2" width=".4" height="20" fill="#fff"/><path d="M0 3 Q30 12 0 21" fill="none" stroke="#fff" stroke-width=".5"/><path d="M100 3 Q70 12 100 21" fill="none" stroke="#fff" stroke-width=".5"/></svg></div>
+      <div class="mdeco md-court" aria-hidden="true" style="left:50%;translate:-50% 0;top:calc(var(--u)*11);width:calc(var(--u)*60);height:calc(var(--u)*10)"><svg viewBox="0 0 120 20"><polygon points="4,0 22,0 22,14 13,19 4,14" fill="#231c1f"/><polygon points="5,1 21,1 21,13 13,17.6 5,13" fill="#2a74bd"/><text x="13" y="9" text-anchor="middle" font-family="Pixelify Sans, monospace" font-size="4.2" font-weight="700" fill="#fff8f0">2024</text><polygon points="28,0 46,0 46,14 37,19 28,14" fill="#231c1f"/><polygon points="29,1 45,1 45,13 37,17.6 29,13" fill="#d8432d"/><text x="37" y="9" text-anchor="middle" font-family="Pixelify Sans, monospace" font-size="4.2" font-weight="700" fill="#fff8f0">2025</text><polygon points="52,0 70,0 70,14 61,19 52,14" fill="#231c1f"/><polygon points="53,1 69,1 69,13 61,17.6 53,13" fill="#ffc53d"/><text x="61" y="9" text-anchor="middle" font-family="Pixelify Sans, monospace" font-size="4.2" font-weight="700" fill="#fff8f0">MVP</text><polygon points="76,0 94,0 94,14 85,19 76,14" fill="#231c1f"/><polygon points="77,1 93,1 93,13 85,17.6 77,13" fill="#7c5cff"/><text x="85" y="9" text-anchor="middle" font-family="Pixelify Sans, monospace" font-size="4.2" font-weight="700" fill="#fff8f0">2026</text><polygon points="100,0 118,0 118,14 109,19 100,14" fill="#231c1f"/><polygon points="101,1 117,1 117,13 109,17.6 101,13" fill="#2fb58f"/><text x="109" y="9" text-anchor="middle" font-family="Pixelify Sans, monospace" font-size="4.2" font-weight="700" fill="#fff8f0">GOAT</text></svg></div>
+      <div class="mdeco md-school" aria-hidden="true" style="left:50%;translate:-50% 0;bottom:calc(var(--u)*27 + var(--dock));width:calc(var(--u)*50);height:calc(var(--u)*25)"><svg viewBox="0 0 100 50"><rect width="100" height="46" fill="#231c1f"/><rect x="2" y="2" width="96" height="42" fill="#8a5a3a"/><rect x="5" y="5" width="90" height="36" fill="#1f4a3a"/><rect x="5" y="5" width="90" height="36" fill="url(#mdDust)" opacity=".5"/><defs><linearGradient id="mdDust" x1="0" x2="1"><stop offset="0" stop-color="#2f6a52"/><stop offset=".5" stop-color="#1f4a3a"/><stop offset="1" stop-color="#2a5a48"/></linearGradient></defs><text x="12" y="17" font-family="Pixelify Sans, monospace" font-size="8" fill="#f3ece2">HODL 101</text><text x="12" y="28" font-family="Pixelify Sans, monospace" font-size="6" fill="#f3ece2">buy low + sell high</text><text x="12" y="37" font-family="Pixelify Sans, monospace" font-size="6" fill="#ffd23f">= profit?</text><path d="M68 34 L74 24 L79 29 L88 12" fill="none" stroke="#7dff5a" stroke-width="1.4"/><path d="M85 12 L88 12 L88 15" fill="none" stroke="#7dff5a" stroke-width="1.4"/><rect x="0" y="44" width="100" height="5" fill="#231c1f"/><rect x="2" y="44.6" width="96" height="3.4" fill="#a0724a"/><rect x="20" y="42.4" width="6" height="2" fill="#f3ece2"/><rect x="60" y="42" width="10" height="2.4" fill="#4a3a2c"/></svg></div>
+      <div class="mdeco md-school" aria-hidden="true" style="left:calc(50% - var(--u)*36);bottom:calc(var(--u)*38 + var(--dock));width:calc(var(--u)*9);height:calc(var(--u)*9)"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9.6" fill="#231c1f"/><circle cx="10" cy="10" r="8" fill="#f3ece2"/><rect x="9.4" y="4" width="1.2" height="6.4" fill="#231c1f"/><rect x="9.4" y="9.4" width="5" height="1.2" fill="#231c1f"/><rect x="9.5" y="2.6" width="1" height="1.6" fill="#231c1f" transform="rotate(0 10 10)"/><rect x="9.5" y="2.6" width="1" height="1.6" fill="#231c1f" transform="rotate(30 10 10)"/><rect x="9.5" y="2.6" width="1" height="1.6" fill="#231c1f" transform="rotate(60 10 10)"/><rect x="9.5" y="2.6" width="1" height="1.6" fill="#231c1f" transform="rotate(90 10 10)"/><rect x="9.5" y="2.6" width="1" height="1.6" fill="#231c1f" transform="rotate(120 10 10)"/><rect x="9.5" y="2.6" width="1" height="1.6" fill="#231c1f" transform="rotate(150 10 10)"/><rect x="9.5" y="2.6" width="1" height="1.6" fill="#231c1f" transform="rotate(180 10 10)"/><rect x="9.5" y="2.6" width="1" height="1.6" fill="#231c1f" transform="rotate(210 10 10)"/><rect x="9.5" y="2.6" width="1" height="1.6" fill="#231c1f" transform="rotate(240 10 10)"/><rect x="9.5" y="2.6" width="1" height="1.6" fill="#231c1f" transform="rotate(270 10 10)"/><rect x="9.5" y="2.6" width="1" height="1.6" fill="#231c1f" transform="rotate(300 10 10)"/><rect x="9.5" y="2.6" width="1" height="1.6" fill="#231c1f" transform="rotate(330 10 10)"/><circle cx="10" cy="10" r="1" fill="#d8432d"/></svg></div>
+      <div class="mdeco md-school" aria-hidden="true" style="left:6%;bottom:calc(var(--u)*21 + var(--dock));width:calc(var(--u)*21);height:calc(var(--u)*32)"><svg viewBox="0 0 42 64"><rect width="42" height="64" fill="#231c1f"/><rect x="1.0" y="1" width="12.6" height="62" fill="#2a74bd"/><rect x="1.0" y="1" width="12.6" height="2" fill="rgba(255,255,255,.3)"/><rect x="4.0" y="6" width="6.6" height=".9" fill="rgba(0,0,0,.35)"/><rect x="4.0" y="8.4" width="6.6" height=".9" fill="rgba(0,0,0,.35)"/><rect x="4.0" y="10.8" width="6.6" height=".9" fill="rgba(0,0,0,.35)"/><rect x="4.0" y="13.2" width="6.6" height=".9" fill="rgba(0,0,0,.35)"/><rect x="10.6" y="30" width="1.6" height="5" fill="#e8edf2"/><rect x="4.6" y="48" width="5.4" height="5" fill="rgba(0,0,0,.2)"/><rect x="14.4" y="1" width="12.6" height="62" fill="#2a74bd"/><rect x="14.4" y="1" width="12.6" height="2" fill="rgba(255,255,255,.3)"/><rect x="17.4" y="6" width="6.6" height=".9" fill="rgba(0,0,0,.35)"/><rect x="17.4" y="8.4" width="6.6" height=".9" fill="rgba(0,0,0,.35)"/><rect x="17.4" y="10.8" width="6.6" height=".9" fill="rgba(0,0,0,.35)"/><rect x="17.4" y="13.2" width="6.6" height=".9" fill="rgba(0,0,0,.35)"/><rect x="24.0" y="30" width="1.6" height="5" fill="#e8edf2"/><rect x="18.0" y="48" width="5.4" height="5" fill="rgba(0,0,0,.2)"/><rect x="27.8" y="1" width="12.6" height="62" fill="#2a74bd"/><rect x="27.8" y="1" width="12.6" height="2" fill="rgba(255,255,255,.3)"/><rect x="30.8" y="6" width="6.6" height=".9" fill="rgba(0,0,0,.35)"/><rect x="30.8" y="8.4" width="6.6" height=".9" fill="rgba(0,0,0,.35)"/><rect x="30.8" y="10.8" width="6.6" height=".9" fill="rgba(0,0,0,.35)"/><rect x="30.8" y="13.2" width="6.6" height=".9" fill="rgba(0,0,0,.35)"/><rect x="37.4" y="30" width="1.6" height="5" fill="#e8edf2"/><rect x="31.400000000000002" y="48" width="5.4" height="5" fill="rgba(0,0,0,.2)"/><rect x="5" y="20" width="6" height="7" fill="#ffd23f" transform="rotate(-6 8 23)"/><text x="8" y="25" text-anchor="middle" font-family="Pixelify Sans, monospace" font-size="3" fill="#231c1f" transform="rotate(-6 8 23)">GM</text></svg></div>
+      <div class="mdeco md-school" aria-hidden="true" style="right:6%;bottom:calc(var(--u)*21 + var(--dock));width:calc(var(--u)*21);height:calc(var(--u)*32)"><svg viewBox="0 0 42 64"><rect width="42" height="64" fill="#231c1f"/><rect x="1.0" y="1" width="12.6" height="62" fill="#d8432d"/><rect x="1.0" y="1" width="12.6" height="2" fill="rgba(255,255,255,.3)"/><rect x="4.0" y="6" width="6.6" height=".9" fill="rgba(0,0,0,.35)"/><rect x="4.0" y="8.4" width="6.6" height=".9" fill="rgba(0,0,0,.35)"/><rect x="4.0" y="10.8" width="6.6" height=".9" fill="rgba(0,0,0,.35)"/><rect x="4.0" y="13.2" width="6.6" height=".9" fill="rgba(0,0,0,.35)"/><rect x="10.6" y="30" width="1.6" height="5" fill="#e8edf2"/><rect x="4.6" y="48" width="5.4" height="5" fill="rgba(0,0,0,.2)"/><rect x="14.4" y="1" width="12.6" height="62" fill="#d8432d"/><rect x="14.4" y="1" width="12.6" height="2" fill="rgba(255,255,255,.3)"/><rect x="17.4" y="6" width="6.6" height=".9" fill="rgba(0,0,0,.35)"/><rect x="17.4" y="8.4" width="6.6" height=".9" fill="rgba(0,0,0,.35)"/><rect x="17.4" y="10.8" width="6.6" height=".9" fill="rgba(0,0,0,.35)"/><rect x="17.4" y="13.2" width="6.6" height=".9" fill="rgba(0,0,0,.35)"/><rect x="24.0" y="30" width="1.6" height="5" fill="#e8edf2"/><rect x="18.0" y="48" width="5.4" height="5" fill="rgba(0,0,0,.2)"/><rect x="27.8" y="1" width="12.6" height="62" fill="#d8432d"/><rect x="27.8" y="1" width="12.6" height="2" fill="rgba(255,255,255,.3)"/><rect x="30.8" y="6" width="6.6" height=".9" fill="rgba(0,0,0,.35)"/><rect x="30.8" y="8.4" width="6.6" height=".9" fill="rgba(0,0,0,.35)"/><rect x="30.8" y="10.8" width="6.6" height=".9" fill="rgba(0,0,0,.35)"/><rect x="30.8" y="13.2" width="6.6" height=".9" fill="rgba(0,0,0,.35)"/><rect x="37.4" y="30" width="1.6" height="5" fill="#e8edf2"/><rect x="31.400000000000002" y="48" width="5.4" height="5" fill="rgba(0,0,0,.2)"/><rect x="5" y="20" width="6" height="7" fill="#ffd23f" transform="rotate(-6 8 23)"/><text x="8" y="25" text-anchor="middle" font-family="Pixelify Sans, monospace" font-size="3" fill="#231c1f" transform="rotate(-6 8 23)">GM</text></svg></div>
+      <div class="mdeco md-school" aria-hidden="true" style="left:26%;bottom:calc(var(--u)*21 + var(--dock));width:calc(var(--u)*13);height:calc(var(--u)*10.4)"><svg viewBox="0 0 30 24"><rect x="0" y="6" width="30" height="4" fill="#231c1f"/><rect x="1" y="6.8" width="28" height="2.4" fill="#c8884a"/><rect x="3" y="10" width="3" height="14" fill="#231c1f"/><rect x="24" y="10" width="3" height="14" fill="#231c1f"/><rect x="7" y="10" width="16" height="6" fill="#8a5a3a"/><rect x="7" y="10" width="16" height="6" fill="none" stroke="#231c1f" stroke-width="1"/><rect x="18" y="1.6" width="6" height="5" fill="#231c1f"/><rect x="18.8" y="2.4" width="4.4" height="3.6" fill="#d8432d"/><rect x="20.6" y="0" width="1" height="2" fill="#6b4a2c"/><rect x="21.4" y=".4" width="2" height="1" fill="#2fb58f"/><rect x="4" y="3.4" width="9" height="2.8" fill="#231c1f"/><rect x="4.6" y="4" width="7.8" height="1.6" fill="#2a74bd"/></svg></div>
+      <div class="mdeco md-school" aria-hidden="true" style="right:24%;bottom:calc(var(--u)*45 + var(--dock));width:calc(var(--u)*20);height:calc(var(--u)*8)"><svg viewBox="0 0 40 16"><polygon points="0,0 40,0 34,8 40,16 0,16" fill="#231c1f"/><polygon points="1,1 37.6,1 32.6,8 37.6,15 1,15" fill="#7c5cff"/><text x="17" y="11" text-anchor="middle" font-family="Pixelify Sans, monospace" font-weight="700" font-size="8" fill="#ffd23f">GO VIBES</text></svg></div>
       <div class="ring-hint watch-only" id="ringHint">Pick two fighters above</div>
       <div class="hud play-only" id="hud">
         <div class="card-hp" id="hudP"><div class="hp-name"><b>Tux</b><small>Sword</small></div><div class="bar hp"><i></i><span></span></div><div class="bar st"><i></i><span></span></div><div class="bar hy" title="Hype: fills up as you fight. Full = special move"><i></i></div></div>
@@ -2053,6 +2127,46 @@
       return P;
     });
   })();
+  // --- Aşama 7: rakiplere özel silahlar (dükkânda yok). Seviye 3+ efsane parıltısı, 4'te kendi perki
+  (() => {
+    const L5 = f => [0,1,2,3,4].map(f);
+    WT.bat = L5(lv => { const w = ['#d8b07a','#c8a070','#a0522d','#5a3a22','#2a1a14'][lv];
+      const P = [[28,35,1.4,7,'#3a2a2c',''],[27.9,24,1.6,11.4,w,''],[27.4,15.4,2.6,9,w,''],[28.1,16,.6,18,'rgba(255,255,255,.35)','nol'],[27.6,41.6,2.2,1,'#3a2a2c','']];
+      if (lv >= 2) P.push([26.6,17.4,1,1,'#aab3bd',''],[30.2,19.6,1,1,'#aab3bd',''],[26.6,21.8,1,1,'#aab3bd','']);
+      if (lv >= 4) P.push([27.2,18.6,3,.8,'#ff3048','glowb'],[27.2,22.6,3,.8,'#ff3048','glowb'],[25,16,1,1,TW,'nol twinkle'],[31.4,23,1,1,TW,'nol twinkle']);
+      return P; });
+    WT.chain = L5(lv => { const c = ['#8a939c','#aab3bd','#e9c64a','#e9c64a','#ffd23f'][lv], d = lv >= 2 ? '#b8901a' : '#5a6068';
+      const P = [[27.8,36,1.8,5.6,'#2a2d33','']];
+      for (let i = 0; i < 11; i++) P.push([i % 2 ? 28.4 : 27.6, 13.6 + i*2.1, i % 2 ? .9 : 1.9, 1.7, i % 2 ? d : c, '']);
+      P.push([27,11,3,3,lv >= 4 ? '#ff2fd0' : c, lv >= 4 ? 'glowb' : '']);
+      if (lv >= 4) P.push([25,14,1,1,TW,'nol twinkle'],[31.6,24,1,1,TW,'nol twinkle']);
+      return P; });
+    WT.spray = L5(lv => { const c = ['#d8432d','#2fb58f','#7c5cff','#ff2fd0','#3fe9ff'][lv];
+      const P = [[27.1,32,3,6.6,c,lv >= 4 ? 'glowb' : ''],[27.1,34.2,3,1.4,'#f3ece2','nol'],[27.6,30.6,2,1.5,'#e8edf2',''],[28.2,29.5,.8,1.1,'#231c1f',''],[29.2,29.7,1,.6,'#231c1f','nol']];
+      if (lv >= 3) P.push([31,28.6,1.2,1.2,c,'nol twinkle'],[32.6,27.6,1,1,c,'nol twinkle']);
+      return P; });
+    WT.ball = L5(lv => { const c = lv >= 4 ? '#ff5a1a' : '#e0701a';
+      const P = [[26.6,32.6,4.4,5.6,c,lv >= 4 ? 'glowb' : ''],[25.9,33.4,5.8,4,c,''],[28.6,32.6,.5,5.6,'#231c1f','nol'],[25.9,35.2,5.8,.5,'#231c1f','nol'],[26.4,33.2,1,1,'rgba(255,255,255,.4)','nol']];
+      if (lv >= 3) P.push([27.2,30.4,1.2,1.8,'#ffd23f','nol flame'],[29.2,29.8,1.2,2.2,'#ff7a1a','nol flame']);
+      return P; });
+    WT.trophy = L5(lv => { const g = lv >= 3 ? '#ffd23f' : lv >= 2 ? '#e9c64a' : '#aab3bd';
+      const P = [[28,33,1.4,9,'#6b4a2c',''],[26.8,31,3.8,1.4,g,''],[28,29.4,1.4,1.8,g,''],[26,22.6,5.4,6.8,g,lv >= 4 ? 'glowb' : ''],[24.8,23.4,1.4,3,g,''],[31.2,23.4,1.4,3,g,''],[26.7,23.2,1,4.6,'rgba(255,255,255,.55)','nol'],[27.6,25,2.2,2,'#d8432d','nol']];
+      if (lv >= 4) P.push([24,20,1,1,TW,'nol twinkle'],[32.4,21,1,1,TW,'nol twinkle']);
+      return P; });
+    WT.ruler = L5(lv => { const m = lv >= 3 ? '#e8edf2' : '#d8b07a';
+      const P = [[27.7,14,1.8,27,m,lv >= 4 ? 'glowb' : ''],[27.7,14,.5,27,lv >= 4 ? '#3fe9ff' : 'rgba(0,0,0,.18)','nol']];
+      for (let y = 16; y < 39; y += 2) P.push([28.6,y,.9,.4,'#231c1f','nol']);
+      if (lv >= 4) P.push([25.6,18,1,1,TW,'nol twinkle'],[31,30,1,1,TW,'nol twinkle']);
+      return P; });
+    WT.book = L5(lv => { const c = ['#2a74bd','#2f9a6a','#d8432d','#7c5cff','#1a1430'][lv];
+      const P = [[25.4,27.6,6.8,9.2,c,''],[25.4,27.6,1.3,9.2,'#231c1f','nol'],[26.9,28.2,5,1,'#f3ece2','nol'],[27.6,31,3.4,1,'#e9c64a','nol'],[27.6,33,3.4,.6,'#e9c64a','nol']];
+      if (lv >= 4) P.push([28.4,29.6,1.4,1.4,'#ff2fd0','glowb'],[24,26,1,1,TW,'nol twinkle'],[32.6,34,1,1,TW,'nol twinkle']);
+      return P; });
+    WT.chalk = L5(lv => { const c = lv >= 4 ? '#9ff3ff' : '#f3ece2';
+      const P = [[27.6,33.4,1.8,5,c,lv >= 4 ? 'glowb' : ''],[27.6,33.4,1.8,.8,'rgba(0,0,0,.15)','nol'],[26.4,38,4.2,3,'#8a5a3a',''],[26.8,38.4,3.4,.8,'#c8a070','nol']];
+      if (lv >= 3) P.push([30.4,31,1,1,c,'nol twinkle'],[25.4,30,1,1,c,'nol twinkle']);
+      return P; });
+  })();
   const wtParts = (gear, lv) => WT[gear][Math.max(0, Math.min(MAXLV, lv))].map(p => ['wpn', ...p]);
   // silah parçalarından ikon üretir (dükkân ve seçim ekranı için)
   function wIcon(gear, lv){
@@ -2090,6 +2204,11 @@
 
   // --- piksel çizimler
   const svgPx = (vb, rects) => `<svg viewBox="${vb}" shape-rendering="crispEdges">${rects.map(([x,y,w,h,c]) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${c}"/>`).join('')}</svg>`;
+  const PROJ = {
+    ball:  svgPx('0 0 8 8', [[2,0,4,8,'#231c1f'],[0,2,8,4,'#231c1f'],[1,1,6,6,'#231c1f'],[2,1,4,6,'#e0701a'],[1,2,6,4,'#e0701a'],[3.7,1,.6,6,'#231c1f'],[1,3.7,6,.6,'#231c1f'],[2,2,1,1,'#ffb070']]),
+    spray: svgPx('0 0 10 6', [[2,1,6,4,'#7dff5a'],[0,2,10,2,'#7dff5a'],[3,0,3,1,'#b8ff9a'],[1,1,2,1,'#2fb58f'],[6,4,3,2,'#2fb58f'],[4,2,2,2,'#e8ffd8']]),
+    chalk: svgPx('0 0 10 3', [[0,0,9,3,'#231c1f'],[.5,.5,8,2,'#f3ece2'],[8,.5,1.5,2,'#d8d0c4']])
+  };
   const PLASMA = svgPx('0 0 10 6', [[2,1,6,4,'#ffd23f'],[1,2,8,2,'#ffd23f'],[3,2,4,2,'#ffffff'],[0,2,1,2,'#ff8a1a']]);
   const ARROW = svgPx('0 0 12 3', [[2,1,8,1,'#8a5a3a'],[10,0,1,3,'#9aa3ad'],[11,1,1,1,'#9aa3ad'],[0,0,2,1,'#e0643a'],[0,2,2,1,'#e0643a']]);
   const POT   = svgPx('0 0 8 8', [[0,2,8,6,'#231c1f'],[1,3,6,4,'#e0a030'],[2,4,4,2,'#fff3c4'],[2,1,4,1,'#8a5a3a'],[5,0,1,3,'#f5c542']]);
@@ -2857,6 +2976,14 @@
     spear:  {name:'NVDA Spear',  tk:'NVDA', trait:'Long reach',     range:2, dmg:1.08, acc:0,   icon:W16([[7,4,2,12,'#8a5a3a'],[6,1,4,3,'#dfe4ea'],[7,0,2,1,'#dfe4ea'],[6,4,4,1,'#d8432d']])},
     dagger: {name:'MSFT Dagger', tk:'MSFT', trait:'Quick and sure', range:1, dmg:.85, acc:.05, cheap:3, quickBonus:2, icon:W16([[7,2,2,7,'#dfe4ea'],[7,1,1,1,'#dfe4ea'],[5,9,6,1,'#9aa3ad'],[7,10,2,4,'#6b4a2c'],[6,14,4,1,'#9aa3ad']])},
     axe:    {name:'AAPL Axe',    tk:'AAPL', trait:'Heavy hitter',   range:1, dmg:1.25, acc:-.06, icon:''},
+    bat:    {name:'Spiked Bat',   trait:'Street brawler', range:1, dmg:1.2, acc:-.02, npc:true},
+    chain:  {name:'Bike Chain',   trait:'Whips from 2 steps', range:2, dmg:1.05, acc:.02, npc:true},
+    spray:  {name:'Spray Can',    trait:'Toxic paint', range:3, dmg:.95, acc:0, ranged:true, proj:'spray', npc:true},
+    ball:   {name:'Fireball',     trait:'From downtown', range:3, dmg:1.1, acc:0, ranged:true, proj:'ball', npc:true},
+    trophy: {name:'MVP Trophy',   trait:'Heavy gold', range:1, dmg:1.3, acc:-.05, npc:true},
+    ruler:  {name:'Steel Ruler',  trait:'Sharp edges', range:1, dmg:1, acc:.03, crit:.1, npc:true},
+    book:   {name:'Giant Textbook', trait:'Knowledge hurts', range:1, dmg:1.35, acc:-.06, npc:true},
+    chalk:  {name:'Chalk Sniper', trait:'Chalk from afar', range:3, dmg:1, acc:.02, ranged:true, proj:'chalk', npc:true},
     bow:    {name:'AMZN Bow',    tk:'AMZN', trait:'Hits from afar', range:3, dmg:.85, acc:0, ranged:true,   close:.15, icon:W16([[4,1,2,2,'#8a5a3a'],[5,3,2,3,'#8a5a3a'],[6,6,2,4,'#8a5a3a'],[5,10,2,3,'#8a5a3a'],[4,13,2,2,'#8a5a3a'],[4,2,1,12,'#f3ece2'],[1,7,11,1,'#8a5a3a'],[12,6,2,3,'#9aa3ad'],[0,6,2,1,'#e0643a'],[0,8,2,1,'#e0643a']])}
   };
   // turnuva: 4 rakip + boss, her birinin kendi huyu var
@@ -2886,9 +3013,95 @@
     {name:'The Singularity', base:'Armor', gear:'sword', wlv:4, hp:400, pow:2.1, boss:true, scale:1.25, neon:true, filter:'hue-rotate(290deg) saturate(1.8) brightness(.9)', ai:{power:.35, crash:4, ult:{name:'SYSTEM OVERRIDE', line:'I. AM. THE. CHAIN.', label:'a System Override', dmg:[24,30]}},
      st:{walk:'stomp', speed:.9, enter:'Humans. So inefficient.', taunt:['Optimizing you out.','I wrote the smart contract.','Resistance is gas.'], hurt:['Anomaly!','Error: emotion detected!','Recompiling!']}, ko:'Shutting... down... gg.'}
   ];
+  // ===== Aşama 7: SOKAK, BASKETBOL ve OKUL arenaları (her biri bir öncekinden güçlü) =====
+  const RIVALS3 = [
+    {name:'Shill Tagger', base:'Honey', gear:'spray', wlv:3, hp:180, pow:1.6, outfit:{top:'hoodie', c:'#2fb58f', hat:'beanie', hc:'#ff2fd0', x:['sneakers']}, ai:{kite:.4, power:.25},
+     st:{walk:'glide', speed:1.2, enter:'This wall needs more shill.', taunt:['100x gem, trust me!','Tagged and bagged.','Paint it green!'], hurt:['My art!','Wet paint!','Not the can!']}, ko:'Out of... paint.'},
+    {name:'Seed Snatcher', base:'Mist', gear:'bat', wlv:3, hp:210, pow:1.75, outfit:{top:'hoodie', c:'#2a2d33', face:'mask', x:['sneakers']}, ai:{flee:.3, power:.35},
+     st:{walk:'scamper', speed:1.4, enter:'Nice wallet. Mind if I hold it?', taunt:['What is your seed phrase?','Just 12 words, friend.','Sign this, quick!'], hurt:['Ouch, my keys!','Not cool!','Cold storage!']}, ko:'Should have... used a hardware wallet.'},
+    {name:'Chain Gang', base:'Armor', gear:'chain', wlv:3, hp:250, pow:1.9, outfit:{top:'tee', c:'#d8432d', hat:'cap', hc:'#231c1f', face:'shades', x:['chain','sneakers']}, ai:{power:.3, drain:12},
+     st:{walk:'stomp', speed:1, enter:'On-chain or off-chain, we run this block.', taunt:['Every block is ours.','Link up!','Gas money, now.'], hurt:['Chain reorg!','Broken link!','Fork it!']}, ko:'Chain... halted.'},
+    {name:'The Bouncer', base:'Lavender', gear:'bat', wlv:4, hp:310, pow:2.05, outfit:{top:'tee', c:'#14161c', face:'shades', x:['chain']}, ai:{slow:true, power:.45, regen:12},
+     st:{walk:'stomp', speed:.7, enter:'You are not on the whitelist.', taunt:['No mint for you.','Velvet rope, pal.','Wrong allowlist.'], hurt:['Hey!','Watch the shirt!','Rude!']}, ko:'Fine... you are on the list.'},
+    {name:'OTC Kingpin', base:'Mr. Hat', gear:'chain', wlv:4, hp:480, pow:2.35, boss:true, scale:1.25, outfit:{top:'suit', c:'#2a1f3a', face:'shades', x:['chain']},
+     ai:{power:.35, crash:4, ult:{name:'HOSTILE TAKEOVER', line:'Your bags are mine now.', label:'a Hostile Takeover', dmg:[26,32], sta:25, toast:'Hostile takeover! You lose 25 energy.', dim:'rgba(200,150,20,.35)'}},
+     st:{walk:'stomp', speed:.9, enter:'Everything on this street trades through me.', taunt:['Dark pool, baby.','Big blocks only.','I set the price.'], hurt:['My spread!','Slippage!','Unacceptable!']}, ko:'Deal... is off.'}
+  ];
+  const RIVALS4 = [
+    {name:'Airdrop Andy', base:'Pip', gear:'ball', wlv:3, hp:220, pow:1.9, outfit:{top:'jersey', c:'#2a74bd', num:'0', hat:'headband', hc:'#f3ece2', x:['shorts','sneakers']}, ai:{kite:.45, power:.25},
+     st:{walk:'scamper', speed:1.3, enter:'Free airdrop! Catch!', taunt:['Claim it!','Airball? Never.','You are eligible!'], hurt:['Ineligible!','Snapshot missed!','Sybil?!']}, ko:'Airdrop... cancelled.'},
+    {name:'Pump & Dunk', base:'Armor', gear:'trophy', wlv:3, hp:260, pow:2.05, outfit:{top:'jersey', c:'#d8432d', num:'69', hat:'headband', hc:'#231c1f', x:['shorts','wrist']}, ai:{power:.4},
+     st:{walk:'stomp', speed:1, enter:'Pump it up, then dunk it on you.', taunt:['Up only!','Slam!','Pump it!'], hurt:['Dumped!','Rejected!','Foul!']}, ko:'Fully... dumped.'},
+    {name:'Fast Break', base:'Goggles', gear:'ball', wlv:4, hp:300, pow:2.2, outfit:{top:'jersey', c:'#e9c64a', num:'7', nc:'#231c1f', x:['shorts','wrist','sneakers']}, ai:{kite:.35, power:.3, drain:14},
+     st:{walk:'glide', speed:1.4, enter:'Fast blocks, faster breaks.', taunt:['Sub-second finality!','Too slow!','Fast break!'], hurt:['Block missed!','Lag!','Timeout!']}, ko:'Network... congested.'},
+    {name:'Dead Cat Bounce', base:'Lavender', gear:'trophy', wlv:4, hp:360, pow:2.35, outfit:{top:'jersey', c:'#7c5cff', num:'23', x:['shorts','wrist']}, ai:{slow:true, power:.45, regen:14},
+     st:{walk:'stomp', speed:.8, enter:'I always bounce back.', taunt:['Rebound!','The bottom is in!','Bounce!'], hurt:['Lower low!','Capitulation!','Meow!']}, ko:'No... bounce... this time.'},
+    {name:'The GOAT', base:'Captain', gear:'ball', wlv:4, hp:560, pow:2.6, boss:true, scale:1.3, outfit:{top:'jersey', c:'#ffc53d', num:'1', nc:'#231c1f', x:['shorts','wrist','sneakers','chain']},
+     ai:{power:.35, crash:4, ult:{name:'SLAM DUNK', line:'Posterized!', label:'a Slam Dunk', dmg:[28,36], toast:'Slam dunk! The crowd goes wild.', dim:'rgba(255,120,20,.35)'}},
+     st:{walk:'stomp', speed:.9, enter:'Greatest Of All Tokens. Bow.', taunt:['Count the rings.','MVP. Again.','Check the stats.'], hurt:['Foul!','Technical!','Ref?!']}, ko:'Even the GOAT... retires.'}
+  ];
+  const RIVALS5 = [
+    {name:'Hall Monitor', base:'Pip', gear:'ruler', wlv:3, hp:260, pow:2.15, outfit:{top:'cardigan', c:'#2f9a6a', face:'glasses', x:['sash']}, ai:{power:.3},
+     st:{walk:'fence', speed:1.1, enter:'Hall pass? Wallet pass?', taunt:['No running!','You are on my list.','Show me your KYC.'], hurt:['Rule break!','Not allowed!','Principal!']}, ko:'Pass... approved.'},
+    {name:'Teacher\'s Pet', base:'Honey', gear:'chalk', wlv:4, hp:300, pow:2.3, outfit:{top:'cardigan', c:'#ff8aa8', face:'glasses', x:['tie']}, ai:{kite:.45, power:.25, drain:14},
+     st:{walk:'glide', speed:1.2, enter:'I did all the homework. Twice.', taunt:['Gold star for me!','Extra credit!','I am telling!'], hurt:['My grades!','Unfair!','B minus?!']}, ko:'Straight... Fs.'},
+    {name:'The Bully', base:'Armor', gear:'book', wlv:4, hp:350, pow:2.45, outfit:{top:'jacket', c:'#d8432d', hat:'cap', hc:'#d8432d', x:['sneakers']}, ai:{slow:true, power:.45, regen:12},
+     st:{walk:'stomp', speed:.9, enter:'Lunch money. In ETH.', taunt:['Pay up!','Noob!','Nice wallet. Mine now.'], hurt:['Hey!','My jacket!','Owww!']}, ko:'I am... telling my mom.'},
+    {name:'Detention Dean', base:'Mr. Hat', gear:'ruler', wlv:4, hp:420, pow:2.6, outfit:{top:'cardigan', c:'#6b4a2c', face:'glasses', x:['tie']},
+     ai:{power:.35, drain:16, crash:5, ult:{name:'DETENTION', line:'See me after class.', label:'Detention', dmg:[26,32], sta:30, toast:'Detention! You lose 30 energy.', dim:'rgba(40,60,140,.35)'}},
+     st:{walk:'fence', speed:1, enter:'Late again? Detention.', taunt:['Write it 100 times.','Silence!','Tardy!'], hurt:['Insubordination!','Outrageous!','My ruler!']}, ko:'Class... dismissed.'},
+    {name:'The Headmaster', base:'Mist', gear:'book', wlv:4, hp:680, pow:2.9, boss:true, scale:1.3, outfit:{top:'gown', c:'#7c5cff', hat:'mortar', face:'glasses'},
+     ai:{power:.35, crash:4, ult:{name:'FINAL EXAM', line:'Pencils down. Forever.', label:'the Final Exam', dmg:[32,40], noShield:true, toast:'Final exam! Your shield is gone.', dim:'rgba(20,60,40,.4)'}},
+     st:{walk:'glide', speed:.9, enter:'Welcome to the final exam.', taunt:['No cheating.','Time is up soon.','Show your work.'], hurt:['Plagiarism!','Who wrote this?!','Rewrite it!']}, ko:'You... graduate.'}
+  ];
+  const MORDER = ['classic', 'neon', 'street', 'court', 'school'];
+  const ARENAS = {
+    classic:{rv:RIVALS,  mult:1,   name:'Classic Arena', c:'#e0643a', snd:'clap'},
+    neon:   {rv:RIVALS2, mult:1.6, name:'Neon Arena',    c:'#ff2fd0', snd:'laser'},
+    street: {rv:RIVALS3, mult:2.2, name:'Street Arena',  c:'#ffb13a', snd:'clap'},
+    court:  {rv:RIVALS4, mult:2.8, name:'Court Arena',   c:'#ff7a1a', snd:'clap'},
+    school: {rv:RIVALS5, mult:3.5, name:'School Arena',  c:'#2fb58f', snd:'clap'}
+  };
   const isNeon = () => G.arena === 'neon';
-  const RV = () => isNeon() ? RIVALS2 : RIVALS;
-  const neonOpen = () => (S.wins || 0) >= 1;
+  const RV = () => (ARENAS[G.arena] || ARENAS.classic).rv;
+  const mapWins = k => k === 'classic' ? (S.wins || 0) : k === 'neon' ? (S.neonWins || 0) : ((S.mw || {})[k] || 0);
+  const mapOpen = k => { const i = MORDER.indexOf(k); return i === 0 || (i > 0 && mapWins(MORDER[i - 1]) >= 1); };
+  const neonOpen = () => mapOpen('neon');
+  function setMapCls(){ ring.classList.toggle('cyber', G.arena === 'neon'); ['street','court','school'].forEach(k => ring.classList.toggle('rg-' + k, G.arena === k)); }
+  // rakip kıyafetleri (temel karakterin üstüne giyilir)
+  const DIG = {0:'111101101101111',1:'010110010010111',2:'111001111100111',3:'111001111001111',6:'111100111101111',7:'111001010010010',9:'111101111001111'};
+  function outfitParts(o){
+    const P = [], c = o.c, W = '#f3ece2';
+    const dk = '#231c1f';
+    if (o.top === 'hoodie'){ P.push(['armL',2,31,4,8,c,''],['armR',24,31,4,8,c,''],['body',6,30,18,13,c,''],['body',7,29.4,16,1.8,'rgba(0,0,0,.28)','nol'],['body',9,37,12,4,'rgba(0,0,0,.22)','nol'],['body',12,30.6,.9,4,W,'nol'],['body',17.1,30.6,.9,4,W,'nol']); }
+    if (o.top === 'tee'){ P.push(['armL',2,31,4,4,c,''],['armR',24,31,4,4,c,''],['body',6,30,18,13,c,''],['body',11.5,30,7,1.2,'rgba(0,0,0,.3)','nol']); }
+    if (o.top === 'suit'){ P.push(['armL',2,31,4,8,c,''],['armR',24,31,4,8,c,''],['body',6,30,18,13,c,''],['body',12,30,6,6,W,''],['body',14.2,30.6,1.6,7,'#d8432d',''],['body',8,30,1.2,12,'#e9c64a','nol'],['body',20.8,30,1.2,12,'#e9c64a','nol']); }
+    if (o.top === 'jersey'){
+      P.push(['body',7,30,16,13,c,''],['body',12,30,6,1.4,W,'nol'],['body',7,30,1,13,W,'nol'],['body',22,30,1,13,W,'nol']);
+      const n = String(o.num || '1'), s = .9, w0 = n.length*3*s + (n.length - 1)*s, x0 = 15 - w0/2;
+      [...n].forEach((d, i) => { const g = DIG[d] || DIG[1]; for (let k = 0; k < 15; k++) if (g[k] === '1') P.push(['body', 30 - (x0 + i*4*s + (k % 3)*s) - s, 33 + Math.floor(k/3)*s, s, s, o.nc || W, 'nol']); }); // rakip aynalı çizildiği için ters
+    }
+    if (o.top === 'cardigan'){ P.push(['armL',2,31,4,8,c,''],['armR',24,31,4,8,c,''],['body',6,30,18,13,c,''],['body',12,30,6,5,W,''],['body',14.5,36,1,1,W,'nol'],['body',14.5,38.4,1,1,W,'nol'],['body',14.5,40.8,1,1,W,'nol']); }
+    if (o.top === 'jacket'){ P.push(['armL',2,31,4,8,W,''],['armR',24,31,4,8,W,''],['body',6,30,18,13,c,''],['body',6,41.4,18,1.6,W,'nol'],['body',8,33,4,4.4,W,''],['body',9,34,2,2.4,c,'nol'],['body',14.5,32,1,1,W,'nol'],['body',14.5,35,1,1,W,'nol'],['body',14.5,38,1,1,W,'nol']); }
+    if (o.top === 'gown'){ P.push(['armL',1.4,31,4.8,9,'#1a1a2a',''],['armR',23.8,31,4.8,9,'#1a1a2a',''],['body',5,30,20,14,'#1a1a2a',''],['body',9,30,12,2,c,'nol'],['body',9,30,2,13,c,'nol'],['body',19,30,2,13,c,'nol']); }
+    (o.x || []).forEach(x => {
+      if (x === 'chain') P.push(['body',9,30.2,12,1.2,'#e9c64a','nol'],['body',13.6,31.2,2.8,2.8,'#ffd23f',''],['body',14.4,32,1.2,1.2,'#b8901a','nol']);
+      if (x === 'sneakers') P.push(['legL',7.6,47.4,6.8,2.8,W,''],['legL',7.6,49,6.8,1.2,o.c,'nol'],['legR',15.6,47.4,6.8,2.8,W,''],['legR',15.6,49,6.8,1.2,o.c,'nol']);
+      if (x === 'shorts') P.push(['legL',8.4,43,5.2,3.8,c,''],['legR',16.4,43,5.2,3.8,c,''],['legL',8.4,45.4,5.2,.8,W,'nol'],['legR',16.4,45.4,5.2,.8,W,'nol']);
+      if (x === 'wrist') P.push(['armL',2,36.6,4,1.6,W,'nol'],['armR',24,36.6,4,1.6,W,'nol']);
+      if (x === 'tie') P.push(['body',14.2,30.6,1.6,1.4,'#d8432d',''],['body',14.5,32,1,5.4,'#d8432d','']);
+      if (x === 'sash') P.push(['body',7,31,3,2,'#ffd23f','nol'],['body',10,33,3,2,'#ffd23f','nol'],['body',13,35,3,2,'#ffd23f','nol'],['body',16,37,3,2,'#ffd23f','nol'],['body',19,39,3,2,'#ffd23f','nol'],['body',15,35.4,2,1.2,'#d8432d','nol']);
+    });
+    const hc = o.hc || c;
+    if (o.hat === 'beanie') P.push(['head',3,10.6,24,5.2,hc,''],['head',3,14.2,24,2,'rgba(0,0,0,.25)','nol'],['head',13,7.8,4,3,W,'']);
+    if (o.hat === 'cap') P.push(['head',4,10.8,22,4.4,hc,''],['head',23.4,13,6,2.2,hc,''],['head',4,14,22,1,'rgba(0,0,0,.3)','nol'],['head',14,10,2,1,'rgba(255,255,255,.6)','nol']);
+    if (o.hat === 'headband') P.push(['head',3,15.2,24,2.2,hc,''],['head',3,15.2,24,.7,'rgba(255,255,255,.5)','nol']);
+    if (o.hat === 'mortar') P.push(['head',8,11.4,14,3.4,dk,''],['head',1,9,28,2.4,dk,''],['head',14.2,8.4,1.6,1,c,'nol'],['head',26,10.6,1,5,'#ffd23f',''],['head',25.4,15.4,2.2,1.6,'#ffd23f','']);
+    if (o.face === 'shades') P.push(['head',4.6,18.2,20.8,4.6,'#14161c',''],['head',6.2,18.8,3.6,.9,'#6fd3ff','nol'],['head',17.2,18.8,3.6,.9,'#6fd3ff','nol']);
+    if (o.face === 'glasses') [[5,17.4],[17,17.4]].forEach(([x, y]) => P.push(['head',x,y,8,1,dk,'nol'],['head',x,y + 6,8,1,dk,'nol'],['head',x,y,1,7,dk,'nol'],['head',x + 7,y,1,7,dk,'nol'])), P.push(['head',13,19.4,4,.9,dk,'nol']);
+    if (o.face === 'mask') P.push(['head',3,24,24,6,'#d8432d',''],['head',6,25.6,1,1,W,'nol'],['head',11,27.4,1,1,W,'nol'],['head',17,25.6,1,1,W,'nol'],['head',22,27.4,1,1,W,'nol']);
+    return P;
+  }
   // düşman işareti: klasikte şeytan boynuzu, neon'da robot anteni + vizör
   function robotParts(){
     return [
@@ -2898,7 +3111,7 @@
       ['head',9,25.4,12,2.6,'#8a939c',''], ['head',10,26,1.2,1.2,'#e8edf2','nol'], ['head',18.8,26,1.2,1.2,'#e8edf2','nol']
     ];
   }
-  const enemyParts = r => r.neon ? robotParts() : hornParts(r.base);
+  const enemyParts = r => r.outfit ? outfitParts(r.outfit) : r.neon ? robotParts() : hornParts(r.base);
   // oynanabilir karakterler: gizli küçük farklar + kendine özel yetenek
   const CHARS = {
     // tier: güç ve ulti seviyesi (1-5), açılma sırasıyla artar
@@ -2932,7 +3145,15 @@
     sword:  {tag:'BLEED',     color:'#ff3048', icon:PICON.drop,  dot:{n:3, dmg:4}},
     spear:  {tag:'POISON',    color:'#7dff5a', icon:PICON.skull, dot:{n:4, dmg:3}},
     dagger: {tag:'DEADLY',    color:'#ffd23f', icon:PICON.star,  crit:true},
-    axe:    {tag:'LIFESTEAL', color:'#ff5c86', icon:PICON.heart, steal:.4}
+    axe:    {tag:'LIFESTEAL', color:'#ff5c86', icon:PICON.heart, steal:.4},
+    bat:    {tag:'CRUSH',     color:'#ff3048', icon:PICON.star,  crit:true, critMult:2},
+    chain:  {tag:'BLEED',     color:'#ff3048', icon:PICON.drop,  dot:{n:3, dmg:5}},
+    spray:  {tag:'TOXIC',     color:'#7dff5a', icon:PICON.skull, dot:{n:4, dmg:4}},
+    ball:   {tag:'POSTERIZE', color:'#ff7a1a', icon:PICON.flame, crit:true, critMult:2.2},
+    trophy: {tag:'MVP',       color:'#ffd23f', icon:PICON.heart, steal:.35},
+    ruler:  {tag:'SNAP',      color:'#e8edf2', icon:PICON.star,  crit:true, critMult:2},
+    book:   {tag:'CONCUSS',   color:'#b98bff', icon:PICON.skull, dot:{n:3, dmg:5}},
+    chalk:  {tag:'DUST',      color:'#f3ece2', icon:PICON.skull, dot:{n:3, dmg:4}}
   };
   // silahlar sırayla açılır: hançer açık, sonra altınla (yay 100, kılıç 200, mızrak 300, balta 350)
   const WORDER = ['dagger', 'bow', 'sword', 'spear', 'axe', 'laser', 'plasma', 'rail'];
@@ -3091,25 +3312,18 @@
     hy.querySelector('i').style.width = Math.min(100, G.p.hype || 0) + '%';
     hy.classList.toggle('full', (G.p.hype || 0) >= 100);
   }
-  // 5 harita: Classic, Neon açık; diğer üçü yakında
-  const MAPS = [
-    {k:'classic', name:'Classic Arena', c:'#e0643a'},
-    {k:'neon',    name:'Neon Arena',    c:'#ff2fd0'},
-    {k:null, name:'???'}, {k:null, name:'???'}, {k:null, name:'???'}
-  ];
+  // 5 harita: her biri bir öncekinin şampiyonluğuyla açılır
   function drawMaps(){
-    const cleared = {classic:(S.wins || 0) >= 1, neon:(S.neonWins || 0) >= 1};
-    return '<span class="maps" role="group" aria-label="Maps">' + MAPS.map((m, i) => {
-      const open = m.k === 'classic' || (m.k === 'neon' && neonOpen());
-      const cur = m.k === (G.arena || 'classic');
-      const st = !m.k ? '&#128274; Soon' : !open ? '&#128274; Beat map 1' : cleared[m.k] ? '&#10003; Cleared' : cur ? '&#9654; Playing' : 'Open';
-      return `${i ? '<i class="mlink"></i>' : ''}<button type="button" class="map${cur ? ' cur' : ''}${open ? '' : ' lock'}${m.k ? ' m-' + m.k : ''}" data-map="${m.k || ''}" ${open && !cur ? '' : 'disabled'} style="--mc:${m.c || '#6b6064'}" aria-label="Map ${i + 1}: ${m.k ? m.name : 'coming soon'}"><em>${i + 1}</em><span><b>${m.name}</b><small>${st}</small></span></button>`;
+    return '<span class="maps" role="group" aria-label="Maps">' + MORDER.map((k, i) => {
+      const m = ARENAS[k], open = mapOpen(k), cur = k === (G.arena || 'classic');
+      const st = !open ? `&#128274; Beat map ${i}` : mapWins(k) >= 1 ? '&#10003; Cleared' : cur ? '&#9654; Playing' : 'Open';
+      return `${i ? '<i class="mlink"></i>' : ''}<button type="button" class="map${cur ? ' cur' : ''}${open ? '' : ' lock'} m-${k}" data-map="${k}" ${open && !cur ? '' : 'disabled'} style="--mc:${m.c}" aria-label="Map ${i + 1}: ${m.name}${open ? '' : ', locked'}"><em>${i + 1}</em><span><b>${m.name}</b><small>${st}</small></span></button>`;
     }).join('') + '</span>';
   }
   stagesEl.addEventListener('click', e => {
     const b = e.target.closest('.map[data-map]'); if (!b || b.disabled || !b.dataset.map) return;
     if (G.on || (G.stage > 0 && resultEl.hidden)){ toast('Finish this run first, then switch maps.'); return; }
-    G.arena = b.dataset.map; S.arena = G.arena; save(); play(G.arena === 'neon' ? 'laser' : 'clap');
+    G.arena = b.dataset.map; S.arena = G.arena; save(); play(ARENAS[G.arena].snd);
     startTournament();
   });
   function drawStages(){
@@ -3243,6 +3457,11 @@
         const bm = fxDiv('railbeam', {x:(from.x + to.x)/2, y:(from.y + to.y)/2}, len, k2*1.6); bm.style.rotate = ang + 'deg';
         bm.animate([{scale:'0 1', opacity:1},{scale:'1 1', opacity:1, offset:.25},{scale:'1 .2', opacity:0}],{duration:420}).finished.then(() => bm.remove());
         play('laser'); shakeRing(5); await wait(120);
+      } else if (PROJ[wa.proj]){
+        play('whoosh');
+        const a = await throwAt(PROJ[wa.proj], from, to, {w:wa.proj === 'chalk' ? 7 : 5, h:wa.proj === 'chalk' ? 2.2 : wa.proj === 'ball' ? 5 : 3.4, dur:wa.proj === 'ball' ? 380 : 320, flip:att.face < 0}); a.remove();
+        if (wa.proj === 'spray') burst(to, ['#7dff5a','#2fb58f'], 10, 10, 420);
+        if (wa.proj === 'chalk') burst(to, ['#f3ece2','#ffffff'], 8, 8, 380);
       } else if (wa.proj === 'plasma'){
         play('laser');
         const a = await throwAt(PLASMA, from, to, {w:5, h:3, dur:300, flip:att.face < 0}); a.remove();
@@ -3401,8 +3620,9 @@
     const U = att.ai.ult;
     if (U){
       ultName(U.name); speak(att.b, U.line, 1300);
-      const dim = overlay('dim'); dim.style.background = 'rgba(120,20,140,.35)';
+      const dim = overlay('dim'); dim.style.background = U.dim || 'rgba(120,20,140,.35)';
       if (U.name === 'RUG PULL'){ def.shield = false; def.b.el.classList.remove('shielded'); def.sta = Math.max(0, def.sta - 25); toast('<span class="dn">Rug pulled! You lose 25 energy.</span>'); }
+      else if (U.toast){ if (U.sta) def.sta = Math.max(0, def.sta - U.sta); if (U.noShield){ def.shield = false; def.b.el.classList.remove('shielded'); } toast(`<span class="dn">${U.toast}</span>`); }
       else toast('<span class="dn">System override! Your controls glitch.</span>');
       await wait(700);
       await attackMove(att, def, 'power', {label:U.label, dmg:U.dmg, acc:.85, sta:20});
@@ -3732,10 +3952,10 @@
     const last = G.stage === RV().length - 1;
     // ödül: zaferde tam, yenilgide teselli
     const hb = TIERS[tier()].bonus;
-    const nm = isNeon() ? 1.6 : 1;
+    const nm = (ARENAS[G.arena] || ARENAS.classic).mult;
     const coins = Math.round((win ? 30 + G.stage*20 + (last ? 150 : 0) : 10 + G.stage*5) * (spon('AMZN') ? 1.25 : 1) * (1 + hb) * nm);
     const xp = Math.round((win ? 25 + G.stage*15 + (last ? 60 : 0) : 10 + G.stage*5) * nm);
-    if (win){ S.best = Math.max(S.best, G.stage + 1); if (last){ if (isNeon()) S.neonWins = (S.neonWins || 0) + 1; else S.wins++; } }
+    if (win){ S.best = Math.max(S.best, G.stage + 1); if (last){ if (G.arena === 'neon') S.neonWins = (S.neonWins || 0) + 1; else if (G.arena === 'classic' || !G.arena) S.wins++; else { S.mw = S.mw || {}; S.mw[G.arena] = (S.mw[G.arena] || 0) + 1; } } }
     else S.kits.hp = Math.max(S.kits.hp, 1); // yeni tura en az bir can kitiyle başla
     const ups = grant(coins, xp);
     const fresh = checkUnlocks();
@@ -3800,8 +4020,8 @@
   // --- turnuva akışı
   function startTournament(){
     G.tok++; matchTok++; G.on = false; G.busy = true; G.stage = 0; G.weapon = null; G.p = null; G.sponsor = null;
-    if (!G.arena) G.arena = S.arena === 'neon' && neonOpen() ? 'neon' : 'classic';
-    ring.classList.toggle('cyber', isNeon());
+    if (!G.arena) G.arena = ARENAS[S.arena] && mapOpen(S.arena) ? S.arena : 'classic';
+    setMapCls();
     drawTape();
     if (!S.unlocked.includes(S.char)) S.char = 'Tux';
     resultEl.hidden = true; clearRing(); log('');
@@ -3825,8 +4045,8 @@
   }
   function drawArenaPick(){
     const el = document.getElementById('arenaPick'); if (!el) return;
-    if (!G.arena) G.arena = S.arena === 'neon' && neonOpen() ? 'neon' : 'classic';
-    el.innerHTML = ''; el.hidden = true; ring.classList.toggle('cyber', isNeon()); return;
+    if (!G.arena) G.arena = ARENAS[S.arena] && mapOpen(S.arena) ? S.arena : 'classic';
+    el.innerHTML = ''; el.hidden = true; setMapCls(); return;
     [['classic','Classic Arena','Swords & sandals'],['neon','Neon Arena','Bots, drones & AI']].forEach(([k, name, sub]) => {
       const lock = k === 'neon' && !neonOpen();
       const b = document.createElement('button'); b.type = 'button'; b.className = 'apick a-' + k + (G.arena === k ? ' on' : ''); b.disabled = lock;
@@ -3836,7 +4056,7 @@
         hud.e.querySelector('b').textContent = RV()[0].name; play(k === 'neon' ? 'laser' : 'clap'); });
       el.appendChild(b);
     });
-    ring.classList.toggle('cyber', isNeon());
+    setMapCls();
   }
   function showFighterPick(){
     drawArenaPick();
