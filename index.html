@@ -469,6 +469,12 @@
   .orb.diag svg{rotate:38deg;scale:1.25}
   .orb.lv3 svg{animation:legend 1.1s ease-in-out infinite alternate}
   .orb.lv4 svg{animation:mythic .9s ease-in-out infinite alternate}
+  .orb.arm svg{width:58px;height:58px}
+  .orb.radiant{animation:radiant 1.6s ease-in-out infinite alternate}
+  .orb.radiant svg{animation:mythic .9s ease-in-out infinite alternate}
+  @keyframes radiant{from{box-shadow:inset 0 0 0 5px var(--ring),inset 0 0 0 7px rgba(35,28,31,.55),inset 0 -6px 10px rgba(0,0,0,.35),2px 3px 0 #231c1f,0 0 6px #9ff3ff}
+    to{box-shadow:inset 0 0 0 5px #9ff3ff,inset 0 0 0 7px rgba(35,28,31,.55),inset 0 -6px 10px rgba(0,0,0,.35),2px 3px 0 #231c1f,0 0 20px #ff7ae0}}
+  @media (prefers-reduced-motion: reduce){ .orb.radiant,.orb.radiant svg{animation:none} }
   .orb.lv4{box-shadow:inset 0 0 0 5px var(--ring,#e9c64a),inset 0 0 0 7px rgba(35,28,31,.55),inset 0 -6px 10px rgba(0,0,0,.35),2px 3px 0 #231c1f,0 0 18px var(--aura)}
   .orb .ob{position:absolute;right:-6px;top:-6px;min-width:26px;height:24px;padding:0 5px;border-radius:12px;display:grid;place-items:center;background:#231c1f;color:#fff3c4;border:2px solid var(--ring,#e9c64a);font-family:"Nunito", sans-serif;font-weight:700;font-size:12px;font-variant-numeric:tabular-nums}
   .orb .tk{font-family:"Pixelify Sans", monospace;font-weight:700;font-size:16px;color:#fff;text-shadow:1px 1px 0 #000}
@@ -769,6 +775,7 @@
   .orb .pk.off{border-color:#6b6064}
   .orb .pk.off svg{filter:grayscale(1) brightness(.8);opacity:.5}
   .orb.locked svg{filter:grayscale(.75) brightness(.75)}
+  .tile .refl{display:block;margin-top:-2px;font-family:"Pixelify Sans", monospace;font-size:11px;color:#c0389a;letter-spacing:.02em}
   .tile b .stars{display:block;color:#e9a91a;font-size:12px;letter-spacing:1px}
   @media (max-width:640px){ .cpanel{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px} .orb{width:66px;height:66px} .orb svg{width:38px;height:38px} .ctab{font-size:13px;padding:6px 9px} }
   /* ---- Kamp ve dükkân ---- */
@@ -2963,20 +2970,31 @@
   if (!S.spells) S.spells = {};
   // --- Aşama 3: ekipman (kask, eldiven, bot) ve büyüler
   const EQUIP = {
-    helm:  {label:'Helmet', names:['Leather Cap','Iron Helm','Golden Helm'],          eff:[.03,.06,.09], stat:'damage taken'},
-    glove: {label:'Gloves', names:['Leather Gloves','Iron Gauntlets','Golden Fists'], eff:[.04,.08,.12], stat:'damage'},
-    boot:  {label:'Boots',  names:['Leather Boots','Iron Greaves','Golden Boots'],    eff:[.03,.06,.09], stat:'dodge'}
+    helm:  {label:'Helmet', names:['Leather Cap','Iron Helm','Golden Helm','Diamond Helm','Radiant Helm'],                eff:[.03,.06,.09,.12,.15], stat:'less damage taken', sign:'-'},
+    glove: {label:'Gloves', names:['Leather Gloves','Iron Gauntlets','Golden Fists','Diamond Fists','Radiant Fists'],      eff:[.04,.08,.12,.16,.20], stat:'more damage', sign:'+'},
+    boot:  {label:'Boots',  names:['Leather Boots','Iron Greaves','Golden Boots','Diamond Boots','Radiant Boots'],        eff:[.03,.06,.09,.12,.15], stat:'dodge chance', sign:'+'}
   };
-  const EQ_PRICE = [90, 200, 380];
-  const eqv = k => S.gear[k] ? EQUIP[k].eff[S.gear[k] - 1] : 0;
-  const EQ_C = [null, {c:'#8a5a3a', hi:'#c08a5a'}, {c:'#8a939c', hi:'#e8edf2'}, {c:'#e0b030', hi:'#fff3b0'}];
+  const EQ_PRICE = [90, 200, 380, 600, 900];
+  const ARM_MAX = 5;
+  // 4. seviye (elmas) Bronze, 5. seviye (parlayan) Silver holder ister; FOLK azalırsa etki o seviyeye iner
+  const ARM_TIER = lv => lv >= 5 ? 2 : lv === 4 ? 1 : 0;
+  const armEff = lv => { const t = typeof W3 !== 'undefined' ? W3.tier : 0; return Math.min(lv || 0, t >= 2 ? 5 : t >= 1 ? 4 : 3); };
+  const eqv = k => { const l = armEff(S.gear[k]); return l ? EQUIP[k].eff[l - 1] : 0; };
+  const EQ_C = [null, {c:'#8a5a3a', hi:'#c08a5a', dk:'#5a3a22'}, {c:'#8a939c', hi:'#e8edf2', dk:'#545b63'}, {c:'#e0b030', hi:'#fff3b0', dk:'#9a7418'},
+    {c:'#4fc8e8', hi:'#e8fbff', dk:'#1f7a9a'}, {c:'#9ff3ff', hi:'#ffffff', dk:'#3fb0d0', glow:true}];
+  // 5. seviye parçalar her alınan isabette hasar yansıtır (gövde 2, diğerleri 1)
+  const reflectAmt = () => (armEff(S.armor) >= 5 ? 2 : 0) + ['helm','glove','boot'].filter(k => armEff(S.gear[k]) >= 5).length;
   // karakterin üzerinde görünen ekipman parçaları
   function gearParts(g = S.gear, armor = S.armor){
-    const P = [];
-    if (armor){ const {c, hi} = EQ_C[armor]; P.push(['body',8,31,14,8.6,c,''],['body',8,31,14,1.1,hi,'nol'],['body',14.4,31.6,1.2,7.8,hi,'nol']); }
-    if (g.helm){ const {c, hi} = EQ_C[g.helm]; P.push(['head',2.2,12.2,25.6,3.6,c,''],['head',2.2,12.2,25.6,1,hi,'nol'],['head',13.4,9.4,3.2,3.2,g.helm === 3 ? '#d8432d' : c,'']); if (g.helm === 3) P.push(['head',13.8,6.6,2.4,3,'#ff6a4a','']); }
-    if (g.glove){ const {c, hi} = EQ_C[g.glove]; P.push(['armL',1.4,38,5.2,3.4,c,''],['armL',1.4,38,5.2,1,hi,'nol'],['armR',23.4,38,5.2,3.4,c,''],['armR',23.4,38,5.2,1,hi,'nol']); }
-    if (g.boot){ const {c, hi} = EQ_C[g.boot]; P.push(['legL',7.4,46.4,7.2,4,c,''],['legL',7.4,46.4,7.2,1,hi,'nol'],['legR',15.4,46.4,7.2,4,c,''],['legR',15.4,46.4,7.2,1,hi,'nol']); }
+    const P = [], gl = lv => lv >= 5 ? 'glowb' : '';
+    if (armor){ const {c, hi} = EQ_C[armor]; P.push(['body',8,31,14,8.6,c,gl(armor)],['body',8,31,14,1.1,hi,'nol'],['body',14.4,31.6,1.2,7.8,hi,'nol']);
+      if (armor >= 4) P.push(['body',10.6,33.4,2.2,2.2,hi,'nol'],['body',17.2,33.4,2.2,2.2,hi,'nol']);
+      if (armor >= 5) P.push(['body',5.6,30,1,1,TW,'nol twinkle'],['body',23.6,35,1,1,TW,'nol twinkle']); }
+    if (g.helm){ const {c, hi} = EQ_C[g.helm]; const pl = g.helm === 3 ? '#d8432d' : g.helm >= 4 ? '#ff2fd0' : c;
+      P.push(['head',2.2,12.2,25.6,3.6,c,gl(g.helm)],['head',2.2,12.2,25.6,1,hi,'nol'],['head',13.4,9.4,3.2,3.2,pl,'']); if (g.helm >= 3) P.push(['head',13.8,6.6,2.4,3,g.helm >= 4 ? '#ff7ae0' : '#ff6a4a','']);
+      if (g.helm >= 5) P.push(['head',0,8,1,1,TW,'nol twinkle']); }
+    if (g.glove){ const {c, hi} = EQ_C[g.glove]; P.push(['armL',1.4,38,5.2,3.4,c,gl(g.glove)],['armL',1.4,38,5.2,1,hi,'nol'],['armR',23.4,38,5.2,3.4,c,gl(g.glove)],['armR',23.4,38,5.2,1,hi,'nol']); }
+    if (g.boot){ const {c, hi} = EQ_C[g.boot]; P.push(['legL',7.4,46.4,7.2,4,c,gl(g.boot)],['legL',7.4,46.4,7.2,1,hi,'nol'],['legR',15.4,46.4,7.2,4,c,gl(g.boot)],['legR',15.4,46.4,7.2,1,hi,'nol']); }
     return P;
   }
   const SPELLS = {
@@ -3013,14 +3031,16 @@
   const effLv = k => Math.min(S.up[k] || 0, [0, 2, 3, 4][tier()]);
   const moveLocked = k => MOVE_PRICE[k] != null && (!S.moves[k] || tier() < (MOVE_TIER[k] || 0));
   const xpNeed = lv => 60 + (lv - 1)*40;
-  const ARMORS = [{name:'No armor', cut:0}, {name:'Leather', cut:.05, price:120}, {name:'Chainmail', cut:.10, price:260}, {name:'Plate', cut:.15, price:450}];
+  const ARMORS = [{name:'No armor', cut:0}, {name:'Leather Armor', cut:.05, price:120}, {name:'Iron Armor', cut:.10, price:260}, {name:'Golden Armor', cut:.15, price:450},
+    {name:'Diamond Armor', cut:.20, price:700}, {name:'Radiant Armor', cut:.25, price:1000}];
+  const armCut = () => ARMORS[armEff(S.armor)].cut;
   const UP_PRICE = [80, 160, 280, 500];
   const KIT = {hp:{name:'Health kit', heal:40, price:40}, en:{name:'Energy kit', sta:50, price:25}, max:3};
   // oyuncu için çarpanlar (rakipte hepsi nötr)
   const mine = f => f === G.p;
   const cmod = () => (CHARS[S.char] || CHARS.Tux).mod;
   const dmgMult = f => mine(f) ? (1 + S.stats.pow*.04 + (cmod().pow || 0) + (spon('NVDA') ? .06 : 0) + eqv('glove')) * (1 + effLv(f.gear)*.08) : (f.pow || 1);
-  const takenMult = f => mine(f) ? (1 - Math.min(.5, S.stats.grd*.03 + ARMORS[S.armor].cut + eqv('helm') + (cmod().guard || 0) + (spon('AAPL') ? .06 : 0))) : 1;
+  const takenMult = f => mine(f) ? (1 - Math.min(.5, S.stats.grd*.03 + armCut() + eqv('helm') + (cmod().guard || 0) + (spon('AAPL') ? .06 : 0))) : 1;
   const accBonus = f => mine(f) ? S.stats.spd*.015 + (cmod().acc || 0) + (spon('MSFT') ? .05 : 0) : 0;
   const critBonus = f => mine(f) ? S.stats.spd*.01 + (cmod().crit || 0) + (spon('TSLA') ? .05 : 0) : 0;
   const playerMax = () => 100 + S.stats.vit*8 + (cmod().hp || 0);
@@ -3258,6 +3278,10 @@
     if (def.diamond){ setTimeout(() => popText('IMMUNE', {x:pt.x, y:pt.y - k2*20}, '#9ff3ff', 6.5), 100); play('clang'); burst(pt, ['#9ff3ff','#fff'], 12, 12, 500); }
     if (def.shield && dmg > 0){ dmg = Math.max(1, Math.round(dmg*.35)); def.shield = false; def.b.el.classList.remove('shielded'); setTimeout(() => popText('BLOCKED', {x:pt.x, y:pt.y - k2*20}, '#6fd3ff', 6), 120); play('clang'); }
     def.hp -= dmg;
+    if (mine(def) && dmg > 0 && reflectAmt() > 0 && att.hp > 0){
+      const rf = reflectAmt(); att.hp = Math.max(0, att.hp - rf);
+      setTimeout(() => { const hp = headPt(att); popText(`REFLECT -${rf}`, {x:hp.x, y:hp.y - k2*4}, '#9ff3ff', 5); burst(hp, ['#9ff3ff','#fff'], 8, 8, 400); hitFlash(att); drawHud(); }, 260);
+    }
     if (mine(att)) addHype(k === 'power' ? 20 : 14); else if (mine(def)) addHype(10);
     play('bonk'); hitFlash(def); cheer(k === 'power' || crit ? 1400 : 700);
     hitFx(k, pt, att, def);
@@ -3895,13 +3919,21 @@
     ['pow','Power','Hit harder'], ['spd','Speed','Hit more often, crit more'],
     ['grd','Guard','Take less damage'], ['vit','Vitality','More health']
   ];
-  const ARMOR_ICON = W16([[3,1,10,3,'#8a8f96'],[2,3,12,9,'#6b737b'],[4,4,8,7,'#9aa3ad'],[7,4,2,7,'#6b737b'],[4,12,8,3,'#6b737b']]);
-  const EQ_ICON = {
-    helm:  lv => { const {c, hi} = EQ_C[lv]; return W16([[3,5,10,8,INK],[2,10,12,3,INK],[4,6,8,6,c],[3,11,10,1,c],[4,6,8,1,hi],[7,2,2,4,INK],[7,3,2,3,lv === 3 ? '#d8432d' : c],[6,9,4,1,INK]]); },
-    glove: lv => { const {c, hi} = EQ_C[lv]; return W16([[3,3,10,11,INK],[4,4,8,9,c],[4,4,2,4,hi],[6,4,1,4,INK],[8,4,1,4,INK],[10,4,1,4,INK],[3,11,10,1,INK],[4,12,8,1,hi]]); },
-    boot:  lv => { const {c, hi} = EQ_C[lv]; return W16([[4,2,6,10,INK],[4,10,10,4,INK],[5,3,4,8,c],[5,11,8,2,c],[5,3,4,1,hi],[5,12,8,1,hi]]); }
+  // Zırhçı ikonları: her parça net bir siluet (göğüslük, şövalye kaskı, eldiven, bot)
+  const armSpark = lv => lv >= 5 ? [[0,1,1,1,TW],[14,0,1,1,TW],[15,12,1,1,TW]] : [];
+  const ARM_ICON = {
+    body: lv => { const {c, hi, dk} = EQ_C[lv]; return W16([[0,2,16,5,INK],[2,6,12,9,INK],[1,3,5,3,c],[10,3,5,3,c],[3,5,10,9,c],[6,2,4,3,INK],[1,3,5,1,hi],[10,3,5,1,hi],[7,6,2,7,dk],[3,13,10,1,dk],[4,6,2,1,hi],
+      ...(lv >= 4 ? [[7,8,2,2,lv >= 5 ? '#ff2fd0' : '#e8fbff']] : []), ...armSpark(lv)]); },
+    helm: lv => { const {c, hi, dk} = EQ_C[lv]; const pl = lv === 3 ? '#d8432d' : lv >= 4 ? '#ff2fd0' : null; return W16([[3,2,10,14,INK],[2,4,12,11,INK],[4,3,8,12,c],[3,5,10,9,c],[4,3,8,1,hi],[3,5,1,5,hi],
+      [4,7,8,2,INK],[7,9,2,5,INK],[10,10,1,1,dk],[10,12,1,1,dk],[5,10,1,1,dk],[5,12,1,1,dk],[3,14,10,1,dk],
+      ...(pl ? [[6,0,4,3,INK],[7,0,2,3,pl]] : []), ...armSpark(lv)]); },
+    glove: lv => { const {c, hi, dk} = EQ_C[lv]; return W16([[3,1,11,10,INK],[1,5,4,6,INK],[4,10,10,6,INK],[4,2,9,8,c],[2,6,2,4,c],[6,2,1,4,INK],[8,2,1,4,INK],[10,2,1,4,INK],[4,2,9,1,hi],[2,6,2,1,hi],[5,11,8,4,dk],[5,11,8,1,hi],
+      ...(lv >= 4 ? [[8,7,2,2,lv >= 5 ? '#ff2fd0' : '#e8fbff']] : []), ...armSpark(lv)]); },
+    boot: lv => { const {c, hi, dk} = EQ_C[lv]; return W16([[3,1,8,12,INK],[3,9,12,6,INK],[4,2,6,11,c],[4,10,10,4,c],[4,2,6,2,dk],[4,2,6,1,hi],[4,13,10,1,dk],[10,10,4,1,hi],
+      ...(lv >= 4 ? [[6,6,2,2,lv >= 5 ? '#ff2fd0' : '#e8fbff']] : []), ...armSpark(lv)]); }
   };
-  const takenMultPreview = () => 1 - Math.min(.5, S.stats.grd*.03 + ARMORS[S.armor].cut + eqv('helm') + (cmod().guard || 0));
+  const ARMOR_ICON = ARM_ICON.body(2);
+  const takenMultPreview = () => 1 - Math.min(.5, S.stats.grd*.03 + armCut() + eqv('helm') + (cmod().guard || 0));
   // Vibe Market: yan yana dükkanlar, her birinin önünde bir satıcı
   let campTab = 'weapons';
   const SHOPS = [
@@ -4019,21 +4051,30 @@
         <span>&#10084; Max HP <em>${playerMax()}</em></span></div>`;
       room.querySelector('.dressfig').appendChild(m);
       el.appendChild(room);
-      csec(el, 'Body armor');
-      const RC = [null, '#b07a4a', '#b8c2cc', '#ffc53d'];
+      // 5 seviye: Leather, Iron, Gold, Diamond (Bronze), Radiant (Silver, parlar ve hasar yansıtır)
+      const RC = [null, '#b07a4a', '#b8c2cc', '#ffc53d', '#4fc8e8', '#ff7ae0'];
+      const armTile = (icon, nm, lv, cur, price, badge, what, set) => {
+        const own = cur >= lv, next = cur + 1 === lv, need = ARM_TIER(lv), capped = own && armEff(cur) < lv;
+        const pills = [];
+        if (own) pills.push(capped ? folkPill(need) : {cls:'own', html:'&#10003;'});
+        else {
+          pills.push({html:priceTxt(price), on:next && S.coins >= price && tier() >= need ? gatedBuy(price, need, set) : null, aria:`Buy ${nm} for ${price} coins`});
+          if (need) pills.push(folkPill(need));
+        }
+        const d = tile(orb(icon, {ring:RC[lv], in1:'#3e4650', in2:'#15191e'}, badge, (own || next ? '' : 'locked') + ' arm' + (lv >= 5 ? ' radiant' : '')), nm, pills, `${nm}: ${what}${lv >= 5 ? ', reflects damage' : ''}`);
+        if (lv >= 5){ const s = document.createElement('small'); s.className = 'refl'; s.textContent = `✦ Reflects ${what.startsWith('body') ? 2 : 1} dmg`; d.querySelector('b').after(s); }
+        return d;
+      };
+      csec(el, 'Body armor · less damage taken');
       ARMORS.slice(1).forEach((a, i) => {
-        const lv = i + 1, own = S.armor >= lv, next = S.armor + 1 === lv;
-        const pill = own ? {cls:'own', html:'&#10003;'} : {html:priceTxt(a.price), on:next && S.coins >= a.price ? buy(a.price, () => { S.armor = lv; }) : null, aria:`Buy ${a.name} armor for ${a.price} coins`};
-        const d = tile(orb(ARMOR_ICON, {ring:RC[lv], in1:'#3e4650', in2:'#15191e'}, `-${Math.round(a.cut*100)}%`, own || next ? '' : 'locked'), a.name, [pill], `${a.name} armor, takes ${Math.round(a.cut*100)}% less damage`);
-        el.appendChild(d);
+        const lv = i + 1;
+        el.appendChild(armTile(ARM_ICON.body(lv), a.name, lv, S.armor, a.price, `-${Math.round(a.cut*100)}%`, `body armor, ${Math.round(a.cut*100)}% less damage taken`, () => { S.armor = lv; }));
       });
       Object.entries(EQUIP).forEach(([k, q]) => {
-        csec(el, q.label);
+        csec(el, `${q.label} · ${q.stat}`);
         q.names.forEach((nm, i) => {
-          const lv = i + 1, own = S.gear[k] >= lv, next = S.gear[k] + 1 === lv, price = EQ_PRICE[i];
-          const pill = own ? {cls:'own', html:'&#10003;'} : {html:priceTxt(price), on:next && S.coins >= price ? buy(price, () => { S.gear[k] = lv; }) : null, aria:`Buy ${nm} for ${price} coins`};
-          const sign = k === 'helm' ? '-' : '+';
-          el.appendChild(tile(orb(EQ_ICON[k](lv), {ring:RC[lv], in1:'#3e4650', in2:'#15191e'}, `${sign}${Math.round(q.eff[i]*100)}%`, own || next ? '' : 'locked'), nm, [pill], `${nm}: ${sign}${Math.round(q.eff[i]*100)}% ${q.stat}`));
+          const lv = i + 1, e = Math.round(q.eff[i]*100);
+          el.appendChild(armTile(ARM_ICON[k](lv), nm, lv, S.gear[k], EQ_PRICE[i], `${q.sign}${e}%`, `${q.sign}${e}% ${q.stat}`, () => { S.gear[k] = lv; }));
         });
       });
     },
