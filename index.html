@@ -651,6 +651,41 @@
   }
   .ring .chooser{top:calc(50% - var(--dock) / 2 + 14px);max-height:calc(100% - var(--dock) - 16px)}
   .ring .result{top:calc(50% - var(--dock) / 2 + 10px)}
+  /* ---- Aşama 2: Vibe Market sokağı ---- */
+  .ctabs.mstreet{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;padding:14px 12px 0;border:3px solid var(--line);border-bottom:0;
+    background:linear-gradient(180deg,#9fd3ff 0,#d8efff calc(100% - 26px),#e8c890 calc(100% - 26px),#d9b47c);position:relative;flex-shrink:0;align-items:start;padding-bottom:20px}
+  .camp-card > *{flex-shrink:0}
+  .ctabs.mstreet .shop{display:flex !important;grid-template-columns:none}
+  .ctabs.mstreet{grid-auto-rows:186px;grid-template-rows:186px}
+  .shop .sign b{font-weight:700} .shop .sign .sn{display:none}
+  @media (max-width:640px){ .ctabs.mstreet{grid-auto-rows:118px;grid-template-rows:118px;padding-bottom:22px} .shop .sign .ln{display:none} .shop .sign .sn{display:inline} .camp .cpanel{margin-top:0} }
+  .shop{position:relative;display:flex;flex-direction:column;align-items:stretch;padding:0;border:0;background:none;cursor:pointer;font:inherit;transition:translate .15s}
+  .shop .roof{height:26px;border:3px solid var(--line);border-bottom:0;background:repeating-linear-gradient(90deg,var(--aw) 0 14px,#fff3e6 14px 28px);
+    -webkit-mask:radial-gradient(circle 7px at 7px 100%,transparent 6px,#000 7px) 0 0/14px 100%;mask:radial-gradient(circle 7px at 7px 100%,transparent 6px,#000 7px) 0 0/14px 100%;margin:0 -4px}
+  .shop .sign{display:block;margin:4px 6px 0;padding:3px 2px;background:#231c1f;color:#ffe9a8;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:13px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border:2px solid var(--aw)}
+  .shop .front{position:relative;display:block;height:104px;margin-top:-2px;border:3px solid var(--line);border-top:0;
+    background:repeating-linear-gradient(0deg,rgba(0,0,0,.12) 0 2px,transparent 2px 14px),var(--wall)}
+  .shop .win{position:absolute;top:10px;left:8px;width:22px;height:20px;background:linear-gradient(135deg,#fff8d0,#ffd772);border:3px solid var(--line)}
+  .shop .win.r{left:auto;right:8px}
+  .shop .keep{position:absolute;left:50%;bottom:18px;translate:-50% 0}
+  .shop .keep .mini{--mu:1.7px}
+  .shop .counter{position:absolute;left:4px;right:4px;bottom:0;height:30px;background:linear-gradient(180deg,#a3744c,#6b4a2c);border:3px solid var(--line);border-bottom:0}
+  .shop .counter::before{content:"";position:absolute;left:-6px;right:-6px;top:-6px;height:6px;background:#c99a6a;border:2px solid var(--line)}
+  .shop .dot{position:absolute;right:-4px;top:-6px;min-width:22px;height:22px;padding:0 5px;border-radius:11px;background:#b8402f;color:#fff;font:700 12px "Nunito", sans-serif;display:grid;place-items:center;border:2px solid var(--line);z-index:2}
+  .shop:hover{translate:0 -3px}
+  .shop[aria-selected="true"]{translate:0 -6px}
+  .shop[aria-selected="true"] .front{box-shadow:0 0 0 3px #ffc53d,0 6px 16px rgba(255,197,61,.6)}
+  .shop[aria-selected="true"]::after{content:"";position:absolute;left:50%;bottom:-14px;margin-left:-10px;border-left:10px solid transparent;border-right:10px solid transparent;border-top:10px solid #231c1f}
+  .shop:focus-visible{outline:3px dashed var(--ink);outline-offset:3px}
+  .camp .cpanel{border:3px solid var(--line);border-top:4px solid #231c1f;padding:14px;background:#fbf7f1;margin-top:-12px}
+  .csec{grid-column:1 / -1;margin:2px 0 -4px;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:15px;letter-spacing:.12em;color:#7a6a6c;text-transform:uppercase;border-bottom:2px dashed #d8cfc6;padding-bottom:4px}
+  .camp-card{width:min(880px,100%) !important}
+  @media (max-width:640px){
+    .ctabs.mstreet{gap:4px;padding:10px 6px 22px}
+    .shop .roof{height:16px} .shop .sign{font-size:9px;margin:3px 2px 0;padding:2px 1px}
+    .shop .front{height:76px} .shop .win{width:12px;height:12px;top:6px;left:4px;border-width:2px} .shop .win.r{right:4px}
+    .shop .keep .mini{--mu:1.15px} .shop .keep{bottom:12px} .shop .counter{height:20px}
+  }
   .orb .pk{position:absolute;left:-6px;bottom:-4px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#231c1f;border:2px solid var(--pc)}
   .orb .pk svg{width:15px;height:15px;rotate:0deg;scale:1;animation:none;filter:none}
   .orb .pk.off{border-color:#6b6064}
@@ -808,7 +843,7 @@
   <div class="camp" id="camp" hidden role="dialog" aria-modal="true" aria-labelledby="campTitle">
     <div class="camp-card">
       <div class="camp-head">
-        <h3 id="campTitle">Camp</h3>
+        <h3 id="campTitle">Vibe Market</h3>
         <div class="camp-purse"><span class="coin"></span><b id="campCoins">0</b></div>
         <button class="btn" type="button" id="campClose">Back to the arena</button>
       </div>
@@ -831,7 +866,7 @@
           <button class="btn mode" type="button" role="tab" id="modeWatch" aria-selected="false">Watch brawl</button>
         </div>
         <div class="w3 play-only" id="w3" aria-live="polite"></div>
-        <button class="btn play-only" type="button" id="campBtn">Camp &amp; shop</button>
+        <button class="btn play-only" type="button" id="campBtn">Vibe Market</button>
         <button class="btn watch-only" type="button" id="arenaGear">Shuffle gear</button>
         <button class="btn watch-only" type="button" id="arenaClear">Clear ring</button>
       </div>
@@ -872,14 +907,14 @@
         <div class="wgrid" id="wgrid" hidden></div>
         <div class="wgrid sgrid" id="sgrid" hidden></div>
         <button class="btn" type="button" id="chooserBackF" hidden style="margin-top:12px;margin-right:8px">&larr; Change fighter</button>
-        <button class="btn" type="button" id="chooserCamp" style="margin-top:12px">Visit camp first</button>
+        <button class="btn" type="button" id="chooserCamp" style="margin-top:12px">Visit the market</button>
       </div>
       <div class="result play-only" id="result" hidden>
         <div class="res-art" id="resArt" aria-hidden="true"></div>
         <h3 id="resTitle">VICTORY!</h3>
         <p id="resText"></p>
         <div class="reward" id="resReward"></div>
-        <div class="res-btns"><button class="btn primary" type="button" id="resAgain">Fight again</button><button class="btn" type="button" id="resCamp">Camp &amp; shop</button></div>
+        <div class="res-btns"><button class="btn primary" type="button" id="resAgain">Fight again</button><button class="btn" type="button" id="resCamp">Market</button></div>
       </div>
     </div>
     <p class="log play-only" id="log" aria-live="polite"></p>
@@ -3521,8 +3556,17 @@
     ['grd','Guard','Take less damage'], ['vit','Vitality','More health']
   ];
   const ARMOR_ICON = W16([[3,1,10,3,'#8a8f96'],[2,3,12,9,'#6b737b'],[4,4,8,7,'#9aa3ad'],[7,4,2,7,'#6b737b'],[4,12,8,3,'#6b737b']]);
-  let campTab = 'moves';
-  const CTABS = [['moves','Moves'],['weapons','Weapons'],['items','Items'],['stats','Stats'],['port','Portfolio']];
+  // Vibe Market: yan yana dükkanlar, her birinin önünde bir satıcı
+  let campTab = 'weapons';
+  const SHOPS = [
+    {k:'weapons', short:'Weapons', name:'Weaponsmith', keeper:'Captain', aw:'#d8432d', wall:'#8a5a3a'},
+    {k:'armor',   short:'Armor', name:'Armorer',     keeper:'Armor',   aw:'#4a6a8a', wall:'#6b5a4a'},
+    {k:'mage',    short:'Magic', name:'Mage Tower',  keeper:'Goggles', aw:'#7c5cff', wall:'#4a3a6a'},
+    {k:'stats',   short:'Train', name:'Training',    keeper:'Honey',   aw:'#2f9a5a', wall:'#7a6a3a'},
+    {k:'port',    short:'Stocks', name:'Exchange',    keeper:'Mr. Hat', aw:'#d9a020', wall:'#5a4a3a'}
+  ];
+  const CTABS = SHOPS.map(s => [s.k, s.name]);
+  const csec = (el, txt) => { const p = document.createElement('p'); p.className = 'csec'; p.textContent = txt; el.appendChild(p); };
   const orb = (svg, c, badge, cls) => `<span class="orb${cls ? ' ' + cls : ''}" aria-hidden="true" style="--ring:${c.ring};--in1:${c.in1};--in2:${c.in2}">${svg}${badge != null ? `<span class="ob">${badge}</span>` : ''}</span>`;
   const priceTxt = n => `${COIN} ${n}`;
   function tile(html, name, pills, label){
@@ -3553,6 +3597,12 @@
     ? {cls:'fchip ok', html:`<span class="mdl">${MEDAL(t)}</span>&#10003;`, aria:`${TIERS[t].name} holder requirement met`}
     : {cls:'fchip', html:`<span class="mdl">${MEDAL(t)}</span>${fmtFolk(TIERS[t].min)}`, on:folkAction, aria:`Hold ${fmtFolk(TIERS[t].min)} FOLK (${TIERS[t].name})`};
   const CAMP_TABS = {
+    mage(el){
+      csec(el, 'Skills');
+      CAMP_TABS.moves(el);
+      csec(el, 'Potions');
+      CAMP_TABS.potions(el);
+    },
     moves(el){
       [['quick','Quick'],['strike','Strike'],['power','Power'],['special','Ultimate']].forEach(([k, name]) => {
         const price = MOVE_PRICE[k], owned = !price || S.moves[k], mt = MOVE_TIER[k] || 0, held = tier() >= mt;
@@ -3593,15 +3643,21 @@
         el.appendChild(d);
       });
     },
-    items(el){
+    potions(el){
       [['hp','Health',{ring:'#ff4a4a', in1:'#6b1414', in2:'#2a0808'}], ['en','Energy',{ring:'#ffd23f', in1:'#6b5412', in2:'#2a2008'}]].forEach(([k, name, c]) => {
         const n = S.kits[k], price = KIT[k].price, full = n >= KIT.max;
         const pill = full ? {cls:'max', html:'MAX'} : {html:priceTxt(price), on:S.coins >= price ? buy(price, () => { S.kits[k]++; }) : null, aria:`Buy ${name} potion for ${price} coins`};
         el.appendChild(tile(orb(BOTTLE[k], c, `${n}/${KIT.max}`), name, [pill], `${name} potion, ${n} of ${KIT.max}`));
       });
-      const na = ARMORS[S.armor + 1];
-      const pill = na ? {html:priceTxt(na.price), on:S.coins >= na.price ? buy(na.price, () => { S.armor++; }) : null, aria:`Buy ${na.name} armor for ${na.price} coins`} : {cls:'max', html:'MAX'};
-      el.appendChild(tile(orb(ARMOR_ICON, {ring:'#b8c2cc', in1:'#3e4650', in2:'#15191e'}, `${S.armor}/3`), na ? na.name : ARMORS[S.armor].name, [pill], `Armor: ${ARMORS[S.armor].name}`));
+    },
+    armor(el){
+      const RC = [null, '#b07a4a', '#b8c2cc', '#ffc53d'];
+      ARMORS.slice(1).forEach((a, i) => {
+        const lv = i + 1, own = S.armor >= lv, next = S.armor + 1 === lv;
+        const pill = own ? {cls:'own', html:'&#10003;'} : {html:priceTxt(a.price), on:next && S.coins >= a.price ? buy(a.price, () => { S.armor = lv; }) : null, aria:`Buy ${a.name} armor for ${a.price} coins`};
+        const d = tile(orb(ARMOR_ICON, {ring:RC[lv], in1:'#3e4650', in2:'#15191e'}, `-${Math.round(a.cut*100)}%`, own || next ? '' : 'locked'), a.name, [pill], `${a.name} armor, takes ${Math.round(a.cut*100)}% less damage`);
+        el.appendChild(d);
+      });
     },
     stats(el){
       const SI = {pow:[ICON.power, MED.power], spd:[ICON.quick, MED.quick], grd:[ARMOR_ICON, {ring:'#b8c2cc', in1:'#3e4650', in2:'#15191e'}], vit:[HEART, {ring:'#ff5c86', in1:'#6b1a36', in2:'#2a0a16'}]};
@@ -3630,12 +3686,16 @@
     document.getElementById('campPts').textContent = S.points ? `${S.points} stat points to spend` : '';
     const tabs = document.getElementById('ctabs'), panel = document.getElementById('cpanel');
     const hadFocus = tabs.contains(document.activeElement);
-    tabs.innerHTML = '';
-    CTABS.forEach(([k, name]) => {
-      const b = document.createElement('button'); b.type = 'button'; b.className = 'ctab'; b.id = 'ctab-' + k;
+    if (!CTABS.some(x => x[0] === campTab)) campTab = 'weapons';
+    tabs.innerHTML = ''; tabs.classList.add('mstreet');
+    SHOPS.forEach(({k, name, short, keeper, aw, wall}) => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'shop'; b.id = 'ctab-' + k;
+      b.style.setProperty('--aw', aw); b.style.setProperty('--wall', wall);
       b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', k === campTab ? 'true' : 'false'); b.tabIndex = k === campTab ? 0 : -1;
+      b.setAttribute('aria-label', name);
       const dot = k === 'stats' && S.points ? S.points : k === 'port' ? Object.values(S.shares).reduce((a, n) => a + (n || 0), 0) || 0 : 0;
-      b.innerHTML = name + (dot ? `<span class="dot">${dot}</span>` : '');
+      b.innerHTML = `<span class="roof"></span><span class="sign"><b class="ln">${name}</b><b class="sn">${short}</b></span><span class="front"><span class="win"></span><span class="win r"></span><span class="keep"></span><span class="counter"></span></span>` + (dot ? `<span class="dot">${dot}</span>` : '');
+      const km = miniOf(keeper); b.querySelector('.keep').appendChild(km);
       b.addEventListener('click', () => { campTab = k; drawCamp(); document.getElementById('ctab-' + k).focus({preventScroll:true}); });
       b.addEventListener('keydown', e => {
         if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
