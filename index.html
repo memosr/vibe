@@ -817,6 +817,34 @@
   .ring.rg-school .dock{background:linear-gradient(180deg,#6b4a2c,#3a2a1c) !important;border-top-color:#ffd23f !important}
   @media (prefers-reduced-motion: reduce){ .mdeco.lamp u{animation:none} }
 
+  /* ---- Aşama 10: leaderboard ---- */
+  .lbbtn{background:#ffd23f}
+  .lb-card{width:min(620px,100%) !important}
+  .lb-tabs{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .lbtab{font:inherit;font-family:"Pixelify Sans", monospace;font-weight:700;padding:6px 14px;border:3px solid var(--line);background:#fff;cursor:pointer;box-shadow:3px 3px 0 var(--line)}
+  .lbtab[aria-selected="true"]{background:var(--line);color:#ffd23f}
+  .lb-tabs small{margin-left:auto;color:var(--ink-soft);font-size:12px}
+  .lb-body{min-height:160px;border:3px solid var(--line);background:#fff;max-height:min(52vh,460px);overflow-y:auto}
+  .lb-list{list-style:none;margin:0;padding:0}
+  .lb-list li{display:grid;grid-template-columns:44px 1fr auto auto;align-items:center;gap:10px;padding:8px 12px;border-bottom:2px dashed #e4dbd0;font-size:14px}
+  .lb-list li:nth-child(2n){background:#faf6f0}
+  .lb-list em{font-style:normal;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:16px;text-align:center}
+  .lb-list b{font-family:ui-monospace,monospace;font-size:13px}
+  .lb-list small{font-size:11px;padding:1px 6px;border:2px solid var(--line);background:#f3ece2;white-space:nowrap}
+  .lb-list small.m-neon{background:#1a0a2e;color:#ff8ae8} .lb-list small.m-street{background:#ffb13a} .lb-list small.m-court{background:#ff7a1a;color:#fff} .lb-list small.m-school{background:#2fb58f;color:#fff}
+  .lb-list strong{font-family:"Pixelify Sans", monospace;font-size:17px;min-width:64px;text-align:right}
+  .lb-list li.top em{font-size:20px}
+  .lb-list li.t1{background:linear-gradient(90deg,#fff3b0,#fff) !important}
+  .lb-list li.me{outline:3px solid #7c5cff;outline-offset:-3px}
+  .lb-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:160px;text-align:center;padding:16px;color:var(--ink-soft)}
+  .lb-empty b{color:var(--ink);font-family:"Pixelify Sans", monospace;font-size:17px}
+  .lb-me{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:14px}
+  .lb-me span{color:var(--ink-soft);font-size:12px}
+  .lb-rules{display:flex;flex-direction:column;gap:2px;font-size:12px;color:var(--ink-soft);border-top:2px dashed #d8cfc6;padding-top:8px}
+  .lb-rules b{color:var(--ink);font-size:13px}
+  .rchip.score{background:#1a1430;color:#ffd23f} .rchip.score em{background:#ffd23f;color:#1a1430}
+  @media (max-width:640px){ .lb-list li{grid-template-columns:32px 1fr auto;font-size:13px} .lb-list small{grid-column:2;justify-self:start} .lb-list strong{grid-row:1 / span 2;grid-column:3} }
+
   /* ---- Aşama 8b: sinematik skill efektleri ---- */
   .vx{position:absolute;pointer-events:none;z-index:7}
   .vx svg{display:block;width:100%;height:100%;overflow:visible}
@@ -1052,6 +1080,18 @@
 <section class="arena" id="arena" hidden aria-label="Vibe Arena">
   <div class="pennant pl" aria-hidden="true"><div class="cloth"><span>VIBE ARENA</span></div></div>
   <div class="pennant pr" aria-hidden="true"><div class="cloth"><span>vibe<em>/</em>vibe</span></div></div>
+  <div class="camp lb" id="lb" hidden role="dialog" aria-modal="true" aria-labelledby="lbTitle">
+    <div class="camp-card lb-card">
+      <div class="camp-head">
+        <h3 id="lbTitle">&#127942; Leaderboard</h3>
+        <button class="btn" type="button" id="lbClose">Back to the arena</button>
+      </div>
+      <div class="lb-tabs" role="tablist"><button class="lbtab" type="button" role="tab" data-s="week">This week</button><button class="lbtab" type="button" role="tab" data-s="all">All time</button><small id="lbWeek"></small></div>
+      <div class="lb-body" id="lbBody"></div>
+      <div class="lb-me" id="lbMe"></div>
+      <div class="lb-rules"><b>How scoring works</b><span>Each stage you win scores more on harder maps (Classic ×1 up to School ×5). Finish with more HP and in fewer rounds for bonus points. Champions get +1000 × map. Only your best run of the week counts.</span></div>
+    </div>
+  </div>
   <div class="camp" id="camp" hidden role="dialog" aria-modal="true" aria-labelledby="campTitle">
     <div class="camp-card">
       <div class="camp-head">
@@ -1079,6 +1119,7 @@
         </div>
         <div class="w3 play-only" id="w3" aria-live="polite"></div>
         <button class="btn play-only" type="button" id="campBtn">Vibe Market</button>
+        <button class="btn play-only lbbtn" type="button" id="lbBtn">&#127942; Leaderboard</button>
         <button class="btn watch-only" type="button" id="arenaGear">Shuffle gear</button>
         <button class="btn watch-only" type="button" id="arenaClear">Clear ring</button>
       </div>
@@ -4327,6 +4368,10 @@
     if (win){ S.best = Math.max(S.best, G.stage + 1); if (last){ if (G.arena === 'neon') S.neonWins = (S.neonWins || 0) + 1; else if (G.arena === 'classic' || !G.arena) S.wins++; else { S.mw = S.mw || {}; S.mw[G.arena] = (S.mw[G.arena] || 0) + 1; } } }
     else S.kits.hp = Math.max(S.kits.hp, 1); // yeni tura en az bir can kitiyle başla
     const ups = grant(coins, xp);
+    let pts = 0;
+    if (win && LB.run){ pts = LB.stagePts(G.stage, G.p.hp, G.p.max, G.round); LB.run.score += pts; LB.run.stages = G.stage + 1; }
+    const lbRes = (!win || last) ? LB.finish(win && last) : null;
+    const runScore = LB.run ? LB.run.score : 0;
     const fresh = checkUnlocks();
     const shareGain = win && G.sponsor ? (last ? 3 : 1) : 0;
     if (shareGain){ S.shares[G.sponsor] = (S.shares[G.sponsor] || 0) + shareGain; save(); }
@@ -4336,8 +4381,10 @@
       ...(hb ? [{cls:'holder', html:`${MEDAL(tier())}<b>+${Math.round(hb*100)}%</b>`}] : []),
       ...(shareGain ? [{cls:'share', color:MKT[G.sponsor].color, html:`<em>${G.sponsor}</em><b>+${shareGain}</b>`}] : []),
       ...(ups ? [{cls:'lvl', html:`<em>LV ${S.level}</em><b>+${ups*3} pts</b>`}] : []),
-      ...fresh.map(n => ({cls:'new', html:`<em>NEW</em><b>${n}</b>`}))
+      ...fresh.map(n => ({cls:'new', html:`<em>NEW</em><b>${n}</b>`})),
+      ...(LB.run && (pts || !win || last) ? [{cls:'score', html:`<em>SCORE</em><b>${runScore.toLocaleString('en-US')}</b>`}] : [])
     ];
+    if (lbRes) lbRes.then(r => { if (r && r.rank) toast(`&#127942; Leaderboard: <b>#${r.rank}</b> this week (best ${r.best.toLocaleString('en-US')})`); });
     if (fresh.length) setTimeout(() => banner('NEW FIGHTER!', 1400), 200);
     await banner(win ? (last ? 'CHAMPION!' : 'VICTORY!') : 'K.O.', 1200);
     if (!win){
@@ -4475,6 +4522,7 @@
   async function startStage(){
     if (!weaponUsable(G.weapon)){ chooserEl.hidden = false; showWeaponPick(); return; } // FOLK azaldıysa silah kilitlenir
     const tok = ++G.tok; matchTok++; ring.scrollLeft = 0; ring.scrollTop = 0;
+    if (G.stage === 0) LB.begin();
     resultEl.hidden = true; chooserEl.hidden = true; G.on = false; G.busy = true; G.round = 0;
     const old = fighters; fighters = []; arenaBots = [];
     old.forEach(f => f.wrap.animate([{transform:`translate(${f.x}px,0)`},{transform:`translate(${f.x}px,${-ring.clientHeight - 80}px)`}],{duration:380,easing:'ease-in',fill:'forwards'}).finished.then(() => f.wrap.remove()));
@@ -4951,6 +4999,92 @@
       stopGame(); matchTok++; fighters.forEach(f => f.wrap.remove()); fighters = []; arenaBots = []; picks = []; updateRoster();
     }
   }
+  // ===== Aşama 10: LEADERBOARD (Railway sunucusu) =====
+  // Skor her turnuvada birikir; yenilince ya da şampiyon olunca cüzdana bağlı olarak sunucuya gönderilir.
+  const LB_API = ''; // Railway adresi, ör. 'https://vibe-arena.up.railway.app'
+  const LB_KEY = 'vibefolk-lb';
+  const SCORE_MAP = {classic:1, neon:2, street:3, court:4, school:5};
+  const LB = {
+    tok:null, addr:null, run:null, scope:'week',
+    load(){ try { const o = JSON.parse(localStorage.getItem(LB_KEY) || 'null'); if (o && o.tok){ LB.tok = o.tok; LB.addr = o.addr; } } catch(e){} },
+    saveTok(){ try { localStorage.setItem(LB_KEY, JSON.stringify({tok:LB.tok, addr:LB.addr})); } catch(e){} },
+    on: () => !!LB_API,
+    authed: () => !!(LB.tok && W3.addr && LB.addr && LB.addr.toLowerCase() === W3.addr.toLowerCase()),
+    async api(path, opt = {}){
+      const r = await fetch(LB_API + path, {...opt, headers:{'content-type':'application/json', ...(LB.tok ? {authorization:'Bearer ' + LB.tok} : {}), ...(opt.headers || {})}});
+      const j = await r.json().catch(() => ({}));
+      if (r.status === 401){ LB.tok = null; LB.saveTok(); }
+      if (!r.ok) throw new Error(j.error || r.status);
+      return j;
+    },
+    async login(){
+      if (!LB.on()) return false;
+      if (!W3.addr){ await w3Connect(); if (!W3.addr) return false; }
+      const p = eth(); if (!p) return false;
+      try {
+        const {message} = await LB.api('/auth/nonce?addr=' + W3.addr);
+        const hex = '0x' + Array.from(new TextEncoder().encode(message), b => b.toString(16).padStart(2, '0')).join('');
+        const signature = await p.request({method:'personal_sign', params:[hex, W3.addr]});
+        const r = await LB.api('/auth/verify', {method:'POST', body:JSON.stringify({addr:W3.addr, signature})});
+        LB.tok = r.token; LB.addr = r.addr; LB.saveTok();
+        toast('Signed in. Your scores now count on the leaderboard.');
+        return true;
+      } catch (e){ console.warn('lb login', e); toast('Sign in cancelled.'); return false; }
+    },
+    // turnuva başında çağrılır
+    begin(){
+      LB.run = {score:0, stages:0, map:G.arena || 'classic', id:null, sent:false};
+      if (LB.on() && LB.authed()) LB.api('/run/start', {method:'POST'}).then(r => { if (LB.run) LB.run.id = r.runId; }).catch(e => console.warn('lb start', e));
+    },
+    // kazanılan aşamanın puanı: aşama zorluğu × harita, kalan can ve hız bonusu
+    stagePts(s, hp, max, rounds){
+      const m = SCORE_MAP[G.arena || 'classic'] || 1;
+      return Math.round((100 + 40*s) * m * (1 + .5*Math.max(0, hp)/max)) + Math.max(0, 20 - rounds)*5;
+    },
+    async finish(champ){
+      const r = LB.run; if (!r || r.sent) return null;
+      r.sent = true;
+      if (champ) r.score += 1000 * (SCORE_MAP[r.map] || 1);
+      S.bestScore = Math.max(S.bestScore || 0, r.score); save();
+      if (!LB.on() || !r.id || !LB.authed()) return null;
+      try { return await LB.api('/run/end', {method:'POST', body:JSON.stringify({runId:r.id, map:r.map, stages:r.stages, score:r.score, champ:!!champ})}); }
+      catch (e){ console.warn('lb end', e); return null; }
+    }
+  };
+  LB.load();
+  const MAP_NM = k => (ARENAS[k] || ARENAS.classic).name.replace(' Arena', '');
+  const lbEl = document.getElementById('lb');
+  async function drawLB(){
+    const body = document.getElementById('lbBody'), me = document.getElementById('lbMe');
+    document.querySelectorAll('#lb .lbtab').forEach(b => b.setAttribute('aria-selected', b.dataset.s === LB.scope ? 'true' : 'false'));
+    const bestTxt = `Your best run on this device: <b>${(S.bestScore || 0).toLocaleString('en-US')}</b>`;
+    if (!LB.on()){ body.innerHTML = `<div class="lb-empty"><b>The leaderboard is warming up.</b><span>Scores already count on this device. Online ranks open soon.</span></div>`; me.innerHTML = bestTxt; return; }
+    me.innerHTML = !W3.addr ? `<button class="pill" type="button" data-lb="connect">Connect MetaMask</button><span>to join the leaderboard</span>`
+      : !LB.authed() ? `<button class="pill" type="button" data-lb="login">Sign in to rank</button><span>One free signature, no gas</span>` : bestTxt;
+    body.innerHTML = '<div class="lb-empty"><span>Loading...</span></div>';
+    try {
+      const d = await LB.api(`/leaderboard?scope=${LB.scope === 'all' ? 'all' : 'week'}${W3.addr ? '&addr=' + W3.addr : ''}`);
+      document.getElementById('lbWeek').textContent = LB.scope === 'all' ? 'All time' : `Week ${d.week.split('-W')[1]} · resets Monday 00:00 UTC`;
+      if (!d.rows.length){ body.innerHTML = '<div class="lb-empty"><b>No scores yet.</b><span>Be the first champion this week.</span></div>'; }
+      else body.innerHTML = '<ol class="lb-list">' + d.rows.map(r => {
+        const mine = W3.addr && r.addr.toLowerCase() === W3.addr.toLowerCase();
+        return `<li class="${r.rank <= 3 ? 'top t' + r.rank : ''}${mine ? ' me' : ''}"><em>${r.rank <= 3 ? ['&#129351;','&#129352;','&#129353;'][r.rank - 1] : r.rank}</em><b>${r.name}${mine ? ' (you)' : ''}</b><small class="m-${r.map}">${MAP_NM(r.map)}${r.champ ? ' &#127942;' : ` ${r.stages}/5`}</small><strong>${r.score.toLocaleString('en-US')}</strong></li>`;
+      }).join('') + '</ol>';
+      if (d.me && LB.authed()) me.innerHTML = `Your rank: <b>#${d.me.rank}</b> · ${d.me.score.toLocaleString('en-US')} pts`;
+    } catch (e){ body.innerHTML = '<div class="lb-empty"><b>Leaderboard is offline.</b><span>Your scores still save on this device.</span></div>'; }
+  }
+  function openLB(){ lbEl.hidden = false; drawLB(); document.getElementById('lbClose').focus({preventScroll:true}); }
+  function closeLB(){ lbEl.hidden = true; }
+  document.getElementById('lbBtn').addEventListener('click', openLB);
+  document.getElementById('lbClose').addEventListener('click', closeLB);
+  lbEl.addEventListener('click', async e => {
+    if (e.target === lbEl) return closeLB();
+    const t = e.target.closest('[data-s]'); if (t){ LB.scope = t.dataset.s; drawLB(); return; }
+    const a = e.target.closest('[data-lb]'); if (!a) return;
+    if (a.dataset.lb === 'connect'){ await w3Connect(); drawLB(); }
+    if (a.dataset.lb === 'login'){ await LB.login(); drawLB(); }
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !lbEl.hidden){ e.stopImmediatePropagation(); closeLB(); } }, true);
   window.addEventListener('hashchange', route);
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !arenaEl.hidden && modal.hidden) location.hash = ''; });
   route();
