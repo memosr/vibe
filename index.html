@@ -340,6 +340,20 @@
   .fpick .sp{font-family:"Pixelify Sans", monospace;font-size:11px;color:#7c5cff}
   .fpick:disabled{cursor:not-allowed;background:#e9e3dc}
   .fpick:disabled .mini{filter:brightness(0) opacity(.35)}
+  .fpick .aff{display:flex;flex-direction:column;align-items:center;gap:1px;margin-top:2px;padding:2px 6px;font-family:"Pixelify Sans", monospace;font-size:11px;font-weight:700;letter-spacing:.06em;border:2px solid var(--line);line-height:1.15;text-align:center}
+  .fpick .aff small{font-size:9.5px;font-weight:400;letter-spacing:0}
+  .fpick .aff small.ax{font-weight:700;opacity:.9}
+  .fpick .aff.up{background:#e3ffd8;color:#1f7a2a}
+  .fpick .aff.dn{background:#ffe0dc;color:#b8402f}
+  .fpick.f-up{box-shadow:3px 3px 0 var(--line),0 0 0 3px #58e04a inset;animation:affUp 1.4s ease-in-out infinite alternate}
+  .fpick.f-dn{opacity:.92}
+  .fpick.f-dn .mini{filter:saturate(.55)}
+  @keyframes affUp{from{box-shadow:3px 3px 0 var(--line),0 0 0 3px #58e04a inset}to{box-shadow:3px 3px 0 var(--line),0 0 0 3px #58e04a inset,0 0 14px #58e04a}}
+  .fpick:disabled .aff{opacity:.6}
+  .haff{display:inline-block;margin-left:4px;padding:0 4px;font-size:.9em;font-weight:700;border:1.5px solid currentColor}
+  .haff.up{color:#2f9a3a} .haff.dn{color:#d8432d}
+  @media (prefers-reduced-motion: reduce){ .fpick.f-up{animation:none} }
+  @media (max-width:640px){ .fpick .aff small:not(.ax){display:none} .fpick .aff{font-size:10px;padding:1px 4px} }
   .fpick .lock{position:absolute;inset:auto 4px 6px 4px;font-size:11px;color:#b8402f;font-weight:700;line-height:1.2}
   .fpick:disabled small,.fpick:disabled .sp{visibility:hidden}
   .bar.hy{height:7px} .bar.hy i{background:linear-gradient(180deg,#d6c2ff,#8a5cff)}
@@ -3315,7 +3329,31 @@
   const KIT = {hp:{name:'Health kit', heal:40, price:40}, en:{name:'Energy kit', sta:50, price:25}, max:3};
   // oyuncu için çarpanlar (rakipte hepsi nötr)
   const mine = f => f === G.p;
-  const cmod = () => (CHARS[S.char] || CHARS.Tux).mod;
+  // ===== Aşama 9: KARAKTER + HARİTA UYUMU =====
+  // Her haritada bazı karakterler güçlenir, bazıları zayıflar. Etki karakterin kendi bonuslarına eklenir.
+  const AFFINITY = {
+    classic:{Tux:{up:1, why:'Born for the old arena', mod:{pow:.10, acc:.04}},           Armor:{up:-1, why:'Heavy in the sand', mod:{acc:-.06, pow:-.04}}},
+    neon:   {Armor:{up:1, why:'Robot on robot turf', mod:{pow:.12, guard:.06}},           Goggles:{up:1, why:'Gadgets love neon', mod:{acc:.06, crit:.04}},
+             Honey:{up:-1, why:'Bees hate the static', mod:{pow:-.08, acc:-.03}}},
+    street: {Captain:{up:1, why:'Street brawler', mod:{pow:.12, hp:20}},                 Honey:{up:1, why:'Quick in the alleys', mod:{acc:.06, crit:.04}},
+             Tux:{up:-1, why:'Too polite for the street', mod:{pow:-.08, guard:-.04}}},
+    court:  {Honey:{up:1, why:'Fast break legend', mod:{acc:.08, crit:.06, pow:.06}},    Tux:{up:1, why:'Light on his feet', mod:{acc:.05, pow:.05}},
+             Armor:{up:-1, why:'Can\'t jump', mod:{acc:-.08, pow:-.06}}},
+    school: {Goggles:{up:1, why:'Top of the class', mod:{pow:.10, acc:.06, crit:.06}},    Armor:{up:1, why:'Built in the lab', mod:{guard:.06, pow:.06}},
+             Captain:{up:-1, why:'Always in detention', mod:{pow:-.10, hp:-10}}}
+  };
+  const affOf = (c, m) => (AFFINITY[m || G.arena || 'classic'] || {})[c] || null;
+  const cmod = () => {
+    const base = (CHARS[S.char] || CHARS.Tux).mod, a = affOf(S.char);
+    if (!a) return base;
+    const m = {...base}; Object.entries(a.mod).forEach(([k, v]) => { m[k] = (m[k] || 0) + v; }); return m;
+  };
+  // "+12% dmg, +6% guard" gibi kısa özet
+  const affTxt = a => Object.entries(a.mod).map(([k, v]) => `${v > 0 ? '+' : ''}${k === 'hp' ? v : Math.round(v*100) + '%'} ${{pow:'dmg', acc:'aim', crit:'crit', guard:'guard', hp:'HP'}[k]}`).join(', ');
+  function mapTip(m){
+    const A = AFFINITY[m] || {}, up = Object.keys(A).filter(c => A[c].up > 0), dn = Object.keys(A).filter(c => A[c].up < 0);
+    return `${ARENAS[m].name}: ${up.length ? 'strong ' + up.join(' & ') : ''}${dn.length ? `, weak ${dn.join(' & ')}` : ''}`;
+  }
   const dmgMult = f => mine(f) ? (1 + S.stats.pow*.04 + (cmod().pow || 0) + (spon('NVDA') ? .06 : 0) + eqv('glove')) * (1 + effLv(f.gear)*.08) : (f.pow || 1);
   const takenMult = f => mine(f) ? (1 - Math.min(.5, S.stats.grd*.03 + armCut() + eqv('helm') + (cmod().guard || 0) + (spon('AAPL') ? .06 : 0))) : 1;
   const accBonus = f => mine(f) ? S.stats.spd*.015 + (cmod().acc || 0) + (spon('MSFT') ? .05 : 0) : 0;
@@ -3380,6 +3418,7 @@
     const b = e.target.closest('.map[data-map]'); if (!b || b.disabled || !b.dataset.map) return;
     if (G.on || (G.stage > 0 && resultEl.hidden)){ toast('Finish this run first, then switch maps.'); return; }
     G.arena = b.dataset.map; S.arena = G.arena; save(); play(ARENAS[G.arena].snd);
+    setTimeout(() => toast(`&#9650; ${mapTip(G.arena)}`), 400);
     startTournament();
   });
   function drawStages(){
@@ -4361,7 +4400,7 @@
     showFighterPick();
   }
   function hudPlayerIdle(){
-    hud.p.querySelector('b').textContent = S.char; hud.p.querySelector('small').textContent = G.weapon ? WEAPONS[G.weapon].name : '';
+    hud.p.querySelector('b').textContent = S.char; hud.p.querySelector('small').innerHTML = (G.weapon ? WEAPONS[G.weapon].name : '') + (affOf(S.char) ? ` <span class="haff ${affOf(S.char).up > 0 ? 'up' : 'dn'}" title="${affTxt(affOf(S.char))}">${affOf(S.char).up > 0 ? '&#9650; MAP' : '&#9660; MAP'}</span>` : '');
     hud.p.querySelector('.hp i').style.width = '100%'; hud.p.querySelector('.hp span').textContent = `${playerMax()} / ${playerMax()}`;
     hud.p.querySelector('.st i').style.width = '100%'; hud.p.querySelector('.hy i').style.width = '0%'; hud.p.querySelector('.hy').classList.remove('full');
   }
@@ -4391,7 +4430,7 @@
   function showFighterPick(){
     drawArenaPick();
     document.getElementById('chooserTitle').textContent = 'Choose your fighter';
-    document.getElementById('chooserSub').textContent = 'Win fights to unlock more of the folk.';
+    document.getElementById('chooserSub').textContent = `${mapTip(G.arena || 'classic')}. Pick wisely.`;
     document.getElementById('fgrid').hidden = false; document.getElementById('wgrid').hidden = true; document.getElementById('chooserBackF').hidden = true;
     buildFighterGrid();
     chooserEl.hidden = false; refreshActions(); turnTag.textContent = 'PICK A FIGHTER';
@@ -4411,8 +4450,9 @@
       const open = S.unlocked.includes(name), lock = UNLOCKS.find(x => x.name === name);
       const b = document.createElement('button'); b.type = 'button'; b.className = 'fpick'; b.disabled = !open;
       const tmp = document.createElement('div'); build({name, act:'poke', parts:bots.find(x => x.name === name).parts}, 0, tmp);
-      b.innerHTML = `<div class="mini">${tmp.querySelector('.bob').outerHTML}</div><b>${name}</b><span class="tiers" aria-hidden="true"><span class="tr pw">${'<i></i>'.repeat(5).replace(/<i><\/i>/g, (m, o2) => o2/7 < c.tier[0] ? '<i class="on"></i>' : m)}</span></span><span class="sp">${c.blurb}</span>${open ? '' : `<span class="lock">&#128274; ${lock.req}</span>`}`;
-      b.setAttribute('aria-label', open ? `${name}, power ${c.tier[0]} of 5: ${c.blurb}` : `${name} is locked. ${lock.req} to unlock.`);
+      b.innerHTML = `<div class="mini">${tmp.querySelector('.bob').outerHTML}</div><b>${name}</b><span class="tiers" aria-hidden="true"><span class="tr pw">${'<i></i>'.repeat(5).replace(/<i><\/i>/g, (m, o2) => o2/7 < c.tier[0] ? '<i class="on"></i>' : m)}</span></span><span class="sp">${c.blurb}</span>${affOf(name) ? `<span class="aff ${affOf(name).up > 0 ? 'up' : 'dn'}" title="${affTxt(affOf(name))}">${affOf(name).up > 0 ? '&#9650; STRONG' : '&#9660; WEAK'}<small>${affOf(name).why}</small><small class="ax">${affTxt(affOf(name))}</small></span>` : ''}${open ? '' : `<span class="lock">&#128274; ${lock.req}</span>`}`;
+      if (affOf(name)) b.classList.add(affOf(name).up > 0 ? 'f-up' : 'f-dn');
+      b.setAttribute('aria-label', (open ? `${name}, power ${c.tier[0]} of 5: ${c.blurb}` : `${name} is locked. ${lock.req} to unlock.`) + (affOf(name) ? ` ${affOf(name).up > 0 ? 'Strong' : 'Weak'} on this map: ${affTxt(affOf(name))}.` : ''));
       if (open) b.addEventListener('click', () => { S.char = name; save(); dropIdle(name); showWeaponPick(); });
       g.appendChild(b);
     });
@@ -4449,7 +4489,7 @@
     { const W = ring.clientWidth, w = bwOf(p), pad = W*.07; COLS = Math.max(4, Math.min(8, Math.floor((W - 2*pad - w)/(w*.9)) + 1)); }
     p.col = 0; e.col = COLS - 1;
     fighters = [p, e]; arenaBots = [p.b, e.b]; G.p = p; G.e = e;
-    hud.p.querySelector('b').textContent = p.name; hud.p.querySelector('small').textContent = WEAPONS[p.gear].name;
+    hud.p.querySelector('b').textContent = p.name; hud.p.querySelector('small').innerHTML = WEAPONS[p.gear].name + (affOf(S.char) ? ` <span class="haff ${affOf(S.char).up > 0 ? 'up' : 'dn'}" title="${affTxt(affOf(S.char))}">${affOf(S.char).up > 0 ? '&#9650; MAP' : '&#9660; MAP'}</span>` : '');
     refreshActions();
     hud.e.querySelector('b').textContent = e.name; hud.e.querySelector('small').textContent = r.boss ? 'BOSS' : WEAPONS[e.gear].name;
     place(p, colX(p, p.col)); place(e, colX(e, e.col));
