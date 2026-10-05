@@ -34,6 +34,7 @@ if (process.env.DATABASE_URL) {
     map TEXT, stages INT, score INT, champ BOOLEAN DEFAULT FALSE, week TEXT)`);
   await pool.query('CREATE INDEX IF NOT EXISTS runs_week_score ON runs (week, score DESC)');
   await pool.query('CREATE INDEX IF NOT EXISTS runs_addr ON runs (addr)');
+  await pool.query('CREATE TABLE IF NOT EXISTS names (addr TEXT PRIMARY KEY, name TEXT NOT NULL, lname TEXT UNIQUE NOT NULL)');
   db = {
     async start(id, addr, t) { await pool.query('INSERT INTO runs (id, addr, started_at) VALUES ($1,$2,$3)', [id, addr, t]); },
     async get(id) { const r = await pool.query('SELECT * FROM runs WHERE id=$1', [id]); return r.rows[0]; },
@@ -43,14 +44,24 @@ if (process.env.DATABASE_URL) {
         WHERE ended_at IS NOT NULL ${week ? 'AND week=$1' : ''} ORDER BY addr, score DESC`, week ? [week] : []);
       return r.rows.sort((a, b) => b.score - a.score).slice(0, limit);
     },
+    async names(addrs) { if (!addrs.length) return {}; const r = await pool.query('SELECT addr, name FROM names WHERE addr = ANY($1)', [addrs]); return Object.fromEntries(r.rows.map(x => [x.addr, x.name])); },
+    async setName(addr, name) {
+      const lname = name.toLowerCase();
+      const t = await pool.query('SELECT addr FROM names WHERE lname=$1', [lname]);
+      if (t.rows[0] && t.rows[0].addr !== addr) return false;
+      await pool.query('INSERT INTO names (addr, name, lname) VALUES ($1,$2,$3) ON CONFLICT (addr) DO UPDATE SET name=$2, lname=$3', [addr, name, lname]);
+      return true;
+    },
     async best(addr, week) {
       const r = await pool.query(`SELECT MAX(score) AS s FROM runs WHERE addr=$1 AND ended_at IS NOT NULL ${week ? 'AND week=$2' : ''}`, week ? [addr, week] : [addr]);
       return Number(r.rows[0].s) || 0;
     }
   };
 } else {
-  const runs = new Map();
+  const runs = new Map(), nm = new Map();
   db = {
+    async names(addrs) { return Object.fromEntries(addrs.filter(a => nm.has(a)).map(a => [a, nm.get(a)])); },
+    async setName(addr, name) { for (const [a, n] of nm) if (a !== addr && n.toLowerCase() === name.toLowerCase()) return false; nm.set(addr, name); return true; },
     async start(id, addr, t) { runs.set(id, { id, addr, started_at: t }); },
     async get(id) { return runs.get(id); },
     async end(id, v) { const r = runs.get(id); if (r && !r.ended_at) Object.assign(r, v); },
@@ -78,6 +89,16 @@ function readToken(req) {
   if (sig.length !== good.length || !crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(good))) return null;
   if (Date.now() > Number(exp)) return null;
   return addr;
+}
+
+// ---- takma isim kuralları
+const BAD = ['fuck','shit','bitch','nigg','cunt','rape','nazi','hitler','porn','pussy','orospu','yarrak','admin','vibevibe','official','support','moderator'];
+function cleanName(s) {
+  const n = String(s || '').trim();
+  if (!/^[A-Za-z0-9_]{3,16}$/.test(n)) return { error: '3-16 letters, numbers or _' };
+  const l = n.toLowerCase().replace(/_/g, '');
+  if (BAD.some(b => l.includes(b))) return { error: 'name not allowed' };
+  return { name: n };
 }
 
 // ---- http yardımcıları
@@ -137,6 +158,17 @@ const routes = {
     const board = await db.board(week, 1000), rank = board.findIndex(r => r.addr === addr) + 1;
     return [200, { ok: true, rank, best: await db.best(addr, week), week }];
   },
+  'POST /name': async req => {
+    const addr = readToken(req); if (!addr) return [401, { error: 'login' }];
+    const { name } = await body(req), c = cleanName(name);
+    if (c.error) return [400, { error: c.error }];
+    if (!(await db.setName(addr, c.name))) return [409, { error: 'name taken' }];
+    return [200, { ok: true, name: c.name }];
+  },
+  'GET /name': async (req, url) => {
+    const a = url.searchParams.get('addr') || ''; if (!isAddress(a)) return [400, { error: 'bad address' }];
+    const addr = getAddress(a); return [200, { name: (await db.names([addr]))[addr] || null }];
+  },
   'GET /leaderboard': async (req, url) => {
     const scope = url.searchParams.get('scope') === 'all' ? null : weekKey();
     const rows = await db.board(scope, 50);
@@ -144,9 +176,11 @@ const routes = {
     let mine = null;
     if (me && isAddress(me)) {
       const a = getAddress(me), all = await db.board(scope, 100000), i = all.findIndex(r => r.addr === a);
-      mine = i >= 0 ? { rank: i + 1, ...all[i], name: short(a) } : null;
+      const myName = (await db.names([a]))[a];
+      mine = i >= 0 ? { rank: i + 1, ...all[i], name: myName || short(a), nick: myName || null } : { rank: null, nick: myName || null };
     }
-    return [200, { week: weekKey(), scope: scope ? 'week' : 'all', rows: rows.map((r, i) => ({ rank: i + 1, name: short(r.addr), addr: r.addr, score: r.score, map: r.map, champ: r.champ, stages: r.stages })), me: mine }];
+    const N = await db.names(rows.map(r => r.addr));
+    return [200, { week: weekKey(), scope: scope ? 'week' : 'all', rows: rows.map((r, i) => ({ rank: i + 1, name: N[r.addr] || short(r.addr), nick: !!N[r.addr], short: short(r.addr), addr: r.addr, score: r.score, map: r.map, champ: r.champ, stages: r.stages })), me: mine }];
   }
 };
 

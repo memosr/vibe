@@ -840,6 +840,12 @@
   .lb-empty b{color:var(--ink);font-family:"Pixelify Sans", monospace;font-size:17px}
   .lb-me{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:14px}
   .lb-me span{color:var(--ink-soft);font-size:12px}
+  .lb-nick{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px}
+  .lb-nick label{font-family:"Pixelify Sans", monospace;font-weight:700}
+  .lb-nick input{font:inherit;font-family:ui-monospace,monospace;padding:5px 8px;border:3px solid var(--line);width:150px;background:#fff}
+  .lb-nick small.ok{color:#2f9a3a;font-weight:700} .lb-nick small.bad{color:#d8432d;font-weight:700}
+  .lb-list b.nick{display:flex;flex-direction:column;font-family:"Pixelify Sans", monospace;font-size:15px;line-height:1.1}
+  .lb-list b.nick i{font-style:normal;font-family:ui-monospace,monospace;font-size:10px;color:var(--ink-soft);font-weight:400}
   .lb-rules{display:flex;flex-direction:column;gap:2px;font-size:12px;color:var(--ink-soft);border-top:2px dashed #d8cfc6;padding-top:8px}
   .lb-rules b{color:var(--ink);font-size:13px}
   .rchip.score{background:#1a1430;color:#ffd23f} .rchip.score em{background:#ffd23f;color:#1a1430}
@@ -1089,6 +1095,7 @@
       <div class="lb-tabs" role="tablist"><button class="lbtab" type="button" role="tab" data-s="week">This week</button><button class="lbtab" type="button" role="tab" data-s="all">All time</button><small id="lbWeek"></small></div>
       <div class="lb-body" id="lbBody"></div>
       <div class="lb-me" id="lbMe"></div>
+      <div class="lb-nick" id="lbNick" hidden><label for="lbNickIn">Nickname</label><input id="lbNickIn" maxlength="16" autocomplete="off" spellcheck="false" placeholder="e.g. memosr"><button class="pill" type="button" data-lb="nick">Save</button><small id="lbNickMsg"></small></div>
       <div class="lb-rules"><b>How scoring works</b><span>Each stage you win scores more on harder maps (Classic ×1 up to School ×5). Finish with more HP and in fewer rounds for bonus points. Champions get +1000 × map. Only your best run of the week counts.</span></div>
     </div>
   </div>
@@ -5001,7 +5008,7 @@
   }
   // ===== Aşama 10: LEADERBOARD (Railway sunucusu) =====
   // Skor her turnuvada birikir; yenilince ya da şampiyon olunca cüzdana bağlı olarak sunucuya gönderilir.
-  const LB_API = ''; // Railway adresi, ör. 'https://vibe-arena.up.railway.app'
+  const LB_API = 'https://ADRESIN'; // Railway adresi, ör. 'https://vibe-arena.up.railway.app'
   const LB_KEY = 'vibefolk-lb';
   const SCORE_MAP = {classic:1, neon:2, street:3, court:4, school:5};
   const LB = {
@@ -5061,6 +5068,10 @@
     if (!LB.on()){ body.innerHTML = `<div class="lb-empty"><b>The leaderboard is warming up.</b><span>Scores already count on this device. Online ranks open soon.</span></div>`; me.innerHTML = bestTxt; return; }
     me.innerHTML = !W3.addr ? `<button class="pill" type="button" data-lb="connect">Connect MetaMask</button><span>to join the leaderboard</span>`
       : !LB.authed() ? `<button class="pill" type="button" data-lb="login">Sign in to rank</button><span>One free signature, no gas</span>` : bestTxt;
+    const nickEl = document.getElementById('lbNick');
+    nickEl.hidden = !LB.authed();
+    if (LB.authed() && !nickEl.dataset.on){ nickEl.dataset.on = '1';
+      LB.api('/name?addr=' + W3.addr).then(r => { document.getElementById('lbNickIn').value = r.name || ''; }).catch(() => {}); }
     body.innerHTML = '<div class="lb-empty"><span>Loading...</span></div>';
     try {
       const d = await LB.api(`/leaderboard?scope=${LB.scope === 'all' ? 'all' : 'week'}${W3.addr ? '&addr=' + W3.addr : ''}`);
@@ -5068,9 +5079,10 @@
       if (!d.rows.length){ body.innerHTML = '<div class="lb-empty"><b>No scores yet.</b><span>Be the first champion this week.</span></div>'; }
       else body.innerHTML = '<ol class="lb-list">' + d.rows.map(r => {
         const mine = W3.addr && r.addr.toLowerCase() === W3.addr.toLowerCase();
-        return `<li class="${r.rank <= 3 ? 'top t' + r.rank : ''}${mine ? ' me' : ''}"><em>${r.rank <= 3 ? ['&#129351;','&#129352;','&#129353;'][r.rank - 1] : r.rank}</em><b>${r.name}${mine ? ' (you)' : ''}</b><small class="m-${r.map}">${MAP_NM(r.map)}${r.champ ? ' &#127942;' : ` ${r.stages}/5`}</small><strong>${r.score.toLocaleString('en-US')}</strong></li>`;
+        const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+        return `<li class="${r.rank <= 3 ? 'top t' + r.rank : ''}${mine ? ' me' : ''}"><em>${r.rank <= 3 ? ['&#129351;','&#129352;','&#129353;'][r.rank - 1] : r.rank}</em><b class="${r.nick ? 'nick' : ''}">${esc(r.name)}${mine ? ' (you)' : ''}${r.nick ? `<i>${r.short}</i>` : ''}</b><small class="m-${r.map}">${MAP_NM(r.map)}${r.champ ? ' &#127942;' : ` ${r.stages}/5`}</small><strong>${r.score.toLocaleString('en-US')}</strong></li>`;
       }).join('') + '</ol>';
-      if (d.me && LB.authed()) me.innerHTML = `Your rank: <b>#${d.me.rank}</b> · ${d.me.score.toLocaleString('en-US')} pts`;
+      if (d.me && d.me.rank && LB.authed()) me.innerHTML = `Your rank: <b>#${d.me.rank}</b> · ${d.me.score.toLocaleString('en-US')} pts`;
     } catch (e){ body.innerHTML = '<div class="lb-empty"><b>Leaderboard is offline.</b><span>Your scores still save on this device.</span></div>'; }
   }
   function openLB(){ lbEl.hidden = false; drawLB(); document.getElementById('lbClose').focus({preventScroll:true}); }
@@ -5083,6 +5095,12 @@
     const a = e.target.closest('[data-lb]'); if (!a) return;
     if (a.dataset.lb === 'connect'){ await w3Connect(); drawLB(); }
     if (a.dataset.lb === 'login'){ await LB.login(); drawLB(); }
+    if (a.dataset.lb === 'nick'){
+      const v = document.getElementById('lbNickIn').value.trim(), msg = document.getElementById('lbNickMsg');
+      if (!/^[A-Za-z0-9_]{3,16}$/.test(v)){ msg.textContent = '3-16 letters, numbers or _'; msg.className = 'bad'; return; }
+      try { const r = await LB.api('/name', {method:'POST', body:JSON.stringify({name:v})}); msg.textContent = `Saved as ${r.name}`; msg.className = 'ok'; drawLB(); }
+      catch (err){ msg.textContent = err.message === 'name taken' ? 'That name is taken' : err.message === 'name not allowed' ? 'Name not allowed' : 'Could not save'; msg.className = 'bad'; }
+    }
   });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !lbEl.hidden){ e.stopImmediatePropagation(); closeLB(); } }, true);
   window.addEventListener('hashchange', route);
