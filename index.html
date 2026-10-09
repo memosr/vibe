@@ -3106,69 +3106,69 @@
   };
   // turnuva: 4 rakip + boss, her birinin kendi huyu var
   const RIVALS = [
-    {name:'Paper Hands', base:'Mist', gear:'dagger', hp:80, pow:.9, ai:{flee:.35, power:.25},
+    {name:'Paper Hands', base:'Mist', gear:'dagger', hp:65, pow:.9, ai:{flee:.35, power:.25},
      st:{walk:'scamper', speed:1.3, enter:'Uh... is it safe here?', taunt:['I\'m selling!','Too risky for me!','Diamond hands? Never heard of it.'], hurt:['SELL SELL SELL!','My portfolio!','I knew I should\'ve sold!']}, ko:'I... I panic sold my HP.'},
-    {name:'The Shorter', base:'Mr. Hat', gear:'spear', hp:95, pow:.85, ai:{kite:.2, power:.2},
+    {name:'The Shorter', base:'Mr. Hat', gear:'spear', hp:75, pow:.85, ai:{kite:.2, power:.2},
      st:{walk:'fence', speed:1, enter:'Everything goes down eventually.', taunt:['Down only.','I\'m betting against you.','Short everything!'], hurt:['Margin call!','Squeezed!','Not the squeeze!']}, ko:'I got... short squeezed.'},
-    {name:'Gas Goblin', base:'Goggles', gear:'bow', hp:130, pow:1.2, ai:{kite:.35, drain:12, power:.2},
+    {name:'Gas Goblin', base:'Goggles', gear:'bow', hp:100, pow:1.2, ai:{kite:.35, drain:12, power:.2},
      st:{walk:'glide', speed:1.1, enter:'Every move costs gas, friend.', taunt:['That\'ll be 20 gwei.','Pay the fee!','Priority fee, please.'], hurt:['Tx reverted!','Out of gas!','Nonce too low!']}, ko:'Transaction... failed.'},
-    {name:'The Whale', base:'Lavender', gear:'axe', wlv:2, hp:170, pow:1.2, ai:{slow:true, power:.45, regen:10},
+    {name:'The Whale', base:'Lavender', gear:'axe', wlv:2, hp:130, pow:1.2, ai:{slow:true, power:.45, regen:10},
      st:{walk:'stomp', speed:.7, enter:'Blub. I am very large.', taunt:['I move markets.','Splash!','You are liquidity.'], hurt:['A ripple!','My bags!','Blub!']}, ko:'Beached... again.'},
-    {name:'The Bear Market', base:'Honey', gear:'sword', wlv:3, hp:280, pow:1.45, boss:true, scale:1.25, ai:{power:.35, crash:4},
+    {name:'The Bear Market', base:'Honey', gear:'sword', wlv:3, hp:195, pow:1.45, boss:true, scale:1.25, ai:{power:.35, crash:4},
      recolor:{'#f0d44d':'#6b4a2c','#2b1e22':'#2a1414','#141112':'#140a0a','#3fd7ea':'#d8432d','#f3efe6':'#ffd2c2'},
      st:{walk:'stomp', speed:.9, enter:'ROAR. The market is closed.', taunt:['Everything is red.','Winter is here.','Capitulate!'], hurt:['A relief rally?!','Green candle?!','GRR!']}, ko:'Fine... bull run... it is.'}
   ];
   // ===== Aşama 6a: NEON ARENA (2. sezon, sci-fi rakipler) =====
   const RIVALS2 = [
-    {name:'MEV Bot', base:'Armor', gear:'dagger', wlv:2, hp:130, pow:1.25, neon:true, filter:'hue-rotate(170deg) saturate(1.3)', ai:{power:.3},
+    {name:'MEV Bot', base:'Armor', gear:'dagger', wlv:2, hp:105, pow:1.25, neon:true, filter:'hue-rotate(170deg) saturate(1.3)', ai:{power:.3},
      st:{walk:'glide', speed:1.4, enter:'Your transaction looks... tasty.', taunt:['Front-running you.','Sandwiched!','Gas war? Easy.'], hurt:['Bundle failed!','Reverted!','My profits!']}, ko:'Block... missed.'},
-    {name:'Liquidation Drone', base:'Goggles', gear:'bow', wlv:3, hp:155, pow:1.4, neon:true, filter:'hue-rotate(200deg) saturate(1.5) brightness(1.05)', ai:{kite:.4, power:.25, drain:14},
+    {name:'Liquidation Drone', base:'Goggles', gear:'bow', wlv:3, hp:125, pow:1.4, neon:true, filter:'hue-rotate(200deg) saturate(1.5) brightness(1.05)', ai:{kite:.4, power:.25, drain:14},
      st:{walk:'glide', speed:1.2, enter:'Health factor: dropping.', taunt:['Margin call incoming.','Collateral detected.','Beep. Liquidate.'], hurt:['Rotor damage!','Recalibrating!','Not my oracle!']}, ko:'Position... closed.'},
-    {name:'Rug Puller', base:'Mr. Hat', gear:'spear', wlv:3, hp:190, pow:1.6, neon:true, filter:'hue-rotate(250deg) saturate(1.4)', ai:{power:.3, crash:4, ult:{name:'RUG PULL', line:'Liquidity? Gone.', label:'a Rug Pull', dmg:[20,26]}},
+    {name:'Rug Puller', base:'Mr. Hat', gear:'spear', wlv:3, hp:140, pow:1.6, neon:true, filter:'hue-rotate(250deg) saturate(1.4)', ai:{power:.3, crash:4, ult:{name:'RUG PULL', line:'Liquidity? Gone.', label:'a Rug Pull', dmg:[20,26]}},
      st:{walk:'fence', speed:1, enter:'Trust me, it is fully audited.', taunt:['Locked liquidity. Pinky promise.','Devs are doxxed. Kind of.','Wen moon? Never.'], hurt:['My exit!','Not the treasury!','Rugged myself?!']}, ko:'The devs... have left.'},
-    {name:'Botnet Swarm', base:'Honey', gear:'axe', wlv:3, hp:240, pow:1.75, neon:true, filter:'hue-rotate(120deg) saturate(1.6) brightness(.95)', ai:{slow:true, power:.45, regen:12},
+    {name:'Botnet Swarm', base:'Honey', gear:'axe', wlv:3, hp:180, pow:1.75, neon:true, filter:'hue-rotate(120deg) saturate(1.6) brightness(.95)', ai:{slow:true, power:.45, regen:12},
      st:{walk:'stomp', speed:.8, enter:'We are many. We are bots.', taunt:['10,000 wallets, one brain.','Sybil says hi.','Airdrop? Ours.'], hurt:['Node down!','Reconnecting...','Packet loss!']}, ko:'All nodes... offline.'},
-    {name:'The Singularity', base:'Armor', gear:'sword', wlv:4, hp:400, pow:2.1, boss:true, scale:1.25, neon:true, filter:'hue-rotate(290deg) saturate(1.8) brightness(.9)', ai:{power:.35, crash:4, ult:{name:'SYSTEM OVERRIDE', line:'I. AM. THE. CHAIN.', label:'a System Override', dmg:[24,30]}},
+    {name:'The Singularity', base:'Armor', gear:'sword', wlv:4, hp:280, pow:2.1, boss:true, scale:1.25, neon:true, filter:'hue-rotate(290deg) saturate(1.8) brightness(.9)', ai:{power:.35, crash:4, ult:{name:'SYSTEM OVERRIDE', line:'I. AM. THE. CHAIN.', label:'a System Override', dmg:[24,30]}},
      st:{walk:'stomp', speed:.9, enter:'Humans. So inefficient.', taunt:['Optimizing you out.','I wrote the smart contract.','Resistance is gas.'], hurt:['Anomaly!','Error: emotion detected!','Recompiling!']}, ko:'Shutting... down... gg.'}
   ];
   // ===== Aşama 7: SOKAK, BASKETBOL ve OKUL arenaları (her biri bir öncekinden güçlü) =====
   const RIVALS3 = [
-    {name:'Shill Tagger', base:'Honey', gear:'spray', wlv:3, hp:180, pow:1.6, outfit:{top:'hoodie', c:'#2fb58f', hat:'beanie', hc:'#ff2fd0', x:['sneakers']}, ai:{kite:.4, power:.25},
+    {name:'Shill Tagger', base:'Honey', gear:'spray', wlv:3, hp:145, pow:1.6, outfit:{top:'hoodie', c:'#2fb58f', hat:'beanie', hc:'#ff2fd0', x:['sneakers']}, ai:{kite:.4, power:.25},
      st:{walk:'glide', speed:1.2, enter:'This wall needs more shill.', taunt:['100x gem, trust me!','Tagged and bagged.','Paint it green!'], hurt:['My art!','Wet paint!','Not the can!']}, ko:'Out of... paint.'},
-    {name:'Seed Snatcher', base:'Mist', gear:'bat', wlv:3, hp:210, pow:1.75, outfit:{top:'hoodie', c:'#2a2d33', face:'mask', x:['sneakers']}, ai:{flee:.3, power:.35},
+    {name:'Seed Snatcher', base:'Mist', gear:'bat', wlv:3, hp:170, pow:1.75, outfit:{top:'hoodie', c:'#2a2d33', face:'mask', x:['sneakers']}, ai:{flee:.3, power:.35},
      st:{walk:'scamper', speed:1.4, enter:'Nice wallet. Mind if I hold it?', taunt:['What is your seed phrase?','Just 12 words, friend.','Sign this, quick!'], hurt:['Ouch, my keys!','Not cool!','Cold storage!']}, ko:'Should have... used a hardware wallet.'},
-    {name:'Chain Gang', base:'Armor', gear:'chain', wlv:3, hp:250, pow:1.9, outfit:{top:'tee', c:'#d8432d', hat:'cap', hc:'#231c1f', face:'shades', x:['chain','sneakers']}, ai:{power:.3, drain:12},
+    {name:'Chain Gang', base:'Armor', gear:'chain', wlv:3, hp:190, pow:1.9, outfit:{top:'tee', c:'#d8432d', hat:'cap', hc:'#231c1f', face:'shades', x:['chain','sneakers']}, ai:{power:.3, drain:12},
      st:{walk:'stomp', speed:1, enter:'On-chain or off-chain, we run this block.', taunt:['Every block is ours.','Link up!','Gas money, now.'], hurt:['Chain reorg!','Broken link!','Fork it!']}, ko:'Chain... halted.'},
-    {name:'The Bouncer', base:'Lavender', gear:'bat', wlv:4, hp:310, pow:2.05, outfit:{top:'tee', c:'#14161c', face:'shades', x:['chain']}, ai:{slow:true, power:.45, regen:12},
+    {name:'The Bouncer', base:'Lavender', gear:'bat', wlv:4, hp:230, pow:2.05, outfit:{top:'tee', c:'#14161c', face:'shades', x:['chain']}, ai:{slow:true, power:.45, regen:12},
      st:{walk:'stomp', speed:.7, enter:'You are not on the whitelist.', taunt:['No mint for you.','Velvet rope, pal.','Wrong allowlist.'], hurt:['Hey!','Watch the shirt!','Rude!']}, ko:'Fine... you are on the list.'},
-    {name:'OTC Kingpin', base:'Mr. Hat', gear:'chain', wlv:4, hp:480, pow:2.35, boss:true, scale:1.25, outfit:{top:'suit', c:'#2a1f3a', face:'shades', x:['chain']},
+    {name:'OTC Kingpin', base:'Mr. Hat', gear:'chain', wlv:4, hp:335, pow:2.35, boss:true, scale:1.25, outfit:{top:'suit', c:'#2a1f3a', face:'shades', x:['chain']},
      ai:{power:.35, crash:4, ult:{name:'HOSTILE TAKEOVER', line:'Your bags are mine now.', label:'a Hostile Takeover', dmg:[26,32], sta:25, toast:'Hostile takeover! You lose 25 energy.', dim:'rgba(200,150,20,.35)'}},
      st:{walk:'stomp', speed:.9, enter:'Everything on this street trades through me.', taunt:['Dark pool, baby.','Big blocks only.','I set the price.'], hurt:['My spread!','Slippage!','Unacceptable!']}, ko:'Deal... is off.'}
   ];
   const RIVALS4 = [
-    {name:'Airdrop Andy', base:'Pip', gear:'ball', wlv:3, hp:220, pow:1.9, outfit:{top:'jersey', c:'#2a74bd', num:'0', hat:'headband', hc:'#f3ece2', x:['shorts','sneakers']}, ai:{kite:.45, power:.25},
+    {name:'Airdrop Andy', base:'Pip', gear:'ball', wlv:3, hp:175, pow:1.9, outfit:{top:'jersey', c:'#2a74bd', num:'0', hat:'headband', hc:'#f3ece2', x:['shorts','sneakers']}, ai:{kite:.45, power:.25},
      st:{walk:'scamper', speed:1.3, enter:'Free airdrop! Catch!', taunt:['Claim it!','Airball? Never.','You are eligible!'], hurt:['Ineligible!','Snapshot missed!','Sybil?!']}, ko:'Airdrop... cancelled.'},
-    {name:'Pump & Dunk', base:'Armor', gear:'trophy', wlv:3, hp:260, pow:2.05, outfit:{top:'jersey', c:'#d8432d', num:'69', hat:'headband', hc:'#231c1f', x:['shorts','wrist']}, ai:{power:.4},
+    {name:'Pump & Dunk', base:'Armor', gear:'trophy', wlv:3, hp:210, pow:2.05, outfit:{top:'jersey', c:'#d8432d', num:'69', hat:'headband', hc:'#231c1f', x:['shorts','wrist']}, ai:{power:.4},
      st:{walk:'stomp', speed:1, enter:'Pump it up, then dunk it on you.', taunt:['Up only!','Slam!','Pump it!'], hurt:['Dumped!','Rejected!','Foul!']}, ko:'Fully... dumped.'},
-    {name:'Fast Break', base:'Goggles', gear:'ball', wlv:4, hp:300, pow:2.2, outfit:{top:'jersey', c:'#e9c64a', num:'7', nc:'#231c1f', x:['shorts','wrist','sneakers']}, ai:{kite:.35, power:.3, drain:14},
+    {name:'Fast Break', base:'Goggles', gear:'ball', wlv:4, hp:225, pow:2.2, outfit:{top:'jersey', c:'#e9c64a', num:'7', nc:'#231c1f', x:['shorts','wrist','sneakers']}, ai:{kite:.35, power:.3, drain:14},
      st:{walk:'glide', speed:1.4, enter:'Fast blocks, faster breaks.', taunt:['Sub-second finality!','Too slow!','Fast break!'], hurt:['Block missed!','Lag!','Timeout!']}, ko:'Network... congested.'},
-    {name:'Dead Cat Bounce', base:'Lavender', gear:'trophy', wlv:4, hp:360, pow:2.35, outfit:{top:'jersey', c:'#7c5cff', num:'23', x:['shorts','wrist']}, ai:{slow:true, power:.45, regen:14},
+    {name:'Dead Cat Bounce', base:'Lavender', gear:'trophy', wlv:4, hp:270, pow:2.35, outfit:{top:'jersey', c:'#7c5cff', num:'23', x:['shorts','wrist']}, ai:{slow:true, power:.45, regen:14},
      st:{walk:'stomp', speed:.8, enter:'I always bounce back.', taunt:['Rebound!','The bottom is in!','Bounce!'], hurt:['Lower low!','Capitulation!','Meow!']}, ko:'No... bounce... this time.'},
-    {name:'The GOAT', base:'Captain', gear:'ball', wlv:4, hp:560, pow:2.6, boss:true, scale:1.3, outfit:{top:'jersey', c:'#ffc53d', num:'1', nc:'#231c1f', x:['shorts','wrist','sneakers','chain']},
+    {name:'The GOAT', base:'Captain', gear:'ball', wlv:4, hp:390, pow:2.6, boss:true, scale:1.3, outfit:{top:'jersey', c:'#ffc53d', num:'1', nc:'#231c1f', x:['shorts','wrist','sneakers','chain']},
      ai:{power:.35, crash:4, ult:{name:'SLAM DUNK', line:'Posterized!', label:'a Slam Dunk', dmg:[28,36], toast:'Slam dunk! The crowd goes wild.', dim:'rgba(255,120,20,.35)'}},
      st:{walk:'stomp', speed:.9, enter:'Greatest Of All Tokens. Bow.', taunt:['Count the rings.','MVP. Again.','Check the stats.'], hurt:['Foul!','Technical!','Ref?!']}, ko:'Even the GOAT... retires.'}
   ];
   const RIVALS5 = [
-    {name:'Hall Monitor', base:'Pip', gear:'ruler', wlv:3, hp:260, pow:2.15, outfit:{top:'cardigan', c:'#2f9a6a', face:'glasses', x:['sash']}, ai:{power:.3},
+    {name:'Hall Monitor', base:'Pip', gear:'ruler', wlv:3, hp:210, pow:2.15, outfit:{top:'cardigan', c:'#2f9a6a', face:'glasses', x:['sash']}, ai:{power:.3},
      st:{walk:'fence', speed:1.1, enter:'Hall pass? Wallet pass?', taunt:['No running!','You are on my list.','Show me your KYC.'], hurt:['Rule break!','Not allowed!','Principal!']}, ko:'Pass... approved.'},
-    {name:'Teacher\'s Pet', base:'Honey', gear:'chalk', wlv:4, hp:300, pow:2.3, outfit:{top:'cardigan', c:'#ff8aa8', face:'glasses', x:['tie']}, ai:{kite:.45, power:.25, drain:14},
+    {name:'Teacher\'s Pet', base:'Honey', gear:'chalk', wlv:4, hp:240, pow:2.3, outfit:{top:'cardigan', c:'#ff8aa8', face:'glasses', x:['tie']}, ai:{kite:.45, power:.25, drain:14},
      st:{walk:'glide', speed:1.2, enter:'I did all the homework. Twice.', taunt:['Gold star for me!','Extra credit!','I am telling!'], hurt:['My grades!','Unfair!','B minus?!']}, ko:'Straight... Fs.'},
-    {name:'The Bully', base:'Armor', gear:'book', wlv:4, hp:350, pow:2.45, outfit:{top:'jacket', c:'#d8432d', hat:'cap', hc:'#d8432d', x:['sneakers']}, ai:{slow:true, power:.45, regen:12},
+    {name:'The Bully', base:'Armor', gear:'book', wlv:4, hp:260, pow:2.45, outfit:{top:'jacket', c:'#d8432d', hat:'cap', hc:'#d8432d', x:['sneakers']}, ai:{slow:true, power:.45, regen:12},
      st:{walk:'stomp', speed:.9, enter:'Lunch money. In ETH.', taunt:['Pay up!','Noob!','Nice wallet. Mine now.'], hurt:['Hey!','My jacket!','Owww!']}, ko:'I am... telling my mom.'},
-    {name:'Detention Dean', base:'Mr. Hat', gear:'ruler', wlv:4, hp:420, pow:2.6, outfit:{top:'cardigan', c:'#6b4a2c', face:'glasses', x:['tie']},
+    {name:'Detention Dean', base:'Mr. Hat', gear:'ruler', wlv:4, hp:315, pow:2.6, outfit:{top:'cardigan', c:'#6b4a2c', face:'glasses', x:['tie']},
      ai:{power:.35, drain:16, crash:5, ult:{name:'DETENTION', line:'See me after class.', label:'Detention', dmg:[26,32], sta:30, toast:'Detention! You lose 30 energy.', dim:'rgba(40,60,140,.35)'}},
      st:{walk:'fence', speed:1, enter:'Late again? Detention.', taunt:['Write it 100 times.','Silence!','Tardy!'], hurt:['Insubordination!','Outrageous!','My ruler!']}, ko:'Class... dismissed.'},
-    {name:'The Headmaster', base:'Mist', gear:'book', wlv:4, hp:680, pow:2.9, boss:true, scale:1.3, outfit:{top:'gown', c:'#7c5cff', hat:'mortar', face:'glasses'},
+    {name:'The Headmaster', base:'Mist', gear:'book', wlv:4, hp:475, pow:2.9, boss:true, scale:1.3, outfit:{top:'gown', c:'#7c5cff', hat:'mortar', face:'glasses'},
      ai:{power:.35, crash:4, ult:{name:'FINAL EXAM', line:'Pencils down. Forever.', label:'the Final Exam', dmg:[32,40], noShield:true, toast:'Final exam! Your shield is gone.', dim:'rgba(20,60,40,.4)'}},
      st:{walk:'glide', speed:.9, enter:'Welcome to the final exam.', taunt:['No cheating.','Time is up soon.','Show your work.'], hurt:['Plagiarism!','Who wrote this?!','Rewrite it!']}, ko:'You... graduate.'}
   ];
