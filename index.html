@@ -817,6 +817,71 @@
   .ring.rg-school .dock{background:linear-gradient(180deg,#6b4a2c,#3a2a1c) !important;border-top-color:#ffd23f !important}
   @media (prefers-reduced-motion: reduce){ .mdeco.lamp u{animation:none} }
 
+
+  /* ---- Oyun içi kontroller: çark (sağ alt), yön (sol alt), laf at (sağ üst) ---- */
+  .ring{--dock:calc(var(--u)*7)}
+  .dock{overflow:visible;justify-content:flex-start}
+  .dock .dpad{position:absolute;left:calc(var(--u)*11);top:auto;bottom:calc(100% + var(--u)*3);translate:none;gap:10px;z-index:9}
+  .dock .dbtn{width:calc(var(--u)*13);height:calc(var(--u)*13);border-radius:50%;padding:calc(var(--u)*2.6);background:radial-gradient(circle at 34% 28%,#fff 0 16%,#f3ece2 60%,#d8cfc6);box-shadow:3px 3px 0 var(--line),inset 0 -4px 0 rgba(0,0,0,.12)}
+  .dock .dbtn:active:not(:disabled){translate:0 2px;box-shadow:1px 1px 0 var(--line)}
+  .dock .dbtn:disabled{opacity:.55}
+  .dock .actions.wheel{position:absolute;right:calc(var(--u)*11);bottom:calc(var(--u)*2);width:calc(var(--u)*34);height:calc(var(--u)*34);display:grid !important;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:5px;margin:0;z-index:9;align-items:stretch !important;justify-items:stretch !important;
+    filter:drop-shadow(4px 5px 0 rgba(20,10,16,.55))}
+  .wheel .act{position:relative;width:auto;height:auto;padding:0;margin:0;display:block;background:none;border:0;box-shadow:none;overflow:visible}
+  .wheel .act .med{position:absolute;inset:0;width:auto !important;height:auto !important;border-radius:0;border:3px solid #231c1f;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+    background:radial-gradient(circle at 50% 50%,var(--in1),var(--in2) 90%);box-shadow:inset 0 0 0 4px var(--ring),inset 0 -6px 10px rgba(0,0,0,.35)}
+  .wheel .q-tl .med{border-radius:100% 0 0 0;padding:22% 0 0 22%} .wheel .q-tr .med{border-radius:0 100% 0 0;padding:22% 22% 0 0}
+  .wheel .q-bl .med{border-radius:0 0 0 100%;padding:0 0 22% 22%} .wheel .q-br .med{border-radius:0 0 100% 0;padding:0 22% 22% 0}
+  .wheel .act .med svg{width:54% !important;height:54% !important;flex:none;filter:drop-shadow(2px 2px 0 rgba(0,0,0,.5))}
+  .wheel .act b{position:absolute;z-index:2;font-size:calc(var(--u)*2.3) !important;color:#fff3e6 !important;text-shadow:1px 1px 0 #000 !important;pointer-events:none;line-height:1}
+  .wheel .q-tl b{left:30%;top:68%} .wheel .q-tr b{right:30%;top:68%} .wheel .q-bl b{left:30%;bottom:68%} .wheel .q-br b{right:30%;bottom:68%}
+  .wheel .q-tl b,.wheel .q-bl b{translate:-15% 0} .wheel .q-tr b,.wheel .q-br b{translate:15% 0}
+  .wheel .act .pips,.wheel .act kbd{display:none}
+  .wheel .act:hover:not(:disabled) .med{transform:scale(1.04);box-shadow:inset 0 0 0 4px var(--ring),0 0 16px var(--ring)}
+  .wheel .act:active:not(:disabled) .med{transform:scale(.96)}
+  .wheel .act,.wheel .act:disabled{opacity:1 !important}
+  .wheel .act:disabled .med{filter:saturate(.5) brightness(.75)}
+  .wheel .act.sp .med::before,.wheel .act.sp .med::after{display:none}
+  .wheel .act.sp:not(:disabled):not(.locked) .med{animation:wheelsp .6s ease-in-out infinite alternate}
+  @keyframes wheelsp{from{box-shadow:inset 0 0 0 4px var(--ring),0 0 6px #ff8a1a}to{box-shadow:inset 0 0 0 4px #ffd23f,0 0 26px #ff5a1a,0 0 8px #fff}}
+  .wheel .act .lockov{border-radius:inherit;inset:0}
+  .wheel .act .lockov svg{width:30%;height:30%}
+  .wheel .act .lockov em{font-size:calc(var(--u)*2.3);padding:1px 5px}
+  .wheel .hub{position:absolute;left:50%;top:50%;width:30%;height:30%;translate:-50% -50%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#5a4a52,#231c1f 70%);border:3px solid #231c1f;box-shadow:inset 0 0 0 3px #e9c64a,0 0 0 4px rgba(35,28,31,.35);pointer-events:none;z-index:3}
+  .wheel .hub::after{content:"";position:absolute;inset:32%;background:#e9c64a;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
+  /* laf at */
+  .tauntb{position:absolute;right:calc(var(--u)*11);top:120px;z-index:8;display:flex;flex-direction:column;align-items:center;gap:2px;padding:0;background:none;border:0;cursor:pointer;font:inherit}
+  .tauntb .tmed{display:grid;place-items:center;width:calc(var(--u)*13);height:calc(var(--u)*13);border-radius:50%;border:3px solid #231c1f;background:radial-gradient(circle at 50% 55%,#6b1a36,#2a0a16 72%);box-shadow:inset 0 0 0 4px #ff5c86,3px 3px 0 #231c1f}
+  .tauntb .tmed svg{width:58%;height:58%}
+  .tauntb b{font-family:"Pixelify Sans", monospace;font-size:12px;color:#fff3e6;text-shadow:1px 1px 0 #000}
+  .tauntb:hover:not(:disabled) .tmed{transform:scale(1.07);box-shadow:inset 0 0 0 4px #ff5c86,3px 3px 0 #231c1f,0 0 14px #ff5c86}
+  .tauntb:disabled{cursor:default} .tauntb:disabled .tmed{filter:saturate(.4) brightness(.7)}
+  .tbub{position:absolute;right:calc(100% + 10px);top:8%;white-space:nowrap;background:#fff;border:3px solid #231c1f;box-shadow:3px 3px 0 #231c1f;padding:4px 9px;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:13px;color:#b8402f;opacity:0;pointer-events:none}
+  .tbub::after{content:"";position:absolute;right:-11px;top:9px;border:6px solid transparent;border-left:8px solid #231c1f}
+  .tbub.show{animation:tbub 2.8s ease-out}
+  @keyframes tbub{0%{opacity:0;translate:8px 0}10%{opacity:1;translate:0 0}80%{opacity:1}100%{opacity:0;translate:0 -6px}}
+  .tauntb .tbub.show + *{}
+  /* büyüler: seviye kilidi ve dinlenme */
+  .potion .lvl{display:none}
+  .potion.spell.lvlock{filter:grayscale(1) brightness(.75);cursor:help}
+  .potion.spell.lvlock .cnt{display:none}
+  .potion.spell.lvlock .lvl{display:block;position:absolute;left:50%;bottom:-9px;translate:-50% 0;white-space:nowrap;background:#231c1f;color:#ffd23f;font-family:"Pixelify Sans", monospace;font-size:10px;padding:0 4px;border:2px solid #231c1f;filter:none}
+  .potion.spell.restb{--ring:#6f8fe8}
+  @media (prefers-reduced-motion: reduce){ .wheel .act.sp .med{animation:none} .tbub.show{animation:none;opacity:1} }
+  @media (max-width:640px){
+    .ring{--dock:calc(var(--u)*34)}
+    .dock .dpad{left:calc(var(--u)*5);bottom:50%;translate:0 50%;gap:8px}
+    .dock .dbtn{width:44px;height:44px;padding:9px}
+    .dock .actions.wheel{right:calc(var(--u)*4);bottom:calc(var(--u)*1.5);width:calc(var(--dock) - var(--u)*3);height:calc(var(--dock) - var(--u)*3);gap:4px}
+    .wheel .act b{font-size:9px !important}
+    .wheel .act .lockov em{font-size:9px}
+    .tauntb{right:calc(var(--u)*4)} .tauntb .tmed{width:42px;height:42px} .tauntb b{font-size:10px}
+    .tbub{font-size:11px}
+    .tbub{right:0;top:calc(100% + 8px)} .tbub::after{right:14px;top:-12px;border:6px solid transparent;border-bottom:7px solid #231c1f}
+    .potions{max-width:calc(100% - 64px - var(--u)*8) !important;gap:6px 6px !important}
+    .potion.spell{width:34px !important;height:34px !important;padding:5px !important}
+    .potion.spell .cnt{min-width:16px;height:16px;font-size:10px;right:-6px;top:-6px}
+  }
   /* ---- Oyun rehberi ---- */
   .guide{position:fixed;inset:0;z-index:45;overflow-y:auto;background:var(--paper,#f6f1ea);color:var(--ink);scroll-behavior:smooth}
   .gbar{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:10px;padding:10px 16px;background:#231c1f;border-bottom:4px solid #e0643a}
@@ -3198,12 +3263,10 @@
     rest:   {key:'7', label:'Rest',    pips:0, sta:0, icon:ICON.rest},
     special:{key:'0', label:'Special', pips:0, sta:0, special:true, icon:ICON.special},
     hpkit:  {key:'8', label:'Health', pips:0, sta:0, kit:'hp', icon:I([[1,2,10,9,INK],[2,3,8,7,'#f6f1ea'],[5,4,2,5,'#d8432d'],[3,5,6,2,'#d8432d'],[4,1,4,1,INK]])},
-    shield: {key:'q', label:'Shield', pips:0, sta:15, spell:true, icon:svgPx('0 0 16 16', [[3,1,10,1,INK],[2,2,12,8,INK],[3,10,10,2,INK],[5,12,6,2,INK],[7,14,2,1,INK],[3,2,10,8,'#6fd3ff'],[4,10,8,2,'#6fd3ff'],[6,12,4,2,'#3aa3d8'],[4,3,3,4,'#e0f6ff'],[8,4,1,6,'#3aa3d8']])},
-    bolt:   {key:'w', label:'Bolt', pips:0, sta:20, spell:true, icon:svgPx('0 0 16 16', [[8,0,5,1,INK],[7,1,5,3,INK],[5,4,8,2,INK],[4,6,5,2,INK],[7,6,6,2,INK],[6,8,4,3,INK],[5,11,3,3,INK],[4,14,2,2,INK],[8,1,3,3,'#ffd23f'],[6,4,6,2,'#ffd23f'],[8,6,4,2,'#ffd23f'],[7,8,2,3,'#ffd23f'],[6,11,1,3,'#fff3b0'],[9,1,1,2,'#fff8d0']])},
-    rug:    {key:'r', label:'Rug Pull', pips:0, sta:20, spell:true, icon:svgPx('0 0 16 16', [[1,5,14,7,INK],[2,6,12,5,'#d8432d'],[2,7,12,1,'#ffd23f'],[2,9,12,1,'#ffd23f'],[0,6,1,1,INK],[0,8,1,1,INK],[0,10,1,1,INK],[15,6,1,1,INK],[15,8,1,1,INK],[15,10,1,1,INK],[11,1,3,4,INK],[12,2,1,3,'#fff']])},
-    diamond:{key:'t', label:'Diamond Hands', pips:0, sta:25, spell:true, icon:svgPx('0 0 16 16', [[4,2,8,2,INK],[2,4,12,3,INK],[3,7,10,2,INK],[5,9,6,2,INK],[7,11,2,2,INK],[5,3,6,1,'#e0fbff'],[3,4,10,3,'#9ff3ff'],[4,7,8,2,'#3fe9ff'],[6,9,4,2,'#1aa3d8'],[7,4,2,3,'#ffffff']])},
-    moon:   {key:'y', label:'To the Moon', pips:0, sta:30, spell:true, icon:svgPx('0 0 16 16', [[7,0,2,2,INK],[6,2,4,8,INK],[4,8,2,4,INK],[10,8,2,4,INK],[7,10,2,4,'#ff8a1a'],[7,2,2,7,'#e8edf2'],[7,4,2,2,'#3fe9ff'],[5,9,1,2,'#d8432d'],[10,9,1,2,'#d8432d'],[7,13,2,3,'#ffd23f']])},
-    heal:   {key:'e', label:'Heal', pips:0, sta:25, spell:true, icon:svgPx('0 0 16 16', [[5,1,6,14,INK],[1,5,14,6,INK],[6,2,4,12,'#7ee07a'],[2,6,12,4,'#7ee07a'],[7,3,2,10,'#c8ffc0'],[3,7,10,2,'#c8ffc0']])},
+    shield: {key:'w', label:'Shield', pips:0, sta:15, spell:true, icon:svgPx('0 0 16 16', [[3,1,10,1,INK],[2,2,12,8,INK],[3,10,10,2,INK],[5,12,6,2,INK],[7,14,2,1,INK],[3,2,10,8,'#6fd3ff'],[4,10,8,2,'#6fd3ff'],[6,12,4,2,'#3aa3d8'],[4,3,3,4,'#e0f6ff'],[8,4,1,6,'#3aa3d8']])},
+    rug:    {key:'e', label:'Rug Pull', pips:0, sta:20, spell:true, icon:svgPx('0 0 16 16', [[1,5,14,7,INK],[2,6,12,5,'#d8432d'],[2,7,12,1,'#ffd23f'],[2,9,12,1,'#ffd23f'],[0,6,1,1,INK],[0,8,1,1,INK],[0,10,1,1,INK],[15,6,1,1,INK],[15,8,1,1,INK],[15,10,1,1,INK],[11,1,3,4,INK],[12,2,1,3,'#fff']])},
+    moon:   {key:'r', label:'To the Moon', pips:0, sta:30, spell:true, icon:svgPx('0 0 16 16', [[7,0,2,2,INK],[6,2,4,8,INK],[4,8,2,4,INK],[10,8,2,4,INK],[7,10,2,4,'#ff8a1a'],[7,2,2,7,'#e8edf2'],[7,4,2,2,'#3fe9ff'],[5,9,1,2,'#d8432d'],[10,9,1,2,'#d8432d'],[7,13,2,3,'#ffd23f']])},
+    heal:   {key:'q', label:'Heal', pips:0, sta:25, spell:true, icon:svgPx('0 0 16 16', [[5,1,6,14,INK],[1,5,14,6,INK],[6,2,4,12,'#7ee07a'],[2,6,12,4,'#7ee07a'],[7,3,2,10,'#c8ffc0'],[3,7,10,2,'#c8ffc0']])},
     enkit:  {key:'9', label:'Energy', pips:0, sta:0, kit:'en', icon:I([[3,0,6,2,INK],[2,2,8,10,INK],[3,3,6,8,'#ffe27a'],[6,4,2,2,'#e9b43a'],[5,6,2,2,'#e9b43a'],[4,8,2,2,'#e9b43a']])}
   };
   // silahların gizli özellikleri; oyuncu sadece kısa bir tarif görür
@@ -3458,14 +3521,14 @@
     if (g.boot){ const {c, hi} = EQ_C[g.boot]; P.push(['legL',7.4,46.4,7.2,4,c,gl(g.boot)],['legL',7.4,46.4,7.2,1,hi,'nol'],['legR',15.4,46.4,7.2,4,c,gl(g.boot)],['legR',15.4,46.4,7.2,1,hi,'nol']); }
     return P;
   }
+  // Büyüler seviyeyle açılır (satın alma yok). Rest her zaman açık.
   const SPELLS = {
-    shield: {label:'Shield', price:150, sta:15, key:'q', ring:'#6fd3ff', in1:'#123a5a', in2:'#071a2a'},
-    bolt:   {label:'Bolt',   price:250, sta:20, key:'w', ring:'#ffd23f', in1:'#4a3a10', in2:'#1a1406', dmg:[10,14]},
-    heal:   {label:'Heal',   price:300, sta:25, key:'e', ring:'#7ee07a', in1:'#16401a', in2:'#08180a', heal:25},
-    rug:     {label:'Rug Pull',      price:400, sta:20, key:'r', vibe:true, ring:'#ff2fd0', in1:'#4a0a3a', in2:'#1a0414'},
-    diamond: {label:'Diamond Hands', price:450, sta:25, key:'t', vibe:true, ring:'#9ff3ff', in1:'#0a3a4a', in2:'#04161c'},
-    moon:    {label:'To the Moon',   price:600, sta:30, key:'y', vibe:true, ring:'#ffd23f', in1:'#3a2a6a', in2:'#140a2a', dmg:[18,24]}
+    heal:   {label:'Heal',        lv:5,  sta:25, key:'q', ring:'#7ee07a', in1:'#16401a', in2:'#08180a', heal:25},
+    shield: {label:'Shield',      lv:10, sta:15, key:'w', ring:'#6fd3ff', in1:'#123a5a', in2:'#071a2a'},
+    rug:    {label:'Rug Pull',    lv:15, sta:20, key:'e', vibe:true, ring:'#ff2fd0', in1:'#4a0a3a', in2:'#1a0414'},
+    moon:   {label:'To the Moon', lv:20, sta:30, key:'r', vibe:true, ring:'#ffd23f', in1:'#3a2a6a', in2:'#140a2a', dmg:[18,24]}
   };
+  const spellOpen = k => (S.level || 1) >= SPELLS[k].lv;
   if (!Array.isArray(S.owned) || (S.owned.length === 1 && WORDER.some(k => k !== 'dagger' && (S.up[k] || 0) > 0))) S.owned = ['dagger', ...WORDER.filter(k => k !== 'dagger' && (S.up[k] || 0) > 0)];
   // ================= $FOLK HOLDER SİSTEMİ =================
   // Cüzdandaki $FOLK bakiyesi okunur (transfer yok). Tutulan miktar seviyeyi belirler.
@@ -3557,7 +3620,8 @@
   const rnd = (a, b) => a + Math.floor(Math.random()*(b - a + 1));
   const wOf = f => WEAPONS[f.gear];
 
-  function colX(f, c){ const W = ring.clientWidth, w = bwOf(f), pad = W*.07; return pad + c*(W - 2*pad - w)/(COLS - 1); }
+  const colPad = W => W*(innerWidth > 640 ? .2 : .07);
+  function colX(f, c){ const W = ring.clientWidth, w = bwOf(f), pad = colPad(W); return pad + c*(W - 2*pad - w)/(COLS - 1); }
   const dist = () => Math.abs(G.p.col - G.e.col);
   function log(t){ logEl.textContent = t; }
   function drawHud(){
@@ -3604,7 +3668,7 @@
   const staCost = (f, k) => Math.max(0, MOVES[k].sta - (MOVES[k].atk ? (wOf(f).cheap || 0) : 0));
   function canDo(f, k){
     const m = MOVES[k];
-    if (m.spell) return mine(f) && !!S.spells[k] && !(f.used && f.used[k]) && f.sta >= m.sta;
+    if (m.spell) return mine(f) && spellOpen(k) && !(f.used && f.used[k]) && f.sta >= m.sta;
     if (mine(f) && moveLocked(k)) return false;
     if (f.sta < staCost(f, k)) return false;
     if (m.atk) return dist() <= wOf(f).range;
@@ -3631,13 +3695,20 @@
       b.addEventListener('click', () => playerMove(k));
       potionsEl.appendChild(b);
     });
+    { // dinlenme her zaman açık
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'potion spell restb'; b.dataset.k = 'rest';
+      b.style.setProperty('--ring', MED.rest.ring); b.style.setProperty('--in1', MED.rest.in1); b.style.setProperty('--in2', MED.rest.in2);
+      b.title = `Rest: +35 energy, +3 HP (key ${MOVES.rest.key})`;
+      b.innerHTML = `${MOVES.rest.icon}<span class="cnt">${MOVES.rest.key}</span>`;
+      b.addEventListener('click', () => playerMove('rest'));
+      potionsEl.appendChild(b);
+    }
     Object.keys(SPELLS).forEach(k => {
-      if (!S.spells[k]) return;
       const sp = SPELLS[k], b = document.createElement('button'); b.type = 'button'; b.className = 'potion spell'; b.dataset.k = k;
       b.style.setProperty('--ring', sp.ring); b.style.setProperty('--in1', sp.in1); b.style.setProperty('--in2', sp.in2);
       b.title = `${sp.label} spell, ${sp.sta} energy, once per fight (key ${sp.key.toUpperCase()})`;
-      b.innerHTML = `${MOVES[k].icon}<span class="cnt">${sp.key.toUpperCase()}</span>`;
-      b.addEventListener('click', () => playerMove(k));
+      b.innerHTML = `${MOVES[k].icon}<span class="cnt">${sp.key.toUpperCase()}</span><span class="lvl">Lv ${sp.lv}</span>`;
+      b.addEventListener('click', () => { if (!spellOpen(k)) toast(`${sp.label} unlocks at level ${sp.lv}. You are level ${S.level}.`); else playerMove(k); });
       potionsEl.appendChild(b);
     });
   }
@@ -3658,15 +3729,34 @@
   }
   window.addEventListener('resize', placePotions);
   function buildActions(){
-    actionsEl.innerHTML = '';
-    ['quick','strike','power','special','taunt','rest'].forEach(k => { const m = MOVES[k]; // ulti, güç vuruşlarının yanında
-      const b = document.createElement('button'); b.type = 'button'; b.className = 'act' + (m.atk ? ' atk' : '') + (m.special ? ' sp' : ''); b.dataset.k = k;
+    actionsEl.innerHTML = ''; actionsEl.classList.add('wheel');
+    [['quick','tl'],['strike','tr'],['special','bl'],['power','br']].forEach(([k, q]) => { const m = MOVES[k]; // joystick gibi dört çeyrek
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'act q-' + q + (m.atk ? ' atk' : '') + (m.special ? ' sp' : ''); b.dataset.k = k;
       const c = MED[k];
       b.innerHTML = `<span class="med" aria-hidden="true" style="--ring:${c.ring};--in1:${c.in1};--in2:${c.in2}">${m.icon}<span class="lockov">${LOCK}<em>${MOVE_PRICE[k] || ''} <span class="coin"></span></em></span></span><b>${m.label}</b><span class="pips" aria-hidden="true">${'<i></i>'.repeat(m.pips)}</span><kbd>${m.key}</kbd>`;
       b.addEventListener('click', () => { if (moveLocked(k)) openCamp(); else playerMove(k); });
       actionsEl.appendChild(b);
     });
+    const hub = document.createElement('span'); hub.className = 'hub'; hub.setAttribute('aria-hidden', 'true'); actionsEl.appendChild(hub);
   }
+  // laf atma (taunt): ringin sağ üstünde, ara ara kendini hatırlatır
+  let tauntEl = null;
+  const TAUNT_TIPS = ['Trash talk!','Roast them!','Say something!','Mock them!','Talk smack!','Get in their head!'];
+  function buildTaunt(){
+    tauntEl = document.createElement('button'); tauntEl.type = 'button'; tauntEl.className = 'tauntb play-only'; tauntEl.dataset.k = 'taunt';
+    tauntEl.title = `Taunt: rival aims worse, you crit more, +20 Hype (key ${MOVES.taunt.key})`;
+    tauntEl.setAttribute('aria-label', 'Taunt');
+    tauntEl.innerHTML = `<span class="tmed">${MOVES.taunt.icon}</span><b>Taunt</b><span class="tbub" aria-hidden="true"></span>`;
+    tauntEl.addEventListener('click', () => playerMove('taunt'));
+    ring.appendChild(tauntEl);
+    setInterval(() => {
+      if (!tauntEl || tauntEl.disabled || arenaEl.hidden || !G.on || G.turn !== 'p' || G.busy || Math.random() < .35) return;
+      const bub = tauntEl.querySelector('.tbub'); bub.textContent = pick(TAUNT_TIPS);
+      bub.classList.remove('show'); void bub.offsetWidth; bub.classList.add('show');
+    }, 7000);
+  }
+  function placeTaunt(){ if (!tauntEl) return; const hudEl = hud.e.parentElement; tauntEl.style.top = (hudEl.offsetTop + hud.e.offsetTop + hud.e.offsetHeight + 10) + 'px'; }
+  window.addEventListener('resize', placeTaunt);
   function refreshActions(){
     const myTurn = G.on && G.turn === 'p' && !G.busy;
     actionsEl.querySelectorAll('.act').forEach(b => {
@@ -3683,11 +3773,15 @@
     });
     dpadEl.querySelectorAll('.dbtn').forEach(b => { b.disabled = !myTurn || !canDo(G.p, b.dataset.k); });
     potionsEl.querySelectorAll('.potion.spell').forEach(b => {
-      const used = G.p && G.p.used && G.p.used[b.dataset.k];
-      b.disabled = !myTurn || !G.p || !canDo(G.p, b.dataset.k);
+      const k = b.dataset.k;
+      if (k === 'rest'){ b.disabled = !myTurn || !G.p || !canDo(G.p, 'rest'); b.classList.toggle('wait', !myTurn); b.setAttribute('aria-label', 'Rest'); return; }
+      const used = G.p && G.p.used && G.p.used[k], open = spellOpen(k);
+      b.classList.toggle('lvlock', !open);
+      b.disabled = open && (!myTurn || !G.p || !canDo(G.p, k));
       b.classList.toggle('used', !!used); b.classList.toggle('wait', !myTurn);
-      b.setAttribute('aria-label', `${SPELLS[b.dataset.k].label} spell${used ? ', used this fight' : ''}`);
+      b.setAttribute('aria-label', open ? `${SPELLS[k].label} spell${used ? ', used this fight' : ''}` : `${SPELLS[k].label}, unlocks at level ${SPELLS[k].lv}`);
     });
+    if (tauntEl){ tauntEl.disabled = !myTurn || !G.p || !canDo(G.p, 'taunt'); tauntEl.classList.toggle('wait', !myTurn); }
     potionsEl.querySelectorAll('.potion:not(.spell)').forEach(b => {
       const m = MOVES[b.dataset.k], n = S.kits[m.kit];
       b.disabled = !myTurn || !canDo(G.p, b.dataset.k);
@@ -3695,7 +3789,7 @@
       b.classList.toggle('empty', n === 0); b.classList.toggle('wait', !myTurn);
       b.setAttribute('aria-label', `${m.kit === 'hp' ? 'Health' : 'Energy'} potion, ${n} left`);
     });
-    placePotions();
+    placePotions(); placeTaunt();
     turnTag.textContent = !G.on ? 'READY' : G.turn === 'p' ? 'YOUR TURN' : 'RIVAL TURN';
     turnTag.classList.toggle('enemy', G.turn !== 'p');
   }
@@ -4663,7 +4757,7 @@
     Object.assign(p, {name:S.char, st:STYLE[S.char], ko:CHARS[S.char].ko, hp:playerMax(), max:playerMax(), sta:100, hype:spon('HOOD') ? 35 : 0, game:true, ai:null, used:{}, shield:false});
     G.mom = {};
     const e = makeRival(r);
-    { const W = ring.clientWidth, w = bwOf(p), pad = W*.07; COLS = Math.max(4, Math.min(8, Math.floor((W - 2*pad - w)/(w*.9)) + 1)); }
+    { const W = ring.clientWidth, w = bwOf(p), pad = colPad(W); COLS = Math.max(4, Math.min(8, Math.floor((W - 2*pad - w)/(w*.9)) + 1)); }
     p.col = 0; e.col = COLS - 1;
     fighters = [p, e]; arenaBots = [p.b, e.b]; G.p = p; G.e = e;
     hud.p.querySelector('b').textContent = p.name; hud.p.querySelector('small').innerHTML = WEAPONS[p.gear].name + (affOf(S.char) ? ` <span class="haff ${affOf(S.char).up > 0 ? 'up' : 'dn'}" title="${affTxt(affOf(S.char))}">${affOf(S.char).up > 0 ? '&#9650; MAP' : '&#9660; MAP'}</span>` : '');
@@ -4745,12 +4839,11 @@
     mage(el){
       csec(el, 'Skills');
       CAMP_TABS.moves(el);
-      csec(el, 'Spells · once per fight');
+      csec(el, `Spells · unlock by level · you are Lv ${S.level}`);
       Object.entries(SPELLS).forEach(([k, sp]) => {
-        if (sp.vibe && k === 'rug') csec(el, 'Vibe moves · Neon Arena');
-        const own = !!S.spells[k], lockV = sp.vibe && !neonOpen();
-        const pill = own ? {cls:'own', html:'&#10003;'} : lockV ? {html:'&#128274; Map 2'} : {html:priceTxt(sp.price), on:S.coins >= sp.price ? buy(sp.price, () => { S.spells[k] = true; buildPotions(); }, 'charge') : null, aria:`Learn ${sp.label} for ${sp.price} coins`};
-        el.appendChild(tile(orb(MOVES[k].icon, {ring:sp.ring, in1:sp.in1, in2:sp.in2}, sp.key.toUpperCase(), own ? '' : 'locked'), sp.label, [pill], `${sp.label} spell, ${sp.sta} energy`));
+        const open = spellOpen(k);
+        const pill = open ? {cls:'own', html:'&#10003;'} : {html:`&#128274; Lv ${sp.lv}`};
+        el.appendChild(tile(orb(MOVES[k].icon, {ring:sp.ring, in1:sp.in1, in2:sp.in2}, sp.key.toUpperCase(), open ? '' : 'locked'), sp.label, [pill], `${sp.label} spell, ${sp.sta} energy, ${open ? 'unlocked' : 'unlocks at level ' + sp.lv}`));
       });
       csec(el, 'Potions');
       CAMP_TABS.potions(el);
@@ -5095,7 +5188,7 @@
     if (k && e.key.startsWith('Arrow')) e.preventDefault();
     if (k) playerMove(k);
   });
-  buildActions(); buildPotions(); buildPad(); w3Init(); buildChooser(); drawTape();
+  buildActions(); buildTaunt(); buildPotions(); buildPad(); w3Init(); buildChooser(); drawTape();
   // arka plan parçacıkları: solda korlar, sağda kalpler (sadece yan boşluklarda)
   (() => {
     const fx = document.getElementById('bgfx'); if (!fx) return;
@@ -5240,7 +5333,7 @@
       f_hype:'<b>Hype bar.</b> Hitting (+14, +20 with Power), getting hit (+10) and taunting (+20) fill your purple Hype bar. At 100 your weapon skill is ready.',
       f_energy:'<b>Energy.</b> Every attack costs energy. You regain 6 per turn. Rest when you run low or you will be stuck.',
       f_crit:'<b>Critical hits</b> deal ×1.6 damage. Speed training, some fighters and the TSLA Sword raise your crit chance.',
-      f_keys:'Keyboard: 1 to 9 for moves, 0 for the weapon skill, Q W E R T Y for spells, arrow keys to move.',
+      f_keys:'Keyboard: 1 to 9 for moves, 0 for the weapon skill, Q W E R for spells, arrow keys to move.',
       w_intro:'Every weapon has a range, a damage multiplier, a perk at level 4 and its own cinematic weapon skill.',
       w_cols:['Range','Damage','Unlock','Holder','Lv 4 perk','Weapon skill'],
       w_up:'<b>Upgrades.</b> Each weapon has 4 levels (+8% damage per level). Prices: 80, 160, 280, 500 gold. Levels 1 to 2 need Bronze, level 3 Silver, level 4 Gold holder status.',
@@ -5251,8 +5344,8 @@
       a_intro:'Armor is permanent. Body armor and helmets cut damage taken, gloves add damage, boots add dodge. Levels 4 and 5 need holder status.',
       a_cols:['Level','Body armor','Helmet','Gloves','Boots','Holder'],
       a_rad:'<b>Radiant (level 5)</b> pieces glow and reflect damage back every time you are hit: body armor 2, every other Radiant piece 1. A full Radiant set reflects 5.',
-      m_intro:'Spells are bought once at the Mage Tower and can be used once per fight. Vibe moves unlock after Map 1.',
-      m_cols:['Spell','Key','Price','Energy','Effect'],
+      m_intro:'Spells unlock as you level up: no gold needed. Each one can be used once per fight. Rest is always available.',
+      m_cols:['Spell','Key','Unlocks','Energy','Effect'],
       spells:{shield:'Next hit only deals 35% damage.',bolt:'Lightning strike for 10 to 14 damage, any range.',heal:'Restore 25 HP.',rug:'Rival takes +50% damage for 2 turns and loses 30 energy.',diamond:'You take no damage this turn.',moon:'Rocket the rival into the sky for 18 to 24 damage (×1.5 after a Rug Pull).'},
       t_intro:'Every level up gives 3 stat points. Spend them at Training.',
       t_cols:['Stat','Per point'],
@@ -5275,7 +5368,7 @@
       k_list:['When your sponsor stock goes up, your weapon hits harder for a few turns. When it drops, it hits softer.','Winning a fight earns shares of your sponsor (3 for a championship). Sell them at the Exchange for gold.','Sponsor perks: TSLA crits, NVDA damage, AAPL defense, MSFT accuracy, AMZN +25% gold, HOOD starts each fight hyped.'],
       l_intro:'Connect MetaMask, sign once (free, no gas) and pick a nickname. Your best run each week is ranked.',
       l_list:['Each stage won scores (100 + 40 × stage) × map multiplier.','Finish with more HP for up to +50%, and in fewer rounds for up to +100.','Champions get +1000 × map multiplier.','The weekly board resets Monday 00:00 UTC.'],
-      tips:['Use the Bow or Railgun against slow, heavy rivals: hit them before they reach you.','Save your Hype for the boss. Weapon skills are your biggest damage.','Rug Pull first, then To the Moon or your weapon skill for +50% damage.','Diamond Hands right before a boss ultimate blocks it completely.','Pick a fighter marked STRONG on the map. A WEAK fighter makes the boss much harder.','Upgrade one weapon to level 4 before buying many weapons: the perk and +32% damage matter more.','Armor is forever. A Radiant set reflects damage and keeps you alive on School Arena.'],
+      tips:['Use the Bow or Railgun against slow, heavy rivals: hit them before they reach you.','Save your Hype for the boss. Weapon skills are your biggest damage.','Rug Pull first, then To the Moon or your weapon skill for +50% damage.','Cast Shield right before a boss ultimate to cut it by 65%.','Pick a fighter marked STRONG on the map. A WEAK fighter makes the boss much harder.','Upgrade one weapon to level 4 before buying many weapons: the perk and +32% damage matter more.','Armor is forever. A Radiant set reflects damage and keeps you alive on School Arena.'],
       foot:'Vibe Arena is a fan game for the vibe/vibe community on Robinhood Chain testnet. Progress is saved in your browser.'
     },
     tr:{
@@ -5288,7 +5381,7 @@
       f_hype:'<b>Hype barı.</b> Vurmak (+14, Power ile +20), vurulmak (+10) ve taunt (+20) mor Hype barını doldurur. 100 olunca silah skilin hazırdır.',
       f_energy:'<b>Enerji.</b> Her saldırı enerji harcar. Her tur 6 enerji geri gelir. Azalınca dinlen, yoksa hamle yapamazsın.',
       f_crit:'<b>Kritik vuruş</b> ×1.6 hasar verir. Speed antrenmanı, bazı dövüşçüler ve TSLA Sword kritik şansını artırır.',
-      f_keys:'Klavye: hamleler için 1 ile 9, silah skili için 0, büyüler için Q W E R T Y, hareket için ok tuşları.',
+      f_keys:'Klavye: hamleler için 1 ile 9, silah skili için 0, büyüler için Q W E R, hareket için ok tuşları.',
       w_intro:'Her silahın menzili, hasar çarpanı, 4. seviyede bir perki ve kendine özel sinematik silah skili var.',
       w_cols:['Menzil','Hasar','Açılış','Holder','4. sv. perk','Silah skili'],
       w_up:'<b>Geliştirme.</b> Her silahın 4 seviyesi var (seviye başı +%8 hasar). Fiyatlar: 80, 160, 280, 500 altın. 1 ile 2. seviye Bronze, 3. seviye Silver, 4. seviye Gold holder ister.',
@@ -5299,8 +5392,8 @@
       a_intro:'Zırh kalıcıdır. Gövde zırhı ve kask alınan hasarı azaltır, eldiven hasar, bot kaçınma ekler. 4 ve 5. seviyeler holder ister.',
       a_cols:['Seviye','Gövde zırhı','Kask','Eldiven','Bot','Holder'],
       a_rad:'<b>Radiant (5. seviye)</b> parçalar parlar ve her vurulduğunda hasarı geri yansıtır: gövde zırhı 2, diğer her Radiant parça 1. Tam Radiant set 5 yansıtır.',
-      m_intro:'Büyüler Mage Tower\'dan bir kez alınır ve her dövüşte bir kez kullanılır. Vibe hamleleri 1. haritadan sonra açılır.',
-      m_cols:['Büyü','Tuş','Fiyat','Enerji','Etki'],
+      m_intro:'Büyüler seviye atladıkça açılır, altın gerekmez. Her biri dövüşte bir kez kullanılır. Rest her zaman açık.',
+      m_cols:['Büyü','Tuş','Açılır','Enerji','Etki'],
       spells:{shield:'Sonraki vuruş sadece %35 hasar verir.',bolt:'Her mesafeden 10 ile 14 hasarlık yıldırım.',heal:'25 can yeniler.',rug:'Rakip 2 tur +%50 hasar alır ve 30 enerji kaybeder.',diamond:'Bu tur hiç hasar almazsın.',moon:'Rakibi göğe fırlatır, 18 ile 24 hasar (Rug Pull sonrası ×1.5).'},
       t_intro:'Her seviye atlayışta 3 stat puanı kazanırsın. Training\'de harca.',
       t_cols:['Stat','Puan başı'],
@@ -5323,7 +5416,7 @@
       k_list:['Sponsor hissen yükselirse silahın birkaç tur daha sert vurur. Düşerse daha yumuşak vurur.','Kazandığın her dövüş sponsorunun hissesini verir (şampiyonlukta 3). Exchange\'de altına çevirebilirsin.','Sponsor bonusları: TSLA kritik, NVDA hasar, AAPL savunma, MSFT isabet, AMZN +%25 altın, HOOD her dövüşe Hype ile başlar.'],
       l_intro:'MetaMask\'ı bağla, bir kez imzala (ücretsiz, gas yok) ve takma isim seç. Her hafta en iyi turun sıralanır.',
       l_list:['Kazanılan her aşama (100 + 40 × aşama) × harita çarpanı puan verir.','Daha çok canla bitirmek +%50\'ye, az turda bitirmek +100\'e kadar bonus verir.','Şampiyonlar +1000 × harita çarpanı alır.','Haftalık tablo pazartesi 00:00 UTC\'de sıfırlanır.'],
-      tips:['Yavaş, ağır rakiplere Bow ya da Railgun kullan: sana ulaşmadan vur.','Hype\'ını boss\'a sakla. Silah skilleri en büyük hasar kaynağın.','Önce Rug Pull, sonra To the Moon ya da silah skili: +%50 hasar.','Boss ultisinden hemen önce Diamond Hands onu tamamen boşa çıkarır.','Haritada STRONG yazan dövüşçüyü seç. WEAK dövüşçü boss\'u çok zorlaştırır.','Çok silah almadan önce birini 4. seviyeye çıkar: perk ve +%32 hasar daha önemli.','Zırh kalıcıdır. Radiant set hasar yansıtır ve School Arena\'da seni ayakta tutar.'],
+      tips:['Yavaş, ağır rakiplere Bow ya da Railgun kullan: sana ulaşmadan vur.','Hype\'ını boss\'a sakla. Silah skilleri en büyük hasar kaynağın.','Önce Rug Pull, sonra To the Moon ya da silah skili: +%50 hasar.','Boss ultisinden hemen önce Shield aç, hasarı %65 azalt.','Haritada STRONG yazan dövüşçüyü seç. WEAK dövüşçü boss\'u çok zorlaştırır.','Çok silah almadan önce birini 4. seviyeye çıkar: perk ve +%32 hasar daha önemli.','Zırh kalıcıdır. Radiant set hasar yansıtır ve School Arena\'da seni ayakta tutar.'],
       foot:'Vibe Arena, Robinhood Chain testnet\'teki vibe/vibe topluluğu için yapılmış bir hayran oyunudur. İlerlemen tarayıcında saklanır.'
     }
   };
@@ -5360,7 +5453,7 @@
     ]), 'garm') + `<div class="gnotes rad"><p>${t.a_rad}</p></div>`);
     // 5 büyü
     h += sec(4, `<p class="glead">${t.m_intro}</p>` + tbl(t.m_cols, Object.entries(SPELLS).map(([k, sp]) => [
-      `<span class="gname">${gIco(MOVES[k].icon, sp.ring, 'sm')}<b>${sp.label}</b>${sp.vibe ? '<small class="vibe">VIBE</small>' : ''}</span>`, `<kbd>${sp.key.toUpperCase()}</kbd>`, `${sp.price} ${COIN}`, sp.sta, t.spells[k]])));
+      `<span class="gname">${gIco(MOVES[k].icon, sp.ring, 'sm')}<b>${sp.label}</b>${sp.vibe ? '<small class="vibe">VIBE</small>' : ''}</span>`, `<kbd>${sp.key.toUpperCase()}</kbd>`, `Lv ${sp.lv}`, sp.sta, t.spells[k]])));
     // 6 antrenman
     h += sec(5, `<p class="glead">${t.t_intro}</p>` + tbl(t.t_cols, STATS.map(([k, name]) => [`<b>${name}</b>`, t.t_stats[k]]), 'gsmall'));
     // 7 dövüşçüler
