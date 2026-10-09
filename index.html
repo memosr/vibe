@@ -817,6 +817,111 @@
   .ring.rg-school .dock{background:linear-gradient(180deg,#6b4a2c,#3a2a1c) !important;border-top-color:#ffd23f !important}
   @media (prefers-reduced-motion: reduce){ .mdeco.lamp u{animation:none} }
 
+  /* ---- Oyun rehberi ---- */
+  .guide{position:fixed;inset:0;z-index:45;overflow-y:auto;background:var(--paper,#f6f1ea);color:var(--ink);scroll-behavior:smooth}
+  .gbar{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:10px;padding:10px 16px;background:#231c1f;border-bottom:4px solid #e0643a}
+  .gbar .btn{padding:6px 12px}
+  .gbrand{display:flex;align-items:center;gap:8px;font-family:"Pixelify Sans", monospace;font-weight:700;color:#ffd23f;letter-spacing:.12em;margin-right:auto}
+  .gbrand i{width:14px;height:14px;background:#e0643a;box-shadow:0 0 0 3px #ffd23f inset}
+  .glang{display:flex;border:3px solid #ffd23f}
+  .glang button{font:inherit;font-family:"Pixelify Sans", monospace;font-weight:700;padding:4px 10px;border:0;background:transparent;color:#ffd23f;cursor:pointer}
+  .glang button[aria-pressed="true"]{background:#ffd23f;color:#231c1f}
+  .ghero{background:linear-gradient(180deg,#e7b58c,#d99a7a 60%,#b8877a);border-bottom:4px solid var(--line);padding:42px 16px 34px;position:relative;overflow:hidden}
+  .ghero::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(35,28,31,.06) 0 2px,transparent 2px 24px),repeating-linear-gradient(90deg,rgba(35,28,31,.06) 0 2px,transparent 2px 48px);pointer-events:none}
+  .ghero-in{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+  .ghero h1{margin:4px 0 6px;font-family:"Pixelify Sans", monospace;font-size:clamp(34px,6vw,64px);line-height:1;text-shadow:4px 4px 0 rgba(255,248,240,.6)}
+  .ghero p:not(.eyebrow){margin:0;font-size:17px;max-width:620px}
+  .gwrap{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:220px 1fr;gap:28px;padding:24px 16px 60px}
+  .gtoc{position:sticky;top:76px;align-self:start;display:flex;flex-direction:column;gap:2px;border:3px solid var(--line);background:#fff;box-shadow:4px 4px 0 var(--line);padding:8px}
+  .gtoc a{display:flex;gap:8px;align-items:baseline;padding:5px 8px;color:var(--ink);text-decoration:none;font-weight:700;font-size:14px}
+  .gtoc a em{font-style:normal;font-family:"Pixelify Sans", monospace;color:#e0643a;font-size:12px}
+  .gtoc a:hover{background:#fff3c4} .gtoc a.on{background:#231c1f;color:#ffd23f} .gtoc a.on em{color:#ffd23f}
+  .gbody{min-width:0;display:flex;flex-direction:column;gap:30px}
+  .gsec{scroll-margin-top:80px}
+  .gsec h2{display:flex;align-items:center;gap:12px;margin:0 0 12px;font-family:"Pixelify Sans", monospace;font-size:30px;border-bottom:4px solid var(--line);padding-bottom:6px}
+  .gsec h2 em{font-style:normal;font-size:15px;background:#e0643a;color:#fff8f0;padding:2px 8px;border:3px solid var(--line)}
+  .gsec h3{font-family:"Pixelify Sans", monospace;font-size:20px;margin:18px 0 8px}
+  .glead{font-size:16px;margin:0 0 12px;max-width:760px}
+  .gsteps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+  .gsteps li{position:relative;background:#fff;border:3px solid var(--line);box-shadow:4px 4px 0 var(--line);padding:14px 12px 12px;display:flex;flex-direction:column;gap:4px}
+  .gsteps em{position:absolute;top:-14px;left:10px;font-style:normal;font-family:"Pixelify Sans", monospace;font-weight:700;background:#ffd23f;border:3px solid var(--line);padding:0 8px}
+  .gsteps b{font-family:"Pixelify Sans", monospace;font-size:17px;margin-top:4px} .gsteps span{font-size:14px;color:var(--ink-soft)}
+  .gtw{overflow-x:auto;border:3px solid var(--line);box-shadow:4px 4px 0 var(--line);background:#fff}
+  .gt{width:100%;border-collapse:collapse;font-size:14px}
+  .gt th{background:#231c1f;color:#ffd23f;font-family:"Pixelify Sans", monospace;font-weight:700;text-align:left;padding:8px 10px;white-space:nowrap}
+  .gt td{padding:8px 10px;border-top:2px dashed #e4dbd0;vertical-align:middle}
+  .gt tr:nth-child(2n) td{background:#faf6f0}
+  .gt td:first-child{white-space:nowrap}
+  .gt kbd{font-family:"Pixelify Sans", monospace;border:2px solid var(--line);padding:0 6px;background:#fff3c4}
+  .gname{display:inline-flex;align-items:center;gap:8px}
+  .gname small{display:block;font-size:11px;color:var(--ink-soft)}
+  .gname small.vibe{display:inline;background:#ff2fd0;color:#fff;padding:0 4px;font-weight:700}
+  .gico{display:inline-grid;place-items:center;width:44px;height:44px;flex:none;border-radius:50%;background:radial-gradient(circle at 34% 28%,rgba(255,255,255,.35) 0 12%,transparent 34%),radial-gradient(circle,#3a3238,#141013 72%);border:3px solid var(--line);box-shadow:inset 0 0 0 3px var(--r),2px 2px 0 var(--line)}
+  .gico svg{width:60%;height:60%;display:block}
+  .gico.sm{width:36px;height:36px} .gico.lg{width:64px;height:64px}
+  .gico.lite{background:radial-gradient(circle at 34% 28%,#fff 0 18%,#f3ece2 60%,#e4dbd0)}
+  .gt td:not(:last-child){white-space:nowrap} .gt.gmatrix td{white-space:normal;min-width:96px}
+  .gsec{scroll-margin-top:120px}
+  .gico.diag svg{rotate:38deg;scale:1.25}
+  .gnotes{display:grid;gap:8px;margin-top:12px}
+  .gnotes p{margin:0;background:#fff3c4;border-left:6px solid #e9a91a;padding:8px 12px;font-size:14px}
+  .gnotes p.gkeys{background:#efe6ff;border-color:#7c5cff}
+  .gnotes.rad p{background:linear-gradient(90deg,#ffe6f8,#e6fbff);border-color:#ff7ae0}
+  .gcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+  .gwpn{background:#fff;border:3px solid var(--line);box-shadow:4px 4px 0 var(--line);padding:12px;display:flex;flex-direction:column;gap:8px}
+  .gwpn.bio{background:linear-gradient(180deg,#f2ecff,#fff 40%)}
+  .gw-top{display:flex;gap:10px;align-items:center}
+  .gw-top b{display:block;font-family:"Pixelify Sans", monospace;font-size:17px;line-height:1.1}
+  .gw-top small{font-size:12px;color:var(--ink-soft)}
+  .gwpn dl{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;margin:0;font-size:13px}
+  .gwpn dt{color:var(--ink-soft)} .gwpn dd{margin:0;font-weight:700;display:flex;align-items:center;gap:4px}
+  .gperk,.gskill{margin:0;font-size:13px;padding:6px 8px;border:2px solid var(--line)}
+  .gperk{display:flex;align-items:center;gap:6px;flex-wrap:wrap;background:color-mix(in srgb,var(--pc) 14%,#fff)}
+  .gperk .pk{width:16px;height:16px;display:inline-block} .gperk .pk svg{width:100%;height:100%;display:block}
+  .gperk b{color:color-mix(in srgb,var(--pc) 70%,#000)}
+  .gskill{background:#1a1430;color:#e8e2f6} .gskill b{display:block;color:var(--sc);font-family:"Pixelify Sans", monospace;font-size:14px}
+  .mdl{display:inline-block;width:14px;height:17px;vertical-align:middle} .mdl svg{width:100%;height:100%;display:block}
+  .glv{font-family:"Pixelify Sans", monospace;font-weight:700;padding:2px 8px;border:2px solid var(--line);background:color-mix(in srgb,var(--r) 35%,#fff)}
+  .gt.gsmall{max-width:520px}
+  .gfig{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+  .gfig article{background:#fff;border:3px solid var(--line);box-shadow:4px 4px 0 var(--line);padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
+  .gfig .gmini{--mu:2.6px;height:calc(var(--mu)*52)}
+  .gfig b{font-family:"Pixelify Sans", monospace;font-size:18px} .gfig small{font-size:12px;color:#7c5cff}
+  .gpill{font-size:11px;font-weight:700;border:2px solid var(--line);padding:1px 6px;background:#fff3c4}
+  .gbon{font-size:12px;font-weight:700;color:#2f9a3a}
+  .gaff{display:flex;flex-direction:column;font-weight:700;font-size:12px;color:#b0a49c}
+  .gaff small{font-weight:400;font-size:11px}
+  .gaff.up{color:#1f7a2a} .gaff.dn{color:#b8402f}
+  .gt.gmatrix td{text-align:center} .gt.gmatrix td:first-child{text-align:left}
+  .gmaps{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+  .gmap{background:#fff;border:3px solid var(--line);box-shadow:4px 4px 0 var(--line);display:flex;flex-direction:column}
+  .gmap header{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--mc);color:#fff;border-bottom:3px solid var(--line)}
+  .gmap.gm-street header,.gmap.gm-court header{color:#231c1f}
+  .gmap header em{font-style:normal;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:20px;background:#231c1f;color:#fff;width:34px;height:34px;display:grid;place-items:center;border:2px solid #fff}
+  .gmap header b{display:block;font-family:"Pixelify Sans", monospace;font-size:18px} .gmap header small{font-size:12px;opacity:.9}
+  .gmx{margin-left:auto;text-align:right;font-size:11px;font-weight:700;line-height:1.3}
+  .gm-neon header{background:linear-gradient(90deg,#1a0a2e,#7a1aff)}
+  .gmap ol{list-style:none;margin:0;padding:6px 10px}
+  .gmap li{display:grid;grid-template-columns:26px 1fr auto;gap:2px 8px;align-items:center;padding:4px 0;border-bottom:1px dashed #e4dbd0;font-size:13px}
+  .gmap li em{font-style:normal;grid-row:span 2;font-family:"Pixelify Sans", monospace;font-weight:700;text-align:center;background:#f3ece2;border:2px solid var(--line)}
+  .gmap li small{grid-column:2;font-size:11px;color:var(--ink-soft)} .gmap li span{grid-row:1 / span 2;grid-column:3;font-family:"Pixelify Sans", monospace;font-weight:700}
+  .gmap li.boss em{background:#231c1f;color:#ff5c86} .gmap li.boss b{color:#b8402f}
+  .gult{margin:auto 0 0;padding:8px 12px;font-size:12px;background:#231c1f;color:#ffd23f}
+  .glist{margin:0;padding-left:20px;display:grid;gap:6px;font-size:15px;max-width:780px}
+  .gtips{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
+  .gtips li{display:flex;gap:10px;align-items:flex-start;background:#fff;border:3px solid var(--line);box-shadow:3px 3px 0 var(--line);padding:10px 12px;font-size:14px}
+  .gtips em{font-style:normal;flex:none;font-family:"Pixelify Sans", monospace;font-weight:700;background:#2fb58f;color:#fff;width:26px;height:26px;display:grid;place-items:center;border:2px solid var(--line)}
+  .gbuy{display:inline-block;margin-top:10px;background:#ffd23f}
+  .gfoot{font-size:12px;color:var(--ink-soft);border-top:2px dashed #d8cfc6;padding-top:12px;margin:0}
+  .guidebtn{background:#fff3c4} a.guidebtn,.arena-ctrl a.btn,.gbar a.btn,a.gbuy{text-decoration:none;color:var(--ink)} .gbar a.playbtn{color:#fff8f0}
+  @media (max-width:820px){
+    .gwrap{grid-template-columns:1fr;gap:16px;padding-top:0}
+    .gtoc{position:sticky;top:58px;z-index:4;flex-direction:row;overflow-x:auto;gap:4px;margin:0 -16px;border-width:0 0 3px;box-shadow:none;padding:6px 10px;scrollbar-width:none}
+    .gtoc a{white-space:nowrap;font-size:13px;padding:4px 8px;border:2px solid var(--line)}
+    .gbrand{display:none} .gbar{gap:6px;padding:8px 10px} .gbar .btn{padding:5px 8px;font-size:13px}
+    .ghero{padding:26px 16px 22px} .gsec h2{font-size:24px}
+  }
+
   /* ---- Aşama 10: leaderboard ---- */
   .lbbtn{background:#ffd23f}
   .lb-card{width:min(620px,100%) !important}
@@ -1083,6 +1188,21 @@
   </div>
   <div class="side-stage" id="sideR"></div>
 </aside>
+<section class="guide" id="guide" hidden aria-label="Vibe Arena guide">
+  <div class="gbar">
+    <button class="btn" type="button" id="gBack">&larr; Back</button>
+    <span class="gbrand"><i></i>VIBE ARENA</span>
+    <div class="glang" role="group" aria-label="Language"><button type="button" data-l="en" aria-pressed="true">EN</button><button type="button" data-l="tr" aria-pressed="false">TR</button></div>
+    <a class="btn playbtn" id="gPlay" href="#arena">&#9654; Play now</a>
+  </div>
+  <div class="ghero">
+    <div class="ghero-in"><p class="eyebrow" aria-hidden="true"><span>vibe</span><b>/</b><span>vibe</span></p><h1 id="gTitle">Vibe Arena Guide</h1><p id="gSub"></p></div>
+  </div>
+  <div class="gwrap">
+    <nav class="gtoc" id="gToc" aria-label="Guide sections"></nav>
+    <div class="gbody" id="gBody"></div>
+  </div>
+</section>
 <section class="arena" id="arena" hidden aria-label="Vibe Arena">
   <div class="pennant pl" aria-hidden="true"><div class="cloth"><span>VIBE ARENA</span></div></div>
   <div class="pennant pr" aria-hidden="true"><div class="cloth"><span>vibe<em>/</em>vibe</span></div></div>
@@ -1127,6 +1247,7 @@
         <div class="w3 play-only" id="w3" aria-live="polite"></div>
         <button class="btn play-only" type="button" id="campBtn">Vibe Market</button>
         <button class="btn play-only lbbtn" type="button" id="lbBtn">&#127942; Leaderboard</button>
+        <a class="btn play-only" href="#guide">&#128214; Guide</a>
         <button class="btn watch-only" type="button" id="arenaGear">Shuffle gear</button>
         <button class="btn watch-only" type="button" id="arenaClear">Clear ring</button>
       </div>
@@ -1212,6 +1333,7 @@
         <span class="found-label" aria-live="polite" id="foundLabel">Personalities found <span id="count">0</span>/9</span>
         <div class="w3 w3main" id="w3main" aria-live="polite"></div>
         <a class="btn playbtn" href="#arena">&#9654; Play Vibe Arena</a>
+        <a class="btn guidebtn" href="#guide">&#128214; Game Guide</a>
         <button class="btn" id="gifBtn" type="button">Make GIF</button>
         <button class="btn" id="sound" type="button" aria-pressed="true">Sound: on</button>
       </div>
@@ -5103,6 +5225,203 @@
     }
   });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !lbEl.hidden){ e.stopImmediatePropagation(); closeLB(); } }, true);
+  // ===== OYUN REHBERİ (#guide): oyunun kendi verisinden üretilir, EN / TR =====
+  const guideEl = document.getElementById('guide');
+  const GL_KEY = 'vibefolk-lang';
+  let GLANG = (() => { try { const s = localStorage.getItem(GL_KEY); if (s) return s; } catch(e){} return /^tr/i.test(navigator.language || '') ? 'tr' : 'en'; })();
+  const GT = {
+    en:{
+      title:'Vibe Arena Guide', sub:'Everything you need to go from your first stab to School Arena champion.', play:'Play now', back:'Back',
+      toc:['Quick start','Fighting','Weapons','Armorer','Magic','Training','Fighters','Maps & rivals','$FOLK holders','Market & sponsors','Leaderboard','Pro tips'],
+      qs:[['Pick a fighter','Tux is free. Win tournaments to unlock Honey, Goggles, Captain and Armor.'],['Pick a weapon','Start with the MSFT Dagger. Buy and upgrade more at the Weaponsmith.'],['Win 5 duels','Each map has 4 rivals and a boss. Beat all 5 to become champion.'],['Spend your gold','Visit the Vibe Market between fights: weapons, armor, spells and training.'],['Climb the maps','Each championship opens the next, harder map with bigger rewards.']],
+      f_intro:'Fights are turn based. You act, then your rival acts. The ring is split into columns: you must be close enough for your weapon to reach.',
+      f_cols:['Move','Energy','Damage','Accuracy','What it does'],
+      f_moves:{fwd:'Step one column closer.',back:'Step one column away.',quick:'Fast jab. Cheap and reliable.',strike:'Solid hit. Unlock in the market.',power:'Huge swing, can miss. Unlock in the market.',taunt:'Rattles the rival (−20% aim) and pumps you up (+crit). +20 Hype.',rest:'Recover 35 energy and 3 HP.',special:'Your weapon skill. Needs a full Hype bar.',hpkit:'Heal 40 HP. Max 3 kits.',enkit:'Recover 50 energy. Max 3 kits.'},
+      f_hype:'<b>Hype bar.</b> Hitting (+14, +20 with Power), getting hit (+10) and taunting (+20) fill your purple Hype bar. At 100 your weapon skill is ready.',
+      f_energy:'<b>Energy.</b> Every attack costs energy. You regain 6 per turn. Rest when you run low or you will be stuck.',
+      f_crit:'<b>Critical hits</b> deal ×1.6 damage. Speed training, some fighters and the TSLA Sword raise your crit chance.',
+      f_keys:'Keyboard: 1 to 9 for moves, 0 for the weapon skill, Q W E R T Y for spells, arrow keys to move.',
+      w_intro:'Every weapon has a range, a damage multiplier, a perk at level 4 and its own cinematic weapon skill.',
+      w_cols:['Range','Damage','Unlock','Holder','Lv 4 perk','Weapon skill'],
+      w_up:'<b>Upgrades.</b> Each weapon has 4 levels (+8% damage per level). Prices: 80, 160, 280, 500 gold. Levels 1 to 2 need Bronze, level 3 Silver, level 4 Gold holder status.',
+      w_perk:'At level 4 each hit has a 50% chance to trigger the perk.',
+      w_bionic:'Bionic weapons unlock after you win Map 1.',
+      perks:{BURN:'5 damage for 3 turns',BLEED:'4 damage for 3 turns',POISON:'3 damage for 4 turns',DEADLY:'Guaranteed crit ×2',LIFESTEAL:'Heal 40% of the damage',SEAR:'6 damage for 3 turns',SHOCK:'Rival loses a turn',OVERCHARGE:'Crit ×2.5'},
+      skills:{dagger:'5 lightning stabs',bow:'Arrow volley from the sky + burn',sword:'Giant crescent slash + bleed',spear:'Pierce, push back 2 columns + stagger',axe:'Ground slam, rival is stunned',laser:'3 light-speed dashes + sear',plasma:'Mega blast, rival loses 2 turns',rail:'Satellite beam from orbit, highest damage'},
+      a_intro:'Armor is permanent. Body armor and helmets cut damage taken, gloves add damage, boots add dodge. Levels 4 and 5 need holder status.',
+      a_cols:['Level','Body armor','Helmet','Gloves','Boots','Holder'],
+      a_rad:'<b>Radiant (level 5)</b> pieces glow and reflect damage back every time you are hit: body armor 2, every other Radiant piece 1. A full Radiant set reflects 5.',
+      m_intro:'Spells are bought once at the Mage Tower and can be used once per fight. Vibe moves unlock after Map 1.',
+      m_cols:['Spell','Key','Price','Energy','Effect'],
+      spells:{shield:'Next hit only deals 35% damage.',bolt:'Lightning strike for 10 to 14 damage, any range.',heal:'Restore 25 HP.',rug:'Rival takes +50% damage for 2 turns and loses 30 energy.',diamond:'You take no damage this turn.',moon:'Rocket the rival into the sky for 18 to 24 damage (×1.5 after a Rug Pull).'},
+      t_intro:'Every level up gives 3 stat points. Spend them at Training.',
+      t_cols:['Stat','Per point'],
+      t_stats:{pow:'+4% damage',spd:'+1.5% accuracy, +1% crit',grd:'3% less damage taken',vit:'+8 max HP'},
+      c_intro:'Each fighter has a small built-in bonus, and every map makes some fighters stronger and others weaker. Check the fighter cards before each map.',
+      c_cols:['Fighter','Unlock','Bonus'],
+      c_free:'Free',
+      c_aff:'Map matchups',
+      c_strong:'Strong', c_weak:'Weak',
+      mods:{pow:'dmg',acc:'aim',crit:'crit',guard:'guard',hp:'HP'},
+      mp_intro:'Five maps, each harder than the last. Win the boss of a map to open the next one. Gold and XP rewards are multiplied on harder maps.',
+      mp_open:['Open','Win Map 1','Win Map 2','Win Map 3','Win Map 4'],
+      mp_rew:'Rewards', mp_score:'Score',
+      mp_boss:'Boss', mp_ult:'Ultimate',
+      h_intro:'Hold $FOLK in your MetaMask wallet on Robinhood Chain. Nothing is spent: the game only reads your balance. Holding more unlocks more.',
+      h_cols:['Tier','Hold','Gold bonus','Unlocks'],
+      h_unl:['TSLA Sword, HOOD Laser, Strike, weapon Lv 1 to 2, Diamond gear','NVDA Spear, COIN Plasma, Power, weapon Lv 3, Radiant gear','AAPL Axe, PLTR Railgun, Weapon Skill, weapon Lv 4'],
+      h_buy:'Buy $FOLK',
+      k_intro:'Your weapon is sponsored by a stock. Market news pops up during fights.',
+      k_list:['When your sponsor stock goes up, your weapon hits harder for a few turns. When it drops, it hits softer.','Winning a fight earns shares of your sponsor (3 for a championship). Sell them at the Exchange for gold.','Sponsor perks: TSLA crits, NVDA damage, AAPL defense, MSFT accuracy, AMZN +25% gold, HOOD starts each fight hyped.'],
+      l_intro:'Connect MetaMask, sign once (free, no gas) and pick a nickname. Your best run each week is ranked.',
+      l_list:['Each stage won scores (100 + 40 × stage) × map multiplier.','Finish with more HP for up to +50%, and in fewer rounds for up to +100.','Champions get +1000 × map multiplier.','The weekly board resets Monday 00:00 UTC.'],
+      tips:['Use the Bow or Railgun against slow, heavy rivals: hit them before they reach you.','Save your Hype for the boss. Weapon skills are your biggest damage.','Rug Pull first, then To the Moon or your weapon skill for +50% damage.','Diamond Hands right before a boss ultimate blocks it completely.','Pick a fighter marked STRONG on the map. A WEAK fighter makes the boss much harder.','Upgrade one weapon to level 4 before buying many weapons: the perk and +32% damage matter more.','Armor is forever. A Radiant set reflects damage and keeps you alive on School Arena.'],
+      foot:'Vibe Arena is a fan game for the vibe/vibe community on Robinhood Chain testnet. Progress is saved in your browser.'
+    },
+    tr:{
+      title:'Vibe Arena Rehberi', sub:'İlk hançer darbesinden School Arena şampiyonluğuna kadar bilmen gereken her şey.', play:'Hemen oyna', back:'Geri',
+      toc:['Hızlı başlangıç','Dövüş','Silahlar','Zırhçı','Büyü','Antrenman','Dövüşçüler','Haritalar ve rakipler','$FOLK sahipleri','Borsa ve sponsorlar','Leaderboard','Profesyonel ipuçları'],
+      qs:[['Dövüşçü seç','Tux ücretsiz. Turnuva kazandıkça Honey, Goggles, Captain ve Armor açılır.'],['Silah seç','MSFT Dagger ile başla. Daha fazlasını Weaponsmith\'ten al ve geliştir.'],['5 düelloyu kazan','Her haritada 4 rakip ve 1 boss var. Beşini de yen, şampiyon ol.'],['Altınını harca','Dövüşler arasında Vibe Market\'e uğra: silah, zırh, büyü ve antrenman.'],['Haritaları tırman','Her şampiyonluk bir sonraki, daha zor ve daha çok ödüllü haritayı açar.']],
+      f_intro:'Dövüşler sıra tabanlıdır. Önce sen, sonra rakip hamle yapar. Ring sütunlara ayrılır: silahının menzili kadar yakın olmalısın.',
+      f_cols:['Hamle','Enerji','Hasar','İsabet','Ne yapar'],
+      f_moves:{fwd:'Bir sütun yaklaş.',back:'Bir sütun uzaklaş.',quick:'Hızlı dürtme. Ucuz ve güvenilir.',strike:'Sağlam vuruş. Market\'ten açılır.',power:'Dev savuruş, ıskalayabilir. Market\'ten açılır.',taunt:'Rakibi sarsar (−%20 isabet), seni gazlar (+kritik). +20 Hype.',rest:'35 enerji ve 3 can kazan.',special:'Silah skilin. Dolu Hype barı ister.',hpkit:'40 can yeniler. En fazla 3 kit.',enkit:'50 enerji yeniler. En fazla 3 kit.'},
+      f_hype:'<b>Hype barı.</b> Vurmak (+14, Power ile +20), vurulmak (+10) ve taunt (+20) mor Hype barını doldurur. 100 olunca silah skilin hazırdır.',
+      f_energy:'<b>Enerji.</b> Her saldırı enerji harcar. Her tur 6 enerji geri gelir. Azalınca dinlen, yoksa hamle yapamazsın.',
+      f_crit:'<b>Kritik vuruş</b> ×1.6 hasar verir. Speed antrenmanı, bazı dövüşçüler ve TSLA Sword kritik şansını artırır.',
+      f_keys:'Klavye: hamleler için 1 ile 9, silah skili için 0, büyüler için Q W E R T Y, hareket için ok tuşları.',
+      w_intro:'Her silahın menzili, hasar çarpanı, 4. seviyede bir perki ve kendine özel sinematik silah skili var.',
+      w_cols:['Menzil','Hasar','Açılış','Holder','4. sv. perk','Silah skili'],
+      w_up:'<b>Geliştirme.</b> Her silahın 4 seviyesi var (seviye başı +%8 hasar). Fiyatlar: 80, 160, 280, 500 altın. 1 ile 2. seviye Bronze, 3. seviye Silver, 4. seviye Gold holder ister.',
+      w_perk:'4. seviyede her isabette %50 ihtimalle perk devreye girer.',
+      w_bionic:'Biyonik silahlar 1. haritayı kazanınca açılır.',
+      perks:{BURN:'3 tur boyunca 5 hasar',BLEED:'3 tur boyunca 4 hasar',POISON:'4 tur boyunca 3 hasar',DEADLY:'Garantili kritik ×2',LIFESTEAL:'Hasarın %40\'ı kadar can',SEAR:'3 tur boyunca 6 hasar',SHOCK:'Rakip bir tur kaybeder',OVERCHARGE:'Kritik ×2.5'},
+      skills:{dagger:'5 yıldırım hızında bıçak darbesi',bow:'Gökten ok yağmuru + yanık',sword:'Dev hilal kesik + kanama',spear:'Saplar, 2 sütun geri iter + sersemletir',axe:'Yere çakılır, rakip sersemler',laser:'3 ışık hızında atılma + yakma',plasma:'Dev patlama, rakip 2 tur kaybeder',rail:'Uzaydan uydu ışını, en yüksek hasar'},
+      a_intro:'Zırh kalıcıdır. Gövde zırhı ve kask alınan hasarı azaltır, eldiven hasar, bot kaçınma ekler. 4 ve 5. seviyeler holder ister.',
+      a_cols:['Seviye','Gövde zırhı','Kask','Eldiven','Bot','Holder'],
+      a_rad:'<b>Radiant (5. seviye)</b> parçalar parlar ve her vurulduğunda hasarı geri yansıtır: gövde zırhı 2, diğer her Radiant parça 1. Tam Radiant set 5 yansıtır.',
+      m_intro:'Büyüler Mage Tower\'dan bir kez alınır ve her dövüşte bir kez kullanılır. Vibe hamleleri 1. haritadan sonra açılır.',
+      m_cols:['Büyü','Tuş','Fiyat','Enerji','Etki'],
+      spells:{shield:'Sonraki vuruş sadece %35 hasar verir.',bolt:'Her mesafeden 10 ile 14 hasarlık yıldırım.',heal:'25 can yeniler.',rug:'Rakip 2 tur +%50 hasar alır ve 30 enerji kaybeder.',diamond:'Bu tur hiç hasar almazsın.',moon:'Rakibi göğe fırlatır, 18 ile 24 hasar (Rug Pull sonrası ×1.5).'},
+      t_intro:'Her seviye atlayışta 3 stat puanı kazanırsın. Training\'de harca.',
+      t_cols:['Stat','Puan başı'],
+      t_stats:{pow:'+%4 hasar',spd:'+%1.5 isabet, +%1 kritik',grd:'%3 daha az hasar',vit:'+8 maksimum can'},
+      c_intro:'Her dövüşçünün küçük bir yerleşik bonusu var ve her harita bazı dövüşçüleri güçlendirip bazılarını zayıflatır. Her haritadan önce kartlara bak.',
+      c_cols:['Dövüşçü','Açılış','Bonus'],
+      c_free:'Ücretsiz',
+      c_aff:'Harita uyumu',
+      c_strong:'Güçlü', c_weak:'Zayıf',
+      mods:{pow:'hasar',acc:'isabet',crit:'kritik',guard:'savunma',hp:'can'},
+      mp_intro:'Beş harita, her biri bir öncekinden zor. Bir haritanın boss\'unu yen, sıradaki açılsın. Zor haritalarda altın ve XP ödülleri katlanır.',
+      mp_open:['Açık','1. haritayı kazan','2. haritayı kazan','3. haritayı kazan','4. haritayı kazan'],
+      mp_rew:'Ödül', mp_score:'Skor',
+      mp_boss:'Boss', mp_ult:'Ulti',
+      h_intro:'Robinhood Chain\'deki MetaMask cüzdanında $FOLK tut. Hiçbir şey harcanmaz: oyun sadece bakiyeni okur. Ne kadar çok tutarsan o kadar çok şey açılır.',
+      h_cols:['Seviye','Tut','Altın bonusu','Açar'],
+      h_unl:['TSLA Sword, HOOD Laser, Strike, silah 1 ile 2. seviye, Diamond ekipman','NVDA Spear, COIN Plasma, Power, silah 3. seviye, Radiant ekipman','AAPL Axe, PLTR Railgun, Silah Skili, silah 4. seviye'],
+      h_buy:'$FOLK al',
+      k_intro:'Silahın bir hisse tarafından sponsorlanır. Dövüş sırasında borsa haberleri çıkar.',
+      k_list:['Sponsor hissen yükselirse silahın birkaç tur daha sert vurur. Düşerse daha yumuşak vurur.','Kazandığın her dövüş sponsorunun hissesini verir (şampiyonlukta 3). Exchange\'de altına çevirebilirsin.','Sponsor bonusları: TSLA kritik, NVDA hasar, AAPL savunma, MSFT isabet, AMZN +%25 altın, HOOD her dövüşe Hype ile başlar.'],
+      l_intro:'MetaMask\'ı bağla, bir kez imzala (ücretsiz, gas yok) ve takma isim seç. Her hafta en iyi turun sıralanır.',
+      l_list:['Kazanılan her aşama (100 + 40 × aşama) × harita çarpanı puan verir.','Daha çok canla bitirmek +%50\'ye, az turda bitirmek +100\'e kadar bonus verir.','Şampiyonlar +1000 × harita çarpanı alır.','Haftalık tablo pazartesi 00:00 UTC\'de sıfırlanır.'],
+      tips:['Yavaş, ağır rakiplere Bow ya da Railgun kullan: sana ulaşmadan vur.','Hype\'ını boss\'a sakla. Silah skilleri en büyük hasar kaynağın.','Önce Rug Pull, sonra To the Moon ya da silah skili: +%50 hasar.','Boss ultisinden hemen önce Diamond Hands onu tamamen boşa çıkarır.','Haritada STRONG yazan dövüşçüyü seç. WEAK dövüşçü boss\'u çok zorlaştırır.','Çok silah almadan önce birini 4. seviyeye çıkar: perk ve +%32 hasar daha önemli.','Zırh kalıcıdır. Radiant set hasar yansıtır ve School Arena\'da seni ayakta tutar.'],
+      foot:'Vibe Arena, Robinhood Chain testnet\'teki vibe/vibe topluluğu için yapılmış bir hayran oyunudur. İlerlemen tarayıcında saklanır.'
+    }
+  };
+  const gMod = (mod, L) => Object.entries(mod || {}).map(([k, v]) => `${v > 0 ? '+' : ''}${k === 'hp' ? v : Math.round(v*100) + '%'} ${GT[L].mods[k]}`).join(', ') || '·';
+  const gIco = (svg, ring = '#e9c64a', cls = '') => `<span class="gico ${cls}" style="--r:${ring}">${svg}</span>`;
+  function drawGuide(){
+    const L = GLANG, t = GT[L], ids = ['start','fight','weapons','armor','magic','train','fighters','maps','holders','market','board','tips'];
+    const sec = (i, html) => `<section class="gsec" id="g-${ids[i]}"><h2><em>${String(i + 1).padStart(2, '0')}</em>${t.toc[i]}</h2>${html}</section>`;
+    const tbl = (cols, rows, cls = '') => `<div class="gtw"><table class="gt ${cls}"><thead><tr>${cols.map(c => `<th>${c}</th>`).join('')}</tr></thead><tbody>${rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+    let h = '';
+    // 1 hızlı başlangıç
+    h += sec(0, `<ol class="gsteps">${t.qs.map(([a, b], i) => `<li><em>${i + 1}</em><b>${a}</b><span>${b}</span></li>`).join('')}</ol>`);
+    // 2 dövüş
+    const mv = ['fwd','back','quick','strike','power','taunt','rest','special','hpkit','enkit'];
+    h += sec(1, `<p class="glead">${t.f_intro}</p>` + tbl(t.f_cols, mv.map(k => { const m = MOVES[k];
+      return [`<span class="gname">${gIco(m.icon, k === 'special' ? '#b98bff' : ({fwd:'#9aa3ad',back:'#9aa3ad',quick:'#ffd23f',strike:'#6fa8ff',power:'#ff7a3a',taunt:'#ff5c86',rest:'#6f8fe8',hpkit:'#ff4a4a',enkit:'#ffd23f'})[k], 'sm lite')}<b>${k === 'special' ? (L === 'tr' ? 'Silah Skili' : 'Weapon Skill') : m.label}</b>${MOVE_PRICE[k] ? `<small>${MOVE_PRICE[k]} ${COIN}</small>` : ''}</span>`, m.sta || (k === 'special' ? '100 Hype' : '·'), m.dmg ? `${m.dmg[0]}-${m.dmg[1]}` : '·', m.acc ? Math.round(m.acc*100) + '%' : '·', t.f_moves[k]]; }))
+      + `<div class="gnotes"><p>${t.f_hype}</p><p>${t.f_energy}</p><p>${t.f_crit}</p><p class="gkeys">${t.f_keys}</p></div>`);
+    // 3 silahlar
+    h += sec(2, `<p class="glead">${t.w_intro}</p><div class="gcards">` + WORDER.map(k => {
+      const w = WEAPONS[k], un = WUNLOCK[k], p = PERK[k], s = wSkill(k), wt = WTIER[k] || 0;
+      return `<article class="gwpn${w.bionic ? ' bio' : ''}" style="--pc:${p.color};--sc:${s.color}">
+        <div class="gw-top">${gIco(wIcon(k, 4).svg, p.color, 'lg' + (wIcon(k, 4).diag ? ' diag' : ''))}<div><b>${w.name}</b><small>${w.trait}</small></div></div>
+        <dl><dt>${t.w_cols[0]}</dt><dd>${w.range}</dd><dt>${t.w_cols[1]}</dt><dd>×${w.dmg}</dd><dt>${t.w_cols[2]}</dt><dd>${un.price ? un.price + ' ' + COIN : t.c_free}${w.bionic ? ' · Map 2' : ''}</dd><dt>${t.w_cols[3]}</dt><dd>${wt ? `<span class="mdl">${MEDAL(wt)}</span>${TIERS[wt].name}` : '·'}</dd></dl>
+        <p class="gperk"><span class="pk">${p.icon}</span><b>${p.tag}</b>${t.perks[p.tag]}</p>
+        <p class="gskill"><b>&#10022; ${s.name}</b>${t.skills[k]}</p></article>`;
+    }).join('') + `</div><div class="gnotes"><p>${t.w_up}</p><p>${t.w_perk} ${t.w_bionic}</p></div>`);
+    // 4 zırhçı
+    const RC = [null, '#b07a4a', '#b8c2cc', '#ffc53d', '#4fc8e8', '#ff7ae0'];
+    h += sec(3, `<p class="glead">${t.a_intro}</p>` + tbl(t.a_cols, [1,2,3,4,5].map(lv => [
+      `<span class="glv" style="--r:${RC[lv]}">${['','Leather','Iron','Golden','Diamond','Radiant'][lv]}</span>`,
+      `<span class="gname">${gIco(ARM_ICON.body(lv), RC[lv], 'sm')}<span>−${Math.round(ARMORS[lv].cut*100)}%<small>${ARMORS[lv].price} ${COIN}</small></span></span>`,
+      ...['helm','glove','boot'].map(k => `<span class="gname">${gIco(ARM_ICON[k](lv), RC[lv], 'sm')}<span>${EQUIP[k].sign}${Math.round(EQUIP[k].eff[lv - 1]*100)}%<small>${EQ_PRICE[lv - 1]} ${COIN}</small></span></span>`),
+      ARM_TIER(lv) ? `<span class="mdl">${MEDAL(ARM_TIER(lv))}</span>${TIERS[ARM_TIER(lv)].name}` : '·'
+    ]), 'garm') + `<div class="gnotes rad"><p>${t.a_rad}</p></div>`);
+    // 5 büyü
+    h += sec(4, `<p class="glead">${t.m_intro}</p>` + tbl(t.m_cols, Object.entries(SPELLS).map(([k, sp]) => [
+      `<span class="gname">${gIco(MOVES[k].icon, sp.ring, 'sm')}<b>${sp.label}</b>${sp.vibe ? '<small class="vibe">VIBE</small>' : ''}</span>`, `<kbd>${sp.key.toUpperCase()}</kbd>`, `${sp.price} ${COIN}`, sp.sta, t.spells[k]])));
+    // 6 antrenman
+    h += sec(5, `<p class="glead">${t.t_intro}</p>` + tbl(t.t_cols, STATS.map(([k, name]) => [`<b>${name}</b>`, t.t_stats[k]]), 'gsmall'));
+    // 7 dövüşçüler
+    const fig = n => { const m = miniOf(n); m.classList.add('gmini'); return m.outerHTML; };
+    h += sec(6, `<p class="glead">${t.c_intro}</p><div class="gfig">` + Object.entries(CHARS).map(([n, c]) => {
+      const lk = UNLOCKS.find(x => x.name === n);
+      return `<article>${fig(n)}<b>${n}</b><small>${c.blurb}</small><span class="gpill">${lk ? (L === 'tr' ? lk.req.replace(/Win (\d) tournaments?/, '$1 turnuva kazan') : lk.req) : t.c_free}</span><span class="gbon">${gMod(c.mod, L)}</span></article>`;
+    }).join('') + `</div><h3>${t.c_aff}</h3>` + tbl(['', ...MORDER.map(m => ARENAS[m].name.replace(' Arena', ''))], Object.keys(CHARS).map(n => [`<b>${n}</b>`, ...MORDER.map(m => {
+      const a = (AFFINITY[m] || {})[n]; return a ? `<span class="gaff ${a.up > 0 ? 'up' : 'dn'}">${a.up > 0 ? '&#9650; ' + t.c_strong : '&#9660; ' + t.c_weak}<small>${gMod(a.mod, L)}</small></span>` : '<span class="gaff">·</span>';
+    })]), 'gmatrix'));
+    // 8 haritalar
+    h += sec(7, `<p class="glead">${t.mp_intro}</p><div class="gmaps">` + MORDER.map((m, i) => {
+      const A = ARENAS[m], R = A.rv, boss = R[R.length - 1];
+      return `<article class="gmap gm-${m}" style="--mc:${A.c}"><header><em>${i + 1}</em><div><b>${A.name}</b><small>${t.mp_open[i]}</small></div><span class="gmx">${t.mp_rew} ×${A.mult}<br>${t.mp_score} ×${SCORE_MAP[m]}</span></header>
+        <ol>${R.map((r, j) => `<li class="${r.boss ? 'boss' : ''}"><em>${r.boss ? '&#9760;' : j + 1}</em><b>${r.name}</b><small>${WEAPONS[r.gear].name}</small><span>${r.hp} HP</span></li>`).join('')}</ol>
+        ${boss.ai.ult ? `<p class="gult"><b>${t.mp_ult}:</b> ${boss.ai.ult.name}</p>` : `<p class="gult"><b>${t.mp_ult}:</b> MARKET CRASH</p>`}</article>`;
+    }).join('') + '</div>');
+    // 9 holder
+    h += sec(8, `<p class="glead">${t.h_intro}</p>` + tbl(t.h_cols, [1,2,3].map(i => [`<span class="gname"><span class="mdl">${MEDAL(i)}</span><b>${TIERS[i].name}</b></span>`, `${fmtFolk(TIERS[i].min)} FOLK`, `+${Math.round(TIERS[i].bonus*100)}%`, t.h_unl[i - 1]])) + `<p><a class="btn gbuy" href="${FOLK.buy}" target="_blank" rel="noopener">${t.h_buy} &#8599;</a></p>`);
+    // 10 borsa
+    h += sec(9, `<p class="glead">${t.k_intro}</p><ul class="glist">${t.k_list.map(x => `<li>${x}</li>`).join('')}</ul>`);
+    // 11 leaderboard
+    h += sec(10, `<p class="glead">${t.l_intro}</p><ul class="glist">${t.l_list.map(x => `<li>${x}</li>`).join('')}</ul>`);
+    // 12 ipuçları
+    h += sec(11, `<ul class="gtips">${t.tips.map((x, i) => `<li><em>${i + 1}</em>${x}</li>`).join('')}</ul>`);
+    document.getElementById('gTitle').textContent = t.title;
+    document.getElementById('gSub').textContent = t.sub;
+    document.getElementById('gPlay').innerHTML = `&#9654; ${t.play}`;
+    document.getElementById('gBack').innerHTML = `&larr; ${t.back}`;
+    document.getElementById('gToc').innerHTML = t.toc.map((x, i) => `<a href="#g-${ids[i]}" data-g="${ids[i]}"><em>${String(i + 1).padStart(2, '0')}</em>${x}</a>`).join('');
+    document.getElementById('gBody').innerHTML = h + `<p class="gfoot">${t.foot}</p>`;
+    document.querySelectorAll('#guide .glang button').forEach(b => b.setAttribute('aria-pressed', b.dataset.l === L ? 'true' : 'false'));
+    guideEl.setAttribute('lang', L);
+  }
+  guideEl.querySelector('.glang').addEventListener('click', e => {
+    const b = e.target.closest('button[data-l]'); if (!b) return;
+    GLANG = b.dataset.l; try { localStorage.setItem(GL_KEY, GLANG); } catch(err){}
+    const y = guideEl.scrollTop; drawGuide(); guideEl.scrollTop = y;
+  });
+  // içindekiler: hash'i bozmadan bölüme kaydır
+  document.getElementById('gToc').addEventListener('click', e => {
+    const a = e.target.closest('a[data-g]'); if (!a) return; e.preventDefault();
+    const s = document.getElementById('g-' + a.dataset.g), off = document.querySelector('#guide .gbar').offsetHeight + (innerWidth <= 820 ? document.getElementById('gToc').offsetHeight : 0) + 14;
+    if (s) guideEl.scrollTo({top:s.offsetTop - off, behavior:'smooth'});
+  });
+  document.getElementById('gBack').addEventListener('click', () => { if (history.length > 1 && document.referrer.includes(location.host)) history.back(); else location.hash = ''; });
+  // aktif bölümü vurgula
+  guideEl.addEventListener('scroll', () => {
+    let cur = null; guideEl.querySelectorAll('.gsec').forEach(s => { if (s.offsetTop - 120 <= guideEl.scrollTop) cur = s.id.slice(2); });
+    guideEl.querySelectorAll('#gToc a').forEach(a => a.classList.toggle('on', a.dataset.g === cur));
+  }, {passive:true});
+  function guideRoute(){
+    const on = location.hash === '#guide';
+    if (on && guideEl.hidden){ drawGuide(); guideEl.scrollTop = 0; }
+    guideEl.hidden = !on;
+    if (on) document.documentElement.style.overflow = 'hidden';
+    else if (location.hash !== '#arena') document.documentElement.style.overflow = '';
+  }
+  window.addEventListener('hashchange', guideRoute);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !guideEl.hidden) location.hash = ''; });
+  guideRoute();
   window.addEventListener('hashchange', route);
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !arenaEl.hidden && modal.hidden) location.hash = ''; });
   route();
