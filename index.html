@@ -1126,6 +1126,52 @@
   .lring .lmd{position:absolute;top:3px;right:4px;display:flex;align-items:center;gap:2px;font-size:10px;font-weight:700} .lring .lmd.lk{background:#7c5cff;color:#fff;padding:0 4px}
   .ldres p{margin:0 0 10px}
   @media (max-width:640px){ .lguests .lbot{--u:1.6px} .loff{bottom:34%} .lprop.palm{font-size:56px} .lsneon{font-size:20px} .lcscreen{font-size:34px} .lbigheart{font-size:70px} .ldstage.wed{gap:70px !important;bottom:30%} .ldstage.wed .lbot{--u:2.4px} .loff{bottom:50%} .loff .lbot{--u:1.9px} }
+  /* ---- Vibe Love D: bebek odası ve NFT kartı ---- */
+  .lv-nursery{background:repeating-linear-gradient(90deg,#ffe3ee 0 40px,#fff0f5 40px 80px)}
+  .lv-nursery::before{top:72%;background:repeating-linear-gradient(90deg,#f3e0c8 0 70px,#e8d0b0 70px 140px);border-top:4px solid #c8a070}
+  .lnwin{position:absolute;left:8%;top:12%;width:120px;height:100px;border:6px solid #fff;box-shadow:0 0 0 3px #231c1f;background:radial-gradient(circle at 30% 40%,#fff 0 12px,transparent 13px),radial-gradient(circle at 60% 50%,#fff 0 16px,transparent 17px),#8ac8ff}
+  .lnmobile{position:absolute;left:50%;top:0;translate:-50% 0;width:120px;height:90px;display:flex;justify-content:space-around;align-items:flex-end;border-top:3px solid #231c1f;animation:lmob 4s ease-in-out infinite alternate;transform-origin:50% 0}
+  .lnmobile b{font-size:22px;padding-top:40px;border-left:1px solid #231c1f;width:1px;display:flex;justify-content:center}
+  @keyframes lmob{from{rotate:-6deg}to{rotate:6deg}}
+  .lncrib{position:absolute;right:8%;bottom:26%;width:150px;height:90px;border:4px solid #231c1f;background:repeating-linear-gradient(90deg,#fff 0 8px,#f3d6e0 8px 20px);border-radius:10px 10px 0 0;transform-origin:50% 100%;z-index:1}
+  .lncrib::after{content:"";position:absolute;left:-10px;right:-10px;bottom:-14px;height:14px;background:#c8a070;border:3px solid #231c1f}
+  .lnrug{position:absolute;left:50%;bottom:4%;translate:-50% 0;width:56%;height:14%;border-radius:50%;background:repeating-radial-gradient(ellipse,#ffb0c8 0 8px,#ffd6e4 8px 16px);border:3px solid #231c1f;z-index:1}
+  .lprop.toys{left:24%;bottom:8%;z-index:2}
+  .lkids{position:absolute;left:50%;bottom:6%;translate:-50% 0;display:flex;gap:18px;z-index:4}
+  .lkids .lbot{--u:clamp(2.2px,.3vw,3px)}
+  .lbaby.r-rare .bot,.lbaby.r-epic .bot,.lbaby.r-legendary .bot{filter:drop-shadow(0 0 6px var(--rc))}
+  .lbaby.r-rare{--rc:#4a9ae0} .lbaby.r-epic{--rc:#9a6cf0} .lbaby.r-legendary{--rc:#ffb13a}
+  .bot.holo .rig{animation:lholo 2.2s linear infinite}
+  @keyframes lholo{to{filter:hue-rotate(360deg)}}
+  .lstork{position:absolute;left:0;top:0;width:150px;height:112px;z-index:9;pointer-events:none}
+  .lstork svg{width:100%;height:100%}
+  .lbundle{position:absolute;left:0;top:0;z-index:9;font-size:34px}
+  .lflash{position:absolute;inset:0;z-index:8;pointer-events:none}
+  .lkidcards{display:flex;gap:8px;flex-wrap:wrap}
+  .lkidc{display:flex;flex-direction:column;align-items:flex-start;padding:6px 12px;border:3px solid var(--line);box-shadow:3px 3px 0 var(--line);cursor:pointer;font:inherit;background:#fff}
+  .lkidc b{font-family:"Pixelify Sans", monospace;font-size:16px} .lkidc small{font-size:11px;font-weight:700}
+  .lkidc.r-rare{background:#e0f0ff} .lkidc.r-epic{background:#efe6ff} .lkidc.r-legendary{background:#fff3c4}
+  .lbmodal{position:fixed;inset:0;z-index:80;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:16px;background:rgba(35,10,24,.72);overflow-y:auto}
+  .lcardnft{width:min(340px,100%);border:6px solid #231c1f;box-shadow:0 0 0 6px var(--fc),8px 8px 0 12px rgba(0,0,0,.35);background:linear-gradient(180deg,var(--b1),var(--b2));display:flex;flex-direction:column;animation:lcardin .6s cubic-bezier(.3,1.6,.5,1)}
+  @keyframes lcardin{from{scale:.4;rotate:-12deg;opacity:0}}
+  .lcardnft.r-legendary{box-shadow:0 0 0 6px var(--fc),0 0 40px #ffd23f,8px 8px 0 12px rgba(0,0,0,.35)}
+  .lcardnft.r-epic{box-shadow:0 0 0 6px var(--fc),0 0 30px #9a6cf0,8px 8px 0 12px rgba(0,0,0,.35)}
+  .lcardnft header{display:flex;justify-content:space-between;background:#231c1f;color:#fff;padding:8px 12px;font-family:"Pixelify Sans", monospace;font-size:20px}
+  .lcardnft header span{color:var(--fc)}
+  .lnftart{display:flex;justify-content:center;padding:30px 0 22px;background:radial-gradient(circle at 50% 60%,rgba(255,255,255,.75),transparent 60%)}
+  .lnftart .bot{--u:5.2px;cursor:default} .lnftart .tag{display:none}
+  .lcardnft.r-legendary .lnftart{background:radial-gradient(circle at 50% 60%,rgba(255,255,255,.85),transparent 55%),conic-gradient(from 0deg,#ff8ac0,#ffd23f,#7ee0b8,#8ac8ff,#c8a8f0,#ff8ac0);animation:lholo 4s linear infinite}
+  .lnftname{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 12px}
+  .lnftname b{font-family:"Pixelify Sans", monospace;font-size:24px}
+  .lnftname input{font:inherit;font-family:"Pixelify Sans", monospace;font-size:20px;width:60%;padding:4px 8px;border:3px solid #231c1f;background:#fff}
+  .lrar{font-style:normal;font-family:"Pixelify Sans", monospace;font-weight:700;color:#fff;background:var(--fc);padding:3px 10px;border:2px solid #231c1f}
+  .lcardnft dl{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;margin:0;padding:6px 12px 10px;font-size:13px}
+  .lcardnft dt{color:rgba(35,28,31,.6)} .lcardnft dd{margin:0;font-weight:700}
+  .lcardnft footer{background:#231c1f;color:#ffb0c8;padding:6px 12px;font-size:13px}
+  .lbmact{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .lbmact a.btn{text-decoration:none;color:var(--ink)}
+  .lbmodal .lbtn.ghost{color:#fff;border-color:#fff}
+  @media (max-width:640px){ .lncrib{width:90px;height:60px} .lnwin{width:70px;height:60px} .lkids .lbot{--u:1.8px} .lnftart .bot{--u:4.2px} }
   @media (max-width:820px){ .lward{grid-template-columns:1fr} .lfit{min-height:330px} .lfig.big{--mu:3.6px} .lmirror{width:90px;height:110px} .lcurtain{width:30px} }
   @media (max-width:640px){ .lcards{grid-template-columns:1fr} .lfig{--mu:2.4px} .lsingle{flex-direction:column} .lbtn.ghost{margin-left:0} }
   @media (prefers-reduced-motion: reduce){ .lbig,.lbrand i,.lbub.show{animation:none} .lbub.show{opacity:1} }
@@ -5917,6 +5963,7 @@
     if (lview === 'venues') return drawVenues();
     if (lview === 'propose') return drawPropose();
     if (lview === 'wedding') return drawWedding();
+    if (lview === 'nursery') return drawNursery();
     drawSelect();
   }
   function drawSelect(){
@@ -5959,7 +6006,7 @@
           : `<button type="button" class="btn lbtn pink" data-a="dates" data-g="${g}" ${left > 0 ? '' : 'disabled'}>&#128149; Go on a date <small>${left}/${DATES_PER_DAY} today</small></button>`}
         ${st === 2 ? `<button type="button" class="btn lbtn gold" data-a="propose" data-g="${g}" ${cp.love >= PROPOSE_AT ? '' : 'disabled'}>&#128141; Propose <small>${cp.love >= PROPOSE_AT ? 'ready!' : PROPOSE_AT + '% love'}</small></button>` : ''}
         ${st === 3 ? `<button type="button" class="btn lbtn gold" data-a="wedding" data-g="${g}">&#128146; Wedding</button>` : ''}
-        ${st >= 4 ? `<button type="button" class="btn lbtn" disabled>&#127868; Baby room <small>soon</small></button>` : ''}<button type="button" class="btn lbtn ghost" data-a="split" data-g="${g}">&#128148; Break up</button></div>`;
+        ${st >= 4 ? `<button type="button" class="btn lbtn gold" data-a="nursery" data-g="${g}">&#127868; Baby room <small>${(cp.babies || []).length}/${MAX_BABIES}</small></button>` : ''}<button type="button" class="btn lbtn ghost" data-a="split" data-g="${g}">&#128148; Break up</button></div>`;
       const pr = a.querySelector('.lpair');
       liveBot(b, null, false, pr); pr.appendChild(pr.querySelector('.lmid')); liveBot(g, null, true, pr);
       cs.appendChild(a);
@@ -6138,7 +6185,7 @@
     if (w.step === 'ready') p.innerHTML = `<p class="ldq">Everyone is here. ${OFFICIANT} will lead the ceremony.</p><div class="lsave"><button type="button" class="btn lbtn pink big" data-a="vows">&#128146; Start the ceremony</button></div>`;
     else if (w.step === 'anim') p.innerHTML = '<p class="ldq ldwait">&#128146; The ceremony is happening...</p>';
     else p.innerHTML = `<div class="ldres"><h3>&#128146; Just married!</h3><p>${b} and ${g} are now husband and wife. ${w.catcher ? `${w.catcher} caught the bouquet!` : ''}</p>
-      <div class="lsave"><button type="button" class="btn lbtn" data-a="home">&larr; Couples</button><button type="button" class="btn lbtn" disabled>&#127868; Baby room <small>soon</small></button></div></div>`;
+      <div class="lsave"><button type="button" class="btn lbtn" data-a="home">&larr; Couples</button><button type="button" class="btn lbtn gold" data-a="nursery" data-g="${g}">&#127868; Go to the baby room</button></div></div>`;
   }
   async function doVows(){
     const g = lcouple, c = L2.couples[g], b = c.boy, B = LBOT[b], Gi = LBOT[g], O = LBOT.__off, scene = document.querySelector('.ldin');
@@ -6167,6 +6214,146 @@
     }
     c.stage = Math.max(c.stage, 4); c.married = Date.now(); c.wvenue = lwed.venue; c.love = Math.min(100, (c.love || 0) + 10);
     lsave(); await wait(1200); lwed.step = 'done'; drawWedPanel();
+  }
+  // ===== D aşaması: BEBEK ODASI ve VIBE BABY NFT kartları =====
+  const MAX_BABIES = 3;
+  const RARITY = {
+    Common:   {c:'#ff8aa8', bg:['#ffe3ee','#ffc8da'], frame:'#ff5c86'},
+    Rare:     {c:'#4a9ae0', bg:['#e0f0ff','#b8d8ff'], frame:'#2a74bd'},
+    Epic:     {c:'#9a6cf0', bg:['#efe6ff','#cdb8ff'], frame:'#7c5cff'},
+    Legendary:{c:'#ffb13a', bg:['#fff3c4','#ffd27a'], frame:'#e9a91a'}
+  };
+  const ONESIES = [['Bubblegum','#ff8aa8'],['Sky','#8ac8ff'],['Mint','#7ee0b8'],['Lemon','#ffe27a'],['Lilac','#c8a8f0'],['Peach','#ffb08a'],['Cloud','#f3ece2']];
+  // tohumlu rastgele sayı (aynı tohum hep aynı bebeği üretir)
+  const rng = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  const hex2 = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+  const mix = (a, b, t = .5) => '#' + hex2(a).map((v, i) => Math.round(v + (hex2(b)[i] - v)*t).toString(16).padStart(2, '0')).join('');
+  const darker = (h, k = .75) => '#' + hex2(h).map(v => Math.round(v*k).toString(16).padStart(2, '0')).join('');
+  const defOf = n => bots.find(x => x.name === n);
+  const headColor = n => { const p = defOf(n).parts.find(p => p[0] === 'head' && p[1] === 3 && p[2] === 14 && p[3] === 24); return p ? p[5] : '#c8a8a0'; };
+  const topperOf = n => defOf(n).parts.filter(p => p[0] === 'head' && p[2] < 14);
+  const eyesOf = n => defOf(n).parts.filter(p => /eye|pupil/.test(p[6] || '') || (p[0] === 'head' && p[1] === 14 && p[2] === 24));
+  const TOPPER_NAME = {Tux:'Tiny top hat', 'Mr. Hat':'Mini sun hat', Pip:'Antenna', Lavender:'Bunny ears'};
+  const EYE_NAME = {Tux:'Gentle eyes', 'Mr. Hat':'Sleepy eyes', Pip:'Shy eyes', Lavender:'Dreamy eyes'};
+  const EXTRAS = {
+    pacifier:{name:'Pacifier', parts:[['head',12,24,6,3,'#ff8ac0',''],['head',13.4,24.6,3.2,1.8,'#ffd6e4','nol'],['head',14,23,2,1.6,'#ffffff','']]},
+    bib:     {name:'Heart bib', parts:[['body',9,30,12,7,'#ffffff',''],['body',12,32,2.4,2,'#ff3a7a','nol'],['body',15.6,32,2.4,2,'#ff3a7a','nol'],['body',12.6,33.6,4.8,1.6,'#ff3a7a','nol'],['body',13.8,35,2.4,1,'#ff3a7a','nol']]},
+    bow:     {name:'Tiny bow', parts:[['head',19,10,4,4,'#ff5c86',''],['head',24,10,4,4,'#ff5c86',''],['head',23,11,1.6,2,'#d8203a','']]},
+    crown:   {name:'Tiny crown', parts:[['head',9,8,12,5,'#ffd23f',''],['head',9,6,2.4,2,'#ffd23f',''],['head',13.8,5,2.4,3,'#ffd23f',''],['head',18.6,6,2.4,2,'#ffd23f',''],['head',11,9.6,2,1.6,'#d8203a','nol'],['head',17,9.6,2,1.6,'#2a74bd','nol']]},
+    halo:    {name:'Angel halo', parts:[['head',8,2,14,1.6,'#fff36b',''],['head',7,3.6,2,1.4,'#fff36b',''],['head',21,3.6,2,1.4,'#fff36b',''],['head',8,5,14,1.4,'#fff36b','']]},
+    wings:   {name:'Fairy wings', parts:[['body',-5,27,7,8,'rgba(200,240,255,.9)',''],['body',-4,35,6,6,'rgba(255,200,230,.9)',''],['body',28,27,7,8,'rgba(200,240,255,.9)',''],['body',28,35,6,6,'rgba(255,200,230,.9)','']]},
+    laser:   {name:'Laser eyes', parts:[['head',8,20,2.6,2.6,'#ff3048','glow pupil eye'],['head',20,20,2.6,2.6,'#ff3048','glow pupil eye']]},
+    rattle:  {name:'Gold rattle', parts:[['armR',25,30,4,4,'#ffd23f',''],['armR',26.4,34,1.2,6,'#ffd23f','']]}
+  };
+  // bebeği tohumdan üret
+  function makeBaby(dad, mom, seed, holder = 0){
+    const R = rng(seed), r = R();
+    const legend = .02 + holder*.02, epic = .10 + holder*.03, rare = .28 + holder*.04;
+    const rarity = r < legend ? 'Legendary' : r < legend + epic ? 'Epic' : r < legend + epic + rare ? 'Rare' : 'Common';
+    const topFrom = R() < .5 ? dad : mom, eyeFrom = topFrom === dad ? mom : dad;
+    const skin = mix(headColor(dad), headColor(mom), .3 + R()*.4);
+    let onesie = ONESIES[Math.floor(R()*ONESIES.length)];
+    const pool = rarity === 'Common' ? ['pacifier','bib','bow'] : rarity === 'Rare' ? ['pacifier','bib','bow','rattle','crown'] : ['crown','halo','wings','laser','rattle','bib'];
+    const nx = {Common:R() < .5 ? 1 : 0, Rare:1, Epic:2, Legendary:3}[rarity], extras = [];
+    while (extras.length < nx){ const k = pool[Math.floor(R()*pool.length)]; if (!extras.includes(k)) extras.push(k); }
+    if (rarity === 'Legendary') onesie = ['Gold', '#ffd23f'];
+    const tops = topperOf(topFrom).map(p => p.slice()), eyes = eyesOf(eyeFrom).map(p => p.slice());
+    const parts = [...tops,
+      ...base({head:skin, body:onesie[1], arm:skin, hand:skin, leg:onesie[1], foot:darker(onesie[1])}),
+      ['body',6,40,18,3,darker(onesie[1], .88),'nol'],['body',14,31,2,2,'#ffffff','flat'],['body',14,35,2,2,'#ffffff','flat'],
+      ...eyes, ...blush(), ...extras.flatMap(k => EXTRAS[k].parts)];
+    const traits = [['Skin', `${dad} × ${mom} mix`], ['Topper', TOPPER_NAME[topFrom] || topFrom], ['Eyes', extras.includes('laser') ? 'Laser eyes' : EYE_NAME[eyeFrom] || eyeFrom], ['Onesie', onesie[0]],
+      ['Extras', extras.filter(k => k !== 'laser').map(k => EXTRAS[k].name).join(', ') || 'None'], ['Aura', rarity === 'Legendary' ? 'Hologram' : rarity === 'Epic' ? 'Sparkle' : 'Soft']];
+    return {rarity, parts, traits, holo:rarity === 'Legendary'};
+  }
+  const babyId = seed => String(1 + Math.abs(seed) % 9999).padStart(4, '0');
+  function babyBot(bb, dad, mom, parent, key){
+    const B = makeBaby(dad, mom, bb.seed, bb.holder || 0);
+    const hold = document.createElement('div'); hold.className = 'lhold lbaby r-' + B.rarity.toLowerCase();
+    const slot = document.createElement('div'); slot.className = 'lbot'; const bub = document.createElement('div'); bub.className = 'lsay';
+    hold.append(slot, bub); parent.appendChild(hold);
+    const b = build({name:bb.name || 'Baby', act:'poke', parts:B.parts}, Math.random()*5, slot);
+    b.el.tabIndex = -1; b.el.style.pointerEvents = 'none'; b.hold = hold; b.bub = bub; if (B.holo) b.el.classList.add('holo');
+    LBOT[key] = b; return b;
+  }
+  // ---- bebek odası
+  const STORK = svgPx('0 0 40 30', [[6,8,20,9,'#231c1f'],[7,9,18,7,'#ffffff'],[22,4,6,6,'#231c1f'],[23,5,4,4,'#ffffff'],[25,6,1,1,'#231c1f'],[28,6,10,2,'#ff8a1a'],[2,6,10,4,'#231c1f'],[3,7,8,2,'#e8edf2'],[10,4,12,4,'#231c1f'],[11,5,10,2,'#ffffff'],[14,17,1,6,'#ff8a1a'],[18,17,1,6,'#ff8a1a'],[30,8,1,10,'#c8a070'],[26,17,10,9,'#231c1f'],[27,18,8,7,'#ffb0c8'],[29,19,4,3,'#f3d6c0'],[30,20,1,1,'#231c1f'],[32,20,1,1,'#231c1f']]);
+  const today2 = () => new Date().toISOString().slice(0, 10);
+  function drawNursery(){
+    const g = lcouple, c = L2.couples[g], b = c.boy, kids = c.babies || [];
+    const canMake = kids.length < MAX_BABIES && c.lastBaby !== today2();
+    body().innerHTML = `<div class="lwtop"><button type="button" class="btn" data-a="home">&larr; Couples</button><h2>Baby room <small>${b} &#10084; ${g} · ${kids.length}/${MAX_BABIES} babies</small></h2></div>
+      <div class="ldin lv-nursery"><i class="lnwin"></i><i class="lnmobile"><b>&#11088;</b><b>&#127769;</b><b>&#11088;</b></i><i class="lncrib"></i><i class="lnrug"></i><span class="lprop toys">&#129528;</span><div class="ldstage" id="lDin"></div><div class="lkids" id="lKids"></div></div>
+      <div class="ldpanel" id="lDPanel">
+        <p class="ldq">${kids.length >= MAX_BABIES ? `&#128106; A full family! ${b} and ${g} have ${MAX_BABIES} little Vibe Babies.` : canMake ? 'Every Vibe Baby gets traits from both parents and a random rarity. Holding $FOLK raises the chance of Rare, Epic and Legendary babies.' : '&#127769; The stork visits once a day. Come back tomorrow for another baby.'}</p>
+        <div class="lsave"><button type="button" class="btn lbtn pink big" data-a="stork" ${canMake ? '' : 'disabled'}>&#128118; Call the stork</button>${tier() ? `<small>${TIERS[tier()].name} holder: better rarity odds &#10024;</small>` : '<small>Common 60% · Rare 28% · Epic 10% · Legendary 2%</small>'}</div>
+        ${kids.length ? `<div class="lkidcards">${kids.map((k, i) => `<button type="button" class="lkidc r-${makeBaby(b, g, k.seed, k.holder || 0).rarity.toLowerCase()}" data-a="card" data-i="${i}"><b>${k.name}</b><small>#${babyId(k.seed)} · ${makeBaby(b, g, k.seed, k.holder || 0).rarity}</small></button>`).join('')}</div>` : ''}
+      </div>`;
+    const st = document.getElementById('lDin'); liveBot(b, null, false, st); liveBot(g, null, true, st);
+    const kb = document.getElementById('lKids'); kids.forEach((k, i) => babyBot(k, b, g, kb, '__k' + i));
+    setTimeout(() => kids.forEach((_, i) => { const x = LBOT['__k' + i]; if (x){ setTimeout(() => { lhop(x); lwave(x); }, i*250); } }), 300);
+  }
+  async function callStork(){
+    const g = lcouple, c = L2.couples[g], b = c.boy, scene = document.querySelector('.ldin');
+    document.querySelector('[data-a="stork"]').disabled = true;
+    lsay(LBOT[g], 'Look! The stork!', 1600); lsay(LBOT[b], 'It is here!', 1600);
+    const s = document.createElement('div'); s.className = 'lstork'; s.innerHTML = STORK; scene.appendChild(s);
+    const W = scene.clientWidth, H = scene.clientHeight;
+    play('whoosh');
+    await s.animate([{translate:`${W + 60}px ${H*.12}px`},{translate:`${W*.45}px ${H*.2}px`, offset:.6},{translate:`${W*.42}px ${H*.32}px`}],{duration:2200, easing:'ease-in-out', fill:'forwards'}).finished;
+    const bundle = document.createElement('span'); bundle.className = 'lbundle'; bundle.innerHTML = '&#128118;'; scene.appendChild(bundle);
+    const crib = scene.querySelector('.lncrib').getBoundingClientRect(), sr = scene.getBoundingClientRect();
+    s.animate([{translate:`${W*.42}px ${H*.32}px`},{translate:`-120px ${H*.05}px`}],{duration:2000, easing:'ease-in', fill:'forwards'}).finished.then(() => s.remove());
+    await bundle.animate([{translate:`${W*.48}px ${H*.42}px`},{translate:`${crib.left - sr.left + crib.width/2 - 16}px ${crib.top - sr.top - 6}px`}],{duration:900, easing:'cubic-bezier(.5,0,.8,.4)', fill:'forwards'}).finished;
+    scene.querySelector('.lncrib').animate([{rotate:'0deg'},{rotate:'-4deg'},{rotate:'4deg'},{rotate:'-3deg'},{rotate:'0deg'}],{duration:900}); play('charge');
+    await wait(900);
+    const seed = (Date.now() ^ Math.floor(Math.random()*1e9)) | 0, holder = tier();
+    const B = makeBaby(b, g, seed, holder), R = RARITY[B.rarity];
+    bundle.remove(); lconfetti(scene, B.rarity === 'Common' ? 40 : 90, [R.c, '#ffffff', R.frame, '#ffd23f']);
+    const flash = document.createElement('i'); flash.className = 'lflash'; flash.style.background = `radial-gradient(circle,${R.c},transparent 70%)`; scene.appendChild(flash);
+    flash.animate([{opacity:0, scale:.3},{opacity:1, scale:1.3, offset:.3},{opacity:0, scale:1.6}],{duration:1400}).finished.then(() => flash.remove());
+    [b, g].forEach((n, i) => setTimeout(() => { lhearts(LBOT[n], 8); lhop(LBOT[n]); lwave(LBOT[n]); }, i*200));
+    play(B.rarity === 'Legendary' || B.rarity === 'Epic' ? 'fight' : 'heart');
+    lsay(LBOT[g], B.rarity === 'Legendary' ? 'A LEGENDARY baby!!' : B.rarity === 'Epic' ? 'An Epic baby!' : 'Our little one!', 2200);
+    const bb = {seed, holder, name:'', born:Date.now()};
+    c.babies = [...(c.babies || []), bb]; c.lastBaby = today2(); c.stage = Math.max(c.stage, 5); lsave();
+    await wait(1300); openCard(c.babies.length - 1, true);
+  }
+  // ---- NFT kartı
+  function openCard(i, isNew){
+    const g = lcouple, c = L2.couples[g], b = c.boy, bb = c.babies[i], B = makeBaby(b, g, bb.seed, bb.holder || 0), R = RARITY[B.rarity];
+    const m = document.createElement('div'); m.className = 'lbmodal'; m.innerHTML = `<div class="lcardnft r-${B.rarity.toLowerCase()}" style="--fc:${R.frame};--b1:${R.bg[0]};--b2:${R.bg[1]}">
+      <header><b>VIBE BABY</b><span>#${babyId(bb.seed)}</span></header>
+      <div class="lnftart" id="lNftArt"></div>
+      <div class="lnftname">${isNew ? `<input id="lBabyName" maxlength="14" placeholder="Name your baby" value="${bb.name || ''}">` : `<b>${bb.name || 'Unnamed'}</b>`}<em class="lrar">${B.rarity}</em></div>
+      <dl>${B.traits.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl>
+      <footer>Parents: <b>${b}</b> &#10084; <b>${g}</b></footer></div>
+      <div class="lbmact">${isNew ? '<button type="button" class="btn lbtn pink" data-a="bname">&#10084; Save name</button>' : ''}<button type="button" class="btn lbtn" data-a="bpng">&#11015; Download PNG</button><a class="btn lbtn" target="_blank" rel="noopener" data-a="bx">Share on X</a><button type="button" class="btn lbtn ghost" data-a="bclose">Close</button></div>`;
+    m.dataset.i = i; loveEl.appendChild(m);
+    const art = m.querySelector('#lNftArt'), bot = build({name:'baby', act:'poke', parts:B.parts}, 0, art); bot.el.tabIndex = -1; if (B.holo) bot.el.classList.add('holo');
+    lwave(bot); lhop(bot);
+    const nm = () => (m.querySelector('#lBabyName') ? m.querySelector('#lBabyName').value.trim() : bb.name) || 'my Vibe Baby';
+    const upd = () => { m.querySelector('[data-a="bx"]').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`Meet ${nm()}, a ${B.rarity} Vibe Baby #${babyId(bb.seed)} 👶 born to ${b} & ${g} in Vibe Love! @vibevibegames`)}&url=${encodeURIComponent('https://vibe-nine-woad.vercel.app/#love')}`; };
+    upd(); const inp = m.querySelector('#lBabyName'); if (inp){ inp.addEventListener('input', upd); setTimeout(() => inp.focus(), 100); }
+  }
+  // kartı PNG olarak çiz
+  function cardPNG(i){
+    const g = lcouple, c = L2.couples[g], b = c.boy, bb = c.babies[i], B = makeBaby(b, g, bb.seed, bb.holder || 0), R = RARITY[B.rarity];
+    const cv = document.createElement('canvas'); cv.width = 600; cv.height = 860; const x = cv.getContext('2d');
+    const F = (s, w = 700) => `${w} ${s}px "Pixelify Sans", ui-monospace, monospace`;
+    x.fillStyle = '#231c1f'; x.fillRect(0, 0, 600, 860);
+    x.fillStyle = R.frame; x.fillRect(12, 12, 576, 836);
+    const gr = x.createLinearGradient(0, 0, 0, 860); gr.addColorStop(0, R.bg[0]); gr.addColorStop(1, R.bg[1]); x.fillStyle = gr; x.fillRect(28, 28, 544, 804);
+    x.fillStyle = '#231c1f'; x.fillRect(28, 28, 544, 64); x.fillStyle = '#fff'; x.font = F(34); x.fillText('VIBE BABY', 50, 72); x.fillStyle = R.c; x.textAlign = 'right'; x.fillText('#' + babyId(bb.seed), 550, 72); x.textAlign = 'left';
+    x.fillStyle = 'rgba(255,255,255,.55)'; for (let k = 0; k < 14; k++) x.fillRect(60 + (k*97) % 480, 120 + (k*53) % 300, 8, 8);
+    const sc = 7.4, ox = 300 - 15*sc, oy = 112 + 8*sc;
+    B.parts.forEach(([gp, px, py, w, h, col, cls]) => { if (/hole/.test(cls || '')) return; x.fillStyle = col; x.fillRect(ox + px*sc, oy + py*sc, w*sc, h*sc); });
+    x.fillStyle = 'rgba(35,28,31,.18)'; x.beginPath(); x.ellipse(300, oy + 51*sc, 90, 12, 0, 0, Math.PI*2); x.fill();
+    x.fillStyle = '#231c1f'; x.font = F(38); x.fillText((bb.name || 'Vibe Baby').slice(0, 14), 50, 560);
+    x.fillStyle = R.frame; x.fillRect(400, 528, 150, 42); x.fillStyle = '#fff'; x.font = F(22); x.textAlign = 'center'; x.fillText(B.rarity.toUpperCase(), 475, 557); x.textAlign = 'left';
+    x.font = F(19, 400); B.traits.forEach(([k, v], j) => { const y = 606 + j*32; x.fillStyle = 'rgba(35,28,31,.6)'; x.fillText(k, 50, y); x.fillStyle = '#231c1f'; x.font = F(19); x.fillText(v.slice(0, 32), 190, y); x.font = F(19, 400); });
+    x.fillStyle = '#231c1f'; x.fillRect(28, 796, 544, 36); x.fillStyle = '#ffb0c8'; x.font = F(18); x.fillText(`Parents: ${b} ♥ ${g}`, 50, 820); x.textAlign = 'right'; x.fillText('Vibe Love', 550, 820);
+    cv.toBlob(bl => { const a = document.createElement('a'); a.href = URL.createObjectURL(bl); a.download = `vibe-baby-${babyId(bb.seed)}.png`; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); });
   }
   // ---- akşam yemeği
   function startDinner(g, venue = 'dinner'){
@@ -6270,6 +6457,14 @@
     else if (act === 'wedding'){ lcouple = a.dataset.g; lwed = {step:'venue'}; lview = 'wedding'; drawLove(); loveEl.scrollTop = 0; }
     else if (act === 'wvenue'){ lwed = {step:'ready', venue:a.dataset.v}; drawLove(); }
     else if (act === 'vows') doVows();
+    else if (act === 'nursery'){ lcouple = a.dataset.g; lview = 'nursery'; drawLove(); loveEl.scrollTop = 0; }
+    else if (act === 'stork') callStork();
+    else if (act === 'card') openCard(+a.dataset.i, !L2.couples[lcouple].babies[+a.dataset.i].name);
+    else if (act === 'bpng') cardPNG(+a.closest('.lbmodal').dataset.i);
+    else if (act === 'bname'){ const m = a.closest('.lbmodal'), v = m.querySelector('#lBabyName').value.trim().slice(0, 14);
+      if (!v){ m.querySelector('#lBabyName').focus(); return; }
+      L2.couples[lcouple].babies[+m.dataset.i].name = v; lsave(); play('heart'); toast(`&#128118; Welcome to the family, ${v.replace(/[<>&]/g, '')}!`); m.remove(); drawLove(); }
+    else if (act === 'bclose'){ a.closest('.lbmodal').remove(); if (lview === 'nursery') drawLove(); }
     else if (act === 'order'){ ldin[a.dataset.kind] = a.dataset.k; play('poke'); drawDinPanel(); }
     else if (act === 'vpick'){ ldin.pick = a.dataset.k; play('poke'); drawDinPanel(); }
     else if (act === 'eat' && ldin.venue !== 'dinner'){
