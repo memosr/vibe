@@ -1062,6 +1062,70 @@
   .ldres small{display:block;margin:4px 0 10px;font-weight:700}
   @media (max-width:820px){ .lgal{grid-template-columns:1fr 1fr} .lcenter{grid-column:1 / -1;grid-row:2} .ldmenus{grid-template-columns:1fr} }
   @media (max-width:640px){ .lgal{grid-template-columns:1fr} .lside.girls h3{text-align:left} .lbot{--u:3px} .lbot.big{--u:3.6px} .lnft{padding:26px 6px 8px} .lpair .lbot{--u:2.6px} .ldwin{width:130px;height:80px} }
+  /* ---- Vibe Love C: mekanlar, teklif, düğün ---- */
+  .love .lbtn.gold{background:#ffd23f;color:#3a0a18}
+  .lvenues{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+  .lvenue{display:flex;flex-direction:column;align-items:center;gap:6px;padding:22px 14px;border:4px solid var(--line);box-shadow:6px 6px 0 #9e2447;cursor:pointer;font:inherit;color:#fff;text-shadow:2px 2px 0 rgba(0,0,0,.4);transition:translate .15s}
+  .lvenue:hover:not(:disabled){translate:0 -4px}
+  .lvenue:disabled{filter:grayscale(.7) brightness(.85);cursor:not-allowed}
+  .lvenue .vico{font-size:48px;filter:drop-shadow(3px 3px 0 rgba(0,0,0,.3))}
+  .lvenue b{font-family:"Pixelify Sans", monospace;font-size:20px} .lvenue small{font-size:13px;font-weight:700;text-align:center}
+  .v-dinner{background:linear-gradient(180deg,#8c1a3a,#4a0a1e)} .v-cinema{background:linear-gradient(180deg,#2a1a5a,#0d0820)} .v-beach{background:linear-gradient(180deg,#ff9a5a,#ff5c86 55%,#2a74bd)} .v-street{background:linear-gradient(180deg,#5a3a3a,#2a1a1e)}
+  .w-chapel{background:linear-gradient(180deg,#d8c8f0,#8a6ac0)} .w-beach{background:linear-gradient(180deg,#ffb07a,#ff5c86 60%,#2a74bd)} .w-garden{background:linear-gradient(180deg,#9ae07a,#2f9a4a)}
+  .ldmenu.one{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px;background:#fffdf6}
+  .lv-cinema{background:linear-gradient(180deg,#0d0820,#1a1030 60%,#2a1a3a)}
+  .lv-cinema::before{background:repeating-linear-gradient(90deg,#3a1428 0 60px,#2a0e1e 60px 120px);border-top-color:#110814}
+  .lcscreen{position:absolute;left:50%;top:18px;translate:-50% 0;width:58%;height:40%;background:radial-gradient(ellipse,#e8f4ff,#9ab8e8 70%);border:6px solid #231c1f;box-shadow:0 0 60px rgba(160,200,255,.6);display:grid;place-items:center;font-size:54px;animation:lflick 2.4s steps(3) infinite}
+  @keyframes lflick{50%{filter:brightness(.9)}}
+  .lcseats{position:absolute;left:0;right:0;bottom:0;height:20%;z-index:3;background:repeating-linear-gradient(90deg,#8c1a3a 0 46px,#6b1028 46px 50px);border-top:4px solid #231c1f}
+  .lprop{position:absolute;z-index:3;font-size:34px;filter:drop-shadow(2px 3px 0 rgba(0,0,0,.35))}
+  .lprop.pop{left:50%;bottom:14%;translate:-50% 0;z-index:4}
+  .lv-beach,.lv-sunset{background:linear-gradient(180deg,#5a3a8a 0,#ff7a8a 35%,#ffb07a 52%,#ffd27a 58%)}
+  .lv-beach::before,.lv-sunset::before{top:70%;background:linear-gradient(180deg,#f3d6a0,#e8c080);border-top:0}
+  .lsun{position:absolute;left:50%;top:36%;translate:-50% 0;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle,#fff3b0,#ffb13a 70%);box-shadow:0 0 60px #ffb13a}
+  .lsea{position:absolute;left:0;right:0;top:56%;height:15%;background:repeating-linear-gradient(180deg,#2a74bd 0 6px,#4a9ae0 6px 9px);z-index:0;animation:lwave 3s ease-in-out infinite alternate}
+  @keyframes lwave{to{background-position:0 9px}}
+  .lprop.palm{left:4%;bottom:22%;font-size:90px} .lprop.gull{right:20%;top:14%;font-size:22px;animation:lgull 6s linear infinite}
+  @keyframes lgull{from{translate:40px 0}to{translate:-220px -20px}}
+  .lprop.basket,.lprop.gift{left:50%;bottom:10%;translate:-50% 0;z-index:4}
+  .lv-street{background:linear-gradient(180deg,#1a1430,#3a2440)}
+  .lv-street::before{top:72%;background:linear-gradient(180deg,#3a3d44,#2a2d33);border-top:4px solid #8a939c}
+  .lsbricks{position:absolute;inset:0 0 28% 0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.25) 0 2px,transparent 2px 18px),repeating-linear-gradient(90deg,rgba(0,0,0,.2) 0 2px,transparent 2px 40px),linear-gradient(180deg,#5a3a3a,#7a4a40)}
+  .lslamp{position:absolute;bottom:28%;width:8px;height:52%;background:#2a2d33;z-index:1}
+  .lslamp::before{content:"";position:absolute;left:-12px;top:-10px;width:32px;height:14px;background:#fff3b0;box-shadow:0 0 50px 20px rgba(255,220,140,.45);border:3px solid #231c1f}
+  .lslamp.l{left:10%} .lslamp.r{right:10%}
+  .lsneon{position:absolute;left:50%;top:16%;translate:-50% 0;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:34px;color:#ff8ae8;text-shadow:0 0 8px #ff2fd0,0 0 18px #ff2fd0;padding:4px 14px;border:3px solid #231c1f;background:#1a0a20}
+  .lv-chapel{background:linear-gradient(180deg,#efe6ff,#d8c8f0 60%)}
+  .lv-chapel::before{top:72%;background:repeating-linear-gradient(90deg,#d8cfc6 0 50px,#e8dfd6 50px 100px);border-top:4px solid #a08aa0}
+  .lwin2{position:absolute;top:12%;width:70px;height:120px;border-radius:35px 35px 4px 4px;border:5px solid #231c1f;background:conic-gradient(#ff8ac0 0 25%,#7c5cff 0 50%,#ffd23f 0 75%,#2fb5c8 0)}
+  .lwin2.l{left:12%} .lwin2.r{right:12%}
+  .larch{position:absolute;left:50%;bottom:26%;translate:-50% 0;width:46%;height:62%;border:14px solid #fff;border-bottom:0;border-radius:200px 200px 0 0;box-shadow:0 0 0 4px #231c1f,inset 0 0 0 4px #231c1f;z-index:1}
+  .larch::before{content:"";position:absolute;inset:-18px;border-radius:inherit;background:radial-gradient(circle,#ff8ac0 0 5px,transparent 6px) 0 0/22px 22px;-webkit-mask:linear-gradient(#000 0 40%,transparent 40%);mask:linear-gradient(#000 0 40%,transparent 40%)}
+  .larch.fl{border-color:#4a9a3a}
+  .laisle{position:absolute;left:50%;bottom:0;translate:-50% 0;width:26%;height:28%;background:#d8203a;clip-path:polygon(30% 0,70% 0,100% 100%,0 100%);z-index:1}
+  .laisle.g{background:#ffd6e4}
+  .lv-garden{background:linear-gradient(180deg,#bfe6ff,#e8f8ff 60%)}
+  .lv-garden::before{top:72%;background:linear-gradient(180deg,#6ac04a,#4a9a3a);border-top:4px solid #2f7a2a}
+  .lhedge{position:absolute;left:0;right:0;bottom:28%;height:22%;background:radial-gradient(circle,#4a9a3a 0 14px,transparent 15px) 0 0/30px 26px,#3a8a2a;border-top:4px solid #2a6a1a}
+  .lprop.fl1{left:6%;bottom:6%} .lprop.fl2{right:6%;bottom:6%}
+  .ldstage.wed{gap:clamp(140px,30vw,300px) !important}
+  .loff{position:absolute;left:50%;bottom:44%;translate:-50% 0;z-index:1}
+  .loff .lbot{--u:clamp(2.6px,.36vw,3.6px)}
+  .lguests{position:absolute;bottom:4%;display:flex;gap:6px;z-index:3}
+  .lguests.l{left:1.5%} .lguests.r{right:1.5%}
+  .lguests .lbot{--u:clamp(2px,.28vw,3px)}
+  .lconf{position:absolute;top:0;width:7px;height:10px;z-index:8;pointer-events:none}
+  .lbigheart{position:absolute;z-index:9;translate:-50% -50%;font-size:110px;color:#ff3a7a;text-shadow:5px 5px 0 #9e2447;pointer-events:none}
+  .lbouquet{position:absolute;left:0;top:0;z-index:9;font-size:34px;pointer-events:none}
+  .lringbox{position:absolute;right:-26px;top:44%;width:30px;height:30px;z-index:6;filter:drop-shadow(0 0 8px #fff3b0)}
+  .lringbox svg{width:100%;height:100%}
+  .lrings{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+  .lring{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 6px 8px;background:#fff;border:3px solid var(--line);box-shadow:3px 3px 0 var(--line);cursor:pointer;font:inherit}
+  .lring svg{width:56px;height:56px} .lring b{font-size:13px} .lring em{font-style:normal;font-size:10px;font-weight:700;color:#fff;background:var(--tc);padding:0 5px}
+  .lring.on{background:#ffe3ee;outline:3px solid #ff3a7a;outline-offset:-6px} .lring:disabled{opacity:.55;cursor:not-allowed}
+  .lring .lmd{position:absolute;top:3px;right:4px;display:flex;align-items:center;gap:2px;font-size:10px;font-weight:700} .lring .lmd.lk{background:#7c5cff;color:#fff;padding:0 4px}
+  .ldres p{margin:0 0 10px}
+  @media (max-width:640px){ .lguests .lbot{--u:1.6px} .loff{bottom:34%} .lprop.palm{font-size:56px} .lsneon{font-size:20px} .lcscreen{font-size:34px} .lbigheart{font-size:70px} .ldstage.wed{gap:70px !important;bottom:30%} .ldstage.wed .lbot{--u:2.4px} .loff{bottom:50%} .loff .lbot{--u:1.9px} }
   @media (max-width:820px){ .lward{grid-template-columns:1fr} .lfit{min-height:330px} .lfig.big{--mu:3.6px} .lmirror{width:90px;height:110px} .lcurtain{width:30px} }
   @media (max-width:640px){ .lcards{grid-template-columns:1fr} .lfig{--mu:2.4px} .lsingle{flex-direction:column} .lbtn.ghost{margin-left:0} }
   @media (prefers-reduced-motion: reduce){ .lbig,.lbrand i,.lbub.show{animation:none} .lbub.show{opacity:1} }
@@ -5850,6 +5914,9 @@
     clearInterval(waveT); Object.keys(LBOT).forEach(k => delete LBOT[k]);
     if (lview === 'wardrobe') return drawWardrobe();
     if (lview === 'dinner') return drawDinner();
+    if (lview === 'venues') return drawVenues();
+    if (lview === 'propose') return drawPropose();
+    if (lview === 'wedding') return drawWedding();
     drawSelect();
   }
   function drawSelect(){
@@ -5888,7 +5955,11 @@
         <div class="lpair"><div class="lmid"><span class="lbig sm">&#10084;</span><div class="lbar"><i style="width:${cp.love || 0}%"></i></div><small>Love ${cp.love || 0}%</small></div></div>
         <div class="lstyle"><span>${g} rates ${b}'s look <b class="hs">${hearts(styleScore(lookOf(b), g))}</b></span><span>${b} rates ${g}'s look <b class="hs">${hearts(styleScore(lookOf(g), b))}</b></span></div>
         <ol class="lsteps">${LSTAGES.map((s, i) => `<li class="${i < st ? 'done' : i === st ? 'now' : ''}">${s}</li>`).join('')}</ol>
-        <div class="lacts"><button type="button" class="btn lbtn" data-a="dress" data-g="${g}">&#128087; Dress up</button><button type="button" class="btn lbtn pink" data-a="dinner" data-g="${g}" ${left > 0 ? '' : 'disabled'}>&#127837; Dinner date <small>${left}/${DATES_PER_DAY} today</small></button><button type="button" class="btn lbtn ghost" data-a="split" data-g="${g}">&#128148; Break up</button></div>`;
+        <div class="lacts"><button type="button" class="btn lbtn" data-a="dress" data-g="${g}">&#128087; Dress up</button>${st < 2 ? `<button type="button" class="btn lbtn pink" data-a="dinner" data-g="${g}" ${left > 0 ? '' : 'disabled'}>&#127837; Dinner date <small>${left}/${DATES_PER_DAY} today</small></button>`
+          : `<button type="button" class="btn lbtn pink" data-a="dates" data-g="${g}" ${left > 0 ? '' : 'disabled'}>&#128149; Go on a date <small>${left}/${DATES_PER_DAY} today</small></button>`}
+        ${st === 2 ? `<button type="button" class="btn lbtn gold" data-a="propose" data-g="${g}" ${cp.love >= PROPOSE_AT ? '' : 'disabled'}>&#128141; Propose <small>${cp.love >= PROPOSE_AT ? 'ready!' : PROPOSE_AT + '% love'}</small></button>` : ''}
+        ${st === 3 ? `<button type="button" class="btn lbtn gold" data-a="wedding" data-g="${g}">&#128146; Wedding</button>` : ''}
+        ${st >= 4 ? `<button type="button" class="btn lbtn" disabled>&#127868; Baby room <small>soon</small></button>` : ''}<button type="button" class="btn lbtn ghost" data-a="split" data-g="${g}">&#128148; Break up</button></div>`;
       const pr = a.querySelector('.lpair');
       liveBot(b, null, false, pr); pr.appendChild(pr.querySelector('.lmid')); liveBot(g, null, true, pr);
       cs.appendChild(a);
@@ -5927,18 +5998,186 @@
     hold.remove(); const nb = liveBot(n, ldraft[n], flip, st); nb.el.parentElement.classList.add('big');
     st.insertBefore(nb.hold, next); lhop(nb);
   }
+  // ===== C aşaması: randevu mekânları, evlilik teklifi, düğün =====
+  const PROPOSE_AT = 60;
+  const VENUES = {
+    dinner:{name:'Dinner date', ico:'&#127837;', step:'Order', toast:'A toast for dessert', need:0, desc:'Candles, pasta and a waiter.'},
+    cinema:{name:'Movie night', ico:'&#127916;', step:'Movie', toast:'Before the credits roll', need:2, desc:'Pick a film, share the popcorn.',
+      q:'Which movie?', opts:[{k:'romcom', name:'Love in Vibe Town', tag:'romantic', ico:'&#128152;'}, {k:'cartoon', name:'Tiny Pixel Pets', tag:'cute', ico:'&#128049;'}, {k:'noir', name:'The Black-Tie Heist', tag:'classy', ico:'&#127913;'}, {k:'docu', name:'Ocean Sleep Sounds', tag:'chill', ico:'&#127754;'}, {k:'comedy', name:'Moon Bag Mayhem', tag:'fun', ico:'&#128514;'}]},
+    beach:{name:'Sunset beach', ico:'&#127965;', step:'Activity', toast:'Watching the sunset', need:2, desc:'Waves, sand and a golden sky.',
+      q:'What do they do?', opts:[{k:'shells', name:'Collect cute shells', tag:'cute', ico:'&#128026;'}, {k:'walk', name:'Hand in hand walk', tag:'romantic', ico:'&#128109;'}, {k:'picnic', name:'Fancy picnic', tag:'classy', ico:'&#129386;'}, {k:'nap', name:'Nap in a hammock', tag:'chill', ico:'&#128164;'}, {k:'volley', name:'Beach volleyball', tag:'fun', ico:'&#127952;'}]},
+    street:{name:'Vibe Street stroll', ico:'&#127747;', step:'Gift', toast:'Under the street lights', need:2, desc:'Lights, music and a little gift.',
+      q:'Pick a gift to buy', opts:[{k:'plush', name:'Pixel plushie', tag:'cute', ico:'&#129528;'}, {k:'roses', name:'Dozen red roses', tag:'romantic', ico:'&#127801;'}, {k:'watch', name:'Vintage watch', tag:'classy', ico:'&#8986;'}, {k:'vinyl', name:'Lo-fi vinyl', tag:'chill', ico:'&#128191;'}, {k:'arcade', name:'Arcade tokens', tag:'fun', ico:'&#128126;'}]}
+  };
+  const RINGS = [
+    {k:'silver', name:'Simple silver band', tag:'chill', band:'#c8ccd4', gem:'#e8edf2'},
+    {k:'heart', name:'Pink heart ring', tag:'cute', band:'#ffb0c8', gem:'#ff3a7a'},
+    {k:'vintage', name:'Golden vintage ring', tag:'classy', band:'#ffd23f', gem:'#2a74bd'},
+    {k:'rosegold', name:'Rose-gold promise', tag:'romantic', band:'#e8a08a', gem:'#ff8ac0'},
+    {k:'diamond', name:'Big diamond', tag:'romantic', band:'#ffd23f', gem:'#9ff3ff', tier:1, bonus:15}
+  ];
+  const ringSvg = r => svgPx('0 0 16 16', [[6,1,4,1,'#231c1f'],[5,2,6,4,'#231c1f'],[6,2,4,3,r.gem],[7,2,1,1,'#fff'],[4,6,8,1,'#231c1f'],[3,7,2,6,'#231c1f'],[11,7,2,6,'#231c1f'],[4,13,8,2,'#231c1f'],[4,7,1,6,r.band],[11,7,1,6,r.band],[5,6,6,1,r.band],[5,13,6,1,r.band]]);
+  const WED_VENUES = [{k:'chapel', name:'Little chapel', ico:'&#9962;'}, {k:'beach', name:'Beach at sunset', ico:'&#127965;'}, {k:'garden', name:'Flower garden', ico:'&#127804;'}];
+  const VEIL = [['head',2,8,26,4,'#ffffff',''],['head',0,11,4,22,'rgba(255,255,255,.75)',''],['head',26,11,4,22,'rgba(255,255,255,.75)',''],['head',9,6,12,3,'#ffffff',''],['head',13,6.6,4,1.4,'#ff8ac0','nol'],
+    ['armL',2,31,4,4,'#ffffff',''],['armR',24,31,4,4,'#ffffff',''],['body',5,30,20,14,'#ffffff',''],['legL',6,43,9,5,'#ffffff',''],['legR',15,43,9,5,'#ffffff',''],['body',5,30,20,1.4,'#f3d6e0','nol'],['body',8,34,1,1,'#ffd6e4','nol'],['body',20,37,1,1,'#ffd6e4','nol'],
+    ['armR',24,35,4,4,'#ff8ac0',''],['armR',25,34,2,2,'#ffffff','']];
+  const WTUX = [['armL',2,31,4,8,'#ffffff',''],['armR',24,31,4,8,'#ffffff',''],['body',6,30,18,13,'#ffffff',''],['body',12,30,6,9,'#f3ece2',''],['body',13.4,30.2,3.2,2.4,'#231c1f',''],['body',8,30,1.2,12,'#d8d0c8','nol'],['body',20.8,30,1.2,12,'#d8d0c8','nol'],['body',19,33,2.4,2.4,'#ff3a7a',''],['body',19.6,33.6,1.2,1.2,'#ffb0c8','nol']];
+  function sceneHTML(kind){
+    if (kind === 'dinner') return `<div class="ldin"><div class="ldwin"><i class="moon"></i><i class="city"></i></div><div class="ldlamp"></div><div class="ldstage" id="lDin"></div>
+        <div class="ldtable"><span class="cand l"><i></i></span><span class="cand r"><i></i></span><span class="plate l" id="lPlB"></span><span class="plate r" id="lPlG"></span><span class="vase">&#127801;</span></div></div>`;
+    const deco = {
+      cinema:'<div class="lcscreen"><span id="lMovie">&#127916;</span></div><div class="lcseats"></div><span class="lprop pop">&#127871;</span>',
+      beach:'<i class="lsun"></i><i class="lsea"></i><span class="lprop palm">&#127796;</span><span class="lprop gull">&#128038;</span><span class="lprop basket" id="lProp"></span>',
+      street:'<i class="lsbricks"></i><i class="lslamp l"></i><i class="lslamp r"></i><span class="lsneon">vibe/vibe</span><span class="lprop gift" id="lProp"></span>',
+      sunset:'<i class="lsun"></i><i class="lsea"></i><span class="lprop palm">&#127796;</span>',
+      chapel:'<i class="lwin2 l"></i><i class="lwin2 r"></i><i class="larch"></i><i class="laisle"></i>',
+      garden:'<i class="lhedge"></i><i class="larch fl"></i><i class="laisle g"></i><span class="lprop fl1">&#127804;</span><span class="lprop fl2">&#127799;</span>'
+    }[kind] || '';
+    return `<div class="ldin lv-${kind}">${deco}<div class="ldstage" id="lDin"></div></div>`;
+  }
+  // konfeti / pirinç
+  function lconfetti(scene, n = 60, cols = ['#ff5c86','#ffd23f','#7c5cff','#2fb58f','#ffffff','#ff8ac0']){
+    if (!scene) return; const W = scene.clientWidth, H = scene.clientHeight;
+    for (let i = 0; i < n; i++){
+      const d = document.createElement('i'); d.className = 'lconf'; d.style.background = pick(cols); d.style.left = Math.random()*W + 'px';
+      scene.appendChild(d);
+      d.animate([{transform:`translate(0,-20px) rotate(0deg)`, opacity:1},{transform:`translate(${(Math.random() - .5)*120}px,${H + 20}px) rotate(${Math.random()*720}deg)`, opacity:.9}],{duration:1800 + Math.random()*1800, delay:Math.random()*700, easing:'ease-in'}).finished.then(() => d.remove());
+    }
+  }
+  function bigHeart(scene, x, y){
+    const h = document.createElement('span'); h.className = 'lbigheart'; h.innerHTML = '&#10084;'; h.style.left = x + 'px'; h.style.top = y + 'px'; scene.appendChild(h);
+    h.animate([{scale:.2, opacity:0},{scale:1.4, opacity:1, offset:.3},{scale:1.1, opacity:1, offset:.7},{scale:1.6, opacity:0}],{duration:2200, easing:'ease-out'}).finished.then(() => h.remove());
+  }
+  // iki karakteri birbirine yaklaştır
+  function closeIn(bn, gn, frac = .62, dur = 1000){
+    const B = LBOT[bn], Gi = LBOT[gn]; if (!B || !Gi) return Promise.resolve();
+    const gap = Gi.hold.offsetLeft - B.hold.offsetLeft - B.hold.offsetWidth, dx = gap*frac/2;
+    [B, Gi].forEach((x, i) => { x.rig.animate([{transform:T()},{transform:T(0,-3)},{transform:T()}],{duration:250, iterations:Math.round(dur/250)}); });
+    return Promise.all([B.hold.animate([{translate:'0 0'},{translate:`${dx}px 0`}],{duration:dur, easing:'ease-in-out', fill:'forwards'}).finished,
+      Gi.hold.animate([{translate:'0 0'},{translate:`${-dx}px 0`}],{duration:dur, easing:'ease-in-out', fill:'forwards'}).finished]);
+  }
+  // ---- mekan seçimi
+  function drawVenues(){
+    const g = lcouple, c = L2.couples[g], b = c.boy, left = datesLeft(c);
+    body().innerHTML = `<div class="lwtop"><button type="button" class="btn" data-a="home">&larr; Couples</button><h2>Where to? <small>${b} &#10084; ${g} · ${left}/${DATES_PER_DAY} dates left today</small></h2></div>
+      <div class="lvenues">${Object.entries(VENUES).map(([k, v]) => { const lock = (c.stage || 0) < v.need;
+        return `<button type="button" class="lvenue v-${k}" data-a="venue" data-v="${k}" ${lock || left <= 0 ? 'disabled' : ''}><span class="vico">${v.ico}</span><b>${v.name}</b><small>${lock ? '&#128274; Unlocks when dating' : v.desc}</small></button>`; }).join('')}</div>`;
+  }
+  // ---- evlilik teklifi
+  let lprop = null;
+  function drawPropose(){
+    const g = lcouple, b = L2.couples[g].boy;
+    body().innerHTML = `<div class="lwtop"><button type="button" class="btn" data-a="home">&larr; Couples</button><h2>The proposal <small>${b} &#10084; ${g}</small></h2></div>
+      ${sceneHTML('sunset')}<div class="ldpanel" id="lDPanel"></div>`;
+    const st = document.getElementById('lDin'); liveBot(b, null, false, st); liveBot(g, null, true, st);
+    drawPropPanel();
+  }
+  function drawPropPanel(){
+    const p = document.getElementById('lDPanel'), g = lcouple, b = L2.couples[g].boy, d = lprop;
+    if (d.step === 'ring'){
+      p.innerHTML = `<p class="ldq"><b>Pick a ring for ${g}.</b> She loves <em style="--tc:${TAG_C[TASTE[g].fav]}">${TASTE[g].fav}</em> things.</p>
+        <div class="lrings">${RINGS.map(r => { const lock = r.tier && tier() < r.tier;
+          return `<button type="button" class="lring${d.ring === r.k ? ' on' : ''}" data-a="ring" data-k="${r.k}" ${lock ? 'disabled' : ''} style="--tc:${TAG_C[r.tag]}">${ringSvg(r)}<b>${r.name}</b><em>${r.tag}</em>${r.tier ? `<span class="lmd${lock ? ' lk' : ''}"><span class="mdl">${MEDAL(r.tier)}</span>${lock ? fmtFolk(TIERS[r.tier].min) : ''}</span>` : ''}</button>`; }).join('')}</div>
+        <div class="lsave"><button type="button" class="btn lbtn pink big" data-a="kneel" ${d.ring ? '' : 'disabled'}>&#128141; Kneel &amp; propose</button></div>`;
+    } else if (d.step === 'anim') p.innerHTML = '<p class="ldq ldwait">&#128141; Down on one knee...</p>';
+    else p.innerHTML = `<div class="ldres"><h3>${d.yes ? `&#128141; ${g} said YES!` : `&#128546; ${g} needs more time...`}</h3>
+      <p>${d.yes ? `${b} and ${g} are engaged. Time to plan the wedding!` : 'Go on more dates to grow your love, or try a ring she likes more.'}</p>
+      <div class="lsave"><button type="button" class="btn lbtn" data-a="home">&larr; Couples</button>${d.yes ? `<button type="button" class="btn lbtn pink" data-a="wedding" data-g="${g}">&#128146; Plan the wedding</button>` : ''}</div></div>`;
+  }
+  async function doPropose(){
+    const g = lcouple, c = L2.couples[g], b = c.boy, r = RINGS.find(x => x.k === lprop.ring), B = LBOT[b], Gi = LBOT[g], scene = document.querySelector('.ldin');
+    lprop.step = 'anim'; drawPropPanel();
+    await closeIn(b, g, .7, 1200);
+    lsay(Gi, pick(['Oh! What is this?','Huh? Why are you...','Is this what I think?!']), 1600);
+    await B.rig.animate([{transform:T()},{transform:T(0, u(B)*6, 0)}],{duration:500, easing:'ease-out', fill:'forwards'}).finished; // diz çöker
+    B.g.armR.animate([{transform:'rotate(0deg)'},{transform:'rotate(-90deg)'}],{duration:400, fill:'forwards'});
+    const box = document.createElement('span'); box.className = 'lringbox'; box.innerHTML = ringSvg(r); B.hold.appendChild(box);
+    box.animate([{scale:0, opacity:0},{scale:1.3, opacity:1, offset:.6},{scale:1, opacity:1}],{duration:600, fill:'forwards'}); play('charge');
+    await wait(500); lsay(B, `${g}, will you marry me?`, 2400); await wait(2200);
+    const k = kindOf(r.tag, g), score = (c.love || 0) + (k === 'fav' ? 20 : k === 'like' ? 10 : 0) + (r.bonus || 0);
+    lprop.yes = score >= 70;
+    if (lprop.yes){
+      lsay(Gi, pick(['YES! YES! YES!','Yes! A thousand times yes!','Of course I will!']), 2600); lhearts(Gi, 10); lhop(Gi); lwave(Gi);
+      setTimeout(() => { lhearts(B, 8); lhop(B); }, 400); lconfetti(scene, 70); play('fight'); setTimeout(() => play('heart'), 400);
+      bigHeart(scene, scene.clientWidth/2, scene.clientHeight*.35);
+      c.stage = Math.max(c.stage, 3); c.ring = r.k; c.engaged = Date.now();
+    } else {
+      lsay(Gi, pick(['I... need a little more time.','Not yet, sweetie.','Let us date a bit more first.']), 2600); play('bonk');
+      c.love = Math.max(0, (c.love || 0) - 10);
+    }
+    lsave(); await wait(1600);
+    B.rig.animate([{transform:T(0, u(B)*6, 0)},{transform:T()}],{duration:400, fill:'forwards'});
+    lprop.step = 'done'; drawPropPanel();
+  }
+  // ---- düğün
+  let lwed = null;
+  const OFFICIANT = 'Goggles';
+  function drawWedding(){
+    const g = lcouple, c = L2.couples[g], b = c.boy, w = lwed;
+    if (w.step === 'venue'){
+      body().innerHTML = `<div class="lwtop"><button type="button" class="btn" data-a="home">&larr; Couples</button><h2>Plan the wedding <small>${b} &#10084; ${g}</small></h2></div>
+        <div class="lvenues">${WED_VENUES.map(v => `<button type="button" class="lvenue w-${v.k}" data-a="wvenue" data-v="${v.k}"><span class="vico">${v.ico}</span><b>${v.name}</b><small>Wedding dress, white tux and all the folk as guests.</small></button>`).join('')}</div>`;
+      return;
+    }
+    const kind = w.venue === 'beach' ? 'sunset' : w.venue;
+    body().innerHTML = `<div class="lwtop"><button type="button" class="btn" data-a="home">&larr; Couples</button><h2>The wedding <small>${b} &#10084; ${g}</small></h2></div>
+      ${sceneHTML(kind)}<div class="ldpanel" id="lDPanel"></div>`;
+    const scene = document.querySelector('.ldin'), st = document.getElementById('lDin');
+    st.classList.add('wed');
+    liveBot(b, null, false, st, WTUX.concat(lookOf(b).hat ? (litem('hat', lookOf(b).hat) || {parts:[]}).parts : []));
+    liveBot(g, null, true, st, VEIL);
+    // nikah memuru ve misafirler
+    const off = document.createElement('div'); off.className = 'loff'; scene.appendChild(off); liveBot(OFFICIANT, null, false, off, [], '__off');
+    const guests = bots.map(x => x.name).filter(n => ![b, g, OFFICIANT].includes(n));
+    ['l', 'r'].forEach((side, i) => { const box = document.createElement('div'); box.className = 'lguests ' + side; scene.appendChild(box);
+      guests.filter((_, j) => j % 2 === i).forEach(n => liveBot(n, null, side === 'r', box, null, '__g' + n)); });
+    drawWedPanel();
+  }
+  function drawWedPanel(){
+    const p = document.getElementById('lDPanel'), g = lcouple, b = L2.couples[g].boy, w = lwed;
+    if (w.step === 'ready') p.innerHTML = `<p class="ldq">Everyone is here. ${OFFICIANT} will lead the ceremony.</p><div class="lsave"><button type="button" class="btn lbtn pink big" data-a="vows">&#128146; Start the ceremony</button></div>`;
+    else if (w.step === 'anim') p.innerHTML = '<p class="ldq ldwait">&#128146; The ceremony is happening...</p>';
+    else p.innerHTML = `<div class="ldres"><h3>&#128146; Just married!</h3><p>${b} and ${g} are now husband and wife. ${w.catcher ? `${w.catcher} caught the bouquet!` : ''}</p>
+      <div class="lsave"><button type="button" class="btn lbtn" data-a="home">&larr; Couples</button><button type="button" class="btn lbtn" disabled>&#127868; Baby room <small>soon</small></button></div></div>`;
+  }
+  async function doVows(){
+    const g = lcouple, c = L2.couples[g], b = c.boy, B = LBOT[b], Gi = LBOT[g], O = LBOT.__off, scene = document.querySelector('.ldin');
+    lwed.step = 'anim'; drawWedPanel(); play('fight');
+    await closeIn(b, g, .55, 1600);
+    lsay(O, 'Dearly beloved folk...', 1800); await wait(2000);
+    lsay(O, `${b}, do you take ${g}?`, 1800); await wait(1900);
+    lsay(B, 'I do!', 1500); lhearts(B, 4); lhop(B); await wait(1700);
+    lsay(O, `${g}, do you take ${b}?`, 1800); await wait(1900);
+    lsay(Gi, 'I do!', 1500); lhearts(Gi, 4); lhop(Gi); await wait(1700);
+    lsay(O, 'You may kiss!', 1500); await wait(800);
+    await closeIn(b, g, .9, 500).catch(() => {});
+    bigHeart(scene, scene.clientWidth/2, scene.clientHeight*.38); play('heart'); lconfetti(scene, 120);
+    Object.keys(LBOT).filter(k => k.startsWith('__g')).forEach((k, i) => setTimeout(() => { lwave(LBOT[k]); lhop(LBOT[k]); lhearts(LBOT[k], 2); }, i*150));
+    await wait(1800);
+    // gelin buketi atar
+    const gk = Object.keys(LBOT).filter(k => k.startsWith('__g')), catcher = gk.length ? pick(gk) : null;
+    if (catcher){
+      lsay(Gi, 'Catch the bouquet!', 1400); await wait(600);
+      const bq = document.createElement('span'); bq.className = 'lbouquet'; bq.innerHTML = '&#128144;'; scene.appendChild(bq);
+      const s = scene.getBoundingClientRect(), a = Gi.hold.getBoundingClientRect(), t = LBOT[catcher].hold.getBoundingClientRect();
+      const x0 = a.left - s.left + a.width/2, y0 = a.top - s.top + 20, x1 = t.left - s.left + t.width/2, y1 = t.top - s.top + 10;
+      await bq.animate([{translate:`${x0}px ${y0}px`, rotate:'0deg'},{translate:`${(x0 + x1)/2}px ${Math.min(y0, y1) - 120}px`, rotate:'360deg'},{translate:`${x1}px ${y1}px`, rotate:'720deg'}],{duration:1300, easing:'ease-in-out', fill:'forwards'}).finished;
+      bq.remove(); lsay(LBOT[catcher], 'I caught it!', 1800); lhearts(LBOT[catcher], 5); lhop(LBOT[catcher]); play('clap');
+      lwed.catcher = catcher.slice(3);
+    }
+    c.stage = Math.max(c.stage, 4); c.married = Date.now(); c.wvenue = lwed.venue; c.love = Math.min(100, (c.love || 0) + 10);
+    lsave(); await wait(1200); lwed.step = 'done'; drawWedPanel();
+  }
   // ---- akşam yemeği
-  function startDinner(g){
+  function startDinner(g, venue = 'dinner'){
     const b = L2.couples[g].boy;
-    ldin = {g, b, step:'menu', dish:null, drink:null, round:0, opts:[], pts:{look:styleScore(lookOf(b), g) + styleScore(lookOf(g), b), food:0, talk:0}};
+    ldin = {g, b, venue, pick:null, step:'menu', dish:null, drink:null, round:0, opts:[], pts:{look:styleScore(lookOf(b), g) + styleScore(lookOf(g), b), food:0, talk:0}};
     lview = 'dinner'; drawLove(); loveEl.scrollTop = 0;
   }
   function drawDinner(){
     const d = ldin, {g, b} = d;
-    body().innerHTML = `<div class="lwtop"><button type="button" class="btn" data-a="home">&larr; Couples</button><h2>Dinner date <small>${b} &#10084; ${g}</small></h2></div>
-      <div class="ldin"><div class="ldwin"><i class="moon"></i><i class="city"></i></div><div class="ldlamp"></div><div class="ldstage" id="lDin"></div>
-        <div class="ldtable"><span class="cand l"><i></i></span><span class="cand r"><i></i></span><span class="plate l" id="lPlB"></span><span class="plate r" id="lPlG"></span><span class="vase">&#127801;</span></div></div>
-      <div class="ldpanel" id="lDPanel"></div>`;
+    body().innerHTML = `<div class="lwtop"><button type="button" class="btn" data-a="home">&larr; Couples</button><h2>${VENUES[d.venue].name} <small>${b} &#10084; ${g}</small></h2></div>
+      ${sceneHTML(d.venue)}<div class="ldpanel" id="lDPanel"></div>`;
     const st = document.getElementById('lDin');
     liveBot(b, null, false, st); liveBot(g, null, true, st);
     drawDinPanel();
@@ -5966,10 +6205,14 @@
     ['lPlB', 'lPlG'].forEach(id => { const e = document.getElementById(id); if (e) e.innerHTML = f; });
   }
   function drawDinPanel(){
-    const d = ldin, p = document.getElementById('lDPanel'), steps = ['Order', 'Talk 1', 'Talk 2', 'Toast', 'Result'];
+    const d = ldin, V = VENUES[d.venue], p = document.getElementById('lDPanel'), steps = [V.step, 'Talk 1', 'Talk 2', d.venue === 'dinner' ? 'Toast' : 'Moment', 'Result'];
     const cur = d.step === 'menu' ? 0 : d.step === 'talk' ? d.round + 1 : 4;
     const prog = `<ol class="ldprog">${steps.map((s, i) => `<li class="${i < cur ? 'done' : i === cur ? 'now' : ''}">${s}</li>`).join('')}</ol>`;
-    if (d.step === 'menu'){
+    if (d.step === 'menu' && d.venue !== 'dinner'){
+      p.innerHTML = prog + `<p class="ldq"><b>${V.q}</b> ${d.b} loves <em style="--tc:${TAG_C[TASTE[d.b].fav]}">${TASTE[d.b].fav}</em>, ${d.g} loves <em style="--tc:${TAG_C[TASTE[d.g].fav]}">${TASTE[d.g].fav}</em>.</p>
+        <div class="ldmenu one">${V.opts.map(x => `<button type="button" class="ldm${d.pick === x.k ? ' on' : ''}" data-a="vpick" data-k="${x.k}" style="--tc:${TAG_C[x.tag]}"><span class="ico">${x.ico}</span><b>${x.name}</b><em>${x.tag}</em></button>`).join('')}</div>
+        <div class="lsave"><button type="button" class="btn lbtn pink" data-a="eat" ${d.pick ? '' : 'disabled'}>&#10084; Let's go</button></div>`;
+    } else if (d.step === 'menu'){
       const col = (kind, title) => `<div class="ldmenu"><h4>${title}</h4>${LMENU[kind].map(x => `<button type="button" class="ldm${d[kind] === x.k ? ' on' : ''}" data-a="order" data-kind="${kind}" data-k="${x.k}" style="--tc:${TAG_C[x.tag]}"><span class="ico">${x.ico}</span><b>${x.name}</b><em>${x.tag}</em></button>`).join('')}</div>`;
       p.innerHTML = prog + `<p class="ldq">Order for the table. ${d.b} loves <em style="--tc:${TAG_C[TASTE[d.b].fav]}">${TASTE[d.b].fav}</em>, ${d.g} loves <em style="--tc:${TAG_C[TASTE[d.g].fav]}">${TASTE[d.g].fav}</em>.</p>
         <div class="ldmenus">${col('dish', 'Main course')}${col('drink', 'Drinks')}</div>
@@ -5977,15 +6220,15 @@
     } else if (d.step === 'talk' && d.wait){
       p.innerHTML = prog + '<p class="ldq ldwait">&#129302; The waiter is coming...</p>';
     } else if (d.step === 'talk'){
-      const R = LTALK[d.round], speaker = R.who === 'boy' ? d.b : R.who === 'girl' ? d.g : 'Both', listener = R.who === 'boy' ? d.g : R.who === 'girl' ? d.b : 'Both';
+      const R = d.round === 2 ? {...LTALK[2], topic:V.toast} : LTALK[d.round], speaker = R.who === 'boy' ? d.b : R.who === 'girl' ? d.g : 'Both', listener = R.who === 'boy' ? d.g : R.who === 'girl' ? d.b : 'Both';
       if (!d.opts.length){ const tags = Object.keys(R.lines); d.opts = tags.sort(() => Math.random() - .5).slice(0, 3); }
       p.innerHTML = prog + `<p class="ldq"><b>${R.topic}.</b> ${R.who === 'both' ? `Pick a toast for ${d.b} and ${d.g}.` : `What should ${speaker} say to ${listener}?`}</p>
         <div class="ldlines">${d.opts.map(t => `<button type="button" class="ldl" data-a="say" data-t="${t}" style="--tc:${TAG_C[t]}"><span>&ldquo;${R.lines[t]}&rdquo;</span><em>${t}</em></button>`).join('')}</div>`;
     } else {
       const c = L2.couples[d.g], tot = (d.pts.look + d.pts.food + d.pts.talk)*LOVE_SPEED;
       p.innerHTML = prog + `<div class="ldres"><h3>${d.up ? (d.up === 2 ? '&#128145; They are officially dating!' : '&#127881; First date done!') : 'What a lovely evening!'}</h3>
-        <ul><li><span>&#128087; Looks</span><b>+${d.pts.look*LOVE_SPEED}</b></li><li><span>&#127837; Food &amp; drinks</span><b>+${d.pts.food*LOVE_SPEED}</b></li><li><span>&#128172; Conversation</span><b>+${d.pts.talk*LOVE_SPEED}</b></li><li class="tot"><span>&#10084; Love</span><b>+${tot}</b></li></ul>
-        <div class="lbar big"><i style="width:${c.love}%"></i></div><small>Love ${c.love}% · ${LSTAGES[c.stage]}${c.love < DATING_AT ? ` · ${DATING_AT}% to start dating` : ''}</small>
+        <ul><li><span>&#128087; Looks</span><b>+${d.pts.look*LOVE_SPEED}</b></li><li><span>${V.ico} ${d.venue === 'dinner' ? 'Food &amp; drinks' : V.step}</span><b>+${d.pts.food*LOVE_SPEED}</b></li><li><span>&#128172; Conversation</span><b>+${d.pts.talk*LOVE_SPEED}</b></li><li class="tot"><span>&#10084; Love</span><b>+${tot}</b></li></ul>
+        <div class="lbar big"><i style="width:${c.love}%"></i></div><small>Love ${c.love}% · ${LSTAGES[c.stage]}${c.love < DATING_AT ? ` · ${DATING_AT}% to start dating` : c.stage === 2 && c.love < PROPOSE_AT ? ` · ${PROPOSE_AT}% to propose` : c.stage === 2 ? ' · Ready to propose! &#128141;' : ''}</small>
         <div class="lsave"><button type="button" class="btn lbtn" data-a="home">&larr; Couples</button><button type="button" class="btn lbtn pink" data-a="dress" data-g="${d.g}">&#128087; New looks</button></div></div>`;
     }
   }
@@ -6019,7 +6262,24 @@
       if (act === 'savego') startDinner(lcouple);
       else { toast('&#10084; Looks saved. They can not stop staring at each other.'); lview = 'select'; drawLove(); }
     } else if (act === 'dinner') startDinner(a.dataset.g);
+    else if (act === 'dates'){ lcouple = a.dataset.g; lview = 'venues'; drawLove(); loveEl.scrollTop = 0; }
+    else if (act === 'venue') startDinner(lcouple, a.dataset.v);
+    else if (act === 'propose'){ lcouple = a.dataset.g; lprop = {step:'ring', ring:null}; lview = 'propose'; drawLove(); loveEl.scrollTop = 0; }
+    else if (act === 'ring'){ lprop.ring = a.dataset.k; play('poke'); drawPropPanel(); const r = RINGS.find(x => x.k === a.dataset.k); lreact(LBOT[lcouple], lcouple, kindOf(r.tag, lcouple)); }
+    else if (act === 'kneel') doPropose();
+    else if (act === 'wedding'){ lcouple = a.dataset.g; lwed = {step:'venue'}; lview = 'wedding'; drawLove(); loveEl.scrollTop = 0; }
+    else if (act === 'wvenue'){ lwed = {step:'ready', venue:a.dataset.v}; drawLove(); }
+    else if (act === 'vows') doVows();
     else if (act === 'order'){ ldin[a.dataset.kind] = a.dataset.k; play('poke'); drawDinPanel(); }
+    else if (act === 'vpick'){ ldin.pick = a.dataset.k; play('poke'); drawDinPanel(); }
+    else if (act === 'eat' && ldin.venue !== 'dinner'){
+      const d = ldin, o = VENUES[d.venue].opts.find(x => x.k === d.pick);
+      d.pts.food = [d.b, d.g].reduce((s, n) => s + (kindOf(o.tag, n) === 'fav' ? 2 : kindOf(o.tag, n) === 'like' ? 1 : 0), 0)*2;
+      d.step = 'talk'; d.round = 0; d.opts = [];
+      const pr = document.getElementById('lProp') || document.getElementById('lMovie'); if (pr) pr.innerHTML = o.ico;
+      lreact(LBOT[d.b], d.b, kindOf(o.tag, d.b)); setTimeout(() => lreact(LBOT[d.g], d.g, kindOf(o.tag, d.g)), 600);
+      drawDinPanel();
+    }
     else if (act === 'eat'){
       const d = ldin, all = LMENU.dish.concat(LMENU.drink), tags = [d.dish, d.drink].map(k => all.find(x => x.k === k).tag);
       let pts = 0; tags.forEach(t => { pts += [d.b, d.g].reduce((s, n) => s + (kindOf(t, n) === 'fav' ? 2 : kindOf(t, n) === 'like' ? 1 : 0), 0); });
@@ -6037,8 +6297,8 @@
       else { const sp = R.who === 'boy' ? d.b : d.g, ls = R.who === 'boy' ? d.g : d.b; lsay(LBOT[sp], R.lines[t], 1600); setTimeout(() => { d.pts.talk += judge(ls, t)*2; }, 900); }
       setTimeout(() => {
         d.round++; d.opts = [];
-        if (d.round === 1) waiter('&#127863;', pick(['More drinks, my friends?','A refill for the lovely couple!']));
-        if (d.round === 2){ d.wait = true; drawDinPanel(); return waiter('&#127874;', 'Dessert for the lovebirds!', () => { const v = document.querySelector('.ldtable .vase'); if (v) v.innerHTML = '&#127874;'; d.wait = false; drawDinPanel(); }); }
+        if (d.round === 1 && d.venue === 'dinner') waiter('&#127863;', pick(['More drinks, my friends?','A refill for the lovely couple!']));
+        if (d.round === 2 && d.venue === 'dinner'){ d.wait = true; drawDinPanel(); return waiter('&#127874;', 'Dessert for the lovebirds!', () => { const v = document.querySelector('.ldtable .vase'); if (v) v.innerHTML = '&#127874;'; d.wait = false; drawDinPanel(); }); }
         if (d.round < LTALK.length) return drawDinPanel();
         finishDinner();
       }, 2600);
