@@ -5717,6 +5717,10 @@
   // gardırop: [grup, x, y, w, h, renk, sınıf]  (30x50 karakter alanı)
   const LITEMS = {
     hat:[
+      {k:'heartcap', name:'Heart cap', tag:'cute', parts:[['head',4,10.8,22,4.4,'#ff8aa8',''],['head',23.4,13,6,2.2,'#ff8aa8',''],['head',4,14,22,1,'#d8607f','nol'],['head',12,11.4,2,1.4,'#d8203a','nol'],['head',15,11.4,2,1.4,'#d8203a','nol'],['head',12.6,12.6,3.8,1.2,'#d8203a','nol'],['head',13.6,13.6,1.8,.8,'#d8203a','nol']]},
+      {k:'pillbox', name:'Pearl pillbox', tag:'classy', parts:[['head',9,8.6,12,4.6,'#2a2140',''],['head',9,12.4,12,1,'#4a3a6a','nol'],['head',10,11,1.4,1.4,'#f3ece2','nol'],['head',13,11,1.4,1.4,'#f3ece2','nol'],['head',16,11,1.4,1.4,'#f3ece2','nol'],['head',19,8,3,4,'rgba(42,33,64,.45)','nol']]},
+      {k:'sunhat', name:'Straw sun hat', tag:'chill', parts:[['head',8,6.6,14,6,'#e8c87a',''],['head',1,11.4,28,2.4,'#e8c87a',''],['head',8,10,14,1.6,'#2fb58f',''],['head',9,7,1,4,'#c8a85a','nol'],['head',14,7,1,4,'#c8a85a','nol'],['head',19,7,1,4,'#c8a85a','nol']]},
+      {k:'starclip', name:'Star clips', tag:'fun', parts:[['head',5,9,4,4,'#ffd23f',''],['head',4,10,6,2,'#ffd23f',''],['head',21,9,4,4,'#ff5c86',''],['head',20,10,6,2,'#ff5c86',''],['head',13,8,4,4,'#2fb5c8',''],['head',12,9,6,2,'#2fb5c8',''],['head',6,10,1,1,'#fff','nol twinkle']]},
       {k:'flower', name:'Flower crown', tag:'romantic', parts:[['head',4,12.4,22,2,'#4a9a3a',''],['head',4.4,10.6,3,3,'#ff8ac0',''],['head',9.4,10,3,3,'#fff36b',''],['head',14,9.6,3,3,'#ffffff',''],['head',18.6,10,3,3,'#ff8ac0',''],['head',23,10.6,3,3,'#b08be0',''],['head',15,10.6,1,1,'#ffd23f','nol']]},
       {k:'bow', name:'Big bow', tag:'cute', parts:[['head',16,8,5,6,'#ff5c86',''],['head',22,8,5,6,'#ff5c86',''],['head',20.6,9.4,2,3.2,'#d8203a',''],['head',17,9,2,2,'#ffb0c8','nol'],['head',23,9,2,2,'#ffb0c8','nol']]},
       {k:'tophat', name:'Top hat', tag:'classy', tier:1, parts:[['head',8,0,14,12,'#1a1a22',''],['head',8,8.6,14,2.2,'#d8432d',''],['head',3,11.6,24,2.4,'#1a1a22',''],['head',9,1,2,7,'#3a3a48','nol']]},
@@ -5731,6 +5735,10 @@
       {k:'tiara', name:'Diamond tiara', tag:'romantic', tier:2, parts:[['head',7,12,16,1.6,'#e8edf2',''],['head',9,10,2,2,'#e8edf2',''],['head',14,8,2,4,'#e8edf2',''],['head',19,10,2,2,'#e8edf2',''],['head',14.4,8.6,1.2,1.2,'#9ff3ff','nol twinkle'],['head',9.4,10.4,1.2,1.2,'#ff8ac0','nol'],['head',19.4,10.4,1.2,1.2,'#ff8ac0','nol']]}
     ],
     top:[
+      {k:'ruffle', name:'Ruffle dress', tag:'romantic', parts:[['armL',2,31,4,4,'#ffb0c8',''],['armR',24,31,4,4,'#ffb0c8',''],['body',5,30,20,14,'#ffb0c8',''],['legL',7,43,8,3,'#ffb0c8',''],['legR',15,43,8,3,'#ffb0c8',''],['body',5,35,20,1.4,'#ff8aa8','nol'],['body',5,39,20,1.4,'#ff8aa8','nol'],['body',12,30,6,2,'#ffffff','nol']]},
+      {k:'tutu', name:'Ballet tutu', tag:'cute', parts:[['armL',2,31,4,3,'#ffe3ee',''],['armR',24,31,4,3,'#ffe3ee',''],['body',7,30,16,9,'#ffe3ee',''],['body',2,38,26,4,'#ffc0d8',''],['body',3,40,24,3,'#ffd6e4',''],['body',14,31,2,2,'#ff3a7a','nol']]},
+      {k:'cardigan', name:'Cozy cardigan', tag:'chill', parts:[['armL',2,31,4,8,'#b8a07a',''],['armR',24,31,4,8,'#b8a07a',''],['body',6,30,18,13,'#b8a07a',''],['body',12,30,6,13,'#f3ece2',''],['body',13.4,33,1.2,1.2,'#7a5a3a','nol'],['body',13.4,36,1.2,1.2,'#7a5a3a','nol'],['body',13.4,39,1.2,1.2,'#7a5a3a','nol'],['body',6,41,18,2,'#9a845e','nol']]},
+      {k:'rainbow', name:'Rainbow dress', tag:'fun', parts:[['armL',2,31,4,3,'#ff5c86',''],['armR',24,31,4,3,'#ff5c86',''],['body',5,30,20,3,'#ff5c86',''],['body',5,33,20,3,'#ffb13a',''],['body',5,36,20,3,'#ffd23f',''],['body',5,39,20,3,'#3fbf4a',''],['legL',7,42,8,3,'#2fb5c8',''],['legR',15,42,8,3,'#7c5cff','']]},
       {k:'suit', name:'Velvet suit', tag:'classy', parts:[['armL',2,31,4,8,'#2a2140',''],['armR',24,31,4,8,'#2a2140',''],['body',6,30,18,13,'#2a2140',''],['body',12,30,6,9,LW_,''],['body',14.2,31,1.6,7,'#d8203a',''],['body',8,30,1.2,12,'#4a3a6a','nol'],['body',20.8,30,1.2,12,'#4a3a6a','nol']]},
       {k:'hoodie', name:'Comfy hoodie', tag:'chill', parts:[['armL',2,31,4,8,'#8a939c',''],['armR',24,31,4,8,'#8a939c',''],['body',6,30,18,13,'#8a939c',''],['body',9,37,12,4,'#6b737b','nol'],['body',12,30.6,.9,4,LW_,'nol'],['body',17.1,30.6,.9,4,LW_,'nol']]},
       {k:'sweater', name:'Heart sweater', tag:'cute', parts:[['armL',2,31,4,8,'#ff8aa8',''],['armR',24,31,4,8,'#ff8aa8',''],['body',6,30,18,13,'#ff8aa8',''],['body',11,33,3,2,'#d8203a',''],['body',16,33,3,2,'#d8203a',''],['body',11,35,8,2,'#d8203a',''],['body',12,37,6,1.6,'#d8203a',''],['body',14,38.6,2,1.4,'#d8203a',''],['body',6,41,18,2,'#ff5c86','nol']]},
@@ -5745,6 +5753,9 @@
       {k:'gown', name:'Star gown', tag:'romantic', tier:2, parts:[['armL',2,31,4,4,'#1a1450',''],['armR',24,31,4,4,'#1a1450',''],['body',5,30,20,14,'#1a1450',''],['legL',7,43,8,4,'#1a1450',''],['legR',15,43,8,4,'#1a1450',''],['body',8,33,1,1,'#ffd23f','nol twinkle'],['body',19,35,1,1,'#ffd23f','nol twinkle'],['body',12,39,1,1,'#fff','nol twinkle'],['body',5,30,20,1.4,'#ffd23f','nol']]}
     ],
     acc:[
+      {k:'teddy', name:'Teddy bear', tag:'cute', parts:[['armR',23,34,6,6,'#a0622d',''],['armR',22,32,2,2,'#a0622d',''],['armR',28,32,2,2,'#a0622d',''],['armR',24.4,35.4,1,1,'#231c1f','nol'],['armR',26.6,35.4,1,1,'#231c1f','nol'],['armR',25.2,37,1.6,1,'#d8a070','nol'],['armR',23,39,6,4,'#8a5226','']]},
+      {k:'purse', name:'Mini purse', tag:'classy', parts:[['armR',27.6,30,.8,7,'#ffd23f','nol'],['armR',23,30,.8,7,'#ffd23f','nol'],['armR',22,37,8,5,'#2a2140',''],['armR',22,37,8,1.4,'#4a3a6a','nol'],['armR',25.4,38.6,1.4,1.4,'#ffd23f','nol']]},
+      {k:'cateye', name:'Cat-eye shades', tag:'chill', parts:[['head',4,18,9,5,'#7c5cff',''],['head',17,18,9,5,'#7c5cff',''],['head',3,17,3,2,'#7c5cff',''],['head',24,17,3,2,'#7c5cff',''],['head',13,19,4,1.2,'#231c1f','nol'],['head',6,19,2,1,'#e8dcff','nol'],['head',19,19,2,1,'#e8dcff','nol']]},
       {k:'bowtie', name:'Bow tie', tag:'classy', parts:[['body',11,29.4,3.6,3,'#d8203a',''],['body',15.4,29.4,3.6,3,'#d8203a',''],['body',14,29.8,2,2.2,'#8c1022','']]},
       {k:'heartglass', name:'Heart glasses', tag:'cute', tier:1, parts:[['head',5,17,8,6,'#ff3a7a',''],['head',17,17,8,6,'#ff3a7a',''],['head',6,16,2.6,2,'#ff3a7a',''],['head',9.6,16,2.6,2,'#ff3a7a',''],['head',18,16,2.6,2,'#ff3a7a',''],['head',21.6,16,2.6,2,'#ff3a7a',''],['head',7,23,4,1.6,'#ff3a7a',''],['head',19,23,4,1.6,'#ff3a7a',''],['head',13,18.4,4,1.2,LK_,'nol'],['head',6.4,17.6,2,1.4,'#ffb0c8','nol'],['head',18.4,17.6,2,1.4,'#ffb0c8','nol']]},
       {k:'shades', name:'Shades', tag:'chill', parts:[['head',4.6,18.2,20.8,4.6,'#14161c',''],['head',6.2,18.8,3.6,.9,'#6fd3ff','nol'],['head',17.2,18.8,3.6,.9,'#6fd3ff','nol']]},
@@ -5759,6 +5770,10 @@
       {k:'scarf', name:'Stripe scarf', tag:'fun', parts:[['body',5,29,20,3.4,'#e0643a',''],['body',8,29,2,3.4,'#ffd23f','nol'],['body',14,29,2,3.4,'#ffd23f','nol'],['body',20,29,2,3.4,'#ffd23f','nol'],['body',17,32,4,7,'#e0643a',''],['body',17,35,4,1.4,'#ffd23f','nol']]}
     ],
     shoe:[
+      {k:'heartsneak', name:'Heart sneakers', tag:'cute', parts:[['legL',7.4,47,7.2,3.4,'#ffffff',''],['legR',15.4,47,7.2,3.4,'#ffffff',''],['legL',9.6,47.6,2,1.6,'#ff3a7a','nol'],['legR',17.6,47.6,2,1.6,'#ff3a7a','nol'],['legL',7.4,49.4,7.2,1,'#ff8aa8','nol'],['legR',15.4,49.4,7.2,1,'#ff8aa8','nol']]},
+      {k:'loafers', name:'Velvet loafers', tag:'romantic', parts:[['legL',7.6,47.4,6.8,3,'#8c1022',''],['legR',15.6,47.4,6.8,3,'#8c1022',''],['legL',9,47.6,3,1,'#ffd23f','nol'],['legR',17,47.6,3,1,'#ffd23f','nol']]},
+      {k:'heels', name:'Glass heels', tag:'classy', parts:[['legL',8,47,6,2.4,'#bfe6ff',''],['legR',16,47,6,2.4,'#bfe6ff',''],['legL',12.4,49.4,1.4,1.6,'#9fd0f0',''],['legR',20.4,49.4,1.4,1.6,'#9fd0f0',''],['legL',9,47.4,1,1,'#fff','nol twinkle'],['legR',17,47.4,1,1,'#fff','nol twinkle']]},
+      {k:'slippers', name:'Fluffy slippers', tag:'chill', parts:[['legL',6.6,46.6,8.4,3.8,'#f3ece2',''],['legR',14.6,46.6,8.4,3.8,'#f3ece2',''],['legL',7,46,2,2,'#ffffff',''],['legL',11.6,46,2,2,'#ffffff',''],['legR',15,46,2,2,'#ffffff',''],['legR',19.6,46,2,2,'#ffffff',''],['legL',9.6,47.6,2,1,'#ff8aa8','nol'],['legR',17.6,47.6,2,1,'#ff8aa8','nol']]},
       {k:'sneakers', name:'Comfy sneakers', tag:'chill', parts:[['legL',7.4,47,7.2,3.4,'#ffffff',''],['legL',7.4,49.2,7.2,1.2,'#2fb58f','nol'],['legR',15.4,47,7.2,3.4,'#ffffff',''],['legR',15.4,49.2,7.2,1.2,'#2fb58f','nol']]},
       {k:'flats', name:'Bow flats', tag:'cute', parts:[['legL',7.6,47.6,6.8,2.8,'#ff8aa8',''],['legR',15.6,47.6,6.8,2.8,'#ff8aa8',''],['legL',10,47,2,1.4,'#ff3a7a',''],['legR',18,47,2,1.4,'#ff3a7a','']]},
       {k:'oxfords', name:'Shiny oxfords', tag:'classy', parts:[['legL',7.6,47.4,6.8,3,'#1a1a22',''],['legR',15.6,47.4,6.8,3,'#1a1a22',''],['legL',8.4,47.8,1.6,.8,'#8a939c','nol'],['legR',16.4,47.8,1.6,.8,'#8a939c','nol']]},
@@ -5767,6 +5782,13 @@
       {k:'goldkicks', name:'Gold kicks', tag:'fun', tier:1, parts:[['legL',7.4,47,7.2,3.4,'#ffd23f',''],['legL',7.4,49.4,7.2,1,'#c7901f','nol'],['legR',15.4,47,7.2,3.4,'#ffd23f',''],['legR',15.4,49.4,7.2,1,'#c7901f','nol'],['legL',10,47.6,1,1,'#fff','nol twinkle'],['legR',18,47.6,1,1,'#fff','nol twinkle']]}
     ]
   };
+  // erkek ve kız kıyafetleri ayrı
+  const LGENDER = {
+    m:['tophat','crown','beanie','phones','cowboy','party','heartcap','halo', 'suit','hoodie','leather','vibetee','hawaii','varsity','floral','sweater', 'bowtie','monocle','shades','guitar','bling','rose','teddy', 'sneakers','oxfords','goldkicks','heartsneak','loafers'],
+    f:['flower','tiara','beret','bow','bunny','pillbox','sunhat','starclip', 'overalls','kimono','sequin','gown','ruffle','tutu','cardigan','rainbow', 'heartglass','pearls','balloon','bouquet','wings','scarf','purse','cateye', 'flats','skates','heartboots','heels','slippers']
+  };
+  Object.values(LITEMS).forEach(list => list.forEach(it => { it.g = LGENDER.m.includes(it.k) ? 'm' : 'f'; }));
+  const genderOf = n => BOYS.includes(n) ? 'm' : 'f';
   const LSLOTS = [['hat','Hat'], ['top','Outfit'], ['acc','Extra'], ['shoe','Shoes']];
   // akşam yemeği menüsü ve konuşmalar
   const LMENU = {
@@ -5783,6 +5805,8 @@
   try { const raw = localStorage.getItem(LOVE_KEY); if (raw) L2 = Object.assign(L2, JSON.parse(raw)); } catch(e){}
   const lsave = () => { try { localStorage.setItem(LOVE_KEY, JSON.stringify(L2)); } catch(e){} };
   const lookOf = n => L2.looks[n] || {};
+  // eski kayıtlardaki karşı cinsiyet parçalarını temizle
+  Object.entries(L2.looks).forEach(([n, l]) => Object.keys(l).forEach(s => { const it = LITEMS[s] && LITEMS[s].find(x => x.k === l[s]); if (!it || it.g !== genderOf(n)) delete l[s]; }));
   const partnerOf = n => GIRLS.includes(n) ? (L2.couples[n] || {}).boy : Object.keys(L2.couples).find(g => L2.couples[g].boy === n);
   const lookParts = look => LSLOTS.flatMap(([s]) => look[s] ? (litem(s, look[s]) || {parts:[]}).parts : []);
   const kindOf = (tag, judge) => { const t = TASTE[judge]; return !tag ? '' : tag === t.fav ? 'fav' : tag === t.like ? 'like' : 'meh'; };
@@ -5885,7 +5909,7 @@
   function drawWardPanel(){
     const g = lcouple, b = L2.couples[g].boy, who = ldress, partner = who === g ? b : g, look = ldraft[who];
     document.getElementById('lWho').innerHTML = [b, g].map(n => `<button type="button" data-a="who" data-n="${n}" class="${n === who ? 'on' : ''}">Dress ${n}</button>`).join('');
-    const items = LITEMS[ltab].map(it => {
+    const items = LITEMS[ltab].filter(it => it.g === genderOf(who)).map(it => {
       const on = look[ltab] === it.k, lock = it.tier && tier() < it.tier, rx = kindOf(it.tag, partner);
       return `<button type="button" class="litem${on ? ' on' : ''}${lock ? ' folk' : ''}" data-a="wear" data-k="${it.k}" style="--tc:${TAG_C[it.tag]}">${itemIcon(it)}<b>${it.name}</b><em>${it.tag}</em>${rx !== 'meh' ? `<span class="rx">${rx === 'fav' ? '&#10084;&#10084;' : '&#10084;'}</span>` : ''}${it.tier ? `<span class="lmd${lock ? ' lk' : ''}"><span class="mdl">${MEDAL(it.tier)}</span>${lock ? fmtFolk(TIERS[it.tier].min) : ''}</span>` : ''}</button>`;
     }).join('');
