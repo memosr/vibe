@@ -894,6 +894,101 @@
     .potion.spell{width:34px !important;height:34px !important;padding:5px !important}
     .potion.spell .cnt{min-width:16px;height:16px;font-size:10px;right:-6px;top:-6px}
   }
+
+  /* ---- Vibe Love ---- */
+  a.side-heart{display:block;text-decoration:none;cursor:pointer}
+  a.side-heart:hover{filter:drop-shadow(4px 4px 0 rgba(35,28,31,.35)) brightness(1.08)}
+  a#sideR{cursor:pointer;text-decoration:none}
+  .lovebtn{background:#ff8aa8;color:#3a0a18 !important;text-decoration:none;font-weight:700}
+  .love{position:fixed;inset:0;z-index:46;overflow-y:auto;color:var(--ink);
+    background:radial-gradient(circle at 20% 0%,#ffe3ee,transparent 50%),linear-gradient(180deg,#ffd6e4,#ffb8cf 60%,#ff9ec0);}
+  .love::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.25;background-size:64px 56px;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 11' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M2 1h3v1h1v1h1V2h1V1h3v1h1v4h-1v1h-1v1H9v1H8v1H5v-1H4V9H3V8H2V7H1V6H0V2h1V1z'/%3E%3C/svg%3E")}
+  .lbarTop{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:10px;padding:10px 16px;background:#3a0a18;border-bottom:4px solid #ff5c86}
+  .lbarTop .btn{padding:6px 12px} .lbarTop a.playbtn{text-decoration:none;display:inline-flex !important}
+  .lbrand{display:flex;align-items:center;gap:8px;margin-right:auto;font-family:"Pixelify Sans", monospace;font-weight:700;letter-spacing:.14em;color:#ffb0c8}
+  .lbrand i{font-style:normal;color:#ff5c86;animation:beat 1.6s ease-in-out infinite}
+  .loveBody{position:relative;max-width:1100px;margin:0 auto;padding:22px 16px 60px;display:flex;flex-direction:column;gap:18px}
+  .lhero h2{margin:0;font-family:"Pixelify Sans", monospace;font-size:clamp(28px,5vw,48px);color:#5a1028;text-shadow:3px 3px 0 #fff}
+  .lhero p{margin:4px 0 0;max-width:640px;font-size:16px;color:#5a1a30}
+  .lcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:18px}
+  .lcard{background:#fff8fb;border:4px solid var(--line);box-shadow:6px 6px 0 #9e2447;display:flex;flex-direction:column}
+  .lcard header{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:10px 14px;background:#ff5c86;color:#fff;border-bottom:4px solid var(--line);flex-wrap:wrap}
+  .lcard h3{margin:0;font-family:"Pixelify Sans", monospace;font-size:22px;text-shadow:2px 2px 0 #9e2447}
+  .lcard header small{font-weight:700;font-size:12px}
+  .lcard.single header{background:#b08be0}
+  .lh{font-style:normal;color:#ffe3ee}
+  .lcard em,.ltaste em,.lmeter em{font-style:normal;font-weight:700;color:#fff;background:var(--tc);padding:0 5px;border:2px solid var(--line)}
+  .lfig{--mu:3px;flex:none} .lfig.flip{scale:-1 1} .lfig.big{--mu:5px}
+  .lpair,.lsingle{display:flex;align-items:flex-end;justify-content:center;gap:16px;padding:18px 12px 8px;background:linear-gradient(180deg,#fff8fb 70%,#ffd6e4 70%)}
+  .lsingle{justify-content:flex-start;align-items:center}
+  .lmid{display:flex;flex-direction:column;align-items:center;gap:4px;align-self:center;min-width:110px}
+  .lbig{font-size:38px;color:#ff3a7a;animation:beat 1.4s ease-in-out infinite;text-shadow:3px 3px 0 #9e2447}
+  .lbar{width:110px;height:14px;border:3px solid var(--line);background:#fff}
+  .lbar i{display:block;height:100%;background:repeating-linear-gradient(90deg,#ff5c86 0 6px,#ff8aa8 6px 12px)}
+  .lmid small{font-weight:700;font-size:12px}
+  .lask{display:flex;flex-direction:column;gap:8px;flex:1}
+  .lask p{margin:0;font-family:"Pixelify Sans", monospace;font-size:16px}
+  .lpicks{display:flex;gap:10px;flex-wrap:wrap}
+  .lpick{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 10px;background:#fff;border:3px solid var(--line);box-shadow:3px 3px 0 var(--line);cursor:pointer;font:inherit}
+  .lpick .lfig{--mu:2px}
+  .lpick b{font-family:"Pixelify Sans", monospace} .lpick small{font-size:11px;color:#9e2447}
+  .lpick:hover:not(:disabled){background:#ffe3ee;translate:0 -2px}
+  .lpick:disabled{opacity:.45;cursor:not-allowed}
+  .lstyle{display:flex;flex-direction:column;gap:2px;padding:8px 14px;font-size:13px;border-top:2px dashed #ffb0c8}
+  .lstyle span{display:flex;justify-content:space-between;gap:8px}
+  .hs{display:inline-flex;gap:3px}
+  .hs i{width:14px;height:12px;background:#e8d0d8;clip-path:polygon(50% 100%,0 40%,0 15%,15% 0,35% 0,50% 15%,65% 0,85% 0,100% 15%,100% 40%)}
+  .hs i.f{background:#ff3a7a} .hs i.h{background:linear-gradient(90deg,#ff3a7a 50%,#e8d0d8 50%)}
+  .hs.big i{width:24px;height:20px}
+  .lsteps{list-style:none;margin:0;padding:8px 10px;display:flex;gap:4px;flex-wrap:wrap;border-top:2px dashed #ffb0c8}
+  .lsteps li{font-size:11px;font-weight:700;padding:2px 7px;border:2px solid #e8c0cc;color:#b88a98;background:#fff}
+  .lsteps li.done{background:#ffd6e4;color:#9e2447;border-color:#9e2447} .lsteps li.now{background:#ff5c86;color:#fff;border-color:var(--line)}
+  .lacts{display:flex;gap:8px;flex-wrap:wrap;padding:10px 14px 14px}
+  .lbtn{font-weight:700} .lbtn.pink{background:#ff5c86;color:#fff} .lbtn.ghost{background:transparent;margin-left:auto}
+  .lbtn small{font-size:10px;opacity:.7} .lbtn:disabled{opacity:.6;cursor:not-allowed}
+  .ltaste{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:13px;background:rgba(255,255,255,.7);border:3px solid var(--line);padding:10px 12px}
+  .lwtop{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .lwtop h2{margin:0;font-family:"Pixelify Sans", monospace;font-size:30px;color:#5a1028;text-shadow:2px 2px 0 #fff}
+  .lwtop h2 small{font-size:15px;color:#9e2447}
+  .lward{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:18px}
+  .lfit{position:relative;min-height:420px;border:4px solid var(--line);box-shadow:6px 6px 0 #9e2447;overflow:hidden;
+    background:repeating-linear-gradient(90deg,#f6dbe6 0 18px,#fbe8ef 18px 36px);display:flex;flex-direction:column;justify-content:flex-end}
+  .lfit::after{content:"";position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(180deg,#c88aa0,#a86a80);border-top:4px solid var(--line)}
+  .lmirror{position:absolute;left:50%;top:26px;translate:-50% 0;width:120px;height:150px;border-radius:60px 60px 6px 6px;border:6px solid #e9c64a;background:linear-gradient(135deg,#e6fbff,#bfe6ff 60%,#e6fbff);box-shadow:0 0 0 3px var(--line)}
+  .lcurtain{position:absolute;top:0;bottom:70px;width:56px;z-index:1;background:repeating-linear-gradient(90deg,#c2185b 0 10px,#e0447a 10px 20px);border-bottom:6px solid #e9c64a}
+  .lcurtain.l{left:0;border-right:4px solid var(--line)} .lcurtain.r{right:0;border-left:4px solid var(--line)}
+  .lstage{position:relative;z-index:2;display:flex;justify-content:center;align-items:flex-end;gap:30px;padding-bottom:40px}
+  .lwho{position:relative;z-index:3;display:flex;justify-content:center;gap:8px;padding:0 0 14px}
+  .lwho button{font:inherit;font-family:"Pixelify Sans", monospace;font-weight:700;padding:6px 12px;border:3px solid var(--line);background:#fff;cursor:pointer;box-shadow:3px 3px 0 var(--line)}
+  .lwho button.on{background:#ff5c86;color:#fff}
+  .lbub{position:absolute;z-index:4;left:50%;top:22px;translate:-50% 0;max-width:80%;background:#fff;border:3px solid var(--line);box-shadow:3px 3px 0 var(--line);padding:6px 12px;font-family:"Pixelify Sans", monospace;font-weight:700;font-size:15px;opacity:0;pointer-events:none;text-align:center}
+  .lbub.show{animation:lbub 2.2s ease-out}
+  .lbub.fav{color:#d8203a} .lbub.like{color:#2f9a3a} .lbub.meh{color:#6b6064}
+  @keyframes lbub{0%{opacity:0;translate:-50% 8px}12%{opacity:1;translate:-50% 0}80%{opacity:1}100%{opacity:0}}
+  .lpanel{display:flex;flex-direction:column;gap:12px}
+  .lmeter{background:#fff8fb;border:4px solid var(--line);box-shadow:4px 4px 0 #9e2447;padding:10px 12px;display:flex;flex-direction:column;gap:6px}
+  .lmeter span{font-family:"Pixelify Sans", monospace;font-weight:700} .lmeter small{font-size:12px}
+  .ltabs{display:flex;gap:6px}
+  .ltabs button{flex:1;font:inherit;font-family:"Pixelify Sans", monospace;font-weight:700;padding:8px;border:3px solid var(--line);background:#fff;cursor:pointer}
+  .ltabs button.on{background:#3a0a18;color:#ffb0c8}
+  .litems{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:10px}
+  .litem{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 6px 8px;background:#fff;border:3px solid var(--line);box-shadow:3px 3px 0 var(--line);cursor:pointer;font:inherit}
+  .litem svg{width:52px;height:52px;display:block}
+  .litem .lnone{display:grid;place-items:center;width:52px;height:52px;font-size:22px;color:#b88a98}
+  .litem b{font-size:12px;text-align:center;line-height:1.1}
+  .litem em{font-style:normal;font-size:10px;font-weight:700;color:#fff;background:var(--tc);padding:0 4px}
+  .litem.on{background:#ffe3ee;outline:3px solid #ff3a7a;outline-offset:-6px}
+  .litem:hover{translate:0 -2px}
+  .litem .rx{position:absolute;top:4px;left:5px;font-size:11px;color:#ff3a7a}
+  .litem .lmd{position:absolute;top:3px;right:4px;display:flex;align-items:center;gap:2px;font-size:10px;font-weight:700}
+  .litem .lmd.lk{background:#7c5cff;color:#fff;padding:0 4px}
+  .litem.folk svg{opacity:.7}
+  .lsave{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .lsave small{font-size:12px;color:#5a1a30;flex:1}
+  @media (max-width:820px){ .lward{grid-template-columns:1fr} .lfit{min-height:330px} .lfig.big{--mu:3.6px} .lmirror{width:90px;height:110px} .lcurtain{width:30px} }
+  @media (max-width:640px){ .lcards{grid-template-columns:1fr} .lfig{--mu:2.4px} .lsingle{flex-direction:column} .lbtn.ghost{margin-left:0} }
+  @media (prefers-reduced-motion: reduce){ .lbig,.lbrand i,.lbub.show{animation:none} .lbub.show{opacity:1} }
   /* ---- Oyun rehberi ---- */
   .guide{position:fixed;inset:0;z-index:45;overflow-y:auto;background:var(--paper,#f6f1ea);color:var(--ink);scroll-behavior:smooth}
   .gbar{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:10px;padding:10px 16px;background:#231c1f;border-bottom:4px solid #e0643a}
@@ -1258,13 +1353,17 @@
   <a class="side-sign play-sign" href="#arena" aria-label="Play Vibe Arena"><b><i></i>PLAY</b><small>ENTER VIBE ARENA</small></a>
   <div class="side-stage" id="sideL"></div>
 </aside>
-<aside class="side side-r" aria-label="Pip, coming soon">
-  <div class="side-heart">
+<aside class="side side-r" aria-label="Pip, Vibe Love">
+  <a class="side-heart love-sign" href="#love" aria-label="Open Vibe Love">
     <svg viewBox="0 0 13 11" shape-rendering="crispEdges" aria-hidden="true"><path fill="#231c1f" d="M2 0h3v1h1v1h1V1h1V0h3v1h1v1h1v4h-1v1h-1v1h-1v1H9v1H8v1H5v-1H4V9H3V8H2V7H1V6H0V2h1V1h1z"/><path fill="#ff5c86" d="M2 1h3v1h1v1h1V2h1V1h3v1h1v4h-1v1h-1v1H9v1H8v1H5V9H4V8H3V7H2V6H1V2h1z"/><path fill="#ffc2d2" d="M2 2h2v1H3v1H2z"/><path fill="#d93b66" d="M11 3h1v3h-1v1h-1v1H9v1H8v1H7V9h1V8h1V7h1V6h1z"/></svg>
-    <span>Coming<br>soon</span>
-  </div>
-  <div class="side-stage" id="sideR"></div>
+    <span>Vibe<br>Love</span>
+  </a>
+  <a class="side-stage" id="sideR" href="#love" aria-label="Open Vibe Love"></a>
 </aside>
+<section class="love" id="love" hidden aria-label="Vibe Love">
+  <div class="lbarTop"><button class="btn" type="button" id="loveBack">&larr; Back</button><span class="lbrand"><i>&#10084;</i>VIBE LOVE</span><a class="btn playbtn" href="#arena">&#9654; Arena</a></div>
+  <div class="loveBody" id="loveBody"></div>
+</section>
 <section class="guide" id="guide" hidden aria-label="Vibe Arena guide">
   <div class="gbar">
     <button class="btn" type="button" id="gBack">&larr; Back</button>
@@ -1410,6 +1509,7 @@
         <span class="found-label" aria-live="polite" id="foundLabel">Personalities found <span id="count">0</span>/9</span>
         <div class="w3 w3main" id="w3main" aria-live="polite"></div>
         <a class="btn playbtn" href="#arena">&#9654; Play Vibe Arena</a>
+        <a class="btn lovebtn" href="#love">&#128152; Vibe Love</a>
         <a class="btn guidebtn" href="#guide">&#128214; Game Guide</a>
         <button class="btn" id="gifBtn" type="button">Make GIF</button>
         <button class="btn" id="sound" type="button" aria-pressed="true">Sound: on</button>
@@ -5152,7 +5252,7 @@
   }
   function w3Init(){
     w3Ready = true; drawW3(); w3Hook(); applyFolkLocks();
-    { const sp = sideBots.find(x => x.name === 'Pip'); if (sp && !sp.chains){ sp.chains = chainUp(sp); sp.el.classList.add('chained'); } } // sağdaki Pip: yakında, zincirde
+    // sağdaki Pip artık serbest: Vibe Love açıldı
     setTimeout(() => { w3Hook(); drawW3(); }, 400); // MetaMask duyurusu geç gelebilir
     setInterval(() => { if (W3.addr && !document.hidden) w3Refresh(); }, 60000);
   }
@@ -5523,6 +5623,166 @@
   window.addEventListener('hashchange', guideRoute);
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !guideEl.hidden) location.hash = ''; });
   guideRoute();
+  // ===== VIBE LOVE (sağ taraf): çiftler, gardırop; ileride akşam yemeği, düğün, bebekler =====
+  const loveEl = document.getElementById('love');
+  const LOVE_KEY = 'vibefolk-love-v1';
+  const GIRLS = ['Pip', 'Lavender'], BOYS = ['Tux', 'Mr. Hat'];
+  const DIVORCE_FOLK = 10e6;
+  const LSTAGES = ['Just met', 'Dinner date', 'Dating', 'Engaged', 'Married', 'Family'];
+  // her karakterin zevki: fav en çok kalp, like biraz
+  const TASTE = {
+    Pip:      {fav:'cute',     like:'fun',      vibe:'Shy & sweet',      say:{fav:['Eee! So cute!','You look adorable!','*blushes*'], like:['Hehe, fun!','I like that.'], meh:['Oh... okay.','Hmm.']}},
+    Lavender: {fav:'romantic', like:'cute',     vibe:'Hopeless romantic', say:{fav:['Like a poem...','My heart!','So dreamy.'], like:['Sweet!','That is lovely.'], meh:['Not very romantic.','Hmm, no.']}},
+    Tux:      {fav:'classy',   like:'romantic', vibe:'True gentleman',    say:{fav:['Simply elegant.','Exquisite, darling.','Magnifique!'], like:['Rather charming.','Very nice.'], meh:['Quite casual...','I see.']}},
+    'Mr. Hat':{fav:'chill',    like:'fun',      vibe:'Sleepy & funny',    say:{fav:['Cozy. I love it.','Zzz... perfect.','Now that is a vibe.'], like:['Ha! Fun.','Nice one.'], meh:['Too fancy...','*yawns*']}}
+  };
+  const TAG_C = {cute:'#ff5c86', romantic:'#b08be0', classy:'#2a2d38', chill:'#2fb58f', fun:'#ffb13a'};
+  // gardırop: [grup, x, y, w, h, renk, sınıf]  (30x50 karakter alanı)
+  const LW_ = '#f3ece2', LK_ = '#231c1f';
+  const LITEMS = {
+    hat:[
+      {k:'flower', name:'Flower crown', tag:'romantic', parts:[['head',4,12.4,22,2,'#4a9a3a',''],['head',4.4,10.6,3,3,'#ff8ac0',''],['head',9.4,10,3,3,'#fff36b',''],['head',14,9.6,3,3,'#ffffff',''],['head',18.6,10,3,3,'#ff8ac0',''],['head',23,10.6,3,3,'#b08be0',''],['head',15,10.6,1,1,'#ffd23f','nol']]},
+      {k:'bow', name:'Big bow', tag:'cute', parts:[['head',16,8,5,6,'#ff5c86',''],['head',22,8,5,6,'#ff5c86',''],['head',20.6,9.4,2,3.2,'#d8203a',''],['head',17,9,2,2,'#ffb0c8','nol'],['head',23,9,2,2,'#ffb0c8','nol']]},
+      {k:'tophat', name:'Top hat', tag:'classy', tier:1, parts:[['head',8,0,14,12,'#1a1a22',''],['head',8,8.6,14,2.2,'#d8432d',''],['head',3,11.6,24,2.4,'#1a1a22',''],['head',9,1,2,7,'#3a3a48','nol']]},
+      {k:'beanie', name:'Cozy beanie', tag:'chill', parts:[['head',3.5,8.6,23,6,'#2fb58f',''],['head',3.5,12.8,23,2.2,'#1f7a5a',''],['head',13,5.6,4,3.4,LW_,''],['head',7,9.6,1,3,'#58d0a8','nol'],['head',12,9.6,1,3,'#58d0a8','nol'],['head',17,9.6,1,3,'#58d0a8','nol'],['head',22,9.6,1,3,'#58d0a8','nol']]},
+      {k:'party', name:'Party hat', tag:'fun', parts:[['head',13.5,2,3,3,'#ffd23f',''],['head',12,5,6,2.4,'#7c5cff',''],['head',10.5,7.4,9,2.4,'#ff5c86',''],['head',9,9.8,12,2.4,'#2fb58f',''],['head',7.5,12.2,15,2,'#7c5cff',''],['head',14.4,0,1.2,2,'#ff8a1a','']]},
+      {k:'tiara', name:'Diamond tiara', tag:'romantic', tier:2, parts:[['head',7,12,16,1.6,'#e8edf2',''],['head',9,10,2,2,'#e8edf2',''],['head',14,8,2,4,'#e8edf2',''],['head',19,10,2,2,'#e8edf2',''],['head',14.4,8.6,1.2,1.2,'#9ff3ff','nol twinkle'],['head',9.4,10.4,1.2,1.2,'#ff8ac0','nol'],['head',19.4,10.4,1.2,1.2,'#ff8ac0','nol']]}
+    ],
+    top:[
+      {k:'suit', name:'Velvet suit', tag:'classy', parts:[['armL',2,31,4,8,'#2a2140',''],['armR',24,31,4,8,'#2a2140',''],['body',6,30,18,13,'#2a2140',''],['body',12,30,6,9,LW_,''],['body',14.2,31,1.6,7,'#d8203a',''],['body',8,30,1.2,12,'#4a3a6a','nol'],['body',20.8,30,1.2,12,'#4a3a6a','nol']]},
+      {k:'hoodie', name:'Comfy hoodie', tag:'chill', parts:[['armL',2,31,4,8,'#8a939c',''],['armR',24,31,4,8,'#8a939c',''],['body',6,30,18,13,'#8a939c',''],['body',9,37,12,4,'#6b737b','nol'],['body',12,30.6,.9,4,LW_,'nol'],['body',17.1,30.6,.9,4,LW_,'nol']]},
+      {k:'sweater', name:'Heart sweater', tag:'cute', parts:[['armL',2,31,4,8,'#ff8aa8',''],['armR',24,31,4,8,'#ff8aa8',''],['body',6,30,18,13,'#ff8aa8',''],['body',11,33,3,2,'#d8203a',''],['body',16,33,3,2,'#d8203a',''],['body',11,35,8,2,'#d8203a',''],['body',12,37,6,1.6,'#d8203a',''],['body',14,38.6,2,1.4,'#d8203a',''],['body',6,41,18,2,'#ff5c86','nol']]},
+      {k:'floral', name:'Floral shirt', tag:'romantic', parts:[['armL',2,31,4,5,'#e8dcff',''],['armR',24,31,4,5,'#e8dcff',''],['body',6,30,18,13,'#e8dcff',''],['body',8,32,2,2,'#ff8ac0','nol'],['body',15,34,2,2,'#b08be0','nol'],['body',20,32,2,2,'#ff8ac0','nol'],['body',10,38,2,2,'#b08be0','nol'],['body',18,39,2,2,'#ff8ac0','nol'],['body',13,30,4,1.4,'#b08be0','nol']]},
+      {k:'vibetee', name:'Vibe tee', tag:'fun', parts:[['armL',2,31,4,4,'#ffd23f',''],['armR',24,31,4,4,'#ffd23f',''],['body',6,30,18,13,'#ffd23f',''],['body',10,33,2,5,LK_,'nol'],['body',12,37,2,2,LK_,'nol'],['body',14,33,2,5,LK_,'nol'],['body',17,33,1.4,6,'#e0643a','nol'],['body',19,33,2,6,LK_,'nol']]},
+      {k:'gown', name:'Star gown', tag:'romantic', tier:2, parts:[['armL',2,31,4,4,'#1a1450',''],['armR',24,31,4,4,'#1a1450',''],['body',5,30,20,14,'#1a1450',''],['legL',7,43,8,4,'#1a1450',''],['legR',15,43,8,4,'#1a1450',''],['body',8,33,1,1,'#ffd23f','nol twinkle'],['body',19,35,1,1,'#ffd23f','nol twinkle'],['body',12,39,1,1,'#fff','nol twinkle'],['body',5,30,20,1.4,'#ffd23f','nol']]}
+    ],
+    acc:[
+      {k:'bowtie', name:'Bow tie', tag:'classy', parts:[['body',11,29.4,3.6,3,'#d8203a',''],['body',15.4,29.4,3.6,3,'#d8203a',''],['body',14,29.8,2,2.2,'#8c1022','']]},
+      {k:'heartglass', name:'Heart glasses', tag:'cute', tier:1, parts:[['head',5,17,8,6,'#ff3a7a',''],['head',17,17,8,6,'#ff3a7a',''],['head',6,16,2.6,2,'#ff3a7a',''],['head',9.6,16,2.6,2,'#ff3a7a',''],['head',18,16,2.6,2,'#ff3a7a',''],['head',21.6,16,2.6,2,'#ff3a7a',''],['head',7,23,4,1.6,'#ff3a7a',''],['head',19,23,4,1.6,'#ff3a7a',''],['head',13,18.4,4,1.2,LK_,'nol'],['head',6.4,17.6,2,1.4,'#ffb0c8','nol'],['head',18.4,17.6,2,1.4,'#ffb0c8','nol']]},
+      {k:'shades', name:'Shades', tag:'chill', parts:[['head',4.6,18.2,20.8,4.6,'#14161c',''],['head',6.2,18.8,3.6,.9,'#6fd3ff','nol'],['head',17.2,18.8,3.6,.9,'#6fd3ff','nol']]},
+      {k:'pearls', name:'Pearl necklace', tag:'romantic', parts:[['body',8,30,2,2,LW_,''],['body',10.6,31,2,2,LW_,''],['body',13.2,31.6,2,2,LW_,''],['body',15.8,31.6,2,2,LW_,''],['body',18.4,31,2,2,LW_,''],['body',21,30,2,2,LW_,'']]},
+      {k:'rose', name:'Red rose', tag:'romantic', tier:1, parts:[['armR',25.4,33,1.2,9,'#2f9a3a',''],['armR',23.6,30.4,4.8,3.6,'#d8203a',''],['armR',24.6,31,2,1.4,'#ff6a7a','nol'],['armR',26.6,36,2,1.2,'#3fbf4a','']]},
+      {k:'scarf', name:'Stripe scarf', tag:'fun', parts:[['body',5,29,20,3.4,'#e0643a',''],['body',8,29,2,3.4,'#ffd23f','nol'],['body',14,29,2,3.4,'#ffd23f','nol'],['body',20,29,2,3.4,'#ffd23f','nol'],['body',17,32,4,7,'#e0643a',''],['body',17,35,4,1.4,'#ffd23f','nol']]}
+    ]
+  };
+  const LSLOTS = [['hat','Hat'], ['top','Outfit'], ['acc','Accessory']];
+  const litem = (slot, k) => LITEMS[slot].find(x => x.k === k);
+  let L2 = {couples:{}, looks:{}};
+  try { const raw = localStorage.getItem(LOVE_KEY); if (raw) L2 = Object.assign(L2, JSON.parse(raw)); } catch(e){}
+  const lsave = () => { try { localStorage.setItem(LOVE_KEY, JSON.stringify(L2)); } catch(e){} };
+  const lookOf = n => L2.looks[n] || {};
+  const partnerOf = n => GIRLS.includes(n) ? (L2.couples[n] || {}).boy : Object.keys(L2.couples).find(g => L2.couples[g].boy === n);
+  const lookParts = look => LSLOTS.flatMap(([s]) => look[s] ? (litem(s, look[s]) || {parts:[]}).parts : []);
+  // partnerin gözünden kıyafet puanı (0-6)
+  function styleScore(wearer, look, judge){
+    const t = TASTE[judge]; if (!t) return 0;
+    return LSLOTS.reduce((s, [slot]) => { const it = look[slot] && litem(slot, look[slot]); return s + (!it ? 0 : it.tag === t.fav ? 2 : it.tag === t.like ? 1 : 0); }, 0);
+  }
+  const hearts = (n, max = 6) => Array.from({length:max/2}, (_, i) => `<i class="${n >= (i + 1)*2 ? 'f' : n === i*2 + 1 ? 'h' : ''}"></i>`).join('');
+  const charFig = (n, look, flip) => { const m = miniOf(n, lookParts(look || lookOf(n))); m.classList.add('lfig'); if (flip) m.classList.add('flip'); return m.outerHTML; };
+  function itemIcon(it){
+    if (!it) return '<span class="lnone">&#10005;</span>';
+    let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+    it.parts.forEach(([, x, y, w, h]) => { x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x + w); y1 = Math.max(y1, y + h); });
+    const pad = 1, W = x1 - x0 + pad*2, H = y1 - y0 + pad*2, s = Math.max(W, H), ox = x0 - pad - (s - W)/2, oy = y0 - pad - (s - H)/2;
+    return svgPx(`${ox} ${oy} ${s} ${s}`, it.parts.map(([, x, y, w, h, c]) => [x, y, w, h, c]));
+  }
+  let lview = 'home', lcouple = null, ldress = null, ltab = 'hat', ldraft = {};
+  function drawLove(){
+    const body = document.getElementById('loveBody');
+    body.innerHTML = lview === 'wardrobe' ? wardrobeHTML() : homeHTML();
+    if (lview === 'wardrobe') document.querySelectorAll('#love .lfit .lfig').forEach(x => x.classList.add('big'));
+  }
+  function homeHTML(){
+    const card = g => {
+      const c = L2.couples[g];
+      if (!c){
+        const opts = BOYS.map(b => { const taken = partnerOf(b); return `<button type="button" class="lpick" data-a="pair" data-g="${g}" data-b="${b}" ${taken ? 'disabled' : ''}>${charFig(b, null, true)}<b>${b}</b><small>${taken ? `with ${taken}` : TASTE[b].vibe}</small></button>`; }).join('');
+        return `<article class="lcard single"><header><h3>${g}</h3><small>${TASTE[g].vibe} · loves <em style="--tc:${TAG_C[TASTE[g].fav]}">${TASTE[g].fav}</em> looks</small></header>
+          <div class="lsingle">${charFig(g)}<div class="lask"><p>Who will ${g} go on a date with?</p><div class="lpicks">${opts}</div></div></div></article>`;
+      }
+      const b = c.boy, st = c.stage || 0;
+      const sGB = styleScore(g, lookOf(g), b), sBG = styleScore(b, lookOf(b), g);
+      return `<article class="lcard"><header><h3>${g} <i class="lh">&#10084;</i> ${b}</h3><small>${LSTAGES[st]}</small></header>
+        <div class="lpair">${charFig(g)}<div class="lmid"><span class="lbig">&#10084;</span><div class="lbar"><i style="width:${c.love || 0}%"></i></div><small>Love ${c.love || 0}%</small></div>${charFig(b, null, true)}</div>
+        <div class="lstyle"><span>${b} rates ${g}'s look <b class="hs">${hearts(sGB)}</b></span><span>${g} rates ${b}'s look <b class="hs">${hearts(sBG)}</b></span></div>
+        <ol class="lsteps">${LSTAGES.map((s, i) => `<li class="${i < st ? 'done' : i === st ? 'now' : ''}">${s}</li>`).join('')}</ol>
+        <div class="lacts"><button type="button" class="btn lbtn pink" data-a="dress" data-g="${g}">&#128087; Dress up</button><button type="button" class="btn lbtn" disabled>&#127837; Dinner date <small>soon</small></button><button type="button" class="btn lbtn ghost" data-a="split" data-g="${g}">&#128148; Break up</button></div></article>`;
+    };
+    return `<div class="lhero"><h2>Find love in Vibe Town</h2><p>Pair the folk, dress them up for each other, then go on dates, get married and start a family. Every character has their own taste.</p></div>
+      <div class="lcards">${GIRLS.map(card).join('')}</div>
+      <div class="ltaste">${[...GIRLS, ...BOYS].map(n => `<span><b>${n}</b> loves <em style="--tc:${TAG_C[TASTE[n].fav]}">${TASTE[n].fav}</em>, likes <em style="--tc:${TAG_C[TASTE[n].like]}">${TASTE[n].like}</em></span>`).join('')}</div>`;
+  }
+  function wardrobeHTML(){
+    const g = lcouple, b = L2.couples[g].boy, who = ldress, partner = who === g ? b : g;
+    const look = ldraft[who];
+    const score = styleScore(who, look, partner), max = 6;
+    const items = LITEMS[ltab].map(it => {
+      const on = look[ltab] === it.k, lock = it.tier && tier() < it.tier;
+      const t = TASTE[partner], rx = it.tag === t.fav ? 'fav' : it.tag === t.like ? 'like' : '';
+      return `<button type="button" class="litem${on ? ' on' : ''}${lock ? ' folk' : ''}" data-a="wear" data-k="${it.k}" style="--tc:${TAG_C[it.tag]}">${itemIcon(it)}<b>${it.name}</b><em>${it.tag}</em>${rx ? `<span class="rx ${rx}">${rx === 'fav' ? '&#10084;&#10084;' : '&#10084;'}</span>` : ''}${it.tier ? `<span class="lmd${lock ? ' lk' : ''}"><span class="mdl">${MEDAL(it.tier)}</span>${lock ? fmtFolk(TIERS[it.tier].min) : ''}</span>` : ''}</button>`;
+    }).join('');
+    const blocked = LSLOTS.some(([s]) => { const it = look[s] && litem(s, look[s]); return it && it.tier && tier() < it.tier; });
+    return `<div class="lwtop"><button type="button" class="btn" data-a="home">&larr; Couples</button><h2>Fitting room <small>${g} &#10084; ${b}</small></h2></div>
+      <div class="lward">
+        <div class="lfit"><div class="lcurtain l"></div><div class="lcurtain r"></div><div class="lmirror"></div>
+          <div class="lstage">${charFig(g, ldraft[g])}${charFig(b, ldraft[b], true)}</div>
+          <div class="lbub" id="lBub"></div>
+          <div class="lwho">${[g, b].map(n => `<button type="button" data-a="who" data-n="${n}" class="${n === who ? 'on' : ''}">Dress ${n}</button>`).join('')}</div>
+        </div>
+        <div class="lpanel">
+          <div class="lmeter"><span>${partner} likes ${who}'s look</span><b class="hs big">${hearts(score, max)}</b><small>${partner} loves <em style="--tc:${TAG_C[TASTE[partner].fav]}">${TASTE[partner].fav}</em> and likes <em style="--tc:${TAG_C[TASTE[partner].like]}">${TASTE[partner].like}</em></small></div>
+          <div class="ltabs">${LSLOTS.map(([s, n]) => `<button type="button" data-a="tab" data-t="${s}" class="${s === ltab ? 'on' : ''}">${n}</button>`).join('')}</div>
+          <div class="litems"><button type="button" class="litem${!look[ltab] ? ' on' : ''}" data-a="wear" data-k="">${itemIcon(null)}<b>None</b></button>${items}</div>
+          <div class="lsave"><button type="button" class="btn lbtn pink" data-a="save" ${blocked ? 'disabled' : ''}>&#10084; Save looks</button>${blocked ? '<small>Some items need $FOLK. Try them on, but hold FOLK to keep them.</small>' : '<small>Better looks earn more love on your dinner date.</small>'}</div>
+        </div>
+      </div>`;
+  }
+  function lbubble(n, kind){
+    const el = document.getElementById('lBub'); if (!el) return;
+    el.textContent = `${n}: "${pick(TASTE[n].say[kind])}"`; el.className = 'lbub show ' + kind;
+    clearTimeout(lbubble.t); lbubble.t = setTimeout(() => el.classList.remove('show'), 2200);
+  }
+  loveEl.addEventListener('click', e => {
+    const a = e.target.closest('[data-a]'); if (!a) return;
+    const act = a.dataset.a;
+    if (act === 'pair'){
+      L2.couples[a.dataset.g] = {boy:a.dataset.b, love:0, stage:0, since:Date.now()}; lsave(); play('clap');
+      toast(`&#10084; ${a.dataset.g} and ${a.dataset.b} are now a couple!`); drawLove();
+    } else if (act === 'dress'){
+      lcouple = a.dataset.g; const b = L2.couples[lcouple].boy;
+      ldress = lcouple; ltab = 'hat'; ldraft = {[lcouple]:{...lookOf(lcouple)}, [b]:{...lookOf(b)}};
+      lview = 'wardrobe'; drawLove(); loveEl.scrollTop = 0;
+    } else if (act === 'home'){ lview = 'home'; drawLove(); }
+    else if (act === 'who'){ ldress = a.dataset.n; drawLove(); }
+    else if (act === 'tab'){ ltab = a.dataset.t; drawLove(); }
+    else if (act === 'wear'){
+      const k = a.dataset.k, who = ldress, partner = who === lcouple ? L2.couples[lcouple].boy : lcouple;
+      ldraft[who] = {...ldraft[who], [ltab]:k || undefined}; if (!k) delete ldraft[who][ltab];
+      drawLove();
+      const it = k && litem(ltab, k), t = TASTE[partner];
+      if (it){ const kind = it.tag === t.fav ? 'fav' : it.tag === t.like ? 'like' : 'meh'; lbubble(partner, kind); play(kind === 'fav' ? 'heart' : kind === 'like' ? 'clap' : 'bonk'); }
+    } else if (act === 'save'){
+      Object.entries(ldraft).forEach(([n, l]) => { L2.looks[n] = l; }); lsave(); play('heart');
+      toast('&#10084; Looks saved. They can not stop staring at each other.'); lview = 'home'; drawLove();
+    } else if (act === 'split'){
+      const g = a.dataset.g, b = L2.couples[g].boy;
+      if ((W3.bal || 0) < DIVORCE_FOLK){ toast(`&#128148; A break up needs ${fmtFolk(DIVORCE_FOLK)} $FOLK in your wallet. Love is not cheap.`); if (!W3.addr) w3Connect(); return; }
+      if (!a.dataset.sure){ a.dataset.sure = '1'; a.innerHTML = `&#128148; Sure? Tap again`; setTimeout(() => { a.dataset.sure = ''; a.innerHTML = '&#128148; Break up'; }, 3000); return; }
+      delete L2.couples[g]; lsave(); play('bonk'); toast(`${g} and ${b} went separate ways.`); drawLove();
+    }
+  });
+  function loveRoute(){
+    const on = location.hash === '#love';
+    if (on && loveEl.hidden){ lview = 'home'; drawLove(); loveEl.scrollTop = 0; }
+    loveEl.hidden = !on;
+    if (on) document.documentElement.style.overflow = 'hidden';
+    else if (location.hash !== '#arena' && location.hash !== '#guide') document.documentElement.style.overflow = '';
+  }
+  window.addEventListener('hashchange', loveRoute);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !loveEl.hidden) location.hash = ''; });
+  document.getElementById('loveBack').addEventListener('click', () => { location.hash = ''; });
+  loveRoute();
   window.addEventListener('hashchange', route);
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !arenaEl.hidden && modal.hidden) location.hash = ''; });
   route();
