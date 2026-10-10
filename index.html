@@ -1111,9 +1111,16 @@
   .ldstage.wed{gap:clamp(140px,30vw,300px) !important}
   .loff{position:absolute;left:50%;bottom:44%;translate:-50% 0;z-index:1}
   .loff .lbot{--u:clamp(2.6px,.36vw,3.6px)}
-  .lguests{position:absolute;bottom:4%;display:flex;gap:6px;z-index:3}
+  .lguests{position:absolute;bottom:2%;display:flex;flex-direction:column;align-items:center;z-index:3}
   .lguests.l{left:1.5%} .lguests.r{right:1.5%}
-  .lguests .lbot{--u:clamp(2px,.28vw,3px)}
+  .lguests .lbot{--u:clamp(2.8px,.38vw,4px)}
+  .lgrow{display:flex;gap:4px} .lgrow.back{margin-bottom:-26%;z-index:0;filter:brightness(.94)} .lgrow.front{z-index:1}
+  .lguests .lsay{font-size:12px;max-width:150px}
+  .lguests.l .lsay{left:0;translate:0 0} .lguests.l .lsay::after{left:20px}
+  .lguests.r .lsay{left:auto;right:0;translate:0 0} .lguests.r .lsay::after{left:auto;right:20px}
+  .ldbg.l .lsay{left:0;translate:0 0} .ldbg.l .lsay::after{left:20px}
+  .ldbg.r .lsay{left:auto;right:0;translate:0 0} .ldbg.r .lsay::after{left:auto;right:20px}
+  .lguests .bot:hover,.ldbg .bot:hover{filter:brightness(1.08) drop-shadow(0 0 6px #fff)}
   .lconf{position:absolute;top:0;width:7px;height:10px;z-index:8;pointer-events:none}
   .lbigheart{position:absolute;z-index:9;translate:-50% -50%;font-size:110px;color:#ff3a7a;text-shadow:5px 5px 0 #9e2447;pointer-events:none}
   .lbouquet{position:absolute;left:0;top:0;z-index:9;font-size:34px;pointer-events:none}
@@ -1172,6 +1179,24 @@
   .lbmact a.btn{text-decoration:none;color:var(--ink)}
   .lbmodal .lbtn.ghost{color:#fff;border-color:#fff}
   @media (max-width:640px){ .lncrib{width:90px;height:60px} .lnwin{width:70px;height:60px} .lkids .lbot{--u:1.8px} .lnftart .bot{--u:4.2px} }
+  /* restoran arka plan masaları, momentler, müzisyen */
+  .ldbg{position:absolute;bottom:40%;z-index:1;display:flex;flex-direction:column;align-items:center;filter:saturate(.85)}
+  .ldbg.l{left:3%} .ldbg.r{right:3%}
+  .ldbgrow{display:flex;gap:22px}
+  .ldbg .lbot{--u:clamp(1.8px,.24vw,2.6px)}
+  .ldbgtable{display:flex;align-items:flex-end;justify-content:center;gap:10px;width:120%;margin-top:-22%;height:26px;background:#fff;border:3px solid var(--line);font-size:16px;line-height:1;padding-bottom:2px;position:relative;z-index:2}
+  .ldbgtable i{width:6px;height:14px;background:#fff8e8;border:2px solid var(--line);position:relative;top:-14px}
+  .ldbg .lsay{font-size:12px;max-width:170px}
+  .lfly{position:absolute;left:0;top:0;z-index:9;font-size:30px;pointer-events:none;filter:drop-shadow(2px 3px 0 rgba(0,0,0,.3))}
+  .lmusic{position:absolute !important;left:2%;bottom:10%;z-index:4}
+  .lmusic .lbot{--u:clamp(2.8px,.42vw,4.2px)}
+  .lmusic .lsay{left:0;translate:0 0} .lmusic .lsay::after{left:24px}
+  .lmoments{display:flex;flex-wrap:wrap;align-items:center;gap:6px;border-top:2px dashed #ffd0dc;padding-top:10px}
+  .lmoments span{font-family:"Pixelify Sans", monospace;font-weight:700;color:#9e2447;margin-right:4px}
+  .lmom{font:inherit;font-size:13px;font-weight:700;padding:5px 10px;border:2px solid var(--line);background:#fff3c4;cursor:pointer;box-shadow:2px 2px 0 var(--line)}
+  .lmom:hover:not(:disabled){background:#ffe3ee;translate:0 -1px}
+  .lmom:disabled{opacity:.45;cursor:default;text-decoration:line-through}
+  @media (max-width:640px){ .ldbg{bottom:44%} .ldbg .lbot{--u:1.4px} .ldbgrow{gap:8px} .ldbgtable{height:18px;font-size:11px} .lguests .lbot{--u:1.9px} .lmusic .lbot{--u:2.4px} .lguests .lsay,.ldbg .lsay{font-size:10px;max-width:110px;padding:3px 6px;border-width:2px} .lmusic{left:1%!important;bottom:6%!important} }
   @media (max-width:820px){ .lward{grid-template-columns:1fr} .lfit{min-height:330px} .lfig.big{--mu:3.6px} .lmirror{width:90px;height:110px} .lcurtain{width:30px} }
   @media (max-width:640px){ .lcards{grid-template-columns:1fr} .lfig{--mu:2.4px} .lsingle{flex-direction:column} .lbtn.ghost{margin-left:0} }
   @media (prefers-reduced-motion: reduce){ .lbig,.lbrand i,.lbub.show{animation:none} .lbub.show{opacity:1} }
@@ -5997,8 +6022,8 @@
   function lhop(b){ if (!b || !b.el.isConnected) return; b.rig.animate([{transform:T()},{transform:T(0,-u(b)*4)},{transform:T()}],{duration:420, easing:'ease-out'}); }
   function lhearts(b, n = 4){ if (!b || !b.el.isConnected) return; floaty(b, HEART, {n, size:4.5, dur:1600, y:8, spread:20, stagger:140}); b.el.classList.add('blushing'); setTimeout(() => b.el.classList.remove('blushing'), 1400); }
   function lsay(b, txt, ms = 2200){ if (!b || !b.el.isConnected) return; const s = b.bub; s.textContent = txt; s.classList.remove('show'); void s.offsetWidth; s.classList.add('show'); clearTimeout(b.sayT); b.sayT = setTimeout(() => s.classList.remove('show'), ms); }
-  function lreact(b, judge, kind){
-    lsay(b, pick(TASTE[judge].say[kind || 'meh'])); lwave(b);
+  function lreact(b, judge, kind, wave = true){
+    lsay(b, pick(TASTE[judge].say[kind || 'meh'])); if (wave) lwave(b); else folkAnim(b, 'chew');
     lhearts(b, kind === 'fav' ? 6 : kind === 'like' ? 3 : 1);
     play(kind === 'fav' ? 'heart' : 'clap');
   }
@@ -6225,9 +6250,13 @@
     liveBot(g, null, true, st, VEIL);
     // nikah memuru ve misafirler
     const off = document.createElement('div'); off.className = 'loff'; scene.appendChild(off); liveBot(OFFICIANT, null, false, off, [], '__off');
+    const off0 = LBOT.__off; off0.el.style.pointerEvents = 'auto'; off0.el.style.cursor = 'pointer';
+    off0.el.addEventListener('click', () => { lsay(off0, pick(['Please, no talking during the vows.','Ahem. Where was I?','Love is... optimal.']), 1600); folkAnim(off0, 'think'); });
     const guests = bots.map(x => x.name).filter(n => ![b, g, OFFICIANT].includes(n));
     ['l', 'r'].forEach((side, i) => { const box = document.createElement('div'); box.className = 'lguests ' + side; scene.appendChild(box);
-      guests.filter((_, j) => j % 2 === i).forEach(n => liveBot(n, null, side === 'r', box, null, '__g' + n)); });
+      const mine = guests.filter((_, j) => j % 2 === i), back = document.createElement('div'), front = document.createElement('div');
+      back.className = 'lgrow back'; front.className = 'lgrow front'; box.append(back, front);
+      mine.forEach((n, j) => folkLive(n, j < 2 ? back : front, side === 'r', 'wed', '__g' + n)); });
     drawWedPanel();
   }
   function drawWedPanel(){
@@ -6412,18 +6441,135 @@
     x.fillStyle = '#231c1f'; x.fillRect(28, 796, 544, 36); x.fillStyle = '#ffb0c8'; x.font = F(18); x.fillText(`Parents: ${b} ♥ ${g}`, 50, 820); x.textAlign = 'right'; x.fillText('Vibe Love', 550, 820);
     cv.toBlob(bl => { const a = document.createElement('a'); a.href = URL.createObjectURL(bl); a.download = `vibe-baby-${babyId(bb.seed)}.png`; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); });
   }
+  // ===== Etkileşimli Vibe Folk: restoranda yemek yiyenler ve düğün misafirleri =====
+  const FOLK_REACT = {
+    Armor:    {anim:'spin',   dine:['BEEP. Delicious.','Calculating... tasty.','More oil, please.'],        wed:['BEEP BOOP. Congratulations.','Crying.exe has started.','Love detected!']},
+    Mist:     {anim:'fade',   dine:['Boo! ...sorry.','I only eat ghost peppers.','Is this seat taken?'],    wed:['I am not crying, I am misty.','Booo-tiful!','Something old, something boo.']},
+    Pip:      {anim:'blush',  dine:['*blushes*','Hi... hehe.','This cake is so cute!'],                      wed:['So romantic!','I want a wedding too!','*happy tears*']},
+    Honey:    {anim:'hug',    dine:['Want some honey?','Mmm, sweet!','Bear hug!'],                           wed:['Sweetest day ever!','Group hug!','Honey for the newlyweds!']},
+    Goggles:  {anim:'think',  dine:['Fascinating soup.','Optimal pasta ratio.','Hypothesis: delicious.'],    wed:['Love: 100% confirmed.','Taking notes...','Statistically adorable.']},
+    Captain:  {anim:'cheer',  dine:['Ahoy! Great steak!','More bread, matey!','Arr, tasty!'],                wed:['To the happy crew!','Hip hip hooray!','Anchors aweigh, lovebirds!']},
+    Lavender: {anim:'hearts', dine:['Love is in the air~','Candles are so dreamy.','Such a cute couple!'],    wed:['Like a fairytale~','Throw the bouquet here!','My heart!']},
+    Tux:      {anim:'bow',    dine:['Bonjour!','Exquisite wine.','A fine evening.'],                         wed:['Splendid ceremony!','A toast to love!','Magnifique!']},
+    'Mr. Hat':{anim:'sleep',  dine:['Zzz... huh? Food?','Wake me for dessert.','Cozy place.'],               wed:['Zzz... is it over?','Nice party... yawn.','I love weddings. And naps.']}
+  };
+  const ZZ = '<svg viewBox="0 0 5 5" shape-rendering="crispEdges"><path fill="#7c5cff" d="M0 0h5v1H3v1H2v1H1v1h4v1H0V4h1V3h1V2h1V1H0z"/></svg>';
+  const NOTE = '<svg viewBox="0 0 6 8" shape-rendering="crispEdges"><path fill="#231c1f" d="M3 0h3v2H4v4H3v1H2v1H0V6h1V5h2z"/><path fill="#ffd23f" d="M4 0h2v1H4zM1 6h1v1H1z"/></svg>';
+  function folkAnim(b, kind){
+    const k = u(b);
+    if (kind === 'spin') b.rig.animate([{transform:T()},{transform:T(0,-k*3,180)},{transform:T(0,0,360)}],{duration:700});
+    else if (kind === 'fade') b.rig.animate([{opacity:1},{opacity:.2},{opacity:1}],{duration:900});
+    else if (kind === 'blush'){ b.el.classList.add('blushing'); setTimeout(() => b.el.classList.remove('blushing'), 1500); floaty(b, HEART, {n:2, size:4, dur:1300, y:10}); }
+    else if (kind === 'hug'){ b.g.armL.animate([{transform:'rotate(0)'},{transform:'rotate(70deg)'},{transform:'rotate(0)'}],{duration:900}); b.g.armR.animate([{transform:'rotate(0)'},{transform:'rotate(-70deg)'},{transform:'rotate(0)'}],{duration:900}); floaty(b, HEART, {n:3, size:4, dur:1300, y:10}); }
+    else if (kind === 'think') b.g.head.animate([{transform:'rotate(0)'},{transform:'rotate(-12deg)'},{transform:'rotate(-12deg)'},{transform:'rotate(0)'}],{duration:1200});
+    else if (kind === 'cheer'){ b.g.armL.animate([{transform:'rotate(0)'},{transform:'rotate(160deg)'},{transform:'rotate(0)'}],{duration:800}); b.g.armR.animate([{transform:'rotate(0)'},{transform:'rotate(-160deg)'},{transform:'rotate(0)'}],{duration:800}); lhop(b); }
+    else if (kind === 'hearts') floaty(b, HEART, {n:5, size:4, dur:1500, y:8, spread:20});
+    else if (kind === 'bow') b.rig.animate([{transform:T()},{transform:T(0,k*1,18)},{transform:T(0,k*1,18)},{transform:T()}],{duration:1000});
+    else if (kind === 'sleep') floaty(b, ZZ, {n:3, size:3.6, dur:1600, x:22, y:6, spread:6, stagger:300});
+    else if (kind === 'chew') b.g.head.animate([{transform:'translateY(0)'},{transform:`translateY(${k*.8}px)`},{transform:'translateY(0)'},{transform:`translateY(${k*.8}px)`},{transform:'translateY(0)'}],{duration:700});
+  }
+  // tıklanabilir Vibe Folk: her dokunuşta sıradaki tepki
+  function folkLive(name, parent, flip, ctx, key){
+    const b = liveBot(name, null, flip, parent, null, key);
+    b.el.style.pointerEvents = 'auto'; b.el.style.cursor = 'pointer'; b.el.removeAttribute('tabindex'); b.el.setAttribute('aria-label', `Tap ${name}`);
+    let n = 0; const R = FOLK_REACT[name] || FOLK_REACT.Tux;
+    b.el.addEventListener('click', e => {
+      e.stopPropagation();
+      const anims = [R.anim, 'cheer', 'hearts'];
+      const grp = b.el.closest('.lguests,.ldbg'); const sc = grp && grp.parentElement; if (sc) sc.querySelectorAll('.lguests .lsay.show,.ldbg .lsay.show').forEach(x => { if (x !== b.bub) x.classList.remove('show'); });
+      lsay(b, R[ctx][n % R[ctx].length], 1800); folkAnim(b, anims[n % anims.length]); play(n % 2 ? 'clap' : 'poke'); n++;
+    });
+    return b;
+  }
+  // restoranın arka planındaki masalar
+  function dinerTables(scene, couple){
+    const pool = ['Mist','Honey','Goggles','Captain','Pip','Lavender','Tux','Mr. Hat'].filter(n => !couple.includes(n));
+    const pick4 = pool.slice(0, 4);
+    [['l', pick4.slice(0, 2)], ['r', pick4.slice(2, 4)]].forEach(([side, names]) => {
+      const box = document.createElement('div'); box.className = 'ldbg ' + side; scene.appendChild(box);
+      const row = document.createElement('div'); row.className = 'ldbgrow'; box.appendChild(row);
+      names.forEach((n, i) => folkLive(n, row, i === 1, 'dine', '__d' + n));
+      box.insertAdjacentHTML('beforeend', `<div class="ldbgtable"><span>${pick(['&#127837;','&#127829;','&#127843;','&#129367;'])}</span><i></i><span>${pick(['&#127863;','&#129380;','&#127846;'])}</span></div>`);
+    });
+    return pool.slice(4); // kalanlar müzisyen olabilir
+  }
+  // bir eşyayı birinden diğerine uçur
+  async function flyItem(scene, from, to, html){
+    if (!scene || !from || !to) return;
+    const s = scene.getBoundingClientRect(), a = from.hold.getBoundingClientRect(), c = to.hold.getBoundingClientRect();
+    const x0 = a.left - s.left + a.width*.75, y0 = a.top - s.top + a.height*.62, x1 = c.left - s.left + c.width*.25, y1 = c.top - s.top + c.height*.62;
+    const it = document.createElement('span'); it.className = 'lfly'; it.innerHTML = html; scene.appendChild(it);
+    await it.animate([{translate:`${x0}px ${y0}px`, scale:.6},{translate:`${(x0 + x1)/2}px ${Math.min(y0, y1) - 50}px`, scale:1.3},{translate:`${x1}px ${y1}px`, scale:1}],{duration:900, easing:'ease-in-out', fill:'forwards'}).finished;
+    setTimeout(() => it.remove(), 900);
+  }
+  // müzisyen: kemancı ya da şarkıcı masaya gelip çalar
+  const VIOLIN = [['armR',23,28,9,4,'#a0622d',''],['armR',24,29,6,2,'#c8884a','nol'],['armR',30,25,1,9,'#231c1f',''],['armR',20,26,12,.7,'#e8dcc0','']];
+  const MIC = [['armR',25,30,2,7,'#2a2d38',''],['armR',24,27,4,3.4,'#8a939c',''],['armR',24.6,27.6,2.8,1,'#c8ccd4','nol']];
+  let musicBusy = false;
+  async function musician(kind, name){
+    const st = document.getElementById('lDin'); if (!st || musicBusy) return; musicBusy = true;
+    const scene = st.parentElement, def = defOf(name);
+    const mb = liveBot(name, null, false, scene, def.parts.length ? (lookParts(lookOf(name)).concat(kind === 'violin' ? VIOLIN : MIC)) : [], '__music');
+    mb.hold.classList.add('lmusic');
+    const W = scene.clientWidth, go = mb.hold.animate([{translate:`${-W*.25}px 0`},{translate:'0 0'}],{duration:1100, easing:'ease-out', fill:'forwards'});
+    mb.rig.animate([{transform:T()},{transform:T(0,-3)},{transform:T()}],{duration:260, iterations:4});
+    await go.finished; if (!mb.hold.isConnected){ musicBusy = false; return; }
+    lsay(mb, kind === 'violin' ? 'A love song for you two...' : '♪ La la la, l\'amour! ♪', 2200);
+    const tune = kind === 'violin' ? [523, 659, 784, 659, 698, 880, 784, 659, 523] : [392, 440, 523, 440, 392, 330, 392, 523];
+    tune.forEach((f, i) => tone(f, f, i*.28, .26, kind === 'violin' ? 'sawtooth' : 'triangle', .025));
+    for (let i = 0; i < 6; i++){ setTimeout(() => { if (mb.el.isConnected){ floaty(mb, NOTE, {n:1, size:3.4, dur:1500, x:24, y:16, spread:16}); mb.rig.animate([{transform:T(0,0,-4)},{transform:T(0,0,4)},{transform:T(0,0,-4)}],{duration:420}); } }, i*420); }
+    await wait(2600);
+    [ldin.b, ldin.g].forEach((n, i) => setTimeout(() => { lhearts(LBOT[n], 6); folkAnim(LBOT[n], 'chew'); }, i*250));
+    lsay(LBOT[ldin.g], pick(['That is beautiful!','My favorite song!','*swoons*']), 1800);
+    await wait(1400);
+    const back = mb.hold.animate([{translate:'0 0'},{translate:`${-W*.25}px 0`}],{duration:1000, easing:'ease-in', fill:'forwards'});
+    await back.finished; mb.hold.remove(); delete LBOT.__music; musicBusy = false;
+  }
+  const MOMENTS = [
+    {k:'rose',   ico:'&#127801;', name:'Give a rose',     any:true},
+    {k:'salt',   ico:'&#129474;', name:'Pass the salt',   dinner:true},
+    {k:'bread',  ico:'&#129366;', name:'Pass the bread',  dinner:true},
+    {k:'violin', ico:'&#127931;', name:'Call a violinist', any:true},
+    {k:'singer', ico:'&#127908;', name:'Call a singer',   any:true}
+  ];
+  async function doMoment(k){
+    const d = ldin; if (!d || d.used[k]) return; d.used[k] = true;
+    const B = LBOT[d.b], G = LBOT[d.g], scene = document.querySelector('.ldin'); drawDinPanel();
+    if (k === 'rose'){
+      lsay(B, pick(['A rose for you.','For the loveliest one here.','This made me think of you.']), 1800);
+      await flyItem(scene, B, G, '&#127801;');
+      const fav = TASTE[d.g].fav === 'romantic' || TASTE[d.g].like === 'romantic';
+      lsay(G, fav ? pick(['A rose for me?! I love it!','My heart is melting!']) : pick(['Aww, thank you!','So sweet of you!']), 2000);
+      lhearts(G, fav ? 8 : 4); lhop(G); d.pts.extra += fav ? 3 : 2; play('heart');
+    } else if (k === 'salt' || k === 'bread'){
+      const asker = Math.random() < .5 ? G : B, giver = asker === G ? B : G, item = k === 'salt' ? '&#129474;' : '&#129366;';
+      lsay(asker, k === 'salt' ? 'Could you pass the salt, please?' : 'Could you pass the bread?', 1600); await wait(900);
+      lsay(giver, pick(['Of course!','Here you go!','Anything for you.']), 1300);
+      await flyItem(scene, giver, asker, item);
+      lsay(asker, pick(['Thank you, darling!','So kind of you!','Merci!']), 1500); lhearts(asker, 2); folkAnim(asker, 'chew'); d.pts.extra += 1; play('clap');
+    } else {
+      const name = d.musicians && d.musicians.length ? d.musicians[k === 'violin' ? 0 : d.musicians.length - 1] : 'Armor';
+      await musician(k === 'violin' ? 'violin' : 'mic', name); d.pts.extra += 2;
+    }
+  }
   // ---- akşam yemeği
   function startDinner(g, venue = 'dinner'){
     const b = L2.couples[g].boy;
-    ldin = {g, b, venue, pick:null, step:'menu', dish:null, drink:null, round:0, opts:[], pts:{look:styleScore(lookOf(b), g) + styleScore(lookOf(g), b), food:0, talk:0}};
+    ldin = {g, b, venue, pick:null, used:{}, step:'menu', dish:null, drink:null, round:0, opts:[], pts:{look:styleScore(lookOf(b), g) + styleScore(lookOf(g), b), food:0, talk:0, extra:0}};
     lview = 'dinner'; drawLove(); loveEl.scrollTop = 0;
   }
   function drawDinner(){
     const d = ldin, {g, b} = d;
     body().innerHTML = `<div class="lwtop"><button type="button" class="btn" data-a="home">&larr; Couples</button><h2>${VENUES[d.venue].name} <small>${b} &#10084; ${g}</small></h2></div>
       ${sceneHTML(d.venue)}<div class="ldpanel" id="lDPanel"></div>`;
-    const st = document.getElementById('lDin');
+    const st = document.getElementById('lDin'), scene = st.parentElement;
     liveBot(b, null, false, st); liveBot(g, null, true, st);
+    d.musicians = d.venue === 'dinner' ? dinerTables(scene, [b, g]) : ['Mist','Honey','Goggles','Captain','Pip','Lavender','Tux','Mr. Hat'].filter(n => n !== b && n !== g).slice(-2);
+    // yemek yerken arada bir çiğneme (el sallama yok)
+    waveT = setInterval(() => {
+      const ks = Object.keys(LBOT).filter(k => k.startsWith('__d') || (d.venue === 'dinner' && d.dish && (k === b || k === g)));
+      const k = ks.length && pick(ks); if (k && LBOT[k]) folkAnim(LBOT[k], Math.random() < .25 && k.startsWith('__d') ? 'cheer' : 'chew');
+    }, 1800);
     drawDinPanel();
   }
   // garson: robot uşak tepsiyle gelir, servis yapar, gider
@@ -6467,17 +6613,18 @@
       const R = d.round === 2 ? {...LTALK[2], topic:V.toast} : LTALK[d.round], speaker = R.who === 'boy' ? d.b : R.who === 'girl' ? d.g : 'Both', listener = R.who === 'boy' ? d.g : R.who === 'girl' ? d.b : 'Both';
       if (!d.opts.length){ const tags = Object.keys(R.lines); d.opts = tags.sort(() => Math.random() - .5).slice(0, 3); }
       p.innerHTML = prog + `<p class="ldq"><b>${R.topic}.</b> ${R.who === 'both' ? `Pick a toast for ${d.b} and ${d.g}.` : `What should ${speaker} say to ${listener}?`}</p>
-        <div class="ldlines">${d.opts.map(t => `<button type="button" class="ldl" data-a="say" data-t="${t}" style="--tc:${TAG_C[t]}"><span>&ldquo;${R.lines[t]}&rdquo;</span><em>${t}</em></button>`).join('')}</div>`;
+        <div class="ldlines">${d.opts.map(t => `<button type="button" class="ldl" data-a="say" data-t="${t}" style="--tc:${TAG_C[t]}"><span>&ldquo;${R.lines[t]}&rdquo;</span><em>${t}</em></button>`).join('')}</div>
+        <div class="lmoments"><span>Moments</span>${MOMENTS.filter(m => m.any || (m.dinner && d.venue === 'dinner')).map(m => `<button type="button" class="lmom" data-a="moment" data-k="${m.k}" ${d.used[m.k] ? 'disabled' : ''}>${m.ico} ${m.name}</button>`).join('')}</div>`;
     } else {
-      const c = L2.couples[d.g], tot = (d.pts.look + d.pts.food + d.pts.talk)*LOVE_SPEED;
+      const c = L2.couples[d.g], tot = (d.pts.look + d.pts.food + d.pts.talk + d.pts.extra)*LOVE_SPEED;
       p.innerHTML = prog + `<div class="ldres"><h3>${d.up ? (d.up === 2 ? '&#128145; They are officially dating!' : '&#127881; First date done!') : 'What a lovely evening!'}</h3>
-        <ul><li><span>&#128087; Looks</span><b>+${d.pts.look*LOVE_SPEED}</b></li><li><span>${V.ico} ${d.venue === 'dinner' ? 'Food &amp; drinks' : V.step}</span><b>+${d.pts.food*LOVE_SPEED}</b></li><li><span>&#128172; Conversation</span><b>+${d.pts.talk*LOVE_SPEED}</b></li><li class="tot"><span>&#10084; Love</span><b>+${tot}</b></li></ul>
+        <ul><li><span>&#128087; Looks</span><b>+${d.pts.look*LOVE_SPEED}</b></li><li><span>${V.ico} ${d.venue === 'dinner' ? 'Food &amp; drinks' : V.step}</span><b>+${d.pts.food*LOVE_SPEED}</b></li><li><span>&#128172; Conversation</span><b>+${d.pts.talk*LOVE_SPEED}</b></li>${d.pts.extra ? `<li><span>&#10024; Sweet moments</span><b>+${d.pts.extra*LOVE_SPEED}</b></li>` : ''}<li class="tot"><span>&#10084; Love</span><b>+${tot}</b></li></ul>
         <div class="lbar big"><i style="width:${c.love}%"></i></div><small>Love ${c.love}% · ${LSTAGES[c.stage]}${c.love < DATING_AT ? ` · ${DATING_AT}% to start dating` : c.stage === 2 && c.love < PROPOSE_AT ? ` · ${PROPOSE_AT}% to propose` : c.stage === 2 ? ' · Ready to propose! &#128141;' : ''}</small>
         <div class="lsave"><button type="button" class="btn lbtn" data-a="home">&larr; Couples</button><button type="button" class="btn lbtn pink" data-a="dress" data-g="${d.g}">&#128087; New looks</button></div></div>`;
     }
   }
   function judge(listener, tag){ // tepki + puan
-    const k = kindOf(tag, listener); lreact(LBOT[listener], listener, k);
+    const k = kindOf(tag, listener); lreact(LBOT[listener], listener, k, false);
     return k === 'fav' ? 2 : k === 'like' ? 1 : 0;
   }
   // ---- tıklamalar
@@ -6523,13 +6670,14 @@
       L2.couples[lcouple].babies[+m.dataset.i].name = v; lsave(); play('heart'); toast(`&#128118; Welcome to the family, ${v.replace(/[<>&]/g, '')}!`); m.remove(); drawLove(); }
     else if (act === 'bclose'){ a.closest('.lbmodal').remove(); if (lview === 'nursery') drawLove(); }
     else if (act === 'order'){ ldin[a.dataset.kind] = a.dataset.k; play('poke'); drawDinPanel(); }
+    else if (act === 'moment') doMoment(a.dataset.k);
     else if (act === 'vpick'){ ldin.pick = a.dataset.k; play('poke'); drawDinPanel(); }
     else if (act === 'eat' && ldin.venue !== 'dinner'){
       const d = ldin, o = VENUES[d.venue].opts.find(x => x.k === d.pick);
       d.pts.food = [d.b, d.g].reduce((s, n) => s + (kindOf(o.tag, n) === 'fav' ? 2 : kindOf(o.tag, n) === 'like' ? 1 : 0), 0)*2;
       d.step = 'talk'; d.round = 0; d.opts = [];
       const pr = document.getElementById('lProp') || document.getElementById('lMovie'); if (pr) pr.innerHTML = o.ico;
-      lreact(LBOT[d.b], d.b, kindOf(o.tag, d.b)); setTimeout(() => lreact(LBOT[d.g], d.g, kindOf(o.tag, d.g)), 600);
+      lreact(LBOT[d.b], d.b, kindOf(o.tag, d.b), false); setTimeout(() => lreact(LBOT[d.g], d.g, kindOf(o.tag, d.g), false), 600);
       drawDinPanel();
     }
     else if (act === 'eat'){
@@ -6539,7 +6687,7 @@
       const kb = kindOf(tags[0], d.b), kg = kindOf(tags[0], d.g), food = all.find(x => x.k === d.dish).ico + all.find(x => x.k === d.drink).ico;
       d.wait = true; drawDinPanel();
       waiter(food, pick(['Bon appetit!','Your dinner, lovebirds!','Chef\'s special for two!']), () => {
-        setPlates(); lreact(LBOT[d.b], d.b, kb); setTimeout(() => lreact(LBOT[d.g], d.g, kg), 600);
+        setPlates(); lreact(LBOT[d.b], d.b, kb, false); setTimeout(() => lreact(LBOT[d.g], d.g, kg, false), 600);
         setTimeout(() => { d.wait = false; drawDinPanel(); }, 900);
       });
     } else if (act === 'say'){
@@ -6567,7 +6715,7 @@
     lview = 'wardrobe'; drawLove(); loveEl.scrollTop = 0;
   }
   function finishDinner(){
-    const d = ldin, c = L2.couples[d.g], tot = (d.pts.look + d.pts.food + d.pts.talk)*LOVE_SPEED, was = c.stage || 0;
+    const d = ldin, c = L2.couples[d.g], tot = (d.pts.look + d.pts.food + d.pts.talk + d.pts.extra)*LOVE_SPEED, was = c.stage || 0;
     c.love = Math.min(100, (c.love || 0) + tot);
     c.dates = {day:today(), n:(c.dates && c.dates.day === today() ? c.dates.n : 0) + 1};
     c.stage = Math.max(was, 1, c.love >= DATING_AT ? 2 : 0);
