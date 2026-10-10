@@ -1175,6 +1175,44 @@
   @media (max-width:820px){ .lward{grid-template-columns:1fr} .lfit{min-height:330px} .lfig.big{--mu:3.6px} .lmirror{width:90px;height:110px} .lcurtain{width:30px} }
   @media (max-width:640px){ .lcards{grid-template-columns:1fr} .lfig{--mu:2.4px} .lsingle{flex-direction:column} .lbtn.ghost{margin-left:0} }
   @media (prefers-reduced-motion: reduce){ .lbig,.lbrand i,.lbub.show{animation:none} .lbub.show{opacity:1} }
+
+  /* ---- ana sayfa: bebek kreşi ---- */
+  .babyyard{margin:26px 0 18px;--u:3.2px}
+  .bhead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+  .bhead h2{margin:0;font-family:"Pixelify Sans", monospace;font-size:30px}
+  .bhead small{color:var(--ink-soft);font-weight:700}
+  .bhead .lovebtn{margin-left:auto;text-decoration:none}
+  .byard{position:relative;height:calc(var(--u)*62);border:4px solid var(--line);box-shadow:6px 6px 0 var(--line);overflow:hidden;
+    background:linear-gradient(180deg,transparent 0 62%,#ffd6e4 62%),repeating-linear-gradient(90deg,#fff0f5 0 34px,#ffe3ee 34px 68px)}
+  .byard::before{content:"";position:absolute;left:0;right:0;top:62%;height:4px;background:#ffb0c8}
+  .byard::after{content:"\2601\FE0E  \2601\FE0E";position:absolute;left:8%;top:10%;font-size:34px;color:#fff;letter-spacing:60px;text-shadow:3px 3px 0 #ffd6e4}
+  .bkid{position:absolute;left:0;bottom:calc(var(--u)*4);z-index:2;will-change:transform}
+  .bkid .bflip{position:relative}
+  .bkid .bot{cursor:pointer}
+  .bkid .tag{display:none}
+  .bname{position:absolute;left:50%;bottom:calc(var(--u)*-4);translate:-50% 0;white-space:nowrap;font-family:"Pixelify Sans", monospace;font-size:11px;font-weight:700;color:#9e2447;background:rgba(255,255,255,.8);padding:0 4px}
+  .bkid.r-rare .bot{filter:drop-shadow(0 0 5px #4a9ae0)} .bkid.r-epic .bot{filter:drop-shadow(0 0 6px #9a6cf0)} .bkid.r-legendary .bot{filter:drop-shadow(0 0 8px #ffb13a)}
+  /* emekleme: gövde öne eğik, kollar ve bacaklar sırayla */
+  .bkid.m-crawl .rig{transform-origin:50% 100%;rotate:20deg;translate:calc(var(--u)*2) calc(var(--u)*6);scale:1 .86}
+  .bkid.m-crawl .g-armL,.bkid.m-crawl .g-legR{animation:bcrawl .5s ease-in-out infinite alternate}
+  .bkid.m-crawl .g-armR,.bkid.m-crawl .g-legL{animation:bcrawl .5s ease-in-out infinite alternate-reverse}
+  @keyframes bcrawl{from{rotate:-28deg}to{rotate:22deg}}
+  /* tıpış tıpış */
+  .bkid.m-toddle .bob{animation:btoddle .38s ease-in-out infinite alternate}
+  @keyframes btoddle{from{rotate:-5deg;translate:0 0}to{rotate:5deg;translate:0 calc(var(--u)*-1.2)}}
+  .bkid.m-toddle .g-legL{animation:bleg .38s ease-in-out infinite alternate} .bkid.m-toddle .g-legR{animation:bleg .38s ease-in-out infinite alternate-reverse}
+  @keyframes bleg{from{rotate:-14deg}to{rotate:14deg}}
+  /* sendeleyen: kollar havada, yalpalar */
+  .bkid.m-wobble .bob{animation:bwobble 1.1s ease-in-out infinite}
+  @keyframes bwobble{0%,100%{rotate:-9deg}25%{rotate:4deg}50%{rotate:10deg}75%{rotate:-3deg}}
+  .bkid.m-wobble .g-armL{rotate:-120deg} .bkid.m-wobble .g-armR{rotate:120deg}
+  .bkid.m-wobble .g-legL{animation:bleg .55s ease-in-out infinite alternate} .bkid.m-wobble .g-legR{animation:bleg .55s ease-in-out infinite alternate-reverse}
+  .lkidrow{display:flex;gap:6px;flex-wrap:wrap;padding:0 14px 6px}
+  .lkidrow span{font-size:12px;font-weight:700;padding:1px 7px;border:2px solid var(--line);background:#fff}
+  .lkidrow .r-rare{background:#e0f0ff} .lkidrow .r-epic{background:#efe6ff} .lkidrow .r-legendary{background:#fff3c4}
+  .gsteps.gstl li em{background:#ff8aa8}
+  @media (max-width:640px){ .babyyard{--u:2.4px} .bhead h2{font-size:24px} }
+  @media (prefers-reduced-motion: reduce){ .bkid .bob,.bkid .g-armL,.bkid .g-armR,.bkid .g-legL,.bkid .g-legR{animation:none !important} }
   /* ---- Oyun rehberi ---- */
   .guide{position:fixed;inset:0;z-index:45;overflow-y:auto;background:var(--paper,#f6f1ea);color:var(--ink);scroll-behavior:smooth}
   .gbar{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:10px;padding:10px 16px;background:#231c1f;border-bottom:4px solid #e0643a}
@@ -1738,6 +1776,10 @@
       </div>
     </div>
   </div>
+  <section class="babyyard" id="babyYard" aria-label="Vibe Baby nursery">
+    <div class="bhead"><h2>Vibe Babies</h2><small class="bcount"></small><a class="btn lovebtn" href="#love">&#128152; Vibe Love</a></div>
+    <div class="byard"></div>
+  </section>
   <footer class="foot">
     <span class="foot-mark">vibe<i>/</i>vibe</span>
     <span>Click, watch, grab your GIF.</span>
@@ -5619,7 +5661,10 @@
   const GT = {
     en:{
       title:'Vibe Arena Guide', sub:'Everything you need to go from your first stab to School Arena champion.', play:'Play now', back:'Back',
-      toc:['Quick start','Fighting','Weapons','Armorer','Magic','Training','Fighters','Maps & rivals','$FOLK holders','Market & sponsors','Leaderboard','Pro tips'],
+      toc:['Quick start','Fighting','Weapons','Armorer','Magic','Training','Fighters','Maps & rivals','$FOLK holders','Market & sponsors','Leaderboard','Pro tips','Vibe Love'],
+      lv_intro:'Vibe Love is the dating side of Vibe Folk. Pair a boy (Tux, Mr. Hat) with a girl (Pip, Lavender) and grow their love from first date to family.',
+      lv_steps:[['Pick a couple','Choose a boy on the left and a girl on the right.'],['Dress them up','Every outfit gets a reaction. Each character loves one style: Pip cute, Lavender romantic, Tux classy, Mr. Hat chill.'],['Go on dates','Dinner, movies, the beach or Vibe Street. Pick what they love and say the right things. 3 dates a day.'],['Propose','At 60% love, pick a ring she likes and kneel. A ring in her style helps her say yes.'],['Wedding','Choose the chapel, beach or garden. All the folk come as guests.'],['Babies','Up to 3 Vibe Babies per couple, one stork visit a day. Babies mix both parents and roll a rarity: Common, Rare, Epic or Legendary.']],
+      lv_note:'Holding $FOLK unlocks special outfits and rings and raises the odds of rare babies. A break up needs 10M $FOLK in your wallet.',
       qs:[['Pick a fighter','Tux is free. Win tournaments to unlock Honey, Goggles, Captain and Armor.'],['Pick a weapon','Start with the MSFT Dagger. Buy and upgrade more at the Weaponsmith.'],['Win 5 duels','Each map has 4 rivals and a boss. Beat all 5 to become champion.'],['Spend your gold','Visit the Vibe Market between fights: weapons, armor, spells and training.'],['Climb the maps','Each championship opens the next, harder map with bigger rewards.']],
       f_intro:'Fights are turn based. You act, then your rival acts. The ring is split into columns: you must be close enough for your weapon to reach.',
       f_cols:['Move','Energy','Damage','Accuracy','What it does'],
@@ -5667,7 +5712,10 @@
     },
     tr:{
       title:'Vibe Arena Rehberi', sub:'İlk hançer darbesinden School Arena şampiyonluğuna kadar bilmen gereken her şey.', play:'Hemen oyna', back:'Geri',
-      toc:['Hızlı başlangıç','Dövüş','Silahlar','Zırhçı','Büyü','Antrenman','Dövüşçüler','Haritalar ve rakipler','$FOLK sahipleri','Borsa ve sponsorlar','Leaderboard','Profesyonel ipuçları'],
+      toc:['Hızlı başlangıç','Dövüş','Silahlar','Zırhçı','Büyü','Antrenman','Dövüşçüler','Haritalar ve rakipler','$FOLK sahipleri','Borsa ve sponsorlar','Leaderboard','Profesyonel ipuçları','Vibe Love'],
+      lv_intro:'Vibe Love, Vibe Folk\'un aşk tarafı. Bir erkeği (Tux, Mr. Hat) bir kızla (Pip, Lavender) eşleştir, ilk randevudan aileye kadar aşklarını büyüt.',
+      lv_steps:[['Çift seç','Solda bir erkek, sağda bir kız seç.'],['Giydir','Her kıyafete tepki gelir. Her karakter bir tarzı sever: Pip cute, Lavender romantic, Tux classy, Mr. Hat chill.'],['Randevuya çık','Akşam yemeği, sinema, plaj ya da Vibe Street. Sevdikleri şeyi seç, doğru lafı söyle. Günde 3 randevu.'],['Evlenme teklifi','Aşk %60 olunca sevdiği tarzda yüzük seç ve diz çök. Doğru yüzük evet deme şansını artırır.'],['Düğün','Kilise, plaj ya da bahçe seç. Tüm Vibe Folk misafir olarak gelir.'],['Bebekler','Her çifte en fazla 3 Vibe Baby, leylek günde bir gelir. Bebekler iki ebeveynden özellik alır, nadirliği Common, Rare, Epic ya da Legendary olur.']],
+      lv_note:'$FOLK tutmak özel kıyafet ve yüzükleri açar, nadir bebek şansını artırır. Ayrılmak için cüzdanda 10M $FOLK gerekir.',
       qs:[['Dövüşçü seç','Tux ücretsiz. Turnuva kazandıkça Honey, Goggles, Captain ve Armor açılır.'],['Silah seç','MSFT Dagger ile başla. Daha fazlasını Weaponsmith\'ten al ve geliştir.'],['5 düelloyu kazan','Her haritada 4 rakip ve 1 boss var. Beşini de yen, şampiyon ol.'],['Altınını harca','Dövüşler arasında Vibe Market\'e uğra: silah, zırh, büyü ve antrenman.'],['Haritaları tırman','Her şampiyonluk bir sonraki, daha zor ve daha çok ödüllü haritayı açar.']],
       f_intro:'Dövüşler sıra tabanlıdır. Önce sen, sonra rakip hamle yapar. Ring sütunlara ayrılır: silahının menzili kadar yakın olmalısın.',
       f_cols:['Hamle','Enerji','Hasar','İsabet','Ne yapar'],
@@ -5717,7 +5765,7 @@
   const gMod = (mod, L) => Object.entries(mod || {}).map(([k, v]) => `${v > 0 ? '+' : ''}${k === 'hp' ? v : Math.round(v*100) + '%'} ${GT[L].mods[k]}`).join(', ') || '·';
   const gIco = (svg, ring = '#e9c64a', cls = '') => `<span class="gico ${cls}" style="--r:${ring}">${svg}</span>`;
   function drawGuide(){
-    const L = GLANG, t = GT[L], ids = ['start','fight','weapons','armor','magic','train','fighters','maps','holders','market','board','tips'];
+    const L = GLANG, t = GT[L], ids = ['start','fight','weapons','armor','magic','train','fighters','maps','holders','market','board','tips','love'];
     const sec = (i, html) => `<section class="gsec" id="g-${ids[i]}"><h2><em>${String(i + 1).padStart(2, '0')}</em>${t.toc[i]}</h2>${html}</section>`;
     const tbl = (cols, rows, cls = '') => `<div class="gtw"><table class="gt ${cls}"><thead><tr>${cols.map(c => `<th>${c}</th>`).join('')}</tr></thead><tbody>${rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
     let h = '';
@@ -5773,6 +5821,7 @@
     h += sec(10, `<p class="glead">${t.l_intro}</p><ul class="glist">${t.l_list.map(x => `<li>${x}</li>`).join('')}</ul>`);
     // 12 ipuçları
     h += sec(11, `<ul class="gtips">${t.tips.map((x, i) => `<li><em>${i + 1}</em>${x}</li>`).join('')}</ul>`);
+    h += sec(12, `<p class="glead">${t.lv_intro}</p><ol class="gsteps gstl">${t.lv_steps.map(([a, b], i) => `<li><em>${i + 1}</em><b>${a}</b><span>${b}</span></li>`).join('')}</ol><div class="gnotes"><p>${t.lv_note}</p></div><p><a class="btn lovebtn" href="#love">&#128152; Vibe Love</a></p>`);
     document.getElementById('gTitle').textContent = t.title;
     document.getElementById('gSub').textContent = t.sub;
     document.getElementById('gPlay').innerHTML = `&#9654; ${t.play}`;
@@ -6002,6 +6051,7 @@
         <div class="lpair"><div class="lmid"><span class="lbig sm">&#10084;</span><div class="lbar"><i style="width:${cp.love || 0}%"></i></div><small>Love ${cp.love || 0}%</small></div></div>
         <div class="lstyle"><span>${g} rates ${b}'s look <b class="hs">${hearts(styleScore(lookOf(b), g))}</b></span><span>${b} rates ${g}'s look <b class="hs">${hearts(styleScore(lookOf(g), b))}</b></span></div>
         <ol class="lsteps">${LSTAGES.map((s, i) => `<li class="${i < st ? 'done' : i === st ? 'now' : ''}">${s}</li>`).join('')}</ol>
+        ${(cp.babies || []).length ? `<div class="lkidrow">${cp.babies.map(k => `<span class="r-${makeBaby(b, g, k.seed, k.holder || 0).rarity.toLowerCase()}">&#128118; ${(k.name || 'Baby').replace(/[<>&]/g, '')}</span>`).join('')}</div>` : ''}
         <div class="lacts"><button type="button" class="btn lbtn" data-a="dress" data-g="${g}">&#128087; Dress up</button>${st < 2 ? `<button type="button" class="btn lbtn pink" data-a="dinner" data-g="${g}" ${left > 0 ? '' : 'disabled'}>&#127837; Dinner date <small>${left}/${DATES_PER_DAY} today</small></button>`
           : `<button type="button" class="btn lbtn pink" data-a="dates" data-g="${g}" ${left > 0 ? '' : 'disabled'}>&#128149; Go on a date <small>${left}/${DATES_PER_DAY} today</small></button>`}
         ${st === 2 ? `<button type="button" class="btn lbtn gold" data-a="propose" data-g="${g}" ${cp.love >= PROPOSE_AT ? '' : 'disabled'}>&#128141; Propose <small>${cp.love >= PROPOSE_AT ? 'ready!' : PROPOSE_AT + '% love'}</small></button>` : ''}
@@ -6258,10 +6308,17 @@
     while (extras.length < nx){ const k = pool[Math.floor(R()*pool.length)]; if (!extras.includes(k)) extras.push(k); }
     if (rarity === 'Legendary') onesie = ['Gold', '#ffd23f'];
     const tops = topperOf(topFrom).map(p => p.slice()), eyes = eyesOf(eyeFrom).map(p => p.slice());
-    const parts = [...tops,
-      ...base({head:skin, body:onesie[1], arm:skin, hand:skin, leg:onesie[1], foot:darker(onesie[1])}),
-      ['body',6,40,18,3,darker(onesie[1], .88),'nol'],['body',14,31,2,2,'#ffffff','flat'],['body',14,35,2,2,'#ffffff','flat'],
-      ...eyes, ...blush(), ...extras.flatMap(k => EXTRAS[k].parts)];
+    const shine = eyes.filter(p => /pupil/.test(p[6] || '')).map(p => [p[0], p[1] + p[3]*.55, p[2] + .2, p[3]*.4, p[4]*.4, '#ffffff', 'nol']);
+    const O = onesie[1], dk = darker(O), sk = skin;
+    const chibi = [ // kocaman kafa, minik gövde ve kısa bacaklar
+      ['legL',9.6,39,4.4,4.6,O,''],['legL',9,42.6,5.4,2.4,dk,''],['legR',16,39,4.4,4.6,O,''],['legR',15.6,42.6,5.4,2.4,dk,''],
+      ['body',8,30,14,10,O,''],['body',8,37.6,14,2.4,darker(O, .9),'nol'],['body',14.2,31.4,1.6,1.6,'#ffffff','flat'],['body',14.2,34.4,1.6,1.6,'#ffffff','flat'],
+      ['head',2,13,26,18,sk,''],['head',3,12,24,1,sk,''],
+      ['armL',4.4,31,3.6,5.4,O,''],['armL',4.4,35.6,3.6,2.4,sk,''],['armR',22,31,3.6,5.4,O,''],['armR',22,35.6,3.6,2.4,sk,'']
+    ];
+    const cheeks = [['head',3.4,25,4.4,2.2,'#ff9ab4','nol'],['head',22.2,25,4.4,2.2,'#ff9ab4','nol']];
+    const parts = [...tops, ...chibi, ...eyes, ...shine, ...cheeks, ...extras.flatMap(k => EXTRAS[k].parts)]
+      .map(p => [p[0], p[1], p[2] + 5, p[3], p[4], p[5], p[6]]); // ayakları zemine indir
     const traits = [['Skin', `${dad} × ${mom} mix`], ['Topper', TOPPER_NAME[topFrom] || topFrom], ['Eyes', extras.includes('laser') ? 'Laser eyes' : EYE_NAME[eyeFrom] || eyeFrom], ['Onesie', onesie[0]],
       ['Extras', extras.filter(k => k !== 'laser').map(k => EXTRAS[k].name).join(', ') || 'None'], ['Aura', rarity === 'Legendary' ? 'Hologram' : rarity === 'Epic' ? 'Sparkle' : 'Soft']];
     return {rarity, parts, traits, holo:rarity === 'Legendary'};
@@ -6519,16 +6576,72 @@
     [d.b, d.g].forEach((n, i) => setTimeout(() => { lwave(LBOT[n]); lhearts(LBOT[n], 6); }, i*300));
     play('heart'); if (d.up) setTimeout(() => play('fight'), 300);
   }
+  // ===== Ana sayfanın en altı: Vibe Baby kreşi, bebekler emekler ya da sendeleyerek yürür =====
+  let yardKids = [];
+  const yard = document.getElementById('babyYard');
+  function babyParade(){
+    if (!yard) return;
+    const lane = yard.querySelector('.byard'); lane.innerHTML = '';
+    const DEMO = [['Tux','Pip',11],['Mr. Hat','Lavender',23],['Tux','Lavender',37],['Mr. Hat','Pip',41],['Tux','Pip',58],['Mr. Hat','Lavender',77]];
+    const real = Object.entries(L2.couples).flatMap(([g, c]) => (c.babies || []).map(k => ({dad:c.boy, mom:g, seed:k.seed, holder:k.holder || 0, name:k.name || 'Baby', mine:true})));
+    const list = real.concat(DEMO.slice(0, Math.max(0, 6 - real.length)).map(([d, m, s], i) => ({dad:d, mom:m, seed:s*7919, holder:i === 0 ? 3 : 0, name:['Bitsy','Momo','Pixel','Nugget','Bean','Lulu'][i]}))).slice(0, innerWidth < 640 ? 4 : 9);
+    const MODES = ['crawl','toddle','wobble'];
+    yardKids = list.map((k, i) => {
+      const B = makeBaby(k.dad, k.mom, k.seed, k.holder), w = document.createElement('div'); w.className = 'bkid r-' + B.rarity.toLowerCase();
+      const fl = document.createElement('div'); fl.className = 'bflip'; w.appendChild(fl);
+      const tag = document.createElement('span'); tag.className = 'bname'; tag.textContent = k.name + (k.mine ? ' ♥' : ''); w.appendChild(tag);
+      lane.appendChild(w);
+      const b = build({name:k.name, act:'poke', parts:B.parts}, i, fl); b.el.tabIndex = -1; if (B.holo) b.el.classList.add('holo');
+      b.el.setAttribute('aria-label', `${k.name}, a ${B.rarity} Vibe Baby`);
+      const mode = MODES[i % 3];
+      const kid = {w, fl, b, mode, x:Math.random(), dir:Math.random() < .5 ? 1 : -1, speed:mode === 'crawl' ? .018 : mode === 'toddle' ? .03 : .022, busy:false, t:Math.random()*10};
+      w.classList.add('m-' + mode);
+      b.el.addEventListener('click', e => { e.stopPropagation(); if (kid.busy) return; speak(b, pick(['Goo goo!','Ba-ba!','Hehe!','Mama?','*giggles*','Bloop!']), 1300); floaty(b, HEART, {n:3, size:4, dur:1400, y:10, spread:14}); play('heart'); kid.pause = 1.4; });
+      return kid;
+    });
+    const cnt = yard.querySelector('.bcount'); if (cnt) cnt.textContent = real.length ? `${real.length} of yours` : 'Make your own in Vibe Love';
+  }
+  if (yard){
+    babyParade();
+    let last = performance.now();
+    const lane = yard.querySelector('.byard');
+    function tick(now){
+      const dt = Math.min(.05, (now - last)/1000); last = now;
+      if (!document.hidden && yard.offsetWidth && !reduce){
+        const W = lane.clientWidth;
+        yardKids.forEach(k => {
+          k.t += dt;
+          if (k.pause > 0){ k.pause -= dt; return; }
+          if (k.busy) return;
+          // sendeleyen bebek ara sıra popo üstü düşer
+          if (k.mode === 'wobble' && Math.random() < dt*.12){ k.busy = true;
+            k.b.rig.animate([{transform:T()},{transform:T(0,u(k.b)*3,-22)},{transform:T(0,u(k.b)*5,0,.96)},{transform:T(0,u(k.b)*5,0,.96)},{transform:T()}],{duration:1600, easing:'ease-out'}).finished.then(() => { k.busy = false; });
+            setTimeout(() => speak(k.b, pick(['Oof!','Uh-oh!','Wah!','Plop!']), 900), 300); return; }
+          k.x += k.dir*k.speed*dt*(k.mode === 'toddle' ? (Math.sin(k.t*7) > -.2 ? 1 : .2) : 1);
+          if (k.x > 1){ k.x = 1; k.dir = -1; } if (k.x < 0){ k.x = 0; k.dir = 1; }
+          if (Math.random() < dt*.08) k.dir *= -1;
+          k.w.style.transform = `translateX(${k.x*(W - k.w.offsetWidth)}px)`;
+          k.fl.style.scale = `${k.dir} 1`;
+        });
+      }
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
   function loveRoute(){
     const on = location.hash === '#love';
     if (on && loveEl.hidden){ lview = 'select'; loveEl.hidden = false; drawLove(); loveEl.scrollTop = 0; }
-    if (!on){ clearInterval(waveT); }
+    if (!on){ clearInterval(waveT); if (!loveEl.hidden) babyParade(); }
     loveEl.hidden = !on;
     if (on) document.documentElement.style.overflow = 'hidden';
     else if (location.hash !== '#arena' && location.hash !== '#guide') document.documentElement.style.overflow = '';
   }
   window.addEventListener('hashchange', loveRoute);
-  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !loveEl.hidden) location.hash = ''; });
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Escape' || loveEl.hidden) return;
+    const m = loveEl.querySelector('.lbmodal'); if (m){ m.remove(); if (lview === 'nursery') drawLove(); return; }
+    location.hash = '';
+  });
   document.getElementById('loveBack').addEventListener('click', () => { location.hash = ''; });
   loveRoute();
   window.addEventListener('hashchange', route);
