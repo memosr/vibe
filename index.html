@@ -911,30 +911,47 @@
   .loveBody{position:relative;max-width:1100px;margin:0 auto;padding:22px 16px 60px;display:flex;flex-direction:column;gap:18px}
   .lhero h2{margin:0;font-family:"Pixelify Sans", monospace;font-size:clamp(28px,5vw,48px);color:#5a1028;text-shadow:3px 3px 0 #fff}
   .lhero p{margin:4px 0 0;max-width:640px;font-size:16px;color:#5a1a30}
+  .lbot{--u:4px;flex:none;position:relative}
+  .lbot.flip{scale:-1 1} .lbot.flip .say{scale:-1 1}
+  .lbot .tag{display:none}
+  .lbot.big{--u:5.4px}
+  .lbot .bot{cursor:default}
+  .lgal{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:stretch}
+  .lside{background:rgba(255,255,255,.75);border:4px solid var(--line);box-shadow:6px 6px 0 #9e2447;padding:10px 12px 14px}
+  .lside h3{margin:0 0 6px;font-family:"Pixelify Sans", monospace;font-size:18px;letter-spacing:.1em;text-transform:uppercase}
+  .lside.boys h3{color:#2a74bd} .lside.girls h3{color:#d8203a;text-align:right}
+  .lrow{display:flex;gap:12px;justify-content:center}
+  .lnft{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;padding:30px 10px 10px;background:#fff;border:3px solid var(--line);box-shadow:4px 4px 0 var(--line);cursor:pointer;font:inherit;transition:translate .15s}
+  .lnft:hover{translate:0 -3px}
+  .lnft b{font-family:"Pixelify Sans", monospace;font-size:17px;margin-top:10px}
+  .lnft small{font-size:11px;color:#9e2447} .lnft small.lwith{color:#fff;background:#ff5c86;padding:0 5px;font-weight:700}
+  .lnft.sel{background:#ffe3ee;outline:4px solid #ff3a7a;outline-offset:-8px;box-shadow:4px 4px 0 var(--line),0 0 22px #ff5c86}
+  .boys .lnft.sel{background:#e3f0ff;outline-color:#2a74bd;box-shadow:4px 4px 0 var(--line),0 0 22px #5fa8ff}
+  .lnft.sel::after{content:"\2714";position:absolute;top:6px;right:8px;width:22px;height:22px;display:grid;place-items:center;background:#ff3a7a;color:#fff;font-weight:700;border:2px solid var(--line);font-size:12px}
+  .boys .lnft.sel::after{background:#2a74bd}
+  .lcenter{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-width:220px;padding:10px}
+  .lnames{display:flex;align-items:center;gap:8px;font-family:"Pixelify Sans", monospace;font-size:22px}
+  .lnames i{font-style:normal;color:#ff3a7a}
+  .lhint{margin:0;text-align:center;font-weight:700;color:#5a1a30;max-width:220px}
+  .lhint.warn{color:#b8402f}
+  .lbtn.big{font-size:17px;padding:10px 18px}
   .lcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:18px}
+  .lcards:empty{display:none}
   .lcard{background:#fff8fb;border:4px solid var(--line);box-shadow:6px 6px 0 #9e2447;display:flex;flex-direction:column}
   .lcard header{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:10px 14px;background:#ff5c86;color:#fff;border-bottom:4px solid var(--line);flex-wrap:wrap}
   .lcard h3{margin:0;font-family:"Pixelify Sans", monospace;font-size:22px;text-shadow:2px 2px 0 #9e2447}
   .lcard header small{font-weight:700;font-size:12px}
-  .lcard.single header{background:#b08be0}
   .lh{font-style:normal;color:#ffe3ee}
-  .lcard em,.ltaste em,.lmeter em{font-style:normal;font-weight:700;color:#fff;background:var(--tc);padding:0 5px;border:2px solid var(--line)}
-  .lfig{--mu:3px;flex:none} .lfig.flip{scale:-1 1} .lfig.big{--mu:5px}
-  .lpair,.lsingle{display:flex;align-items:flex-end;justify-content:center;gap:16px;padding:18px 12px 8px;background:linear-gradient(180deg,#fff8fb 70%,#ffd6e4 70%)}
-  .lsingle{justify-content:flex-start;align-items:center}
+  .lcard em,.ltaste em,.lmeter em,.ldq em{font-style:normal;font-weight:700;color:#fff;background:var(--tc);padding:0 5px;border:2px solid var(--line)}
+  .lpair{display:flex;align-items:flex-end;justify-content:center;gap:16px;padding:40px 12px 10px;background:linear-gradient(180deg,#fff8fb 72%,#ffd6e4 72%)}
+  .lpair .lbot{--u:3.2px}
   .lmid{display:flex;flex-direction:column;align-items:center;gap:4px;align-self:center;min-width:110px}
-  .lbig{font-size:38px;color:#ff3a7a;animation:beat 1.4s ease-in-out infinite;text-shadow:3px 3px 0 #9e2447}
+  .lbig{font-size:44px;color:#ff3a7a;animation:beat 1.4s ease-in-out infinite;text-shadow:3px 3px 0 #9e2447;line-height:1}
+  .lbig.sm{font-size:32px}
   .lbar{width:110px;height:14px;border:3px solid var(--line);background:#fff}
-  .lbar i{display:block;height:100%;background:repeating-linear-gradient(90deg,#ff5c86 0 6px,#ff8aa8 6px 12px)}
+  .lbar.big{width:100%;height:20px}
+  .lbar i{display:block;height:100%;background:repeating-linear-gradient(90deg,#ff5c86 0 6px,#ff8aa8 6px 12px);transition:width .8s}
   .lmid small{font-weight:700;font-size:12px}
-  .lask{display:flex;flex-direction:column;gap:8px;flex:1}
-  .lask p{margin:0;font-family:"Pixelify Sans", monospace;font-size:16px}
-  .lpicks{display:flex;gap:10px;flex-wrap:wrap}
-  .lpick{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 10px;background:#fff;border:3px solid var(--line);box-shadow:3px 3px 0 var(--line);cursor:pointer;font:inherit}
-  .lpick .lfig{--mu:2px}
-  .lpick b{font-family:"Pixelify Sans", monospace} .lpick small{font-size:11px;color:#9e2447}
-  .lpick:hover:not(:disabled){background:#ffe3ee;translate:0 -2px}
-  .lpick:disabled{opacity:.45;cursor:not-allowed}
   .lstyle{display:flex;flex-direction:column;gap:2px;padding:8px 14px;font-size:13px;border-top:2px dashed #ffb0c8}
   .lstyle span{display:flex;justify-content:space-between;gap:8px}
   .hs{display:inline-flex;gap:3px}
@@ -945,9 +962,10 @@
   .lsteps li{font-size:11px;font-weight:700;padding:2px 7px;border:2px solid #e8c0cc;color:#b88a98;background:#fff}
   .lsteps li.done{background:#ffd6e4;color:#9e2447;border-color:#9e2447} .lsteps li.now{background:#ff5c86;color:#fff;border-color:var(--line)}
   .lacts{display:flex;gap:8px;flex-wrap:wrap;padding:10px 14px 14px}
-  .lbtn{font-weight:700} .lbtn.pink{background:#ff5c86;color:#fff} .lbtn.ghost{background:transparent;margin-left:auto}
-  .lbtn small{font-size:10px;opacity:.7} .lbtn:disabled{opacity:.6;cursor:not-allowed}
-  .ltaste{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:13px;background:rgba(255,255,255,.7);border:3px solid var(--line);padding:10px 12px}
+  .love .lbtn{font-weight:700} .love .lbtn.pink{background:#ff5c86;color:#fff} .love .lbtn.ghost{background:transparent;margin-left:auto}
+  .love .lbtn small{font-size:10px;opacity:.8} .love .lbtn:disabled{opacity:.55;cursor:not-allowed}
+  .ltaste{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;background:rgba(255,255,255,.7);border:3px solid var(--line);padding:10px 12px}
+  .lbot .say{white-space:normal;width:max-content;max-width:240px;text-align:center;line-height:1.2}
   .lwtop{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
   .lwtop h2{margin:0;font-family:"Pixelify Sans", monospace;font-size:30px;color:#5a1028;text-shadow:2px 2px 0 #fff}
   .lwtop h2 small{font-size:15px;color:#9e2447}
@@ -986,6 +1004,51 @@
   .litem.folk svg{opacity:.7}
   .lsave{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
   .lsave small{font-size:12px;color:#5a1a30;flex:1}
+  /* akşam yemeği */
+  .ldin{position:relative;height:clamp(300px,42vw,420px);border:4px solid var(--line);box-shadow:6px 6px 0 #9e2447;overflow:hidden;
+    background:repeating-linear-gradient(90deg,#5a1a2a 0 40px,#4a1422 40px 80px)}
+  .ldin::before{content:"";position:absolute;left:0;right:0;top:58%;bottom:0;background:repeating-linear-gradient(90deg,#6b3a22 0 60px,#5a2e1a 60px 120px);border-top:4px solid #2a120a}
+  .ldwin{position:absolute;left:50%;top:22px;translate:-50% 0;width:200px;height:120px;border:6px solid #e9c64a;box-shadow:0 0 0 3px var(--line);background:linear-gradient(180deg,#0d1238,#2a1a5a 70%,#5a2a6a);overflow:hidden}
+  .ldwin .moon{position:absolute;right:26px;top:16px;width:28px;height:28px;border-radius:50%;background:#fff3d6;box-shadow:0 0 18px #fff3d6}
+  .ldwin .city{position:absolute;left:0;right:0;bottom:0;height:46px;background:
+    linear-gradient(#ffd23f,#ffd23f) 12px 14px/4px 4px no-repeat,linear-gradient(#ffd23f,#ffd23f) 40px 24px/4px 4px no-repeat,linear-gradient(#ffd23f,#ffd23f) 120px 10px/4px 4px no-repeat,linear-gradient(#ffd23f,#ffd23f) 160px 28px/4px 4px no-repeat,
+    linear-gradient(180deg,transparent 0 10px,#14102a 10px) 0 0/30px 100%,linear-gradient(180deg,transparent 0 0,#1a1434 0) 30px 16px/36px 100% no-repeat,linear-gradient(#14102a,#14102a) 66px 4px/40px 100% no-repeat,linear-gradient(#1a1434,#1a1434) 106px 20px/50px 100% no-repeat,linear-gradient(#14102a,#14102a) 156px 0/50px 100% no-repeat}
+  .ldlamp{position:absolute;left:50%;top:0;translate:-50% 0;width:360px;height:280px;background:radial-gradient(ellipse at 50% 0%,rgba(255,220,140,.35),transparent 70%);pointer-events:none}
+  .ldstage{position:absolute;left:0;right:0;bottom:16%;display:flex;justify-content:center;gap:clamp(90px,22vw,230px);z-index:2}
+  .ldstage .lbot{--u:clamp(3.2px,.5vw,5px)}
+  .ldtable{position:absolute;left:50%;bottom:6%;translate:-50% 0;width:min(60%,460px);height:20%;z-index:3;background:linear-gradient(180deg,#fff 0 18%,#f3ece2 18% 100%);border:4px solid var(--line);box-shadow:0 6px 0 #2a120a}
+  .ldtable::after{content:"";position:absolute;left:8%;right:8%;top:100%;height:30px;background:linear-gradient(90deg,transparent 0 6%,#3a1e10 6% 10%,transparent 10% 90%,#3a1e10 90% 94%,transparent 94%)}
+  .ldtable .cand{position:absolute;top:-34px;width:10px;height:34px;background:#fff8e8;border:2px solid var(--line)}
+  .ldtable .cand.l{left:38%} .ldtable .cand.r{right:38%}
+  .ldtable .cand i{position:absolute;left:50%;top:-16px;translate:-50% 0;width:10px;height:14px;background:radial-gradient(ellipse at 50% 70%,#fff3b0,#ffb13a 55%,transparent 72%);animation:flame .18s steps(2) infinite alternate;filter:drop-shadow(0 0 8px #ffb13a)}
+  .ldtable .plate{position:absolute;top:-8px;font-size:clamp(18px,2.4vw,28px);letter-spacing:4px}
+  .ldtable .plate.l{left:10%} .ldtable .plate.r{right:10%}
+  .ldtable .vase{position:absolute;left:50%;top:-30px;translate:-50% 0;font-size:26px}
+  .ldpanel{background:#fff8fb;border:4px solid var(--line);box-shadow:6px 6px 0 #9e2447;padding:12px 14px;display:flex;flex-direction:column;gap:12px}
+  .ldprog{list-style:none;margin:0;padding:0;display:flex;gap:4px;flex-wrap:wrap}
+  .ldprog li{font-size:11px;font-weight:700;padding:2px 8px;border:2px solid #e8c0cc;color:#b88a98;background:#fff}
+  .ldprog li.done{background:#ffd6e4;color:#9e2447;border-color:#9e2447} .ldprog li.now{background:#ff5c86;color:#fff;border-color:var(--line)}
+  .ldq{margin:0;font-size:15px}
+  .ldmenus{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .ldmenu{display:flex;flex-direction:column;gap:6px;background:#fffdf6;border:3px solid var(--line);padding:10px;background-image:repeating-linear-gradient(0deg,transparent 0 23px,#f0e4d0 23px 24px)}
+  .ldmenu h4{margin:0 0 4px;font-family:"Pixelify Sans", monospace;font-size:17px;text-align:center;border-bottom:2px dashed #d8c0a0;padding-bottom:4px}
+  .ldm{display:flex;align-items:center;gap:8px;padding:6px 8px;background:#fff;border:2px solid var(--line);cursor:pointer;font:inherit;text-align:left}
+  .ldm .ico{font-size:22px} .ldm b{flex:1;font-size:14px}
+  .ldm em{font-style:normal;font-size:10px;font-weight:700;color:#fff;background:var(--tc);padding:0 5px}
+  .ldm:hover{background:#fff3c4} .ldm.on{background:#ffe3ee;outline:3px solid #ff3a7a;outline-offset:-4px}
+  .ldlines{display:grid;gap:8px}
+  .ldl{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fff;border:3px solid var(--line);box-shadow:3px 3px 0 var(--line);cursor:pointer;font:inherit;text-align:left;font-size:15px}
+  .ldl span{flex:1} .ldl em{font-style:normal;font-size:10px;font-weight:700;color:#fff;background:var(--tc);padding:0 5px}
+  .ldl:hover:not(:disabled){background:#ffe3ee;translate:0 -2px}
+  .ldl:disabled{opacity:.55;cursor:default}
+  .ldres h3{margin:0 0 8px;font-family:"Pixelify Sans", monospace;font-size:24px;color:#9e2447}
+  .ldres ul{list-style:none;margin:0 0 10px;padding:0;display:grid;gap:4px;max-width:360px}
+  .ldres li{display:flex;justify-content:space-between;font-size:15px;border-bottom:2px dashed #ffd0dc;padding:2px 0}
+  .ldres li b{font-family:"Pixelify Sans", monospace;color:#d8203a}
+  .ldres li.tot{font-weight:700;font-size:17px;border-bottom:0}
+  .ldres small{display:block;margin:4px 0 10px;font-weight:700}
+  @media (max-width:820px){ .lgal{grid-template-columns:1fr 1fr} .lcenter{grid-column:1 / -1;grid-row:2} .ldmenus{grid-template-columns:1fr} }
+  @media (max-width:640px){ .lgal{grid-template-columns:1fr} .lside.girls h3{text-align:left} .lbot{--u:3px} .lbot.big{--u:3.6px} .lnft{padding:26px 6px 8px} .lpair .lbot{--u:2.6px} .ldwin{width:130px;height:80px} }
   @media (max-width:820px){ .lward{grid-template-columns:1fr} .lfit{min-height:330px} .lfig.big{--mu:3.6px} .lmirror{width:90px;height:110px} .lcurtain{width:30px} }
   @media (max-width:640px){ .lcards{grid-template-columns:1fr} .lfig{--mu:2.4px} .lsingle{flex-direction:column} .lbtn.ghost{margin-left:0} }
   @media (prefers-reduced-motion: reduce){ .lbig,.lbrand i,.lbub.show{animation:none} .lbub.show{opacity:1} }
@@ -5623,22 +5686,22 @@
   window.addEventListener('hashchange', guideRoute);
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !guideEl.hidden) location.hash = ''; });
   guideRoute();
-  // ===== VIBE LOVE (sağ taraf): çiftler, gardırop; ileride akşam yemeği, düğün, bebekler =====
+  // ===== VIBE LOVE (sağ taraf): seçim, gardırop, akşam yemeği; ileride düğün ve bebekler =====
   const loveEl = document.getElementById('love');
   const LOVE_KEY = 'vibefolk-love-v1';
   const GIRLS = ['Pip', 'Lavender'], BOYS = ['Tux', 'Mr. Hat'];
-  const DIVORCE_FOLK = 10e6;
+  const DIVORCE_FOLK = 10e6, DATES_PER_DAY = 3, DATING_AT = 30;
   const LSTAGES = ['Just met', 'Dinner date', 'Dating', 'Engaged', 'Married', 'Family'];
   // her karakterin zevki: fav en çok kalp, like biraz
   const TASTE = {
-    Pip:      {fav:'cute',     like:'fun',      vibe:'Shy & sweet',      say:{fav:['Eee! So cute!','You look adorable!','*blushes*'], like:['Hehe, fun!','I like that.'], meh:['Oh... okay.','Hmm.']}},
-    Lavender: {fav:'romantic', like:'cute',     vibe:'Hopeless romantic', say:{fav:['Like a poem...','My heart!','So dreamy.'], like:['Sweet!','That is lovely.'], meh:['Not very romantic.','Hmm, no.']}},
-    Tux:      {fav:'classy',   like:'romantic', vibe:'True gentleman',    say:{fav:['Simply elegant.','Exquisite, darling.','Magnifique!'], like:['Rather charming.','Very nice.'], meh:['Quite casual...','I see.']}},
-    'Mr. Hat':{fav:'chill',    like:'fun',      vibe:'Sleepy & funny',    say:{fav:['Cozy. I love it.','Zzz... perfect.','Now that is a vibe.'], like:['Ha! Fun.','Nice one.'], meh:['Too fancy...','*yawns*']}}
+    Pip:      {fav:'cute',     like:'fun',      vibe:'Shy & sweet',       hi:'H-hi...',       say:{fav:['Eee! I like you!','That suits you so much!','*blushes* So cute!'], like:['Hehe, nice look!','That looks good on you!'], meh:['Aww, you look nice!','Cute anyway!']}},
+    Lavender: {fav:'romantic', like:'cute',     vibe:'Hopeless romantic', hi:'Hello, darling', say:{fav:['My heart! I like you!','You look like a poem!','That suits you perfectly.'], like:['So sweet on you!','Lovely choice!'], meh:['You look nice tonight.','I still like you!']}},
+    Tux:      {fav:'classy',   like:'romantic', vibe:'True gentleman',    hi:'Good evening!', say:{fav:['Simply elegant. I like you!','That suits you, darling.','Exquisite!'], like:['Rather charming!','Very nice on you.'], meh:['You look lovely.','Charming as always.']}},
+    'Mr. Hat':{fav:'chill',    like:'fun',      vibe:'Sleepy & funny',    hi:'Oh, hey...',     say:{fav:['Whoa. I like you!','That suits you. Big vibe.','Cozy and cute!'], like:['Ha! Looks good!','Nice one!'], meh:['You look cool.','Still cute!']}}
   };
   const TAG_C = {cute:'#ff5c86', romantic:'#b08be0', classy:'#2a2d38', chill:'#2fb58f', fun:'#ffb13a'};
-  // gardırop: [grup, x, y, w, h, renk, sınıf]  (30x50 karakter alanı)
   const LW_ = '#f3ece2', LK_ = '#231c1f';
+  // gardırop: [grup, x, y, w, h, renk, sınıf]  (30x50 karakter alanı)
   const LITEMS = {
     hat:[
       {k:'flower', name:'Flower crown', tag:'romantic', parts:[['head',4,12.4,22,2,'#4a9a3a',''],['head',4.4,10.6,3,3,'#ff8ac0',''],['head',9.4,10,3,3,'#fff36b',''],['head',14,9.6,3,3,'#ffffff',''],['head',18.6,10,3,3,'#ff8ac0',''],['head',23,10.6,3,3,'#b08be0',''],['head',15,10.6,1,1,'#ffd23f','nol']]},
@@ -5666,6 +5729,16 @@
     ]
   };
   const LSLOTS = [['hat','Hat'], ['top','Outfit'], ['acc','Accessory']];
+  // akşam yemeği menüsü ve konuşmalar
+  const LMENU = {
+    dish:[{k:'pasta', name:'Spaghetti for two', tag:'romantic', ico:'&#127837;'}, {k:'sushi', name:'Sushi platter', tag:'classy', ico:'&#127843;'}, {k:'pizza', name:'Pizza party', tag:'fun', ico:'&#127829;'}, {k:'pancake', name:'Heart pancakes', tag:'cute', ico:'&#129374;'}, {k:'ramen', name:'Warm ramen', tag:'chill', ico:'&#127836;'}],
+    drink:[{k:'cider', name:'Sparkling cider', tag:'classy', ico:'&#129346;'}, {k:'boba', name:'Bubble tea', tag:'fun', ico:'&#129483;'}, {k:'cocoa', name:'Hot cocoa', tag:'chill', ico:'&#9749;'}, {k:'milk', name:'Strawberry milk', tag:'cute', ico:'&#129371;'}, {k:'rosetea', name:'Rose tea', tag:'romantic', ico:'&#127801;'}]
+  };
+  const LTALK = [
+    {who:'boy', topic:'Opening line', lines:{cute:'You look adorable tonight!', romantic:'The candlelight loves you as much as I do.', classy:'Allow me to pull out your chair, my dear.', chill:'This place is cozy. Glad you came.', fun:'I almost wore my lucky socks. Twice.'}},
+    {who:'girl', topic:'Talking about the market', lines:{cute:'I bought a token just because the logo was cute.', romantic:'Holding you feels better than holding $FOLK.', classy:'I only collect blue chips. Like you.', chill:'I never check charts. Too much stress.', fun:'My bags are 90% memes and 10% snacks.'}},
+    {who:'both', topic:'A toast for dessert', lines:{cute:'To us, and to tiny cupcakes!', romantic:'To the first of many dates.', classy:'To fine company and finer taste.', chill:'To slow nights and no alarms.', fun:'To moon bags and pizza!'}}
+  ];
   const litem = (slot, k) => LITEMS[slot].find(x => x.k === k);
   let L2 = {couples:{}, looks:{}};
   try { const raw = localStorage.getItem(LOVE_KEY); if (raw) L2 = Object.assign(L2, JSON.parse(raw)); } catch(e){}
@@ -5673,13 +5746,12 @@
   const lookOf = n => L2.looks[n] || {};
   const partnerOf = n => GIRLS.includes(n) ? (L2.couples[n] || {}).boy : Object.keys(L2.couples).find(g => L2.couples[g].boy === n);
   const lookParts = look => LSLOTS.flatMap(([s]) => look[s] ? (litem(s, look[s]) || {parts:[]}).parts : []);
+  const kindOf = (tag, judge) => { const t = TASTE[judge]; return !tag ? '' : tag === t.fav ? 'fav' : tag === t.like ? 'like' : 'meh'; };
   // partnerin gözünden kıyafet puanı (0-6)
-  function styleScore(wearer, look, judge){
-    const t = TASTE[judge]; if (!t) return 0;
-    return LSLOTS.reduce((s, [slot]) => { const it = look[slot] && litem(slot, look[slot]); return s + (!it ? 0 : it.tag === t.fav ? 2 : it.tag === t.like ? 1 : 0); }, 0);
-  }
+  const styleScore = (look, judge) => LSLOTS.reduce((s, [slot]) => { const it = look[slot] && litem(slot, look[slot]); const k = it ? kindOf(it.tag, judge) : ''; return s + (k === 'fav' ? 2 : k === 'like' ? 1 : 0); }, 0);
   const hearts = (n, max = 6) => Array.from({length:max/2}, (_, i) => `<i class="${n >= (i + 1)*2 ? 'f' : n === i*2 + 1 ? 'h' : ''}"></i>`).join('');
-  const charFig = (n, look, flip) => { const m = miniOf(n, lookParts(look || lookOf(n))); m.classList.add('lfig'); if (flip) m.classList.add('flip'); return m.outerHTML; };
+  const today = () => new Date().toISOString().slice(0, 10);
+  const datesLeft = c => DATES_PER_DAY - ((c.dates && c.dates.day === today()) ? c.dates.n : 0);
   function itemIcon(it){
     if (!it) return '<span class="lnone">&#10005;</span>';
     let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
@@ -5687,94 +5759,225 @@
     const pad = 1, W = x1 - x0 + pad*2, H = y1 - y0 + pad*2, s = Math.max(W, H), ox = x0 - pad - (s - W)/2, oy = y0 - pad - (s - H)/2;
     return svgPx(`${ox} ${oy} ${s} ${s}`, it.parts.map(([, x, y, w, h, c]) => [x, y, w, h, c]));
   }
-  let lview = 'home', lcouple = null, ldress = null, ltab = 'hat', ldraft = {};
+  // ---- canlı NFT'ler: el sallar, konuşur, kalp çıkarır
+  const LBOT = {}; // isim -> canlı karakter
+  function liveBot(name, look, flip, parent){
+    const slot = document.createElement('div'); slot.className = 'lbot' + (flip ? ' flip' : ''); slot.dataset.n = name;
+    parent.appendChild(slot);
+    const def = bots.find(x => x.name === name);
+    const b = build({name, act:'poke', parts:def.parts.concat(lookParts(look || lookOf(name)))}, Math.random()*5, slot);
+    b.el.tabIndex = -1; b.el.style.pointerEvents = 'none';
+    LBOT[name] = b; return b;
+  }
+  function lwave(b){ if (!b || !b.el.isConnected) return; b.g.armR.animate([{transform:'rotate(0deg)'},{transform:'rotate(-160deg)'},{transform:'rotate(-120deg)'},{transform:'rotate(-160deg)'},{transform:'rotate(-120deg)'},{transform:'rotate(0deg)'}],{duration:1100, easing:'ease-in-out'}); }
+  function lhop(b){ if (!b || !b.el.isConnected) return; b.rig.animate([{transform:T()},{transform:T(0,-u(b)*4)},{transform:T()}],{duration:420, easing:'ease-out'}); }
+  function lhearts(b, n = 4){ if (!b || !b.el.isConnected) return; floaty(b, HEART, {n, size:4.5, dur:1600, y:8, spread:20, stagger:140}); b.el.classList.add('blushing'); setTimeout(() => b.el.classList.remove('blushing'), 1400); }
+  function lsay(b, txt, ms = 2200){ if (!b || !b.el.isConnected) return; b.say.style.marginLeft = '0px'; b.say.textContent = txt; b.say.classList.add('show'); clearTimeout(b.sayT); b.sayT = setTimeout(() => b.say.classList.remove('show'), ms); }
+  function lreact(b, judge, kind){
+    lsay(b, pick(TASTE[judge].say[kind || 'meh'])); lwave(b);
+    lhearts(b, kind === 'fav' ? 6 : kind === 'like' ? 3 : 1);
+    play(kind === 'fav' ? 'heart' : 'clap');
+  }
+  // ---- ekranlar
+  let lview = 'select', selB = null, selG = null, lcouple = null, ldress = null, ltab = 'hat', ldraft = {}, ldin = null, waveT = null;
+  const body = () => document.getElementById('loveBody');
   function drawLove(){
-    const body = document.getElementById('loveBody');
-    body.innerHTML = lview === 'wardrobe' ? wardrobeHTML() : homeHTML();
-    if (lview === 'wardrobe') document.querySelectorAll('#love .lfit .lfig').forEach(x => x.classList.add('big'));
+    clearInterval(waveT); Object.keys(LBOT).forEach(k => delete LBOT[k]);
+    if (lview === 'wardrobe') return drawWardrobe();
+    if (lview === 'dinner') return drawDinner();
+    drawSelect();
   }
-  function homeHTML(){
-    const card = g => {
-      const c = L2.couples[g];
-      if (!c){
-        const opts = BOYS.map(b => { const taken = partnerOf(b); return `<button type="button" class="lpick" data-a="pair" data-g="${g}" data-b="${b}" ${taken ? 'disabled' : ''}>${charFig(b, null, true)}<b>${b}</b><small>${taken ? `with ${taken}` : TASTE[b].vibe}</small></button>`; }).join('');
-        return `<article class="lcard single"><header><h3>${g}</h3><small>${TASTE[g].vibe} · loves <em style="--tc:${TAG_C[TASTE[g].fav]}">${TASTE[g].fav}</em> looks</small></header>
-          <div class="lsingle">${charFig(g)}<div class="lask"><p>Who will ${g} go on a date with?</p><div class="lpicks">${opts}</div></div></div></article>`;
-      }
-      const b = c.boy, st = c.stage || 0;
-      const sGB = styleScore(g, lookOf(g), b), sBG = styleScore(b, lookOf(b), g);
-      return `<article class="lcard"><header><h3>${g} <i class="lh">&#10084;</i> ${b}</h3><small>${LSTAGES[st]}</small></header>
-        <div class="lpair">${charFig(g)}<div class="lmid"><span class="lbig">&#10084;</span><div class="lbar"><i style="width:${c.love || 0}%"></i></div><small>Love ${c.love || 0}%</small></div>${charFig(b, null, true)}</div>
-        <div class="lstyle"><span>${b} rates ${g}'s look <b class="hs">${hearts(sGB)}</b></span><span>${g} rates ${b}'s look <b class="hs">${hearts(sBG)}</b></span></div>
-        <ol class="lsteps">${LSTAGES.map((s, i) => `<li class="${i < st ? 'done' : i === st ? 'now' : ''}">${s}</li>`).join('')}</ol>
-        <div class="lacts"><button type="button" class="btn lbtn pink" data-a="dress" data-g="${g}">&#128087; Dress up</button><button type="button" class="btn lbtn" disabled>&#127837; Dinner date <small>soon</small></button><button type="button" class="btn lbtn ghost" data-a="split" data-g="${g}">&#128148; Break up</button></div></article>`;
+  function drawSelect(){
+    const chip = n => { const p = partnerOf(n); return p ? `<small class="lwith">&#10084; with ${p}</small>` : `<small>${TASTE[n].vibe}</small>`; };
+    const c = selG && L2.couples[selG] && L2.couples[selG].boy === selB ? L2.couples[selG] : null;
+    const busy = (selG && partnerOf(selG) && partnerOf(selG) !== selB) ? `${selG} is with ${partnerOf(selG)}.` : (selB && partnerOf(selB) && partnerOf(selB) !== selG) ? `${selB} is with ${partnerOf(selB)}.` : '';
+    let cta;
+    if (!selB || !selG) cta = `<p class="lhint">${!selB && !selG ? 'Pick a boy on the left and a girl on the right.' : !selB ? 'Now pick a boy on the left.' : 'Now pick a girl on the right.'}</p>`;
+    else if (busy) cta = `<p class="lhint warn">&#128148; ${busy} Break up first to change partners.</p>`;
+    else cta = `<button type="button" class="btn lbtn pink big" data-a="go">${c ? '&#10084; Continue' : '&#128087; Dress them up'}</button>`;
+    body().innerHTML = `<div class="lhero"><h2>Find love in Vibe Town</h2><p>Pick a boy and a girl, dress them up for each other, then take them on a dinner date. Every character has their own taste.</p></div>
+      <div class="lgal">
+        <div class="lside boys"><h3>Boys</h3><div class="lrow" id="lBoys"></div></div>
+        <div class="lcenter"><span class="lbig">&#10084;</span><div class="lnames"><b>${selB || '?'}</b><i>&#10084;</i><b>${selG || '?'}</b></div>${cta}</div>
+        <div class="lside girls"><h3>Girls</h3><div class="lrow" id="lGirls"></div></div>
+      </div>
+      <div class="lcards" id="lCouples"></div>
+      <div class="ltaste">${[...BOYS, ...GIRLS].map(n => `<span><b>${n}</b> loves <em style="--tc:${TAG_C[TASTE[n].fav]}">${TASTE[n].fav}</em>, likes <em style="--tc:${TAG_C[TASTE[n].like]}">${TASTE[n].like}</em></span>`).join('')}</div>`;
+    const card = (n, rowId, flip) => {
+      const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'lnft' + ((n === selB || n === selG) ? ' sel' : ''); btn.dataset.a = 'sel'; btn.dataset.n = n;
+      btn.setAttribute('aria-pressed', (n === selB || n === selG) ? 'true' : 'false'); btn.setAttribute('aria-label', `Choose ${n}`);
+      document.getElementById(rowId).appendChild(btn);
+      liveBot(n, null, flip, btn);
+      btn.insertAdjacentHTML('beforeend', `<b>${n}</b>${chip(n)}`);
     };
-    return `<div class="lhero"><h2>Find love in Vibe Town</h2><p>Pair the folk, dress them up for each other, then go on dates, get married and start a family. Every character has their own taste.</p></div>
-      <div class="lcards">${GIRLS.map(card).join('')}</div>
-      <div class="ltaste">${[...GIRLS, ...BOYS].map(n => `<span><b>${n}</b> loves <em style="--tc:${TAG_C[TASTE[n].fav]}">${TASTE[n].fav}</em>, likes <em style="--tc:${TAG_C[TASTE[n].like]}">${TASTE[n].like}</em></span>`).join('')}</div>`;
+    BOYS.forEach(n => card(n, 'lBoys', false)); GIRLS.forEach(n => card(n, 'lGirls', true));
+    // seçilen NFT el sallar
+    const greet = () => [selB, selG].forEach(n => { if (n && LBOT[n]){ lwave(LBOT[n]); lhop(LBOT[n]); } });
+    greet(); waveT = setInterval(greet, 2600);
+    // mevcut çiftler
+    const cs = document.getElementById('lCouples');
+    Object.entries(L2.couples).forEach(([g, cp]) => {
+      const b = cp.boy, st = cp.stage || 0, left = datesLeft(cp);
+      const a = document.createElement('article'); a.className = 'lcard';
+      a.innerHTML = `<header><h3>${b} <i class="lh">&#10084;</i> ${g}</h3><small>${LSTAGES[st]}</small></header>
+        <div class="lpair"><div class="lmid"><span class="lbig sm">&#10084;</span><div class="lbar"><i style="width:${cp.love || 0}%"></i></div><small>Love ${cp.love || 0}%</small></div></div>
+        <div class="lstyle"><span>${g} rates ${b}'s look <b class="hs">${hearts(styleScore(lookOf(b), g))}</b></span><span>${b} rates ${g}'s look <b class="hs">${hearts(styleScore(lookOf(g), b))}</b></span></div>
+        <ol class="lsteps">${LSTAGES.map((s, i) => `<li class="${i < st ? 'done' : i === st ? 'now' : ''}">${s}</li>`).join('')}</ol>
+        <div class="lacts"><button type="button" class="btn lbtn" data-a="dress" data-g="${g}">&#128087; Dress up</button><button type="button" class="btn lbtn pink" data-a="dinner" data-g="${g}" ${left > 0 ? '' : 'disabled'}>&#127837; Dinner date <small>${left}/${DATES_PER_DAY} today</small></button><button type="button" class="btn lbtn ghost" data-a="split" data-g="${g}">&#128148; Break up</button></div>`;
+      const pr = a.querySelector('.lpair');
+      liveBot(b, null, false, pr); pr.appendChild(pr.querySelector('.lmid')); liveBot(g, null, true, pr);
+      cs.appendChild(a);
+    });
   }
-  function wardrobeHTML(){
-    const g = lcouple, b = L2.couples[g].boy, who = ldress, partner = who === g ? b : g;
-    const look = ldraft[who];
-    const score = styleScore(who, look, partner), max = 6;
+  // ---- gardırop
+  function drawWardrobe(){
+    const g = lcouple, b = L2.couples[g].boy;
+    body().innerHTML = `<div class="lwtop"><button type="button" class="btn" data-a="home">&larr; Couples</button><h2>Fitting room <small>${b} &#10084; ${g}</small></h2></div>
+      <div class="lward"><div class="lfit"><div class="lcurtain l"></div><div class="lcurtain r"></div><div class="lmirror"></div><div class="lstage" id="lStage"></div>
+        <div class="lwho" id="lWho"></div></div><div class="lpanel" id="lPanel"></div></div>`;
+    const st = document.getElementById('lStage');
+    liveBot(b, ldraft[b], false, st); liveBot(g, ldraft[g], true, st);
+    st.querySelectorAll('.lbot').forEach(x => x.classList.add('big'));
+    drawWardPanel();
+    setTimeout(() => { lsay(LBOT[b], TASTE[b].hi); lwave(LBOT[b]); setTimeout(() => { lsay(LBOT[g], TASTE[g].hi); lwave(LBOT[g]); }, 700); }, 300);
+  }
+  function drawWardPanel(){
+    const g = lcouple, b = L2.couples[g].boy, who = ldress, partner = who === g ? b : g, look = ldraft[who];
+    document.getElementById('lWho').innerHTML = [b, g].map(n => `<button type="button" data-a="who" data-n="${n}" class="${n === who ? 'on' : ''}">Dress ${n}</button>`).join('');
     const items = LITEMS[ltab].map(it => {
-      const on = look[ltab] === it.k, lock = it.tier && tier() < it.tier;
-      const t = TASTE[partner], rx = it.tag === t.fav ? 'fav' : it.tag === t.like ? 'like' : '';
-      return `<button type="button" class="litem${on ? ' on' : ''}${lock ? ' folk' : ''}" data-a="wear" data-k="${it.k}" style="--tc:${TAG_C[it.tag]}">${itemIcon(it)}<b>${it.name}</b><em>${it.tag}</em>${rx ? `<span class="rx ${rx}">${rx === 'fav' ? '&#10084;&#10084;' : '&#10084;'}</span>` : ''}${it.tier ? `<span class="lmd${lock ? ' lk' : ''}"><span class="mdl">${MEDAL(it.tier)}</span>${lock ? fmtFolk(TIERS[it.tier].min) : ''}</span>` : ''}</button>`;
+      const on = look[ltab] === it.k, lock = it.tier && tier() < it.tier, rx = kindOf(it.tag, partner);
+      return `<button type="button" class="litem${on ? ' on' : ''}${lock ? ' folk' : ''}" data-a="wear" data-k="${it.k}" style="--tc:${TAG_C[it.tag]}">${itemIcon(it)}<b>${it.name}</b><em>${it.tag}</em>${rx !== 'meh' ? `<span class="rx">${rx === 'fav' ? '&#10084;&#10084;' : '&#10084;'}</span>` : ''}${it.tier ? `<span class="lmd${lock ? ' lk' : ''}"><span class="mdl">${MEDAL(it.tier)}</span>${lock ? fmtFolk(TIERS[it.tier].min) : ''}</span>` : ''}</button>`;
     }).join('');
-    const blocked = LSLOTS.some(([s]) => { const it = look[s] && litem(s, look[s]); return it && it.tier && tier() < it.tier; });
-    return `<div class="lwtop"><button type="button" class="btn" data-a="home">&larr; Couples</button><h2>Fitting room <small>${g} &#10084; ${b}</small></h2></div>
-      <div class="lward">
-        <div class="lfit"><div class="lcurtain l"></div><div class="lcurtain r"></div><div class="lmirror"></div>
-          <div class="lstage">${charFig(g, ldraft[g])}${charFig(b, ldraft[b], true)}</div>
-          <div class="lbub" id="lBub"></div>
-          <div class="lwho">${[g, b].map(n => `<button type="button" data-a="who" data-n="${n}" class="${n === who ? 'on' : ''}">Dress ${n}</button>`).join('')}</div>
-        </div>
-        <div class="lpanel">
-          <div class="lmeter"><span>${partner} likes ${who}'s look</span><b class="hs big">${hearts(score, max)}</b><small>${partner} loves <em style="--tc:${TAG_C[TASTE[partner].fav]}">${TASTE[partner].fav}</em> and likes <em style="--tc:${TAG_C[TASTE[partner].like]}">${TASTE[partner].like}</em></small></div>
-          <div class="ltabs">${LSLOTS.map(([s, n]) => `<button type="button" data-a="tab" data-t="${s}" class="${s === ltab ? 'on' : ''}">${n}</button>`).join('')}</div>
-          <div class="litems"><button type="button" class="litem${!look[ltab] ? ' on' : ''}" data-a="wear" data-k="">${itemIcon(null)}<b>None</b></button>${items}</div>
-          <div class="lsave"><button type="button" class="btn lbtn pink" data-a="save" ${blocked ? 'disabled' : ''}>&#10084; Save looks</button>${blocked ? '<small>Some items need $FOLK. Try them on, but hold FOLK to keep them.</small>' : '<small>Better looks earn more love on your dinner date.</small>'}</div>
-        </div>
-      </div>`;
+    const blocked = [b, g].some(n => LSLOTS.some(([s]) => { const it = ldraft[n][s] && litem(s, ldraft[n][s]); return it && it.tier && tier() < it.tier; }));
+    document.getElementById('lPanel').innerHTML = `
+      <div class="lmeter"><span>${partner} likes ${who}'s look</span><b class="hs big">${hearts(styleScore(look, partner))}</b><small>${partner} loves <em style="--tc:${TAG_C[TASTE[partner].fav]}">${TASTE[partner].fav}</em> and likes <em style="--tc:${TAG_C[TASTE[partner].like]}">${TASTE[partner].like}</em></small></div>
+      <div class="ltabs">${LSLOTS.map(([s, n]) => `<button type="button" data-a="tab" data-t="${s}" class="${s === ltab ? 'on' : ''}">${n}</button>`).join('')}</div>
+      <div class="litems"><button type="button" class="litem${!look[ltab] ? ' on' : ''}" data-a="wear" data-k="">${itemIcon(null)}<b>None</b></button>${items}</div>
+      <div class="lsave"><button type="button" class="btn lbtn" data-a="save" ${blocked ? 'disabled' : ''}>&#10084; Save looks</button><button type="button" class="btn lbtn pink" data-a="savego" ${blocked || datesLeft(L2.couples[g]) <= 0 ? 'disabled' : ''}>&#127837; Save &amp; go to dinner</button>
+      <small>${blocked ? 'Some items need $FOLK. Try them on, but hold FOLK to keep them.' : 'Better looks earn more love on the dinner date.'}</small></div>`;
   }
-  function lbubble(n, kind){
-    const el = document.getElementById('lBub'); if (!el) return;
-    el.textContent = `${n}: "${pick(TASTE[n].say[kind])}"`; el.className = 'lbub show ' + kind;
-    clearTimeout(lbubble.t); lbubble.t = setTimeout(() => el.classList.remove('show'), 2200);
+  function rebuildWearer(n){
+    const old = LBOT[n]; if (!old) return;
+    const slot = old.el.parentElement, flip = slot.classList.contains('flip'), st = slot.parentElement, next = slot.nextSibling;
+    slot.remove(); const nb = liveBot(n, ldraft[n], flip, st); nb.el.parentElement.classList.add('big');
+    st.insertBefore(nb.el.parentElement, next); lhop(nb);
   }
+  // ---- akşam yemeği
+  function startDinner(g){
+    const b = L2.couples[g].boy;
+    ldin = {g, b, step:'menu', dish:null, drink:null, round:0, opts:[], pts:{look:styleScore(lookOf(b), g) + styleScore(lookOf(g), b), food:0, talk:0}};
+    lview = 'dinner'; drawLove(); loveEl.scrollTop = 0;
+  }
+  function drawDinner(){
+    const d = ldin, {g, b} = d;
+    body().innerHTML = `<div class="lwtop"><button type="button" class="btn" data-a="home">&larr; Couples</button><h2>Dinner date <small>${b} &#10084; ${g}</small></h2></div>
+      <div class="ldin"><div class="ldwin"><i class="moon"></i><i class="city"></i></div><div class="ldlamp"></div><div class="ldstage" id="lDin"></div>
+        <div class="ldtable"><span class="cand l"><i></i></span><span class="cand r"><i></i></span><span class="plate l" id="lPlB"></span><span class="plate r" id="lPlG"></span><span class="vase">&#127801;</span></div></div>
+      <div class="ldpanel" id="lDPanel"></div>`;
+    const st = document.getElementById('lDin');
+    liveBot(b, null, false, st); liveBot(g, null, true, st);
+    drawDinPanel();
+  }
+  function setPlates(){
+    const f = [ldin.dish, ldin.drink].filter(Boolean).map(k => (LMENU.dish.concat(LMENU.drink)).find(x => x.k === k).ico).join('');
+    ['lPlB', 'lPlG'].forEach(id => { const e = document.getElementById(id); if (e) e.innerHTML = f; });
+  }
+  function drawDinPanel(){
+    const d = ldin, p = document.getElementById('lDPanel'), steps = ['Order', 'Talk 1', 'Talk 2', 'Toast', 'Result'];
+    const cur = d.step === 'menu' ? 0 : d.step === 'talk' ? d.round + 1 : 4;
+    const prog = `<ol class="ldprog">${steps.map((s, i) => `<li class="${i < cur ? 'done' : i === cur ? 'now' : ''}">${s}</li>`).join('')}</ol>`;
+    if (d.step === 'menu'){
+      const col = (kind, title) => `<div class="ldmenu"><h4>${title}</h4>${LMENU[kind].map(x => `<button type="button" class="ldm${d[kind] === x.k ? ' on' : ''}" data-a="order" data-kind="${kind}" data-k="${x.k}" style="--tc:${TAG_C[x.tag]}"><span class="ico">${x.ico}</span><b>${x.name}</b><em>${x.tag}</em></button>`).join('')}</div>`;
+      p.innerHTML = prog + `<p class="ldq">Order for the table. ${d.b} loves <em style="--tc:${TAG_C[TASTE[d.b].fav]}">${TASTE[d.b].fav}</em>, ${d.g} loves <em style="--tc:${TAG_C[TASTE[d.g].fav]}">${TASTE[d.g].fav}</em>.</p>
+        <div class="ldmenus">${col('dish', 'Main course')}${col('drink', 'Drinks')}</div>
+        <div class="lsave"><button type="button" class="btn lbtn pink" data-a="eat" ${d.dish && d.drink ? '' : 'disabled'}>&#127860; Bon appetit</button></div>`;
+    } else if (d.step === 'talk'){
+      const R = LTALK[d.round], speaker = R.who === 'boy' ? d.b : R.who === 'girl' ? d.g : 'Both', listener = R.who === 'boy' ? d.g : R.who === 'girl' ? d.b : 'Both';
+      if (!d.opts.length){ const tags = Object.keys(R.lines); d.opts = tags.sort(() => Math.random() - .5).slice(0, 3); }
+      p.innerHTML = prog + `<p class="ldq"><b>${R.topic}.</b> ${R.who === 'both' ? `Pick a toast for ${d.b} and ${d.g}.` : `What should ${speaker} say to ${listener}?`}</p>
+        <div class="ldlines">${d.opts.map(t => `<button type="button" class="ldl" data-a="say" data-t="${t}" style="--tc:${TAG_C[t]}"><span>&ldquo;${R.lines[t]}&rdquo;</span><em>${t}</em></button>`).join('')}</div>`;
+    } else {
+      const c = L2.couples[d.g], tot = d.pts.look + d.pts.food + d.pts.talk;
+      p.innerHTML = prog + `<div class="ldres"><h3>${d.up ? (d.up === 2 ? '&#128145; They are officially dating!' : '&#127881; First date done!') : 'What a lovely evening!'}</h3>
+        <ul><li><span>&#128087; Looks</span><b>+${d.pts.look}</b></li><li><span>&#127837; Food &amp; drinks</span><b>+${d.pts.food}</b></li><li><span>&#128172; Conversation</span><b>+${d.pts.talk}</b></li><li class="tot"><span>&#10084; Love</span><b>+${tot}</b></li></ul>
+        <div class="lbar big"><i style="width:${c.love}%"></i></div><small>Love ${c.love}% · ${LSTAGES[c.stage]}${c.love < DATING_AT ? ` · ${DATING_AT}% to start dating` : ''}</small>
+        <div class="lsave"><button type="button" class="btn lbtn" data-a="home">&larr; Couples</button><button type="button" class="btn lbtn pink" data-a="dress" data-g="${d.g}">&#128087; New looks</button></div></div>`;
+    }
+  }
+  function judge(listener, tag){ // tepki + puan
+    const k = kindOf(tag, listener); lreact(LBOT[listener], listener, k);
+    return k === 'fav' ? 2 : k === 'like' ? 1 : 0;
+  }
+  // ---- tıklamalar
   loveEl.addEventListener('click', e => {
     const a = e.target.closest('[data-a]'); if (!a) return;
     const act = a.dataset.a;
-    if (act === 'pair'){
-      L2.couples[a.dataset.g] = {boy:a.dataset.b, love:0, stage:0, since:Date.now()}; lsave(); play('clap');
-      toast(`&#10084; ${a.dataset.g} and ${a.dataset.b} are now a couple!`); drawLove();
-    } else if (act === 'dress'){
-      lcouple = a.dataset.g; const b = L2.couples[lcouple].boy;
-      ldress = lcouple; ltab = 'hat'; ldraft = {[lcouple]:{...lookOf(lcouple)}, [b]:{...lookOf(b)}};
-      lview = 'wardrobe'; drawLove(); loveEl.scrollTop = 0;
-    } else if (act === 'home'){ lview = 'home'; drawLove(); }
-    else if (act === 'who'){ ldress = a.dataset.n; drawLove(); }
-    else if (act === 'tab'){ ltab = a.dataset.t; drawLove(); }
+    if (act === 'sel'){
+      const n = a.dataset.n;
+      if (BOYS.includes(n)) selB = selB === n ? null : n; else selG = selG === n ? null : n;
+      play('poke'); drawLove();
+      const b = LBOT[n]; if (b && (n === selB || n === selG)) { lsay(b, TASTE[n].hi); lhearts(b, 2); }
+    } else if (act === 'go'){
+      if (!L2.couples[selG]){ L2.couples[selG] = {boy:selB, love:0, stage:0, since:Date.now()}; lsave(); toast(`&#10084; ${selB} and ${selG} are now a couple!`); play('heart'); }
+      openWardrobe(selG);
+    } else if (act === 'dress') openWardrobe(a.dataset.g);
+    else if (act === 'home'){ lview = 'select'; drawLove(); }
+    else if (act === 'who'){ ldress = a.dataset.n; drawWardPanel(); lhop(LBOT[ldress]); }
+    else if (act === 'tab'){ ltab = a.dataset.t; drawWardPanel(); }
     else if (act === 'wear'){
       const k = a.dataset.k, who = ldress, partner = who === lcouple ? L2.couples[lcouple].boy : lcouple;
-      ldraft[who] = {...ldraft[who], [ltab]:k || undefined}; if (!k) delete ldraft[who][ltab];
-      drawLove();
-      const it = k && litem(ltab, k), t = TASTE[partner];
-      if (it){ const kind = it.tag === t.fav ? 'fav' : it.tag === t.like ? 'like' : 'meh'; lbubble(partner, kind); play(kind === 'fav' ? 'heart' : kind === 'like' ? 'clap' : 'bonk'); }
-    } else if (act === 'save'){
+      ldraft[who] = {...ldraft[who]}; if (k) ldraft[who][ltab] = k; else delete ldraft[who][ltab];
+      rebuildWearer(who); drawWardPanel();
+      const it = k && litem(ltab, k); if (it) lreact(LBOT[partner], partner, kindOf(it.tag, partner));
+    } else if (act === 'save' || act === 'savego'){
       Object.entries(ldraft).forEach(([n, l]) => { L2.looks[n] = l; }); lsave(); play('heart');
-      toast('&#10084; Looks saved. They can not stop staring at each other.'); lview = 'home'; drawLove();
+      if (act === 'savego') startDinner(lcouple);
+      else { toast('&#10084; Looks saved. They can not stop staring at each other.'); lview = 'select'; drawLove(); }
+    } else if (act === 'dinner') startDinner(a.dataset.g);
+    else if (act === 'order'){ ldin[a.dataset.kind] = a.dataset.k; play('poke'); setPlates(); drawDinPanel(); }
+    else if (act === 'eat'){
+      const d = ldin, all = LMENU.dish.concat(LMENU.drink), tags = [d.dish, d.drink].map(k => all.find(x => x.k === k).tag);
+      let pts = 0; tags.forEach(t => { pts += [d.b, d.g].reduce((s, n) => s + (kindOf(t, n) === 'fav' ? 2 : kindOf(t, n) === 'like' ? 1 : 0), 0); });
+      d.pts.food = pts; d.step = 'talk'; d.round = 0; d.opts = [];
+      const kb = kindOf(tags[0], d.b), kg = kindOf(tags[0], d.g);
+      lreact(LBOT[d.b], d.b, kb); setTimeout(() => lreact(LBOT[d.g], d.g, kg), 600);
+      drawDinPanel();
+    } else if (act === 'say'){
+      const d = ldin, R = LTALK[d.round], t = a.dataset.t;
+      document.querySelectorAll('#lDPanel .ldl').forEach(x => x.disabled = true);
+      if (R.who === 'both'){ lsay(LBOT[d.b], R.lines[t], 1600); setTimeout(() => { d.pts.talk += Math.round((judge(d.g, t) + judge(d.b, t))*1.5); }, 900); }
+      else { const sp = R.who === 'boy' ? d.b : d.g, ls = R.who === 'boy' ? d.g : d.b; lsay(LBOT[sp], R.lines[t], 1600); setTimeout(() => { d.pts.talk += judge(ls, t)*2; }, 900); }
+      setTimeout(() => {
+        d.round++; d.opts = [];
+        if (d.round < LTALK.length) return drawDinPanel();
+        finishDinner();
+      }, 2600);
     } else if (act === 'split'){
       const g = a.dataset.g, b = L2.couples[g].boy;
       if ((W3.bal || 0) < DIVORCE_FOLK){ toast(`&#128148; A break up needs ${fmtFolk(DIVORCE_FOLK)} $FOLK in your wallet. Love is not cheap.`); if (!W3.addr) w3Connect(); return; }
       if (!a.dataset.sure){ a.dataset.sure = '1'; a.innerHTML = `&#128148; Sure? Tap again`; setTimeout(() => { a.dataset.sure = ''; a.innerHTML = '&#128148; Break up'; }, 3000); return; }
-      delete L2.couples[g]; lsave(); play('bonk'); toast(`${g} and ${b} went separate ways.`); drawLove();
+      delete L2.couples[g]; lsave(); play('bonk'); toast(`${b} and ${g} went separate ways.`); drawLove();
     }
   });
+  function openWardrobe(g){
+    lcouple = g; const b = L2.couples[g].boy;
+    ldress = b; ltab = 'hat'; ldraft = {[g]:{...lookOf(g)}, [b]:{...lookOf(b)}};
+    lview = 'wardrobe'; drawLove(); loveEl.scrollTop = 0;
+  }
+  function finishDinner(){
+    const d = ldin, c = L2.couples[d.g], tot = d.pts.look + d.pts.food + d.pts.talk, was = c.stage || 0;
+    c.love = Math.min(100, (c.love || 0) + tot);
+    c.dates = {day:today(), n:(c.dates && c.dates.day === today() ? c.dates.n : 0) + 1};
+    c.stage = Math.max(was, 1, c.love >= DATING_AT ? 2 : 0);
+    d.up = c.stage > was ? c.stage : 0;
+    lsave(); d.step = 'done'; drawDinPanel();
+    [d.b, d.g].forEach((n, i) => setTimeout(() => { lwave(LBOT[n]); lhearts(LBOT[n], 6); }, i*300));
+    play('heart'); if (d.up) setTimeout(() => play('fight'), 300);
+  }
   function loveRoute(){
     const on = location.hash === '#love';
-    if (on && loveEl.hidden){ lview = 'home'; drawLove(); loveEl.scrollTop = 0; }
+    if (on && loveEl.hidden){ lview = 'select'; loveEl.hidden = false; drawLove(); loveEl.scrollTop = 0; }
+    if (!on){ clearInterval(waveT); }
     loveEl.hidden = !on;
     if (on) document.documentElement.style.overflow = 'hidden';
     else if (location.hash !== '#arena' && location.hash !== '#guide') document.documentElement.style.overflow = '';
