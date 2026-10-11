@@ -1175,6 +1175,37 @@
   .lcardnft dl{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;margin:0;padding:6px 12px 10px;font-size:13px}
   .lcardnft dt{color:rgba(35,28,31,.6)} .lcardnft dd{margin:0;font-weight:700}
   .lcardnft footer{background:#231c1f;color:#ffb0c8;padding:6px 12px;font-size:13px}
+  .lv-dance{background:radial-gradient(ellipse at 50% 0%,#3a1a5a,#14081f 70%)}
+  .lv-dance::before{display:none}
+  .ldfloor{position:absolute;left:-10%;right:-10%;bottom:0;height:42%;transform:perspective(300px) rotateX(38deg);transform-origin:50% 100%;
+    background:conic-gradient(from 0deg,#ff5c86 0 25%,#7c5cff 0 50%,#2fb58f 0 75%,#ffd23f 0) 0 0/64px 64px;border-top:4px solid #231c1f;opacity:.55;animation:ldfl 1.6s steps(2) infinite}
+  .lv-dance.on .ldfloor{opacity:.9;animation-duration:.48s}
+  .lv-dance.slow .ldfloor{opacity:.35;filter:saturate(.5) hue-rotate(-30deg);animation-duration:2.4s}
+  @keyframes ldfl{to{background-position:32px 0;filter:hue-rotate(90deg)}}
+  .ldball{position:absolute;left:50%;top:-6px;width:56px;height:56px;margin-left:-28px;border-radius:50%;border:3px solid #231c1f;z-index:1;
+    background:repeating-conic-gradient(#e8edf2 0 10deg,#9aa6b2 0 20deg),#ccc;box-shadow:0 0 30px rgba(255,255,255,.5);animation:ldbl 3s linear infinite}
+  .ldball::before{content:"";position:absolute;left:50%;top:-40px;width:3px;height:40px;background:#231c1f}
+  @keyframes ldbl{to{rotate:360deg}}
+  .ldbeam{position:absolute;top:0;left:50%;width:46%;height:110%;transform-origin:0 0;opacity:.22;z-index:0;pointer-events:none;
+    background:linear-gradient(90deg,transparent,var(--bc) 40%,transparent);clip-path:polygon(0 0,100% 100%,30% 100%);animation:ldbm 4s ease-in-out infinite alternate}
+  .ldbeam.a{--bc:#ff5c86} .ldbeam.b{--bc:#7c5cff;animation-delay:-1.3s;animation-duration:5s} .ldbeam.c{--bc:#ffd23f;animation-delay:-2.6s;animation-duration:3.4s}
+  @keyframes ldbm{from{rotate:20deg}to{rotate:150deg}}
+  .lv-dance.on .ldbeam{opacity:.45} .lv-dance.slow .ldbeam{opacity:.12} .lv-dance.slow .ldbeam.a{opacity:.4}
+  .lv-dance.slow{background:radial-gradient(ellipse at 50% 30%,#4a1a3a,#0e0614 70%)}
+  .lddj{position:absolute;left:3%;right:3%;bottom:30%;display:flex;justify-content:space-between;z-index:1;opacity:.9}
+  .lddj .lbot{--u:clamp(2.2px,.3vw,3px)}
+  .lddj .bot:hover{filter:brightness(1.1) drop-shadow(0 0 6px #fff)}
+  .ldstage.dance{gap:clamp(50px,12vw,140px);bottom:10%}
+  .lkiss{position:absolute;z-index:6;font-size:48px;translate:-50% -50%;pointer-events:none;filter:drop-shadow(0 0 10px #ff5c86)}
+  .ldances{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0}
+  .ldance{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 6px;background:#fff;border:3px solid var(--line);box-shadow:3px 3px 0 var(--line);cursor:pointer;font:inherit;text-align:center}
+  .ldance:hover:not(:disabled){background:#ffe3ee;translate:-1px -1px}
+  .ldance .ico{font-size:30px} .ldance b{font-family:"Pixelify Sans", monospace;font-size:17px} .ldance small{font-size:11px;color:#6a5a60}
+  .ldance em{font-style:normal;font-size:11px;font-weight:700;color:#fff;background:#d8203a;padding:1px 6px;margin-top:2px}
+  .ldance.done{background:#e6fff4} .ldance.done em{background:#2fb58f} .ldance:disabled{cursor:default;opacity:.7}
+  .lbtn.big small{display:block;font-size:10px;font-weight:700;opacity:.85}
+  .ldlove{display:block;margin-top:4px;font-weight:700}
+  @media (max-width:640px){ .ldances{gap:5px} .ldance{padding:7px 3px} .ldance .ico{font-size:24px} .ldance b{font-size:14px} .ldance small{display:none} .ldball{width:40px;height:40px;margin-left:-20px} .lddj{bottom:34%} .lddj .lbot{--u:1.5px} .ldstage.dance .lbot{--u:2.6px} }
   .lbmact{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
   .lbmint{display:contents} .lbtn.mint{background:#231c1f;color:#ffd23f;border-color:#231c1f} .lbtn.mint small{display:block;font-size:10px;color:#ffb0c8;font-weight:700}
   .lbtn.mint.done{background:#2fb58f;color:#fff;text-decoration:none} .lbtn.mint:disabled{opacity:.85;cursor:wait}
@@ -6045,6 +6076,7 @@
     if (lview === 'propose') return drawPropose();
     if (lview === 'wedding') return drawWedding();
     if (lview === 'nursery') return drawNursery();
+    if (lview === 'dance') return drawDance();
     drawSelect();
   }
   function drawSelect(){
@@ -6749,7 +6781,7 @@
       p.innerHTML = prog + `<div class="ldres"><h3>${d.up ? (d.up === 2 ? '&#128145; They are officially dating!' : '&#127881; First date done!') : 'What a lovely evening!'}</h3>
         <ul><li><span>&#128087; Looks</span><b>+${d.pts.look*LOVE_SPEED}</b></li><li><span>${V.ico} ${d.venue === 'dinner' ? 'Food &amp; drinks' : V.step}</span><b>+${d.pts.food*LOVE_SPEED}</b></li><li><span>&#128172; Conversation</span><b>+${d.pts.talk*LOVE_SPEED}</b></li>${d.pts.extra ? `<li><span>&#10024; Sweet moments</span><b>+${d.pts.extra*LOVE_SPEED}</b></li>` : ''}<li class="tot"><span>&#10084; Love</span><b>+${tot}</b></li></ul>
         <div class="lbar big"><i style="width:${c.love}%"></i></div><small>Love ${c.love}% · ${LSTAGES[c.stage]}${c.love < DATING_AT ? ` · ${DATING_AT}% to start dating` : c.stage === 2 && c.love < PROPOSE_AT ? ` · ${PROPOSE_AT}% to propose` : c.stage === 2 ? ' · Ready to propose! &#128141;' : ''}</small>
-        <div class="lsave"><button type="button" class="btn lbtn" data-a="home">&larr; Couples</button><button type="button" class="btn lbtn pink" data-a="dress" data-g="${d.g}">&#128087; New looks</button></div></div>`;
+        <div class="lsave"><button type="button" class="btn lbtn" data-a="home">&larr; Couples</button><button type="button" class="btn lbtn" data-a="dress" data-g="${d.g}">&#128087; New looks</button><button type="button" class="btn lbtn pink big" data-a="godance">&#128131; Go dancing</button></div></div>`;
     }
   }
   function judge(listener, tag){ // tepki + puan
@@ -6769,7 +6801,10 @@
       if (!L2.couples[selG]){ L2.couples[selG] = {boy:selB, love:0, stage:0, since:Date.now()}; lsave(); toast(`&#10084; ${selB} and ${selG} are now a couple!`); play('heart'); }
       openWardrobe(selG);
     } else if (act === 'dress') openWardrobe(a.dataset.g);
-    else if (act === 'home'){ lview = 'select'; drawLove(); }
+    else if (act === 'home'){ if (ldance && ldance.busy) return; clearInterval(waveT); lview = 'select'; drawLove(); }
+    else if (act === 'godance') openDance();
+    else if (act === 'dance') doDance(a.dataset.k);
+    else if (act === 'kiss') doKiss();
     else if (act === 'who'){ ldress = a.dataset.n; drawWardPanel(); lhop(LBOT[ldress]); }
     else if (act === 'tab'){ ltab = a.dataset.t; drawWardPanel(); }
     else if (act === 'wear'){
@@ -6843,6 +6878,123 @@
     lcouple = g; const b = L2.couples[g].boy;
     ldress = b; ltab = 'hat'; ldraft = {[g]:{...lookOf(g)}, [b]:{...lookOf(b)}};
     lview = 'wardrobe'; drawLove(); loveEl.scrollTop = 0;
+  }
+  // ===== Dans pisti: randevudan sonra 3 dans ve bir öpücük =====
+  const DANCE_LOVE = 6, KISS_LOVE = 10;
+  const DANCES = [
+    {k:'salsa', ico:'&#128131;', name:'Salsa',      desc:'Steps, twirls and a dip',  say:['Uno, dos, tres!', 'Spin me!']},
+    {k:'disco', ico:'&#128378;', name:'Disco',      desc:'Point, bounce, groove',    say:['Stayin\' vibe!', 'Groovy!']},
+    {k:'slow',  ico:'&#128158;', name:'Slow dance', desc:'Close and gentle sway',    say:['Just you and me...', 'I could stay here forever.']}
+  ];
+  let ldance = null;
+  function openDance(){ const d = ldin; ldance = {g:d.g, b:d.b, done:{}, kiss:false, busy:false, gain:0}; clearInterval(waveT); lview = 'dance'; drawLove(); loveEl.scrollTop = 0; }
+  function drawDance(){
+    const D = ldance, {g, b} = D;
+    body().innerHTML = `<div class="lwtop"><button type="button" class="btn" data-a="home">&larr; Couples</button><h2>Dance floor <small>${b} &#10084; ${g}</small></h2></div>
+      <div class="ldin lv-dance" id="lDance"><i class="ldball"></i><i class="ldbeam a"></i><i class="ldbeam b"></i><i class="ldbeam c"></i><i class="ldfloor"></i>
+        <div class="lddj" id="lDJ"></div><div class="ldstage dance" id="lDin"></div></div><div class="ldpanel" id="lDPanel"></div>`;
+    const scene = document.getElementById('lDance'), st = document.getElementById('lDin'), dj = document.getElementById('lDJ');
+    liveBot(b, null, false, st); liveBot(g, null, true, st);
+    const others = ['Armor','Mist','Pip','Honey','Goggles','Captain','Lavender','Tux','Mr. Hat'].filter(n => n !== b && n !== g);
+    [pick(others.slice(0, 4)), pick(others.slice(4))].forEach((n, i) => folkLive(n, dj, i === 1, 'dine', '__dj' + i));
+    waveT = setInterval(() => { ['__dj0', '__dj1'].forEach(k => { const x = LBOT[k]; if (x && x.el.isConnected) x.rig.animate([{transform:T()},{transform:T(0,u(x)*1.2,-5)},{transform:T()},{transform:T(0,u(x)*1.2,5)},{transform:T()}],{duration:960}); }); }, 1000);
+    drawDancePanel();
+  }
+  function drawDancePanel(){
+    const D = ldance, c = L2.couples[D.g], p = document.getElementById('lDPanel'); if (!p) return;
+    const any = Object.keys(D.done).length;
+    p.innerHTML = `<p class="ldq">${D.busy ? '&#127926; Dancing...' : D.kiss ? `&#128139; ${c.kisses > 1 ? 'Another sweet kiss.' : 'Their first kiss!'} What a night.` : any ? 'The music is still playing. Another dance, or a kiss?' : 'The band is playing. Pick a dance for the two of them.'}</p>
+      <div class="ldances">${DANCES.map(x => `<button type="button" class="ldance${D.done[x.k] ? ' done' : ''}" data-a="dance" data-k="${x.k}" ${D.done[x.k] || D.busy ? 'disabled' : ''}><span class="ico">${x.ico}</span><b>${x.name}</b><small>${x.desc}</small><em>${D.done[x.k] ? '&#10003; +' + DANCE_LOVE : '+' + DANCE_LOVE + ' love'}</em></button>`).join('')}</div>
+      <div class="lsave"><button type="button" class="btn lbtn pink big" data-a="kiss" ${any && !D.kiss && !D.busy ? '' : 'disabled'}>&#128139; Kiss <small>${D.kiss ? 'done' : any ? '+' + KISS_LOVE + ' love' : 'dance first'}</small></button><button type="button" class="btn lbtn" data-a="home" ${D.busy ? 'disabled' : ''}>&larr; Couples</button></div>
+      <div class="lbar big"><i style="width:${c.love}%"></i></div><small class="ldlove">Love ${c.love}% · ${LSTAGES[c.stage]}${D.gain ? ` · <b>+${D.gain} on the dance floor</b>` : ''}</small>`;
+  }
+  function danceLove(n){
+    const D = ldance, c = L2.couples[D.g], was = c.stage || 0;
+    c.love = Math.min(100, (c.love || 0) + n); c.stage = Math.max(was, 1, c.love >= DATING_AT ? 2 : 0); D.gain += n; lsave();
+    if (c.stage > was && c.stage === 2) setTimeout(() => toast('&#128145; They are officially dating!'), 600);
+  }
+  // müzik: notalar sırayla
+  function tune(notes, step, type, vol, len = .9){ notes.forEach((f, i) => { if (f) tone(f, f, i*step, step*len, type, vol); }); }
+  function danceMusic(k){
+    if (k === 'salsa'){
+      const m = [523,659,784,659,587,698,880,698,523,659,784,659,494,587,784,587]; tune(m.concat(m), .2, 'square', .018, .8);
+      tune(Array.from({length:16}, (_, i) => [131,196,147,196][i % 4]), .4, 'triangle', .04, .7);
+    } else if (k === 'disco'){
+      tune(Array.from({length:28}, (_, i) => i % 2 ? 220 : 110), .24, 'square', .02, .6);
+      const m = [440,523,659,523,587,698,880,698,659,587,523,494,523,659]; tune(m, .48, 'triangle', .03, .8);
+    } else {
+      tune([392,440,494,523,494,440,392,330,349,392,440,392], .6, 'triangle', .03, .95);
+      tune([131,0,165,0,175,0,147,0,131,0,196,0], .6, 'sine', .04, 1.8);
+    }
+  }
+  const twirl = (b, n = 2, dur = 700) => b.rig.animate([{scale:'1 1'},{scale:'0 1'},{scale:'-1 1'},{scale:'0 1'},{scale:'1 1'}],{duration:dur, iterations:n});
+  const armTo = (b, side, deg, dur, hold = .8) => b.g[side].animate([{transform:'rotate(0)'},{transform:`rotate(${deg}deg)`, offset:.12},{transform:`rotate(${deg}deg)`, offset:hold},{transform:'rotate(0)'}],{duration:dur});
+  async function doDance(k){
+    const D = ldance; if (!D || D.busy || D.done[k]) return;
+    const B = LBOT[D.b], G = LBOT[D.g], scene = document.getElementById('lDance'); if (!B || !G || !scene) return;
+    D.busy = true; drawDancePanel(); scene.classList.add('on', k); danceMusic(k);
+    const X = DANCES.find(x => x.k === k), kk = u(B), gap = G.hold.offsetLeft - B.hold.offsetLeft - B.hold.offsetWidth;
+    const at = (ms, fn) => setTimeout(() => { if (B.el.isConnected) fn(); }, ms);
+    const path = (h, pts, total) => h.animate(pts.map(([t, x, y = 0]) => ({translate:`${x}px ${y}px`, offset:t/total})), {duration:total, easing:'ease-in-out'});
+    let total = 7000;
+    lsay(G, X.say[0], 1600);
+    if (k === 'salsa'){
+      const dx = gap*.36, s = kk*6;
+      path(B.hold, [[0,0],[600,dx],[1200,dx+s],[1800,dx],[2400,dx-s],[3000,dx],[4400,dx],[5000,dx+s/2],[5600,dx],[6400,dx],[7000,0]], total);
+      path(G.hold, [[0,0],[600,-dx],[1200,-dx+s],[1800,-dx],[2400,-dx-s],[3000,-dx],[4400,-dx],[5000,-dx+s/2],[5600,-dx],[6400,-dx],[7000,0]], total);
+      [B, G].forEach(x => x.rig.animate([{transform:T()},{transform:T(0,-kk,5)},{transform:T()},{transform:T(0,-kk,-5)},{transform:T()}],{duration:600, iterations:5}));
+      at(3000, () => { twirl(G, 2, 700); armTo(B, 'armR', -150, 1400); lsay(B, 'Olé!', 1200); });
+      at(4400, () => { lhop(B); lhop(G); });
+      at(5000, () => { lhop(B); lhop(G); });
+      at(5600, () => { B.rig.animate([{transform:T()},{transform:T(0,0,10)},{transform:T(0,0,10)},{transform:T()}],{duration:1100}); G.rig.animate([{transform:T()},{transform:T(0,kk*2,-28)},{transform:T(0,kk*2,-28)},{transform:T()}],{duration:1100}); lhearts(G, 4); lsay(G, X.say[1], 1200); });
+    } else if (k === 'disco'){
+      const dx = gap*.22, beat = 480;
+      for (let i = 0; i < 14; i++) at(i*beat, () => [B, G].forEach(x => {
+        x.rig.animate([{transform:T()},{transform:T(0,kk*.9,i % 2 ? 7 : -7)},{transform:T()}],{duration:beat});
+        if (i < 5 || i > 9) armTo(x, i % 2 ? 'armL' : 'armR', i % 2 ? 40 : -150, beat, .6);
+      }));
+      path(B.hold, [[0,0],[500,dx],[2400,dx],[2900,dx-kk*8],[3400,dx+kk*4],[4400,dx],[6400,dx],[7000,0]], total);
+      path(G.hold, [[0,0],[500,-dx],[2400,-dx],[2900,-dx+kk*8],[3400,-dx-kk*4],[4400,-dx],[6400,-dx],[7000,0]], total);
+      at(2600, () => { twirl(B, 2, 600); twirl(G, 2, 600); lsay(B, X.say[1], 1200); });
+      at(5900, () => [B, G].forEach(x => { lhop(x); armTo(x, 'armL', 160, 900); armTo(x, 'armR', -160, 900); }));
+    } else {
+      total = 7200; const dx = gap*.46, s = kk*2;
+      path(B.hold, [[0,0],[900,dx],[2300,dx+s],[3700,dx-s],[5100,dx+s],[6300,dx],[7200,0]], total);
+      path(G.hold, [[0,0],[900,-dx],[2300,-dx+s],[3700,-dx-s],[5100,-dx+s],[6300,-dx],[7200,0]], total);
+      [B, G].forEach(x => { armTo(x, 'armR', -55, total, .88); x.rig.animate([{transform:T()},{transform:T(0,0,5)},{transform:T()},{transform:T(0,0,-5)},{transform:T()}],{duration:1400, iterations:5}); });
+      for (let i = 1; i < 7; i++) at(i*950, () => floaty(i % 2 ? B : G, HEART, {n:1, size:4, dur:1500, y:8, spread:10}));
+      at(4200, () => lsay(B, X.say[1], 1800));
+    }
+    await wait(total + 150);
+    scene.classList.remove('on', k);
+    if (!B.el.isConnected) { D.busy = false; return; }
+    D.done[k] = true; D.busy = false; danceLove(DANCE_LOVE);
+    lhearts(B, 4); lhearts(G, 4); play('heart'); drawDancePanel();
+  }
+  async function doKiss(){
+    const D = ldance; if (!D || D.busy || D.kiss || !Object.keys(D.done).length) return;
+    const B = LBOT[D.b], G = LBOT[D.g], scene = document.getElementById('lDance'); if (!B || !G || !scene) return;
+    D.busy = true; drawDancePanel(); scene.classList.add('on', 'slow');
+    const kk = u(B), gap = G.hold.offsetLeft - B.hold.offsetLeft - B.hold.offsetWidth, dx = gap/2 - B.hold.offsetWidth*.04;
+    tune([523,659,784,1047], .35, 'triangle', .03, 1.2);
+    [B, G].forEach(x => x.rig.animate([{transform:T()},{transform:T(0,-2)},{transform:T()}],{duration:300, iterations:4}));
+    await Promise.all([B.hold.animate([{translate:'0 0'},{translate:`${dx}px 0`}],{duration:1200, easing:'ease-in-out', fill:'forwards'}).finished,
+      G.hold.animate([{translate:'0 0'},{translate:`${-dx}px 0`}],{duration:1200, easing:'ease-in-out', fill:'forwards'}).finished]);
+    if (!B.el.isConnected){ D.busy = false; return; }
+    B.rig.animate([{transform:T()},{transform:T(0,0,9)},{transform:T(0,0,9)},{transform:T()}],{duration:2200});
+    G.rig.animate([{transform:T()},{transform:T(0,-kk*1.5,9)},{transform:T(0,-kk*1.5,9)},{transform:T()}],{duration:2200});
+    await wait(650);
+    const sr = scene.getBoundingClientRect(), br = B.el.getBoundingClientRect(), gr = G.el.getBoundingClientRect();
+    const mx = (br.right + gr.left)/2 - sr.left, my = Math.min(br.top, gr.top) - sr.top + br.height*.25;
+    const lip = document.createElement('span'); lip.className = 'lkiss'; lip.innerHTML = '&#128139;'; lip.style.left = mx + 'px'; lip.style.top = my + 'px'; scene.appendChild(lip);
+    lip.animate([{scale:.2, opacity:0},{scale:1.5, opacity:1, offset:.25},{scale:1.2, opacity:1, offset:.7},{scale:1.8, opacity:0, translate:'0 -30px'}],{duration:1800, easing:'ease-out'}).finished.then(() => lip.remove());
+    tone(1300, 1700, 0, .07, 'sine', .05); tone(1300, 1800, .12, .08, 'sine', .05);
+    bigHeart(scene, mx, my - 30); lhearts(B, 8); lhearts(G, 8); lconfetti(scene, 40, ['#ff5c86','#ff8ac0','#ffffff','#ffd0dc']);
+    await wait(1700);
+    scene.classList.remove('on', 'slow');
+    lsay(G, 'Mwah!', 1600); setTimeout(() => lsay(B, '*blushes*', 1600), 700);
+    const c = L2.couples[D.g]; c.kisses = (c.kisses || 0) + 1;
+    D.kiss = true; D.busy = false; danceLove(KISS_LOVE); play('heart'); drawDancePanel();
   }
   function finishDinner(){
     const d = ldin, c = L2.couples[d.g], tot = (d.pts.look + d.pts.food + d.pts.talk + d.pts.extra)*LOVE_SPEED, was = c.stage || 0;
