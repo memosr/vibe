@@ -6519,7 +6519,30 @@
     return '0x6da46032' + head + tail;
   }
   const ethCall = (to, data) => eth().request({method:'eth_call', params:[{to, data}, 'latest']});
-  const ethSend = tx => eth().request({method:'eth_sendTransaction', params:[{from:W3.addr, ...tx}]});
+  // Robinhood Chain (Arbitrum Orbit): MetaMask bazen taban ücretin altında tahmin eder. Ücreti zincirden okuyup 3 kat pay bırakırız.
+  async function feeFields(){
+    const p = eth(); let base = 0n, gp = 0n;
+    try { const blk = await p.request({method:'eth_getBlockByNumber', params:['latest', false]}); if (blk && blk.baseFeePerGas) base = BigInt(blk.baseFeePerGas); } catch(e){}
+    try { gp = BigInt(await p.request({method:'eth_gasPrice'})); } catch(e){}
+    const ref = base > gp ? base : gp; if (!ref) return {};
+    const max = ref*3n + 10000000n; // en az +0.01 gwei
+    return base ? {maxFeePerGas:'0x' + max.toString(16), maxPriorityFeePerGas:'0x0'} : {gasPrice:'0x' + max.toString(16)};
+  }
+  async function ethSend(tx){
+    const p = eth(), base = {from:W3.addr, ...tx}, fees = await feeFields();
+    try { const g = BigInt(await p.request({method:'eth_estimateGas', params:[{...base}]})); base.gas = '0x' + (g*13n/10n).toString(16); }
+    catch (e){ console.warn('estimateGas', e); throw e; }
+    try { return await p.request({method:'eth_sendTransaction', params:[{...base, ...fees}]}); }
+    catch (e){
+      if (e && e.code === 4001) throw e;
+      if (/fee|base fee|underpriced/i.test(String(e && (e.message || (e.data && e.data.message)) || ''))){ // bir kez daha, daha yüksek ücretle
+        const f2 = await feeFields(); const bump = v => '0x' + (BigInt(v)*2n).toString(16);
+        if (f2.maxFeePerGas) f2.maxFeePerGas = bump(f2.maxFeePerGas); if (f2.gasPrice) f2.gasPrice = bump(f2.gasPrice);
+        return await p.request({method:'eth_sendTransaction', params:[{...base, ...f2}]});
+      }
+      throw e;
+    }
+  }
   async function txWait(h){
     for (let k = 0; k < 150; k++){
       const r = await eth().request({method:'eth_getTransactionReceipt', params:[h]});
