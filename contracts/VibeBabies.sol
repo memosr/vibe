@@ -7,7 +7,8 @@ import "@openzeppelin/contracts/utils/Base64.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 
 /// @title Vibe Folk Babies
-/// @notice Vibe Love bebekleri. Görsel tamamen zincir üstünde (SVG). Her mint FOLK yakar.
+/// @notice Vibe Love bebekleri. Görsel tamamen zincir üstünde (SVG).
+/// Mint için cüzdanda `price` kadar FOLK gerekir. Token transfere açıksa bu miktar yakılır.
 contract VibeBabies is ERC721 {
     address public constant DEAD = 0x000000000000000000000000000000000000dEaD;
 
@@ -16,13 +17,14 @@ contract VibeBabies is ERC721 {
     uint256 public price;       // yakılacak FOLK (en küçük birim)
     uint256 public totalSupply;
     uint256 public totalBurned;
+    bool public burnRequired;   // mezuniyetten sonra sahibi açar: yakım zorunlu olur
 
     struct Baby { uint32 seed; uint8 rarity; uint64 born; string name; string dad; string mom; }
     mapping(uint256 => Baby) public babies;
     mapping(uint256 => bytes) private art;
     mapping(uint32 => uint256) public tokenOfSeed;
 
-    event Born(uint256 indexed id, address indexed parent, uint32 seed, uint8 rarity, string name);
+    event Born(uint256 indexed id, address indexed parent, uint32 seed, uint8 rarity, string name, bool burned);
     event PriceChanged(uint256 price);
 
     constructor(address folk_, uint256 price_) ERC721("Vibe Folk Babies", "VBABY") {
@@ -34,6 +36,7 @@ contract VibeBabies is ERC721 {
     modifier onlyOwner() { require(msg.sender == owner, "owner"); _; }
     function setPrice(uint256 p) external onlyOwner { price = p; emit PriceChanged(p); }
     function setOwner(address o) external onlyOwner { owner = o; }
+    function setBurnRequired(bool on) external onlyOwner { burnRequired = on; }
 
     function mint(uint32 seed, uint8 rarity, string calldata name_, string calldata dad, string calldata mom, bytes calldata svg)
         external returns (uint256 id)
@@ -44,16 +47,21 @@ contract VibeBabies is ERC721 {
         require(svg.length > 10 && svg.length <= 12000, "svg size");
         require(svg[0] == "<" && svg[1] == "s" && svg[2] == "v" && svg[3] == "g", "svg");
 
+        bool burned;
         if (price > 0) {
-            require(folk.transferFrom(msg.sender, DEAD, price), "burn failed");
-            totalBurned += price;
+            require(folk.balanceOf(msg.sender) >= price, "not enough FOLK");
+            // yakmayı dene. Token transferleri kilitliyse (mezuniyet öncesi) mint yine de olur.
+            try folk.transferFrom(msg.sender, DEAD, price) returns (bool ok) {
+                if (ok) { burned = true; totalBurned += price; }
+            } catch {}
+            require(burned || !burnRequired, "burn failed");
         }
         id = ++totalSupply;
         tokenOfSeed[seed] = id;
         babies[id] = Baby(seed, rarity, uint64(block.timestamp), name_, dad, mom);
         art[id] = svg;
         _mint(msg.sender, id);
-        emit Born(id, msg.sender, seed, rarity, name_);
+        emit Born(id, msg.sender, seed, rarity, name_, burned);
     }
 
     // isimlerde sadece harf, rakam, boşluk, nokta ve tire (JSON güvenli)
