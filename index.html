@@ -6897,7 +6897,9 @@
     liveBot(b, null, false, st); liveBot(g, null, true, st);
     const others = ['Armor','Mist','Pip','Honey','Goggles','Captain','Lavender','Tux','Mr. Hat'].filter(n => n !== b && n !== g);
     [pick(others.slice(0, 4)), pick(others.slice(4))].forEach((n, i) => folkLive(n, dj, i === 1, 'dine', '__dj' + i));
-    waveT = setInterval(() => { ['__dj0', '__dj1'].forEach(k => { const x = LBOT[k]; if (x && x.el.isConnected) x.rig.animate([{transform:T()},{transform:T(0,u(x)*1.2,-5)},{transform:T()},{transform:T(0,u(x)*1.2,5)},{transform:T()}],{duration:960}); }); }, 1000);
+    const DJ = [[{}, {aL:70, aR:-30, lL:10, ly:-1.2, h:-9, y:.7, r:-5}, {aL:20, aR:-100, lR:-10, ry:-1.2, h:9, y:.7, r:5}, {}],
+      [{}, {aL:140, aR:-140, y:-1.5, h:-6, lL:8, lR:-8}, {aL:40, aR:-40, y:.8, h:6}, {}], [{}, {aR:-150, aL:20, r:-6, lL:12, ly:-1, h:-10}, {aR:20, aL:-30, r:6, y:.8, h:10}, {}]];
+    let djn = 0; waveT = setInterval(() => { djn++; ['__dj0', '__dj1'].forEach((k, i) => { const x = LBOT[k]; if (x && x.el.isConnected) choreo(x, DJ[(djn + i) % 3], 320); }); }, 1000);
     drawDancePanel();
   }
   function drawDancePanel(){
@@ -6929,6 +6931,53 @@
   }
   const twirl = (b, n = 2, dur = 700) => b.rig.animate([{scale:'1 1'},{scale:'0 1'},{scale:'-1 1'},{scale:'0 1'},{scale:'1 1'}],{duration:dur, iterations:n});
   const armTo = (b, side, deg, dur, hold = .8) => b.g[side].animate([{transform:'rotate(0)'},{transform:`rotate(${deg}deg)`, offset:.12},{transform:`rotate(${deg}deg)`, offset:hold},{transform:'rotate(0)'}],{duration:dur});
+  // koreografi motoru: her vuruşta tam vücut pozu (kollar, bacaklar, kafa, gövde)
+  // p: aL/aR kol açısı, lL/lR bacak açısı, ly/ry bacak kaldırma, h kafa açısı, hy kafa zıplama, x/y/r gövde
+  function choreo(b, poses, beat){
+    const k = u(b), n = poses.length, dur = beat*(n - 1), off = i => i/(n - 1), E = 'ease-in-out';
+    const P = poses.map(p => ({aL:0, aR:0, lL:0, lR:0, ly:0, ry:0, h:0, hy:0, x:0, y:0, r:0, ...p}));
+    const run = (el, f) => el && el.animate(P.map((p, i) => ({transform:f(p), offset:off(i), easing:E})), {duration:dur});
+    run(b.g.armL, p => `rotate(${p.aL}deg)`); run(b.g.armR, p => `rotate(${p.aR}deg)`);
+    run(b.g.legL, p => `translateY(${p.ly*k}px) rotate(${p.lL}deg)`); run(b.g.legR, p => `translateY(${p.ry*k}px) rotate(${p.lR}deg)`);
+    run(b.g.head, p => `translateY(${p.hy*k}px) rotate(${p.h}deg)`);
+    run(b.rig, p => T(p.x*k, p.y*k, p.r));
+    return dur;
+  }
+  const rep = (n, f) => Array.from({length:n}, (_, i) => f(i));
+  // salsa: 1-2-3 adım, el ele tutuşma, kız döner, sonunda arkaya yatırma
+  function salsaPoses(role){
+    const lead = role === 'b', hand = -105, free = i => i % 2 ? 70 : 35;
+    const step = i => {
+      const ph = i % 4;
+      if (ph === 0) return {lL:12, ly:-1.6, lR:-4, r:5, x:.6, h:7, hy:-.3, aR:hand, aL:free(i), y:-.4};
+      if (ph === 1) return {lL:2, lR:-2, r:0, x:0, h:0, hy:.3, aR:hand + 10, aL:free(i) - 15, y:.6};
+      if (ph === 2) return {lR:-12, ry:-1.6, lL:4, r:-5, x:-.6, h:-7, hy:-.3, aR:hand, aL:free(i), y:-.4};
+      return {lL:-2, lR:2, r:0, x:0, h:3, hy:.3, aR:hand + 10, aL:free(i) - 15, y:.6};
+    };
+    const P = [{}, ...rep(8, step)];
+    if (lead) P.push({aR:-160, aL:60, r:2, h:-10, lL:6, ly:-.6}, {aR:-165, aL:70, r:-2, h:-12}, {aR:-160, aL:60, r:2, h:-10, lR:-6, ry:-.6});
+    else P.push({aR:-170, aL:120, h:-8, y:-.8, lL:20, ly:-2.2}, {aR:-170, aL:130, h:8, y:-.8, lR:-20, ry:-2.2}, {aR:-160, aL:110, h:0, y:-.4});
+    P.push(step(0), step(2));
+    if (lead) P.push({aR:-80, aL:-30, r:12, x:.8, h:14, lR:-14, ry:-.5}, {aR:-80, aL:-30, r:12, x:.8, h:14, lR:-14, ry:-.5}, {});
+    else P.push({aR:-90, aL:150, r:-28, y:2, h:-22, lR:-30, ry:-2.5, lL:10}, {aR:-90, aL:160, r:-28, y:2, h:-24, lR:-34, ry:-2.8, lL:10}, {});
+    return P;
+  }
+  // disko: yukarı işaret, aşağı çapraz, diz sektirme, kol yuvarlama, V pozu
+  function discoPoses(role){
+    const s = role === 'b' ? 1 : -1;
+    const up = {aR:-150, aL:15, r:-7, x:-.5, lL:14, ly:-1.2, h:-12, hy:-.4, y:-.3};
+    const down = {aR:25, aL:-35, r:6, x:.5, lR:-8, h:10, hy:.4, y:1};
+    const roll = i => ({aL:i % 2 ? 80 : 30, aR:i % 2 ? -30 : -80, ly:i % 2 ? -1.4 : 0, ry:i % 2 ? 0 : -1.4, lL:i % 2 ? 10 : 0, lR:i % 2 ? 0 : -10, h:i % 2 ? 9 : -9, hy:i % 2 ? -.4 : .4, y:i % 2 ? .8 : -.2, r:i % 2 ? 4 : -4, x:(i % 2 ? .4 : -.4)*s});
+    return [{}, up, down, up, down, up, down, ...rep(4, roll), {aL:60, aR:-60, h:0, y:.6}, {aL:100, aR:-100, y:-.6, h:-6, lL:8, lR:-8}, up, down,
+      {aL:155, aR:-155, lL:14, lR:-14, y:-2.4, h:-8}, {aL:150, aR:-150, lL:12, lR:-12, y:.8, h:0}, {}];
+  }
+  // slow dans: sarılma, ağır sallanma, kafa omuza
+  function slowPoses(role){
+    const lead = role === 'b', hug = lead ? -72 : -85, low = lead ? 25 : 35;
+    const sway = i => ({aR:hug + (i % 2 ? 6 : -6), aL:low + (i % 2 ? 8 : 0), r:i % 2 ? 4 : -4, x:i % 2 ? .4 : -.4, h:i % 2 ? 12 : 6, hy:i % 2 ? .3 : 0,
+      ly:i % 2 ? -.7 : 0, ry:i % 2 ? 0 : -.7, lL:i % 2 ? 4 : 0, lR:i % 2 ? 0 : -4, y:i % 2 ? .3 : 0});
+    return [{}, ...rep(9, sway), lead ? {aR:-80, aL:30, r:7, h:14, y:.3} : {aR:-90, aL:40, r:7, h:16, ly:-1, lL:24}, {aR:-40, aL:10, h:6}, {}];
+  }
   async function doDance(k){
     const D = ldance; if (!D || D.busy || D.done[k]) return;
     const B = LBOT[D.b], G = LBOT[D.g], scene = document.getElementById('lDance'); if (!B || !G || !scene) return;
@@ -6939,29 +6988,23 @@
     let total = 7000;
     lsay(G, X.say[0], 1600);
     if (k === 'salsa'){
-      const dx = gap*.36, s = kk*6;
-      path(B.hold, [[0,0],[600,dx],[1200,dx+s],[1800,dx],[2400,dx-s],[3000,dx],[4400,dx],[5000,dx+s/2],[5600,dx],[6400,dx],[7000,0]], total);
-      path(G.hold, [[0,0],[600,-dx],[1200,-dx+s],[1800,-dx],[2400,-dx-s],[3000,-dx],[4400,-dx],[5000,-dx+s/2],[5600,-dx],[6400,-dx],[7000,0]], total);
-      [B, G].forEach(x => x.rig.animate([{transform:T()},{transform:T(0,-kk,5)},{transform:T()},{transform:T(0,-kk,-5)},{transform:T()}],{duration:600, iterations:5}));
-      at(3000, () => { twirl(G, 2, 700); armTo(B, 'armR', -150, 1400); lsay(B, 'Olé!', 1200); });
-      at(4400, () => { lhop(B); lhop(G); });
-      at(5000, () => { lhop(B); lhop(G); });
-      at(5600, () => { B.rig.animate([{transform:T()},{transform:T(0,0,10)},{transform:T(0,0,10)},{transform:T()}],{duration:1100}); G.rig.animate([{transform:T()},{transform:T(0,kk*2,-28)},{transform:T(0,kk*2,-28)},{transform:T()}],{duration:1100}); lhearts(G, 4); lsay(G, X.say[1], 1200); });
+      const dx = gap*.36, s = kk*5;
+      path(B.hold, [[0,0],[600,dx],[1300,dx+s],[2200,dx],[3100,dx-s],[3500,dx],[5200,dx],[6400,dx],[7000,0]], total);
+      path(G.hold, [[0,0],[600,-dx],[1300,-dx+s],[2200,-dx],[3100,-dx-s],[3500,-dx],[5200,-dx],[6400,-dx],[7000,0]], total);
+      choreo(B, salsaPoses('b'), 440); choreo(G, salsaPoses('g'), 440);
+      at(3600, () => { twirl(G, 2, 640); lsay(B, 'Olé!', 1200); });
+      at(5400, () => { lhearts(G, 4); lsay(G, X.say[1], 1200); });
     } else if (k === 'disco'){
-      const dx = gap*.22, beat = 480;
-      for (let i = 0; i < 14; i++) at(i*beat, () => [B, G].forEach(x => {
-        x.rig.animate([{transform:T()},{transform:T(0,kk*.9,i % 2 ? 7 : -7)},{transform:T()}],{duration:beat});
-        if (i < 5 || i > 9) armTo(x, i % 2 ? 'armL' : 'armR', i % 2 ? 40 : -150, beat, .6);
-      }));
-      path(B.hold, [[0,0],[500,dx],[2400,dx],[2900,dx-kk*8],[3400,dx+kk*4],[4400,dx],[6400,dx],[7000,0]], total);
-      path(G.hold, [[0,0],[500,-dx],[2400,-dx],[2900,-dx+kk*8],[3400,-dx-kk*4],[4400,-dx],[6400,-dx],[7000,0]], total);
-      at(2600, () => { twirl(B, 2, 600); twirl(G, 2, 600); lsay(B, X.say[1], 1200); });
-      at(5900, () => [B, G].forEach(x => { lhop(x); armTo(x, 'armL', 160, 900); armTo(x, 'armR', -160, 900); }));
+      const dx = gap*.22;
+      choreo(B, discoPoses('b'), 380); choreo(G, discoPoses('g'), 380);
+      path(B.hold, [[0,0],[500,dx],[2300,dx],[2700,dx-kk*8],[3200,dx+kk*4],[4200,dx],[6500,dx],[7000,0]], total);
+      path(G.hold, [[0,0],[500,-dx],[2300,-dx],[2700,-dx+kk*8],[3200,-dx-kk*4],[4200,-dx],[6500,-dx],[7000,0]], total);
+      at(4200, () => { twirl(B, 1, 600); twirl(G, 1, 600); lsay(B, X.say[1], 1200); });
     } else {
       total = 7200; const dx = gap*.46, s = kk*2;
       path(B.hold, [[0,0],[900,dx],[2300,dx+s],[3700,dx-s],[5100,dx+s],[6300,dx],[7200,0]], total);
       path(G.hold, [[0,0],[900,-dx],[2300,-dx+s],[3700,-dx-s],[5100,-dx+s],[6300,-dx],[7200,0]], total);
-      [B, G].forEach(x => { armTo(x, 'armR', -55, total, .88); x.rig.animate([{transform:T()},{transform:T(0,0,5)},{transform:T()},{transform:T(0,0,-5)},{transform:T()}],{duration:1400, iterations:5}); });
+      choreo(B, slowPoses('b'), 600); choreo(G, slowPoses('g'), 600);
       for (let i = 1; i < 7; i++) at(i*950, () => floaty(i % 2 ? B : G, HEART, {n:1, size:4, dur:1500, y:8, spread:10}));
       at(4200, () => lsay(B, X.say[1], 1800));
     }
@@ -6981,8 +7024,8 @@
     await Promise.all([B.hold.animate([{translate:'0 0'},{translate:`${dx}px 0`}],{duration:1200, easing:'ease-in-out', fill:'forwards'}).finished,
       G.hold.animate([{translate:'0 0'},{translate:`${-dx}px 0`}],{duration:1200, easing:'ease-in-out', fill:'forwards'}).finished]);
     if (!B.el.isConnected){ D.busy = false; return; }
-    B.rig.animate([{transform:T()},{transform:T(0,0,9)},{transform:T(0,0,9)},{transform:T()}],{duration:2200});
-    G.rig.animate([{transform:T()},{transform:T(0,-kk*1.5,9)},{transform:T(0,-kk*1.5,9)},{transform:T()}],{duration:2200});
+    choreo(B, [{}, {aR:-75, aL:40, r:9, h:10}, {aR:-75, aL:40, r:9, h:12}, {aR:-75, aL:40, r:9, h:12}, {}], 550);
+    choreo(G, [{}, {aR:-85, aL:30, r:9, y:-1.5, h:12, lL:30, ly:-1.6}, {aR:-85, aL:30, r:9, y:-1.5, h:14, lL:38, ly:-2}, {aR:-85, aL:30, r:9, y:-1.5, h:14, lL:34, ly:-1.8}, {}], 550);
     await wait(650);
     const sr = scene.getBoundingClientRect(), br = B.el.getBoundingClientRect(), gr = G.el.getBoundingClientRect();
     const mx = (br.right + gr.left)/2 - sr.left, my = Math.min(br.top, gr.top) - sr.top + br.height*.25;
