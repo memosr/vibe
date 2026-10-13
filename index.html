@@ -1164,7 +1164,7 @@
   .lkidc{display:flex;flex-direction:column;align-items:flex-start;padding:6px 12px;border:3px solid var(--line);box-shadow:3px 3px 0 var(--line);cursor:pointer;font:inherit;background:#fff}
   .lkidc b{font-family:"Pixelify Sans", monospace;font-size:16px} .lkidc small{font-size:11px;font-weight:700}
   .lkidc.r-rare{background:#e0f0ff} .lkidc.r-epic{background:#efe6ff} .lkidc.r-legendary{background:#fff3c4}
-  .lbmodal{position:fixed;inset:0;z-index:80;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:16px;background:rgba(35,10,24,.72);overflow-y:auto}
+  .lbmodal{position:fixed;inset:0;z-index:80;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:110px 16px 16px;background:rgba(35,10,24,.72);overflow-y:auto}
   .lcardnft{width:min(340px,100%);border:6px solid #231c1f;box-shadow:0 0 0 6px var(--fc),8px 8px 0 12px rgba(0,0,0,.35);background:linear-gradient(180deg,var(--b1),var(--b2));display:flex;flex-direction:column;animation:lcardin .6s cubic-bezier(.3,1.6,.5,1)}
   @keyframes lcardin{from{scale:.4;rotate:-12deg;opacity:0}}
   .lcardnft.r-legendary{box-shadow:0 0 0 6px var(--fc),0 0 40px #ffd23f,8px 8px 0 12px rgba(0,0,0,.35)}
@@ -1212,6 +1212,27 @@
   .lbtn.big small{display:block;font-size:10px;font-weight:700;opacity:.85}
   .ldlove{display:block;margin-top:4px;font-weight:700}
   @media (max-width:640px){ .ldances{gap:5px} .ldance{padding:7px 3px} .ldance .ico{font-size:24px} .ldance b{font-size:14px} .ldance small{display:none} .ldball{width:40px;height:40px;margin-left:-20px} .lddj{bottom:34%} .lddj .lbot{--u:1.5px} .ldstage.dance .lbot{--u:2.6px} }
+  .lguidebar{position:sticky;top:0;z-index:90;display:flex;flex-direction:column;gap:6px;margin:0 auto;max-width:1100px;padding:8px 44px 8px 12px;background:#fff8fb;border:3px solid #231c1f;border-top:0;box-shadow:0 4px 0 rgba(158,36,71,.35)}
+  .lguidebar.off{background:none;border:0;box-shadow:none;align-items:flex-end;padding:4px 12px}
+  .lgsteps{display:flex;gap:4px;list-style:none;margin:0;padding:0;overflow-x:auto;scrollbar-width:none}
+  .lgsteps li{display:flex;align-items:center;gap:4px;padding:3px 8px;border:2px solid #e8c0cc;background:#fff;font-size:12px;font-weight:700;color:#a07a86;white-space:nowrap;flex:none}
+  .lgsteps li span{font-size:13px}
+  .lgsteps li.done{background:#e6fff4;border-color:#2fb58f;color:#1f8a6a}
+  .lgsteps li.now{background:#ffd23f;border-color:#231c1f;color:#231c1f;box-shadow:2px 2px 0 #231c1f;animation:lgnow 1.4s ease-in-out infinite}
+  @keyframes lgnow{50%{transform:translateY(-2px)}}
+  .lghint{margin:0;font-size:15px;font-weight:700;color:#231c1f;min-height:20px} .lghint i{font-style:normal;display:inline-block;animation:lgpoint 1s ease-in-out infinite}
+  @keyframes lgpoint{50%{transform:translateX(4px)}}
+  .lgtoggle{font:inherit;font-size:12px;font-weight:700;cursor:pointer;background:#fff;border:2px solid #231c1f;padding:3px 8px}
+  .lgtoggle.x{position:absolute;right:8px;top:8px;width:28px;height:28px;padding:0;font-size:18px;line-height:1}
+  .lnext{position:relative;z-index:5;animation:lnglow 1.2s ease-in-out infinite !important;outline:3px solid #ffd23f;outline-offset:2px}
+  @keyframes lnglow{0%,100%{box-shadow:0 0 0 0 rgba(255,210,63,.9),3px 3px 0 #231c1f}50%{box-shadow:0 0 0 8px rgba(255,210,63,0),0 0 22px 6px rgba(255,210,63,.85)}}
+  .lnext::after{content:"\1F447";position:absolute;left:50%;top:-30px;translate:-50% 0;font-size:22px;line-height:1;pointer-events:none;animation:lnbounce .8s ease-in-out infinite;filter:drop-shadow(1px 2px 0 rgba(0,0,0,.3));z-index:6}
+  input.lnext::after{display:none}
+  @keyframes lnbounce{50%{transform:translateY(-6px)}}
+  .lnextbox{outline:3px dashed #ffb13a;outline-offset:4px;animation:lnbox 1.2s ease-in-out infinite}
+  @keyframes lnbox{50%{outline-color:#ff3a7a}}
+  @media (prefers-reduced-motion: reduce){ .lnext,.lnextbox,.lgsteps li.now,.lghint i,.lnext::after{animation:none !important} }
+  @media (max-width:640px){ .lguidebar{padding:6px 40px 6px 8px} .lghint{font-size:13px} .lgsteps li{padding:2px 6px;font-size:11px} .lgsteps li b{display:none} .lgsteps li.now b{display:inline} }
   .lbmact{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
   .lbmint{display:contents} .lbtn.mint{background:#231c1f;color:#ffd23f;border-color:#231c1f} .lbtn.mint small{display:block;font-size:10px;color:#ffb0c8;font-weight:700}
   .lbtn.mint.done{background:#2fb58f;color:#fff;text-decoration:none} .lbtn.mint:disabled{opacity:.85;cursor:wait}
@@ -1655,6 +1676,7 @@
 </aside>
 <section class="love" id="love" hidden aria-label="Vibe Love">
   <div class="lbarTop"><button class="btn" type="button" id="loveBack">&larr; Back</button><span class="lbrand"><i>&#10084;</i>VIBE LOVE</span><a class="btn playbtn" href="#arena">&#9654; Arena</a></div>
+  <div class="lguidebar" id="lGuide" aria-live="polite"></div>
   <div class="loveBody" id="loveBody"></div>
 </section>
 <section class="guide" id="guide" hidden aria-label="Vibe Arena guide">
@@ -6090,7 +6112,7 @@
     const c = selG && L2.couples[selG] && L2.couples[selG].boy === selB ? L2.couples[selG] : null;
     const busy = (selG && partnerOf(selG) && partnerOf(selG) !== selB) ? `${selG} is with ${partnerOf(selG)}.` : (selB && partnerOf(selB) && partnerOf(selB) !== selG) ? `${selB} is with ${partnerOf(selB)}.` : '';
     let cta;
-    if (!selB || !selG) cta = `<p class="lhint">${!selB && !selG ? 'Pick a boy on the left and a girl on the right.' : !selB ? 'Now pick a boy on the left.' : 'Now pick a girl on the right.'}</p>`;
+    if (!selB || !selG) cta = `<p class="lhint">${!selB && !selG ? 'Pick a boy and a girl.' : !selB ? 'Now pick a boy.' : 'Now pick a girl.'}</p>`;
     else if (busy) cta = `<p class="lhint warn">&#128148; ${busy} Break up first to change partners.</p>`;
     else cta = `<button type="button" class="btn lbtn pink big" data-a="go">${c ? '&#10084; Continue' : '&#128087; Dress them up'}</button>`;
     body().innerHTML = `<div class="lhero"><h2>Find love in Vibe Town</h2><p>Pick a boy and a girl, dress them up for each other, then take them on a dinner date. Every character has their own taste.</p></div>
@@ -7149,9 +7171,126 @@
     }
     requestAnimationFrame(tick);
   }
+  // ===== Rehber: her ekranda ne yapılacağını gösterir, sıradaki butonu parlatır =====
+  const GUIDE_KEY = 'vibefolk-guide-off';
+  let guideOff = false; try { guideOff = localStorage.getItem(GUIDE_KEY) === '1'; } catch(e){}
+  let gWore = false, gLast = '', gTarget = '';
+  const JOURNEY = [['pick','&#128107;','Pick'], ['dress','&#128087;','Dress'], ['date','&#127837;','Date'], ['dance','&#128131;','Dance'], ['propose','&#128141;','Propose'], ['wed','&#128146;','Wedding'], ['baby','&#128118;','Baby'], ['mint','&#9939;','Mint']];
+  function journeyDone(c, b){
+    const kids = (c && c.babies) || [];
+    return {pick:!!c, dress:!!(b && L2.looks[b] && Object.keys(L2.looks[b]).length), date:!!c && (c.stage || 0) >= 1, dance:!!c && ((c.kisses || 0) > 0 || (c.stage || 0) >= 3),
+      propose:!!c && (c.stage || 0) >= 3, wed:!!c && (c.stage || 0) >= 4, baby:kids.length > 0, mint:kids.some(k => k.token)};
+  }
+  // ekrana göre: ipucu metni, parlatılacak hedef, grup mu
+  function guidePlan(){
+    const $ = s => loveEl.querySelector(s), on = s => { const e = $(s); return e && !e.disabled ? e : null; };
+    const modal = $('.lbmodal');
+    if (modal){
+      const inp = modal.querySelector('#lBabyName');
+      if (inp && !inp.value.trim()) return {hint:'Give your baby a name.', el:inp};
+      const mint = modal.querySelector('[data-a="bmint"]:not([disabled])');
+      if (mint) return {hint:'Mint your baby as an on-chain NFT on Robinhood Chain. You need 1M $FOLK in your wallet.', el:mint};
+      if (modal.querySelector('[data-a="bname"]')) return {hint:'Save the name to welcome your baby.', el:modal.querySelector('[data-a="bname"]')};
+      return {hint:'Your baby is on-chain! Share it on X or close the card.', el:modal.querySelector('[data-a="bx"]')};
+    }
+    if (lview === 'select'){
+      const pair = selB && selG && L2.couples[selG] && L2.couples[selG].boy === selB;
+      if (!selB && !selG && Object.keys(L2.couples).length){
+        const [g, c] = Object.entries(L2.couples)[0], card = [...loveEl.querySelectorAll('.lcard')][0];
+        const q = s => card && card.querySelector(s + ':not([disabled])');
+        const st = c.stage || 0, kids = (c.babies || []).length;
+        if (st === 2 && c.love >= PROPOSE_AT && q('[data-a="propose"]')) return {hint:`${c.boy} and ${g} are ready. Time to propose!`, el:q('[data-a="propose"]')};
+        if (st === 3) return {hint:'She said yes! Plan the wedding.', el:q('[data-a="wedding"]')};
+        if (st >= 4 && kids < MAX_BABIES && q('[data-a="nursery"]')) return {hint:'Married! Visit the baby room and call the stork.', el:q('[data-a="nursery"]')};
+        const date = q('[data-a="dinner"]') || q('[data-a="dates"]');
+        if (date) return {hint:st < 2 ? `Go on dates to grow love. ${DATING_AT}% love makes them a couple.` : `Keep dating. At ${PROPOSE_AT}% love he can propose.`, el:date};
+        return {hint:'No dates left today. Dress them up, or come back tomorrow.', el:q('[data-a="dress"]')};
+      }
+      if (!selB) return {hint:'Tap a boy to choose him.', el:$('.lside.boys'), box:true};
+      if (!selG) return {hint:'Now tap a girl to choose her.', el:$('.lside.girls'), box:true};
+      const go = on('[data-a="go"]');
+      return go ? {hint:pair ? 'Continue with this couple.' : 'Great pair! Now dress them up.', el:go} : {hint:'Pick a free boy and girl.'};
+    }
+    if (lview === 'wardrobe'){
+      if (!gWore) return {hint:'Tap clothes to dress them. Each one has a favorite style, shown by the color tags.', el:$('.lpanel [data-a="wear"]:not([data-k=""])')};
+      const go = on('[data-a="savego"]');
+      return go ? {hint:'Looking good! Save and go on a dinner date.', el:go} : {hint:'Save the looks.', el:on('[data-a="save"]')};
+    }
+    if (lview === 'venues') return {hint:'Pick where to go on your date.', el:$('.lvenues') || $('[data-a="venue"]'), box:true};
+    if (lview === 'dinner' && ldin){
+      const d = ldin;
+      if (d.step === 'menu' && d.venue === 'dinner'){
+        if (!d.dish) return {hint:'Order a main course. Pick something they love for extra love.', el:$('[data-kind="dish"]') && $('[data-kind="dish"]').parentElement, box:true};
+        if (!d.drink) return {hint:'Now pick drinks.', el:$('[data-kind="drink"]') && $('[data-kind="drink"]').parentElement, box:true};
+        return {hint:'Ready! Start the dinner.', el:on('[data-a="eat"]')};
+      }
+      if (d.step === 'menu') return d.pick ? {hint:'Let\'s go!', el:on('[data-a="eat"]')} : {hint:'Pick an activity they will love.', el:$('.ldmenu'), box:true};
+      if (d.step === 'talk' && d.wait) return {hint:'The waiter is coming...'};
+      if (d.step === 'talk') return {hint:'Pick what to say. Matching their style gives more love. Moments below add bonus love.', el:$('.ldlines'), box:true};
+      return {hint:'Date done! Go dancing for bonus love and a kiss.', el:on('[data-a="godance"]')};
+    }
+    if (lview === 'dance' && ldance){
+      if (ldance.busy) return {hint:'Dancing... enjoy the show!'};
+      const any = Object.keys(ldance.done).length;
+      if (!any) return {hint:'Pick a dance. Each one adds love.', el:$('.ldances'), box:true};
+      if (!ldance.kiss) return {hint:'Hearts are racing. Time for a kiss! &#128139;', el:on('[data-a="kiss"]')};
+      if (any < 3) return {hint:'More dances, more love. Or head back home.', el:$('.ldances'), box:true};
+      return {hint:'What a night! Go back to see your love progress.', el:$('[data-a="home"]')};
+    }
+    if (lview === 'propose' && lprop){
+      if (lprop.step === 'ring') return lprop.ring ? {hint:'Kneel and ask the big question.', el:on('[data-a="kneel"]')} : {hint:'Pick a ring. Her favorite style works best.', el:$('.lrings'), box:true};
+      if (lprop.step === 'anim') return {hint:'Down on one knee...'};
+      const w = on('[data-a="wedding"]');
+      return w ? {hint:'She said YES! Plan the wedding.', el:w} : {hint:'Not this time. Go on more dates and try again.', el:$('[data-a="home"]')};
+    }
+    if (lview === 'wedding' && lwed){
+      if (lwed.step === 'venue') return {hint:'Choose where the wedding happens.', el:$('.lvenues'), box:true};
+      const v = on('[data-a="vows"]'); if (v) return {hint:'Everyone is here. Start the ceremony!', el:v};
+      const n = on('[data-a="nursery"]'); if (n) return {hint:'Just married! Go to the baby room.', el:n};
+      return {hint:'Tap the guests, they all have something to say.'};
+    }
+    if (lview === 'nursery'){
+      const s = on('[data-a="stork"]'); if (s) return {hint:'Call the stork! Every Vibe Baby gets traits from both parents.', el:s};
+      const c = L2.couples[lcouple], kids = (c && c.babies) || [], i = kids.findIndex(k => !k.token);
+      if (i >= 0) return {hint:'Tap a baby card to name it and mint it as an NFT.', el:loveEl.querySelectorAll('[data-a="card"]')[i]};
+      return {hint:kids.length >= MAX_BABIES ? 'A full family! Tap the babies to play with them.' : 'The stork visits once a day. Tap the babies to play.'};
+    }
+    return {hint:''};
+  }
+  function guideCouple(){
+    const g = lview === 'select' ? (selG && L2.couples[selG] && L2.couples[selG].boy === selB ? selG : (!selB && !selG ? Object.keys(L2.couples)[0] : null)) : lcouple;
+    const c = g ? L2.couples[g] : null; return {c, b:c ? c.boy : (lview === 'select' ? selB : null)};
+  }
+  function drawGuide(){
+    const box = document.getElementById('lGuide'); if (!box || loveEl.hidden) return;
+    loveEl.querySelectorAll('.lnext,.lnextbox').forEach(e => e.classList.remove('lnext', 'lnextbox'));
+    if (guideOff){ const h = '<button type="button" class="lgtoggle" data-a="gtoggle">&#10067; Show guide</button>'; if (gLast !== h){ box.innerHTML = h; gLast = h; } box.classList.add('off'); return; }
+    box.classList.remove('off');
+    const P = guidePlan(), {c, b} = guideCouple(), done = journeyDone(c, b), cur = JOURNEY.findIndex(([k]) => !done[k]);
+    if (P.el){ P.el.classList.add(P.box ? 'lnextbox' : 'lnext');
+      const key = lview + '|' + (P.el.dataset.a || P.el.className) + '|' + (P.el.dataset.g || P.el.dataset.k || '');
+      if (key !== gTarget){ gTarget = key; const r = P.el.getBoundingClientRect(), top = 130;
+        if (r.top < top || r.bottom > innerHeight - 20) setTimeout(() => { if (P.el.isConnected) P.el.scrollIntoView({block:'center', behavior:reduce ? 'auto' : 'smooth'}); }, 350); } }
+    const h = `<ol class="lgsteps">${JOURNEY.map(([k, ico, name], i) => `<li class="${done[k] ? 'done' : i === cur ? 'now' : ''}"><span>${done[k] ? '&#10003;' : ico}</span><b>${name}</b></li>`).join('')}</ol>
+      <p class="lghint">${P.hint ? `<i>&#128073;</i> ${P.hint}` : ''}</p><button type="button" class="lgtoggle x" data-a="gtoggle" aria-label="Hide guide" title="Hide guide">&times;</button>`;
+    if (h !== gLast){ box.innerHTML = h; gLast = h; }
+  }
+  let gRaf = 0;
+  const guideSoon = () => { if (!gRaf) gRaf = requestAnimationFrame(() => { gRaf = 0; drawGuide(); }); };
+  new MutationObserver(ms => { if (ms.some(m => !(m.target.closest && m.target.closest('#lGuide')) && [...m.addedNodes, ...m.removedNodes].some(n => n.nodeType === 1 && !n.classList.contains('floaty') && !n.classList.contains('lconf')))) guideSoon(); })
+    .observe(loveEl, {childList:true, subtree:true});
+  loveEl.addEventListener('input', guideSoon);
+  loveEl.addEventListener('click', e => {
+    const a = e.target.closest('[data-a]'); if (!a) return;
+    if (a.dataset.a === 'wear') gWore = true;
+    if (a.dataset.a === 'dress' || a.dataset.a === 'go') gWore = false;
+    if (a.dataset.a === 'gtoggle'){ guideOff = !guideOff; try { localStorage.setItem(GUIDE_KEY, guideOff ? '1' : '0'); } catch(err){} gLast = ''; }
+    setTimeout(guideSoon, 30);
+  });
   function loveRoute(){
     const on = location.hash === '#love';
     if (on && loveEl.hidden){ lview = 'select'; loveEl.hidden = false; drawLove(); loveEl.scrollTop = 0; }
+    if (on) setTimeout(drawGuide, 50);
     if (!on){ clearInterval(waveT); if (!loveEl.hidden) babyParade(); }
     loveEl.hidden = !on;
     if (on) document.documentElement.style.overflow = 'hidden';
